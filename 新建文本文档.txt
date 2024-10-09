@@ -1,0 +1,229 @@
+10-08 14:48:50.817  1422  1422 E m.mumu.launche: No package ID 9c found for ID 0x9c010101.
+10-08 14:48:50.817  1422  1422 D Launcher.DragController: endDrag:
+10-08 14:48:50.824  1422  1422 D ForbidAppManager: checkShouldForbidCurrentShortcut: pkgName = com.DefaultCompany.PoSuiShiJie
+10-08 14:48:50.825  1186  3162 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity bnds=[251,789][444,1268]} from uid 1000, pid 1422
+10-08 14:48:50.826  1045  1104 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.827  1186  3162 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+10-08 14:48:50.842  1186  3162 E ActivityTaskManager: [KeepAlive] created display id:31 , ph-yid:local:4619827045430321950, for pkg com.DefaultCompany.PoSuiShiJie
+10-08 14:48:50.842  1186  3162 W ActivityTaskManager: Can't find TaskDisplayArea to determine support for multi window. Task id=320 attached=false
+10-08 14:48:50.844  1186  3162 D RecentTaskMonitor: onRecentTaskAdded 320:Task=320
+10-08 14:48:50.846  1422  1422 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1196 android.content.ContextWrapper.sendBroadcast:484 com.mumu.launcher.D1.e:65 com.mumu.launcher.Launcher.onClick:351 android.view.View.performClick:7455
+10-08 14:48:50.846  1045  1045 I SurfaceFlinger: onComposerHalHotplug(31, connected)
+10-08 14:48:50.846  1045  1045 E HWComposer: getDisplayConnectionType: getDisplayConnectionType failed for display 4619827016651670559: Unsupported (8)
+10-08 14:48:50.846  1045  1045 W HwcComposer: getPerFrameMetadataKeys failed with 8
+10-08 14:48:50.846  1045  1045 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.846  1045  1045 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.846  1045  1045 I SurfaceFlinger: Dispatching display hotplug event displayId=4619827016651670559, connected=1
+10-08 14:48:50.846  1045  1155 W EventThread: Failed dispatching Hotplug{displayId=4619827016651670559, connected} for Connection{0x73c32da24690, VSyncRequest::None}
+10-08 14:48:50.846  1045  1156 W EventThread: Failed dispatching Hotplug{displayId=4619827016651670559, connected} for Connection{0x73c32da23cd0, VSyncRequest::None}
+10-08 14:48:50.846  1045  1104 D SurfaceFlinger: Physical display 31 plugined successfully
+10-08 14:48:50.846  1045  1155 W EventThread: Failed dispatching Hotplug{displayId=4619827016651670559, connected} for Connection{0x73c32da26e50, VSyncRequest::None}
+10-08 14:48:50.846  1186  1209 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10016; state: DISABLED
+10-08 14:48:50.843  1045  1045 I Binder:1045_4: type=1400 audit(0.0:5969): avc: denied { transfer } for scontext=u:r:init:s0 tcontext=u:r:platform_app:s0:c512,c768 tclass=binder permissive=1
+10-08 14:48:50.843  1372  1372 I ll.splashworker: type=1400 audit(0.0:5970): avc: denied { map } for path="/system/framework/framework-res.apk" dev="sda6" ino=1491 scontext=u:r:platform_app:s0:c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=file permissive=1
+10-08 14:48:50.847  1045  1104 E HWComposer: getSupportedContentTypes: getSupportedContentTypes failed for display 4619827016651670559: Unsupported (8)
+10-08 14:48:50.847  1186  1219 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10016; state: ENABLED
+10-08 14:48:50.849  1186  1209 W RecentTaskMonitor: null pid retry ...
+10-08 14:48:50.849  1186  1209 E RecentTaskMonitor: VAddressShellNotifier#notifyOpenTab null request
+10-08 14:48:50.850  1186  1209 I WindowManager: Override config changes=20000480 {0.0 ?mcc?mnc ?localeList ?layoutDir sw540dp w960dp h540dp 320dpi lrg long land ?uimode ?night -touch -keyb/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1920, 1080) mAppBounds=Rect(0, 0 - 1920, 1080) mMaxBounds=Rect(0, 0 - 1920, 1080) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_90} ?fontWeightAdjustment} for displayId=31
+10-08 14:48:50.843  1372  1372 I ll.splashworker: type=1400 audit(0.0:5971): avc: denied { read } for path="/system/framework/framework-res.apk" dev="sda6" ino=1491 scontext=u:r:platform_app:s0:c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=file permissive=1
+10-08 14:48:50.843  1052  1052 I Binder:1052_2: type=1400 audit(0.0:5972): avc: denied { call } for scontext=u:r:init:s0 tcontext=u:r:platform_app:s0:c512,c768 tclass=binder permissive=1
+10-08 14:48:50.846  1025  1025 I main    : type=1400 audit(0.0:5973): avc: denied { getattr } for path="/apex/com.android.permission/javalib/framework-permission-s.jar" dev="sda6" ino=444 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=file permissive=1
+10-08 14:48:50.852  1186  1209 I DisplayDeviceRepository: Display device added: DisplayDeviceInfo{"HDMI 屏幕": uniqueId="local:4619827016651670559", 1080 x 1920, modeId 63, defaultModeId 63, supportedModes [{id=63, width=1080, height=1920, fps=60.000004, alternativeRefreshRates=[15.000001]}, {id=64, width=1080, height=1920, fps=15.000001, alternativeRefreshRates=[60.000004]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 320, 320.0 x 320.0 dpi, appVsyncOff 1000000, presDeadline 16666666, touch EXTERNAL, rotation 0, type EXTERNAL, address {port=31, model=0x401cec31db4684, physicalDisplayId=4619827016651670559}, deviceProductInfo DeviceProductInfo{name=mumuscreen031, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state UNKNOWN, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.5, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_OWN_CONTENT_ONLY}
+10-08 14:48:50.852  1025  1025 D Zygote  : Forked child process 4215
+10-08 14:48:50.852  1186  1209 I LogicalDisplayMapper: Applying layout: [{addr: {port=0, model=0x401ceced0008c5, physicalDisplayId=4619827820427265280}, dispId: 0(ON)}], Previous layout: [{addr: {port=0, model=0x401ceced0008c5, physicalDisplayId=4619827820427265280}, dispId: 0(ON)}]
+10-08 14:48:50.852  1186  1209 I LogicalDisplayMapper: Adding new display: 32: DisplayInfo{"HDMI 屏幕", displayId 32", displayGroupId -1, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, real 1080 x 1920, largest app 1080 x 1920, smallest app 1080 x 1920, appVsyncOff 1000000, presDeadline 16666666, mode 63, defaultMode 63, modes [{id=63, width=1080, height=1920, fps=60.000004, alternativeRefreshRates=[15.000001]}, {id=64, width=1080, height=1920, fps=15.000001, alternativeRefreshRates=[60.000004]}], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, userDisabledHdrTypes [], minimalPostProcessingSupported false, rotation 0, state UNKNOWN, type EXTERNAL, uniqueId "local:4619827016651670559", app 1080 x 1920, density 320 (320.0 x 320.0) dpi, layerStack 32, colorMode 0, supportedColorModes [0], address {port=31, model=0x401cec31db4684, physicalDisplayId=4619827016651670559}, deviceProductInfo DeviceProductInfo{name=mumuscreen031, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, removeMode 0, refreshRateOverride 0.0, brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.5}
+10-08 14:48:50.853  1186  1219 I ActivityManager: Start proc 4215:com.DefaultCompany.PoSuiShiJie/u0a16 for top-activity {com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity}
+10-08 14:48:50.846  4215  4215 I main    : type=1400 audit(0.0:5974): avc: denied { search } for name="com.android.permission" dev="sda6" ino=435 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-08 14:48:50.853  1186  1209 I LogicalDisplayMapper: Setting new display group 0 for display 32, from previous group: null
+10-08 14:48:50.853  4215  4215 I Zygote  : fakeProductInfoIfNeed callded! com.DefaultCompany.PoSuiShiJie
+10-08 14:48:50.846  4215  4215 I main    : type=1400 audit(0.0:5975): avc: denied { read } for name="framework-permission-s.jar" dev="sda6" ino=444 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=file permissive=1
+10-08 14:48:50.854  1186  1209 W DisplayPowerController[32]: Screen brightness nits configuration is unavailable; falling back
+10-08 14:48:50.846  4215  4215 I main    : type=1400 audit(0.0:5976): avc: denied { open } for path="/apex/com.android.permission/javalib/framework-permission-s.jar" dev="sda6" ino=444 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=file permissive=1
+10-08 14:48:50.854  4215  4215 I Zygote  : fake Product info com.DefaultCompany.PoSuiShiJie not matched any pattern
+10-08 14:48:50.854  4215  4215 I Zygote  : fakeProductInfoFromProperties callded! com.DefaultCompany.PoSuiShiJie
+10-08 14:48:50.854  1186  1209 I InputManager-JNI: Viewport [0] to add: local:4619827820427265280, isActive: true
+10-08 14:48:50.854  1186  1209 I InputManager-JNI: Viewport [1] to add: local:4619827045430321950, isActive: true
+10-08 14:48:50.855  4215  4215 E NemuAppNameUtil: save data success
+10-08 14:48:50.856  4215  4215 W Zygote  : BindMount ,  SpecializeCommon: source /data/system/etc/mumu-configs/app/com.DefaultCompany.PoSuiShiJie/currentApp, target: /system/etc/mumu-configs/currentApp , chownRet: 0
+10-08 14:48:50.856  4215  4215 W Zygote  : BindMount ,  SpecializeCommon mount currentApp , MountRet: 0
+10-08 14:48:50.857  4215  4215 W nativebridge: Failed to bind-mount /system/etc/cpuinfo.arm.txt as /proc/cpuinfo: No such file or directory
+10-08 14:48:50.857  4215  4215 I Zygote  : seccomp disabled by setenforce 0
+10-08 14:48:50.859  4215  4215 I any.PoSuiShiJi: Late-enabling -Xcheck:jni
+10-08 14:48:50.859  1186  1277 I InputReader: Reconfiguring input devices, changes=DISPLAY_INFO |
+10-08 14:48:50.860  1186  1207 V WindowManager: Display 31 state is now (2), so update layer mirroring?
+10-08 14:48:50.860  1186  1231 V DisplayPowerController[32]: Brightness [0.5] reason changing to: 'manual', previous reason: '0'.
+10-08 14:48:50.860  1045  1045 D SurfaceFlinger: Setting power mode 2 on display 4619827016651670559
+10-08 14:48:50.860  1045  1045 D SurfaceFlinger: Finished setting power mode 2 on display 4619827016651670559
+10-08 14:48:50.860  1186  4216 E DisplayDeviceConfig: requesting nits when no mapping exists.
+10-08 14:48:50.860  1186  4216 E DisplayDeviceConfig: requesting nits when no mapping exists.
+10-08 14:48:50.861  1186  1207 I InputDispatcher: Created monitor PointerEventDispatcher32 for display 32, gesture=false, pid=1186
+10-08 14:48:50.861  1186  1218 I DropBoxManagerService: add tag=system_server_wtf isTagEnabled=true flags=0x2
+10-08 14:48:50.861  4215  4215 W any.PoSuiShiJi: Unexpected CPU variant for X86 using defaults: x86_64
+10-08 14:48:50.861  4215  4215 V libnb   : enter native_bridge2_initialize /data/user/0/com.DefaultCompany.PoSuiShiJie/code_cache arm
+10-08 14:48:50.861  1186  1218 I DropBoxManagerService: add tag=system_server_wtf isTagEnabled=true flags=0x2
+10-08 14:48:50.863  4215  4215 I nemucooker: cook file1: /system/etc/mumu-configs/shared_libs/libhp12_x86.so, last modify time: Fri Jul  5 15:38:09 2024
+10-08 14:48:50.863  4215  4215 I nemucooker: cook file2: /data/system/etc/mumu-configs/shared_libs/libhp12_x86.so, last modify time: Mon Aug 26 10:47:40 2024
+10-08 14:48:50.863  4215  4215 I nemucooker: cook select file: /data/system/etc/mumu-configs/shared_libs/libhp12_x86.so
+10-08 14:48:50.867  1186  1207 I WindowManager: Override config changes=20005df8 {0.0 ?mcc?mnc ?localeList ?layoutDir sw540dp w540dp h960dp 320dpi lrg long port ?uimode ?night -touch -keyb/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mMaxBounds=Rect(0, 0 - 1080, 1920) mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} ?fontWeightAdjustment} for displayId=32
+10-08 14:48:50.867  1372  1372 W DisplayController: Skipping Display Configuration change on non-added display.
+10-08 14:48:50.869  1186  1209 I InputManager-JNI: Viewport [0] to add: local:4619827820427265280, isActive: true
+10-08 14:48:50.869  1186  1209 I InputManager-JNI: Viewport [1] to add: local:4619827045430321950, isActive: true
+10-08 14:48:50.869  1186  1209 I InputManager-JNI: Viewport [2] to add: local:4619827016651670559, isActive: true
+10-08 14:48:50.869  4215  4215 E libnb   : get_callbacks native_handle 0x9efc210d: 1
+10-08 14:48:50.870  4215  4215 I libnb   : Found /system/lib/libhoudini.so version 6
+10-08 14:48:50.870  4215  4215 D HP      : initialize private_dir:/data/user/0/com.DefaultCompany.PoSuiShiJie/code_cache instruction_set:arm
+10-08 14:48:50.870  4215  4215 D HP      : patch_linker_namespace_32
+10-08 14:48:50.870  4215  4215 D HP      : patch call constructors entrance 32
+10-08 14:48:50.870  4215  4215 D houdini : [4215] Initialize library(version: 12.0.0_y.38816.m RELEASE)... successfully.
+10-08 14:48:50.871  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2629632
+10-08 14:48:50.871  1186  1277 I InputReader: Reconfiguring input devices, changes=DISPLAY_INFO |
+10-08 14:48:50.871  1186  1209 I DisplayDeviceRepository: Display device changed state: "HDMI 屏幕", ON
+10-08 14:48:50.872  1186  1207 V WindowManager: Display 32 state is now (2), so update layer mirroring?
+10-08 14:48:50.882  1372  4221 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2629632
+10-08 14:48:50.892  1372  4221 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2629632
+10-08 14:48:50.903  1046  1090 I adbd    : jdwp connection from 4215
+10-08 14:48:50.908  4215  4215 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+10-08 14:48:50.908  1186  1210 I WindowManager: Screen frozen for +82ms due to new-config
+10-08 14:48:50.908  1045  1109 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.910  1186  1210 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+10-08 14:48:50.916  1186  1203 W OomAdjuster: Fallback pre-set sched group to default: not expected top priority
+10-08 14:48:50.931  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2629632
+10-08 14:48:50.934  4215  4231 E ashmem  : memfd: ro.vndk.version not defined or invalid (), this is mandated since P.
+10-08 14:48:50.935  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2629632
+10-08 14:48:50.937  4215  4215 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10016; state: DISABLED
+10-08 14:48:50.942  1186  2125 I ActivityTaskManager: Request to restart process of ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320}
+10-08 14:48:50.943  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 69632
+10-08 14:48:50.951  1372  4234 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 69632
+10-08 14:48:50.953  1372  4234 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 69632
+10-08 14:48:50.961  1186  2125 W InputDispatcher: Letterbox_bottom_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} has FLAG_SLIPPERY. Please report this in b/157929241
+10-08 14:48:50.962  1186  2125 W InputDispatcher: Letterbox_right_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} has FLAG_SLIPPERY. Please report this in b/157929241
+10-08 14:48:50.962  1186  2125 W InputDispatcher: Letterbox_top_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} has FLAG_SLIPPERY. Please report this in b/157929241
+10-08 14:48:50.962  1186  2125 W InputDispatcher: Letterbox_left_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} has FLAG_SLIPPERY. Please report this in b/157929241
+10-08 14:48:50.966  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.967  1186  1209 D RecentTaskMonitor: VAddressShellNotifier#notifyOpenTab :{"uri":"player\/tab","need_response":false,"params":{"id":"task:320","displayId":31,"userId":0,"name":"PoSuiShiJie","originName":"PoSuiShiJie","packageName":"com.DefaultCompany.PoSuiShiJie","launcher":false,"newTask":true,"icon":"iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAJHSURBVEiJ1VW\/a1phFD33vaoEf+QHiZDBDNl0ECFDfZlcgqAEp0hA54J7\/oKAbi4Bhwwh4B+gixGS6SXi4hvcO5VCaKhB\/AXx4bOnQ5uCJFpNa6EX7vLde+7hO+e7fADwHsBHAPzL2QIQB4BPSxj+nF8FwDcAguUE5SfT0kJZ5nAAePcWkKIoWFtbw\/7+PgaDAXRdn9k\/l2EiQk3TeHJywqurK7ZaLVqWxUajQZvNNgs7H0EwGOTT0xN7vR7r9ToNwyBJmqZJn883FfdbD7LZLCqVCvb29hCJRLC7u4tEIoGdnR0Ui0UAgN\/vX1wip9PJfD7Pfr\/PTCZDESEArqys8Pr6mrVajVtbW3x4eODp6eliEqmqysvLS1qWxePj44na4eEhR6MRNU2jiLBcLlPXdaqq+irBi1ekKArOzs6QTqfR7\/cRj8cRjUYBACICTdNQKpVgGAZI4vz8HF6vF+Px+FV5XhCICNxuN0QEIoL19fUJsMPhwGAwAPljP03TxHA4XMwDVVVZLBZpWRaTyeRELZFIcDQaMRwOEwBLpdJMiaaavLq6youLC3a7XaZSqV\/nLpeLtVqNNzc33NjY4P39PXO53Nv2QERYKBSo6zqPjo4YCATo8Xi4vb3Nx8dHFgoFmqbJWCz254sWCoU4HA7Z6XR4e3vLRqMx16LNTSAijEajzGazvLu7Y6fT4Xg8ZrPZpN1un457ZlkkVFXF5uYmDg4O0G63Ua1Wp\/b+P\/+Borw+6p\/c4MsS53cBIAbgM+Z8TQtkF8CH75s24WBkrUivAAAAAElFTkSuQmCC","canChangeAppOrientation":false,"pid":4215,"uid":10016,"action":"open"}}
+10-08 14:48:50.968  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:50.968  4215  4215 D NemuJavaHotPatchHelper: onHandleBindApplication reportedPackageName:com.DefaultCompany.PoSuiShiJie isMatchJavaPatch:false
+10-08 14:48:50.968  1186  1209 I RecentTaskMonitor: broadcast tab opened in android as it's new task 320
+10-08 14:48:50.968  1186  1209 I RecentTaskMonitor: notify sub display opened to input: 31
+10-08 14:48:50.969  1186  1218 W BroadcastQueue: Background execution not allowed: receiving Intent { act=nemu.intent.action.NEW_TASK dat=package:com.DefaultCompany.PoSuiShiJie flg=0x10 (has extras) } to com.mumu.acc/.AccMsgReceiver
+10-08 14:48:50.969  1422  1422 D create_screen: onReceive: action = nemu.intent.action.NEW_TASK
+10-08 14:48:50.969  1343  1343 D TabManager: setFocusTaskProp 320
+10-08 14:48:50.970  1343  1512 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1181 android.content.ContextWrapper.sendBroadcast:479 com.netease.nemu_vapi_android.thread.NewFileUpdater.notifyFocusedTabChanged:494 com.netease.nemu_vapi_android.thread.NewFileUpdater.onOpenNewTask:410 com.netease.nemu_vapi_android.worker.LocalAppManager.updateOnNewTask:244
+10-08 14:48:50.972  1343  1512 D NewFileUpdater: onOpenNewTask focusPkgName set to com.DefaultCompany.PoSuiShiJie
+10-08 14:48:50.973  1343  1809 D Watchdog: upload event: {"architecture":"x86_64","channel":"nochannel","country":"zh-CN","engine":"NEMUX","fchannel":"usermigration-6to12","language":"zh-Hans","mpid":"0","package":"mumu","product":"","product_version":"3.9.3.3098","usage":"0","uuid":"7a72f42b-5f43-4a5f-80ad-1beabea7c1a9","version":"3.9.3.3098","x":{"app_name":"PoSuiShiJie","app_package":"com.DefaultCompany.PoSuiShiJie","app_version_code":1,"app_version_name":"0.1","error":{"code":0,"msg":"ok"},"extra":{"amp_name":"PoSuiShiJie","ampid":0},"token":"03d1847c-a9c6-4d03-aab7-bb0127023c5c"}}       type: LaunchAPP  sign: C5lpbtG9Fdwvm9i7Cv4Z/yrT1fI=      uid: 1000       json:{"app_name":"PoSuiShiJie","app_package":"com.DefaultCompany.PoSuiShiJie","app_version_code":1,"app_version_name":"0.1","error":{"code":0,"msg":"ok"},"extra":{"amp_name":"PoSuiShiJie","ampid":0},"token":"03d1847c-a9c6-4d03-aab7-bb0127023c5c"}
+10-08 14:48:50.976  1186  1204 W ActivityManager: Foreground service started from background can not have location/camera/microphone access: service com.mumu.acc/.AccService
+10-08 14:48:50.976  1422  1487 D updatePackage: version com.DefaultCompany.PoSuiShiJie 1
+10-08 14:48:50.976  1186  1218 V ActivityManager: Attempted to start a foreground service (com.mumu.acc/.AccService) with a broken notification (no icon: Notification(channel=acc-service shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+10-08 14:48:50.981  1372  1495 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:51.028  1343  1809 D Watchdog: upload server response: {"errcode": 100, "errmsg": "ok"}
+10-08 14:48:51.028  1343  1809 D Watchdog: upload result: true
+10-08 14:48:51.044  1343  1718 W NewFileUpdater: MSG_GET_PACKAGE_TAG_INFO, no available new tag for: com.DefaultCompany.PoSuiShiJie, workingTag: 12.693
+10-08 14:48:51.075  4215  4215 I Typeface: Preloading /system/fonts/Roboto-Regular.ttf
+10-08 14:48:51.117  4215  4215 V GraphicsEnvironment: ANGLE Developer option for 'com.DefaultCompany.PoSuiShiJie' set to: 'default'
+10-08 14:48:51.117  4215  4215 V GraphicsEnvironment: ANGLE GameManagerService for com.DefaultCompany.PoSuiShiJie: false
+10-08 14:48:51.117  4215  4215 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-08 14:48:51.119  4215  4215 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-08 14:48:51.120  4215  4215 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-08 14:48:51.123  4215  4215 D AndroidRuntime: Shutting down VM
+10-08 14:48:51.124  4215  4215 E AndroidRuntime: FATAL EXCEPTION: main
+10-08 14:48:51.124  4215  4215 E AndroidRuntime: Process: com.DefaultCompany.PoSuiShiJie, PID: 4215
+10-08 14:48:51.124  4215  4215 E AndroidRuntime: java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity}: java.lang.ClassNotFoundException: Didn't find class "com.unity3d.player.UnityPlayerActivity" on path: DexPathList[[zip file "/data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/base.apk"],nativeLibraryDirectories=[/data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/lib/arm, /data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/base.apk!/lib/armeabi-v7a, /system/lib, /system/system_ext/lib, /system/vendor/lib]]
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3623)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3893)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:103)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2256)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.os.Handler.dispatchMessage(Handler.java:106)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.os.Looper.loopOnce(Looper.java:201)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.os.Looper.loop(Looper.java:288)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.ActivityThread.main(ActivityThread.java:8022)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at java.lang.reflect.Method.invoke(Native Method)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:555)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1091)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: Didn't find class "com.unity3d.player.UnityPlayerActivity" on path: DexPathList[[zip file "/data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/base.apk"],nativeLibraryDirectories=[/data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/lib/arm, /data/app/~~M6KuX3Cr4Rzay2nVaqJ1Ow==/com.DefaultCompany.PoSuiShiJie-ruZz0qJa61ne9Qtm4famhg==/base.apk!/lib/armeabi-v7a, /system/lib, /system/system_ext/lib, /system/vendor/lib]]
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:218)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.Instrumentation.newActivity(Instrumentation.java:1291)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3610)
+10-08 14:48:51.124  4215  4215 E AndroidRuntime:        ... 12 more
+10-08 14:48:51.126  1186  4237 I DropBoxManagerService: add tag=data_app_crash isTagEnabled=true flags=0x2
+10-08 14:48:51.126  1186  1204 W ActivityTaskManager:   Force finishing activity com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity
+10-08 14:48:51.128  1045  1104 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 8298496
+10-08 14:48:51.131  1186  1218 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.DROPBOX_ENTRY_ADDED flg=0x10 (has extras) } to com.netease.nemu_vapi_android.nemu/com.netease.nemu_vapi_android.receiver.DropboxReceiver
+10-08 14:48:51.132  1186  2315 W WindowManager: Failed looking up window session=Session{656698e 1372:u0a10010} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:5827 com.android.server.wm.WindowManagerService.removeWindow:2052 com.android.server.wm.Session.remove:218
+10-08 14:48:51.132  1186  2315 W InputManager-JNI: Input channel object 'EmbeddedWindow{ u0 Internal} (client)' was disposed without first being removed with the input manager!
+10-08 14:48:51.133  1186  1277 I InputReader: Device reconfigured: id=2, name='nemuVM Virtual Input', size 1080x1920, orientation 1, mode 1, display id 31
+10-08 14:48:51.144  1186  2440 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2064384
+10-08 14:48:51.151  1186  4242 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2064384
+10-08 14:48:51.152  1186  4242 D gralloc_x86: gralloc_alloc: Creating ashmem region of size 2064384
+10-08 14:48:51.258  1186  1210 W InputManager-JNI: Input channel object 'e50efdb Splash Screen com.DefaultCompany.PoSuiShiJie (client)' was disposed without first being removed with the input manager!
+10-08 14:48:51.442  1186  1209 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320 f}}
+10-08 14:48:51.461  1186  2125 W WindowManager: Failed looking up window session=Session{656698e 1372:u0a10010} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:5827 com.android.server.wm.WindowManagerService.relayoutWindow:2248 com.android.server.wm.Session.relayout:235
+10-08 14:48:51.464  1186  2315 W WindowManager: Failed looking up window session=Session{656698e 1372:u0a10010} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:5827 com.android.server.wm.WindowManagerService.removeWindow:2052 com.android.server.wm.Session.remove:218
+10-08 14:48:52.138  1186  1207 V InputMethodManager: b/117267690: Failed to get fallback IMM with expected displayId=31 actual IMM#displayId=0 view=android.widget.Button{9bdeb28 GFED..C.. ......I. 0,0-0,0 #1020019 android:id/button1}
+10-08 14:48:52.138  1186  1207 V InputMethodManager: b/117267690: Failed to get fallback IMM with expected displayId=31 actual IMM#displayId=0 view=android.widget.Button{c738041 GFED..C.. ......I. 0,0-0,0 #102001a android:id/button2}
+10-08 14:48:52.138  1186  1207 V InputMethodManager: b/117267690: Failed to get fallback IMM with expected displayId=31 actual IMM#displayId=0 view=android.widget.Button{18799e6 GFED..C.. ......I. 0,0-0,0 #102001b android:id/button3}
+10-08 14:48:52.613  1082  1082 I rild    : type=1400 audit(0.0:6002): avc: denied { call } for scontext=u:r:init:s0 tcontext=u:r:radio:s0 tclass=binder permissive=1
+10-08 14:48:52.613   953   953 I servicemanager: type=1400 audit(0.0:6003): avc: denied { transfer } for scontext=u:r:init:s0 tcontext=u:r:radio:s0 tclass=binder permissive=1
+10-08 14:48:52.862  1186  1218 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.DROPBOX_ENTRY_ADDED flg=0x10 (has extras) } to com.netease.nemu_vapi_android.nemu/com.netease.nemu_vapi_android.receiver.DropboxReceiver
+10-08 14:48:52.957  1186  1209 I system_server: Explicit concurrent copying GC freed 49267(2132KB) AllocSpace objects, 11(708KB) LOS objects, 49% free, 12MB/24MB, paused 21us,28us total 26.004ms
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call release.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call release.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call release.
+10-08 14:48:52.958  1186  1197 W System  : A resource failed to call close.
+10-08 14:48:53.847  1186  1704 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-08 14:48:55.275  1186  1204 W WindowManager:   Force finishing activity com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity
+10-08 14:48:55.276  1186  1204 D RecentTaskMonitor: onRecentTaskRemoved 320:Task=320
+10-08 14:48:55.276  1186  1204 E RecentTaskMonitor: failed to call send close intent!
+10-08 14:48:55.276  1186  1204 E ActivityTaskManager: [KeepAlive] TaskDisplayArea#onRootTaskRemoved called, diconnect display 31
+10-08 14:48:55.277  1186  2440 D OpenGLRenderer: endAllActiveAnimators on 0x7dabed505080 (RippleDrawable) with handle 0x7daafd59f160
+10-08 14:48:55.277  1045  1045 I SurfaceFlinger: onComposerHalHotplug(30, disconnected)
+10-08 14:48:55.273  3313  3313 I ate.networkdisk: type=1400 audit(0.0:6004): avc: denied { read } for scontext=u:r:untrusted_app:s0:c8,c256,c512,c768 tcontext=u:r:init:s0 tclass=unix_stream_socket permissive=1
+10-08 14:48:55.277  1045  1045 I SurfaceFlinger: Dispatching display hotplug event displayId=4619827045430321950, connected=0
+10-08 14:48:55.277  1045  1155 W EventThread: Failed dispatching Hotplug{displayId=4619827045430321950, disconnected} for Connection{0x73c32da24690, VSyncRequest::None}
+10-08 14:48:55.277  1045  1156 W EventThread: Failed dispatching Hotplug{displayId=4619827045430321950, disconnected} for Connection{0x73c32da23cd0, VSyncRequest::None}
+10-08 14:48:55.277  1045  1155 W EventThread: Failed dispatching Hotplug{displayId=4619827045430321950, disconnected} for Connection{0x73c32da26e50, VSyncRequest::None}
+10-08 14:48:55.277  1186  1204 W InputManager-JNI: Input channel object 'Letterbox_left_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} (client)' was disposed without first being removed with the input manager!
+10-08 14:48:55.278  1186  1204 W InputManager-JNI: Input channel object 'Letterbox_top_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} (client)' was disposed without first being removed with the input manager!
+10-08 14:48:55.278  1186  1204 W InputManager-JNI: Input channel object 'Letterbox_right_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} (client)' was disposed without first being removed with the input manager!
+10-08 14:48:55.278  1186  1204 W InputManager-JNI: Input channel object 'Letterbox_bottom_ActivityRecord{4c5c7 u0 com.DefaultCompany.PoSuiShiJie/com.unity3d.player.UnityPlayerActivity t320} (client)' was disposed without first being removed with the input manager!
+10-08 14:48:55.279  1186  1210 W ActivityTaskManager: Can't find TaskDisplayArea to determine support for multi window. Task id=320 attached=false
+10-08 14:48:55.279  1186  1210 W ActivityTaskManager: Can't find TaskDisplayArea to determine support for multi window. Task id=320 attached=false
+10-08 14:48:55.280  1186  1209 D RecentTaskMonitor: VAddressShellNotifier#notifyOpenTab :{"uri":"player\/tab","need_response":false,"params":{"id":"task:2","displayId":0,"userId":0,"name":"Mumu Launcher","originName":"Mumu Launcher","packageName":"com.mumu.launcher","launcher":true,"newTask":false,"icon":"iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAHOSURBVEiJ7ZTBatRAGMd\/mclacMCF7ta20pNPsFBEjQf7CB48CsUX8GDFd\/DiE3hp0ZsHMZrTQtiTgr34AuJhhT2IlsS1ktnk87BJmm2TdqnrrT8YSGa+\/L\/v+89M4IIF4+bjvxEDCXBl0cIuMASyfMSAWaS4aK0lCALp9\/vSbrcFkHyNENzwH6yLtdbi+76EYSgFxhght2sf4k+QfKyxTp1R+RAwvu9jjMHzvHJxNBoVMd8Oz2HXjC2DwUCstXKcJEmk0+kIIB8aOmii1pYmqnbNU\/kQyN69fyuPXizLr8ODUmhn92ptgjiOhYbT5RwTtwBBEGCM4eatGzx5uUIyGQPwfPsHl9w23b3PRDY7avdhjyUyut0uURQBtIAJzG7yz2pm785tnr5aK8UBHu8ul8+9a6tsbqyzubGOcqp1AvC7sKt6dtfyzF89z2srR3Pv+msm6eQUR2tZBcb5mEkwLt611mSS8ubLff7YCBHIMlAKtu6mtJSD64A6UXipU7Y91+3LUtjbgQfPoKUV37d7J2KsTWu\/Pe2iHQXpqbi7NE\/0LLUdWGvRriJLodgC5U47sdbWCjXN1yU8YPojO+9ovAcFlxvm52V8dsgFFf4Csc8O5d4NxXMAAAAASUVORK5CYII=","canChangeAppOrientation":false,"pid":1422,"uid":1000,"action":"open"}}
+10-08 14:48:55.281  1186  1209 D RecentTaskMonitor: VAddressShellNotifier#notifyCloseTab :{"uri":"player\/tab","need_response":false,"params":{"id":"task:320","action":"close"}}
+10-08 14:48:55.282  1186  1207 W InputManager-JNI: Input channel object '7f9b799 Application Error: com.DefaultCompany.PoSuiShiJie (client)' was disposed without first being removed with the input manager!
+10-08 14:48:55.283  1186  1209 I DisplayDeviceRepository: Display device removed: DisplayDeviceInfo{"HDMI 屏幕": uniqueId="local:4619827045430321950", 1080 x 1920, modeId 61, defaultModeId 61, supportedModes [{id=61, width=1080, height=1920, fps=60.000004, alternativeRefreshRates=[15.000001]}, {id=62, width=1080, height=1920, fps=15.000001, alternativeRefreshRates=[60.000004]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 320, 320.0 x 320.0 dpi, appVsyncOff 1000000, presDeadline 16666666, touch EXTERNAL, rotation 0, type EXTERNAL, address {port=30, model=0x401cec388e9de3, physicalDisplayId=4619827045430321950}, deviceProductInfo DeviceProductInfo{name=mumuscreen030, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.5, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_OWN_CONTENT_ONLY}
+10-08 14:48:55.283  1186  1204 I ActivityManager: Killing 4215:com.DefaultCompany.PoSuiShiJie/u0a16 (adj 900): crash
+10-08 14:48:55.284  1186  1209 I LogicalDisplayMapper: Removing display: 31
+10-08 14:48:55.288  1186  1209 I InputManager-JNI: Viewport [0] to add: local:4619827820427265280, isActive: true
+10-08 14:48:55.288  1186  1209 I InputManager-JNI: Viewport [1] to add: local:4619827016651670559, isActive: true
+10-08 14:48:55.289  1186  1277 I InputReader: Reconfiguring input devices, changes=DISPLAY_INFO |
+10-08 14:48:55.289  1186  1277 I InputReader: Device reconfigured: id=2, name='nemuVM Virtual Input', size 1080x1920, orientation 0, mode 1, display id 0
+10-08 14:48:55.289  1186  1220 I libprocessgroup: Successfully killed process cgroup uid 10016 pid 4215 in 5ms
+10-08 14:48:55.292  1186  1276 I InputDispatcher: Erasing monitor PointerEventDispatcher31 (server) on display 31, pid=1186
+10-08 14:48:55.308  1186  2315 V ActivityManager: Got obituary of 4215:com.DefaultCompany.PoSuiShiJie
+10-08 14:48:55.306  1025  1025 I main    : type=1400 audit(0.0:6005): avc: denied { sendto } for path="/dev/socket/logdw" scontext=u:r:zygote:s0 tcontext=u:r:init:s0 tclass=unix_dgram_socket permissive=1
+10-08 14:48:55.308  1025  1025 I Zygote  : Process 4215 exited due to signal 9 (Killed)
+10-08 14:48:55.440  1343  1356 W System  : A resource failed to call close.
+10-08 14:48:58.780  1186  1704 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-08 14:49:07.480  1035  1035 I health@2.0-serv: type=1400 audit(0.0:6006): avc: denied { read } for name="present" dev="sysfs" ino=4779 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-08 14:49:07.480  1035  1035 I health@2.0-serv: type=1400 audit(0.0:6007): avc: denied { open } for path="/sys/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/PNP0C0A:00/power_supply/BAT0/present" dev="sysfs" ino=4779 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-08 14:49:10.463  1422  1422 I RenderThread: type=1400 audit(0.0:6008): avc: denied { ioctl } for path="/dev/vaddress" dev="tmpfs" ino=10044 ioctlcmd=0x4c19 scontext=u:r:system_app:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-08 14:49:12.570  1186  1186 I WifiHandlerThre: type=1400 audit(0.0:6009): avc: denied { call } for scontext=u:r:system_server:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-08 14:49:12.570  1186  1186 I WifiHandlerThre: type=1400 audit(0.0:6010): avc: denied { sendto } for path="/dev/socket/statsdw" scontext=u:r:system_server:s0 tcontext=u:r:init:s0 tclass=unix_dgram_socket permissive=1
+10-08 14:49:12.640  1403  1403 I IpClient.wlan0: type=1400 audit(0.0:6011): avc: denied { call } for scontext=u:r:network_stack:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-08 14:49:15.283  1040  1040 I sensors@2.1-ser: type=1400 audit(0.0:6012): avc: denied { ioctl } for path="/dev/vaddress" dev="tmpfs" ino=10044 ioctlcmd=0x4c19 scontext=u:r:init:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-08 14:49:17.869  1186  1209 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+10-08 14:49:33.336  1035  1035 I health@2.0-serv: type=1400 audit(0.0:6013): avc: denied { read } for scontext=u:r:init:s0 tcontext=u:r:init:s0 tclass=netlink_kobject_uevent_socket permissive=1
+10-08 14:50:09.696  1186  1186 I WifiHandlerThre: type=1400 audit(0.0:6014): avc: denied { map_read } for scontext=u:r:system_server:s0 tcontext=u:r:init:s0 tclass=bpf permissive=1
+10-08 14:50:09.696  1035  1035 I health@2.0-serv: type=1400 audit(0.0:6015): avc: denied { read } for scontext=u:r:init:s0 tcontext=u:r:init:s0 tclass=netlink_kobject_uevent_socket permissive=1
+10-08 14:50:10.297  1036  1036 E android.hardware.power.stats@1.0-service-mock: Failed to getEnergyData
