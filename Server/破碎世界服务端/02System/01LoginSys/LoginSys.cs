@@ -126,6 +126,7 @@ public class LoginSys
         }
         else
         {
+            //TODO校验玩家名称不可重复
             //累加天赋数据
             List<int> TalentIDList = reqCreateGame.TalentIDList;
             for (int i = 0; i < TalentIDList.Count; i++)
@@ -144,6 +145,7 @@ public class LoginSys
             //累加进玩家属性
             personCfg = GetPerson(personCfg, talentCount);
             //更新玩家数据
+
             playerData.name = reqCreateGame.name;
             playerData.TalentID = TalentIDList;
             playerData.level = 1;

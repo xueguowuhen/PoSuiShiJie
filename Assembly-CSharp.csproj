@@ -108,11 +108,12 @@
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityBase.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\SkillMgr.cs" />
-    <Compile Include="Assets\Scripts\Common\WindowRoot.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\WindowRoot.cs" />
     <Compile Include="Assets\Scripts\Service\TimerSvc.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\FriendsItem.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateMove.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Controller\Controller.cs" />
-    <Compile Include="Assets\Scripts\Common\SystemRoot.cs" />
+    <Compile Include="Assets\Scripts\System\SystemRoot.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\TalentItemWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\ShopWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateIdle.cs" />
@@ -133,7 +134,7 @@
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIItem\FriendsItem.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\WindowItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />

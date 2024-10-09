@@ -275,8 +275,11 @@ namespace CommonNet
     public class FriendItem
     {
         public int id;
+        public string type;
         public string name;
         public int level;
+        public List<int> FriendList;//好友id列表
+        public List<int> AddFriendList;//好友id申请列表
     }
     public class TaskList
     {
@@ -343,7 +346,7 @@ namespace CommonNet
         FriendNameError = 1017,//该用户不存在
         FriendRequestExistError = 1021,//已经申请过该好友
         FriendExistError = 1022,//好友已存在
-        FriendRequestRecvError = 1023,//接收好友申请失败
+        FriendRequestError= 1023,//好友申请失败
         FriendRequestRecvLimitError = 1024,//接收好友申请数量达到上限
         FriendRequestRecvExistError = 1025,//已经收到过该好友申请
     }

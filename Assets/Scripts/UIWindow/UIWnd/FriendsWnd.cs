@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class FriendsWnd : WindowRoot
 {
@@ -18,11 +19,11 @@ public class FriendsWnd : WindowRoot
     public Button AddBtn;
     public Button FriendsListBtn;
     public GameObject FriendObj;
-    private GameObject FriendContent;
+    public GameObject FriendContent;
     public GameObject AddObj;
-    private GameObject AddContent;
+    public GameObject AddContent;
     public GameObject FriendsListObj;
-    private GameObject FriendsListContent;
+    public GameObject FriendsListContent;
     public GameObject pointer;
     public InputField FriendName;
     public Button SearchBtn;
@@ -37,17 +38,15 @@ public class FriendsWnd : WindowRoot
     {
         base.SetGameObject();
         AddListener(FriendBtn, ClickFriend);
-        FriendContent = FriendObj.transform.Find("Content").gameObject;
+
         AddListener(AddBtn, ClickAdd);
-        AddContent = AddObj.transform.Find("Content").gameObject;
         AddListener(FriendsListBtn, ClickFriendsList);
-        FriendsListContent = FriendsListObj.transform.Find("Content").gameObject;
         AddListener(SearchBtn, ClickSearch);
         AddListener(CloseBtn, ClickClose);
         InitFriendsPool();
     }
     /// <summary>
-    /// 初始化商品池
+    /// 初始化好友池
     /// </summary>
     private void InitFriendsPool()
     {
@@ -70,22 +69,44 @@ public class FriendsWnd : WindowRoot
         {
             for (int i = 0; i < friendList.Count; i++)
             {
-                GameObject obj = pool.GetObject();
-                obj.transform.SetParent(FriendContent.transform, false);
-                obj.transform.localScale = Vector3.one;
-                //obj.GetComponent<FriendItem>().Init(friendList[i]);
+                FriendsItem item = CreateFriends(friendList[i], FriendContent);
+                item.SetFriend();
             }
         }
     }
     private void ClickAdd()
     {
-        SetWindowVisibility(AddObj,AddBtn.transform);
+        SetWindowVisibility(AddObj, AddBtn.transform);
         ClearFriend(AddContent);
     }
     private void ClickFriendsList()
     {
-        SetWindowVisibility(FriendsListObj,FriendsListBtn.transform);
+        SetWindowVisibility(FriendsListObj, FriendsListBtn.transform);
         ClearFriend(FriendsListContent);
+        //获取好友列表
+        List<FriendItem> friendList = GameRoot.Instance.PlayerData.FriendList;
+        if (friendList != null && friendList.Count > 0)
+        {
+            for (int i = 0; i < friendList.Count; i++)
+            {
+                FriendsItem item = CreateFriends(friendList[i], FriendsListContent);
+                item.SetFriendsList();
+            }
+        }
+    }
+    public void AddFriend(FriendItem friendItem)
+    {
+        FriendsItem item = CreateFriends(friendItem,AddContent);
+        item.SetSearch(ClearItem);
+    }
+    private FriendsItem CreateFriends(FriendItem friendItem,GameObject game)
+    {
+        GameObject obj = pool.GetObject();
+        obj.transform.SetParent(game.transform, false);
+        obj.transform.localScale = Vector3.one;
+        FriendsItem item = obj.GetComponent<FriendsItem>();
+        item.SetUI(friendItem);
+        return item;
     }
     /// <summary>
     /// 点击搜索按钮
@@ -126,10 +147,14 @@ public class FriendsWnd : WindowRoot
             }
         }
     }
+    private void ClearItem(GameObject Obj)
+    {
+        pool.ReturnObject(Obj);
+    }
     /// <summary>
     /// 切换窗口显示
     /// </summary>
-    private void SetWindowVisibility(GameObject targetWindow,Transform targetPointer)
+    private void SetWindowVisibility(GameObject targetWindow, Transform targetPointer)
     {
         FriendObj.SetActive(false);
         AddObj.SetActive(false);

@@ -53,6 +53,58 @@ public class FriendSys
         }
         else if (name == playerData.name)
         {
+            gameMsg.err = (int)Error.FriendMeError;//不能搜索自己
+        }
+        else
+        {
+            //查询该好友是否存在
+            FriendItem friendData = cacheSvc.GetPlayerDataByFriendName(name);
+            if (friendData == null)
+            {
+                gameMsg.err = (int)Error.FriendNameError;//该用户不存在
+            }
+            else
+            {
+                //// 检查在添加列表中的存在
+                //FriendItem addFriendItem = playerData.AddFriendList.Find(f => f.name == name);
+                //if (addFriendItem != null)
+                //{
+                //    if (friendData.id == addFriendItem.id)
+                //    {
+                //        gameMsg.err = (int)Error.FriendRequestExistError; // 该好友已经在添加列表中
+                //    }
+                //}
+                //else
+                //{
+                gameMsg.rspSearchFriend = new RspSearchFriend()
+                {
+                    Friend = friendData,
+                };
+                //}
+            }
+        }
+        pack.session.SendMsg(gameMsg);
+
+    }
+    /// <summary>
+    /// 发送好友申请
+    /// </summary>
+    /// <param name="pack"></param>
+    public void ReqAddFriend(MsgPack pack)
+    {
+        ReqAddFriend reqAddFriend = pack.gameMsg.reqAddFriend;
+        PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.RspAddFriend,
+        };
+        string name = reqAddFriend.name;
+        if (string.IsNullOrEmpty(name))
+        {
+            gameMsg.err = (int)Error.NotFriendError;//无效的好友名
+        }
+        else if (name == playerData.name)
+        {
             gameMsg.err = (int)Error.FriendMeError;//不能添加自己为好友
         }
         else
@@ -63,29 +115,47 @@ public class FriendSys
             {
                 gameMsg.err = (int)Error.FriendNameError;//该用户不存在
             }
-            if (friendData.id == playerData.FriendList.Find(f => f.name == name).id)
-            {
-                gameMsg.err = (int)Error.FriendExistError;//该好友已经存在
-            }
-            else if (friendData.id == playerData.AddFriendList.Find(f => f.name == name).id)
-            {
-                gameMsg.err = (int)Error.FriendRequestExistError;//该好友已经在添加列表中
-            }
             else
             {
-                gameMsg.rspSearchFriend = new RspSearchFriend()
+                PlayerData targetPlayerData = cacheSvc.GetPlayerData(name);
+                #region 该用户在线中
+                if (targetPlayerData != null)
                 {
-                    Friend = friendData,
-                };
+                    //该好友的申请列表中存在自己
+                    FriendItem addFriendItem = targetPlayerData.AddFriendList.Find(f => f.name == playerData.name);
+                    if (addFriendItem != null)
+                    {
+                        gameMsg.err = (int)Error.FriendRequestExistError; // 该好友已经在申请列表中
+                    }
+                    else
+                    {
+                        //添加到申请列表
+                        targetPlayerData.AddFriendList.Add(new FriendItem()
+                        {
+                            id = playerData.id,
+                            name = playerData.name,
+                            type = playerData.type.ToString(),
+                            level = playerData.level,
+                        });
+                        if (!cacheSvc.UpdatePlayerData(targetPlayerData))
+                        {
+                            gameMsg.err = (int)Error.FriendRequestError; //好友申请失败
+                        }
+                        gameMsg.rspAddFriend = new RspAddFriend()
+                        {
+                            isSucc = true,
+                        };
+                    }
+                }
+                #endregion
+                else
+                {
+                    //向好友发起添加申请
+                    friendData.AddFriendList.Add(playerData.id);
 
+                }
             }
         }
-        pack.session.SendMsg(gameMsg);
-
-    }
-    public void ReqAddFriend(MsgPack pack)
-    {
-
     }
     public void ReqDelFriend(MsgPack pack)
     {

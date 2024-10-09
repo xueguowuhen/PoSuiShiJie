@@ -73,6 +73,28 @@ public class CacheSvc
     {
         return dBMgr.GetPlayerDataByFriendName(friendName);
     }
+    /// <summary>
+    /// 根据id查询在线玩家
+    /// </summary>
+    /// <param name="acct"></param>
+    /// <param name="friendName"></param>
+    /// <returns></returns>
+    public PlayerData GetPlayerData(string name)
+    {
+        foreach (PlayerData playerData in onLineSessionDic.Values)
+        {
+            if (playerData.name == name)
+            {
+                return playerData;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 根据id查询玩家
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <returns></returns>
     public PlayerData GetPlayerData(int playerId)
     {
         foreach (PlayerData playerData in onLineSessionDic.Values)
@@ -145,5 +167,9 @@ public class CacheSvc
     public bool UpdatePlayerData(PlayerData playerData)
     {
         return dBMgr.UpdatePlayerData(playerData);
+    }
+    public bool UpdateFriend(FriendItem friendItem)
+    {
+        return dBMgr.UpdateFriend(friendItem);
     }
 }

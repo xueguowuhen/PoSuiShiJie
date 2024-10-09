@@ -113,7 +113,7 @@ public class BagWnd : WindowRoot
     private void FillBagItem(int currentCount)
     {
         int itemsToAdd = 20 - currentCount; // 计算需要补充的数量
-        for(int i = 0; i < itemsToAdd; i++)
+        for (int i = 0; i < itemsToAdd; i++)
         {
             // 假设 CreateItem 支持批量创建
             CreateNoneItem();
@@ -156,11 +156,14 @@ public class BagWnd : WindowRoot
         }
         else
         {
-            // 如果没有符合条件的物品，遍历全部物品
-            foreach (var item in allDic.Keys)
+            if (itemType == ItemType.all)
             {
-                CreateItem(item, allDic[item]);
-                count++;
+                // 如果没有符合条件的物品，遍历全部物品
+                foreach (var item in allDic.Keys)
+                {
+                    CreateItem(item, allDic[item]);
+                    count++;
+                }
             }
         }
         FillBagItem(count);

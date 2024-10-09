@@ -213,6 +213,7 @@ internal class DBMgr
                         FriendList.Add(new FriendItem
                         {
                             id = reader.GetInt32("id"),
+                            type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
                         });
@@ -246,8 +247,13 @@ internal class DBMgr
                         FriendItem friendItem = new FriendItem
                         {
                             id = reader.GetInt32("id"),
+                            type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
+                            FriendList = reader.GetString("Friend").Split("|")
+                            .Select(idString => int.TryParse(idString, out int id) ? id : 0).ToList(),
+                            AddFriendList = reader.GetString("AddFriend").Split("|")
+                            .Select(idString => int.TryParse(idString, out int id) ? id : 0).ToList(),
                         };
                         return friendItem;
                     }
@@ -284,6 +290,36 @@ internal class DBMgr
             catch (Exception ex)
             {
                 GameCommon.Log("RegistAcct PlayeData Error:" + ex, ComLogType.Error);
+                return false;
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 更新好友数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
+    public bool UpdateFriend(FriendItem friendItem)
+    {
+        using (var conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                "update account set Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
+                cmd.Parameters.AddWithValue("id", friendItem.id);
+                cmd.Parameters.AddWithValue("Friend", string.Join("|", friendItem.FriendList.Select(f => f)));
+                cmd.Parameters.AddWithValue("AddFriend", string.Join("|", friendItem.AddFriendList.Select(f => f)));
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                GameCommon.Log("Update PlayerData Error:" + e, ComLogType.Error);
                 return false;
             }
             return true;

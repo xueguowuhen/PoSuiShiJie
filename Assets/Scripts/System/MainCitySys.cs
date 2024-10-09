@@ -112,10 +112,11 @@ public class MainCitySys : SystemRoot
     public void RspSearchFriend(GameMsg msg)
     {
         GameRoot.AddTips("已找到该好友");
-
+        FriendItem friendItem = msg.rspSearchFriend.Friend;
+        FriendSearch(friendItem);
     }
     #endregion
-    #region RspAddFriend 接收任务信息
+    #region RspAddFriend 添加好友信息
     /// <summary>
     /// 添加好友信息
     /// </summary>
@@ -132,7 +133,7 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspFriendGift(GameMsg msg)
     {
- 
+
     }
     #endregion
     #region RspDelFriend 删除好友信息
@@ -290,6 +291,13 @@ public class MainCitySys : SystemRoot
     public void EnterFriendWnd()
     {
         friendsWnd.SetWndState();
+    }
+    public void FriendSearch(FriendItem item)
+    {
+        if (friendsWnd.gameObject.activeSelf)
+        {
+            friendsWnd.AddFriend(item);
+        }
     }
     public void ClickArena()
     {
