@@ -119,7 +119,19 @@ public class CacheSvc
     }
     public ServerSession GetSessionByPlayerData(PlayerData playerData)
     {
+        if (onLineSessionDic.ContainsValue(playerData))
+        {
+            foreach (var session in onLineSessionDic)
+            {
+                if (session.Value == playerData)
+                {
+                    return session.Key;
+                }
+
+            }
+        }
         return null;
+
     }
     public List<PlayerData> GetPlayerData(PlayerData playerData)
     {

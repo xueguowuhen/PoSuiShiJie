@@ -64,7 +64,7 @@ public class FriendsItem : WindowItem
     }
 
     /// <summary>
-    /// 设置为搜索
+    /// 设置为申请
     /// </summary>
     public void SetFriendsList()
     {
@@ -76,12 +76,36 @@ public class FriendsItem : WindowItem
 
     private void ClickRefuse()
     {
-
+        ClickWithDelay(() =>
+        {
+            GameMsg gameMsg = new GameMsg()
+            {
+                cmd = (int)CMD.ReqAddFriend,
+                reqAddFriend = new ReqAddFriend()
+                {
+                    id = friendId,
+                    name = nameText.text,
+                }
+            };
+            NetSvc.instance.SendMsg(gameMsg);
+        });
     }
 
     private void ClickAgree()
     {
-
+        ClickWithDelay(() =>
+        {
+            GameMsg gameMsg = new GameMsg()
+            {
+                cmd = (int)CMD.ReqAddFriend,
+                reqAddFriend = new ReqAddFriend()
+                {
+                    id = friendId,
+                    name = nameText.text,
+                }
+            };
+            NetSvc.instance.SendMsg(gameMsg);
+        });
     }
     /// <summary>
     /// 点击取消

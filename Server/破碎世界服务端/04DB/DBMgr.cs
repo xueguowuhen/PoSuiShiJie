@@ -201,7 +201,7 @@ internal class DBMgr
                 conn.Open();
 
                 // 创建查询字符串，使用IN来查询多个账号
-                string query = "SELECT id, name, level FROM account WHERE id IN (" +
+                string query = "SELECT id,type, name, level FROM account WHERE id IN (" +
                                string.Join(", ", accounts.Select(a => $"'{a}'")) + ")";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
