@@ -111,6 +111,61 @@ namespace CommonNet
         public int lv;
         public int exp;
     }
+    public class ReqSearchFriend//好友搜索
+    {
+        public string name;
+    }
+    public class RspSearchFriend
+    {
+        public FriendItem Friend;//好友数据
+    }
+    public class ReqAddFriend//好友申请
+    {
+        public int id;//对方id
+        public string name;//对方名字
+    }
+    public class RspAddFriend
+    {
+        public List<FriendItem> AddFriendList;//好友申请列表
+        public bool isSucc;//是否申请成功
+    }
+    public class ReqDelFriend//好友删除
+    {
+        public int id;//对方id
+        public string name;//对方名字
+    }
+    public class RspDelFriend
+    {
+        public FriendItem Friend;//好友数据
+    }
+    public class ReqFriendGift//好友赠送
+    {
+        public int id;//好友id
+        public int GoodsID;//物品id
+        public int count;//数量
+    }
+    public class RspFriendGift
+    {
+        public List<BagList> Bag;//背包数据
+        public float aura;//角色星晶
+        public float ruvia;//角色云晶
+        public float crystal; //角色彩晶
+    }
+    public class ReqFriendAddConfirm//好友添加确认
+    {
+        public int id;//对方id
+        public string name;//对方名字
+        public bool isAgree;//true同意，false拒绝
+    }
+    /// <summary>
+    /// 好友添加确认响应
+    /// </summary>
+    public class RspFriendAddConfirm
+    {
+        public bool isAgree;//同意或失败
+        public List<FriendItem> FriendList;//好友列表
+        public List<FriendItem> AddFriendList;//好友申请列表
+    }
     #endregion
     #region 心跳机制请求
     public class HeartbeatMessage
@@ -189,46 +244,7 @@ namespace CommonNet
         public int id;
         public int hp;
     }
-    public class ReqSearchFriend//好友搜索
-    {
-        public string name;
-    }
-    public class RspSearchFriend
-    {
-        public FriendItem Friend;//好友数据
-    }
-    public class ReqAddFriend//好友申请
-    {
-        public int id;//对方id
-        public string name;//对方名字
-    }
-    public class RspAddFriend
-    {
-        public List<FriendItem> AddFriendList;//好友申请列表
-        public bool isSucc;//是否申请成功
-    }
-    public class ReqDelFriend//好友删除
-    {
-        public int id;//对方id
-        public string name;//对方名字
-    }
-    public class RspDelFriend
-    {
-        public FriendItem Friend;//好友数据
-    }
-    public class ReqFriendGift//好友赠送
-    {
-        public int id;//好友id
-        public int GoodsID;//物品id
-        public int count;//数量
-    }
-    public class RspFriendGift
-    {
-        public List<BagList> Bag;//背包数据
-        public float aura;//角色星晶
-        public float ruvia;//角色云晶
-        public float crystal; //角色彩晶
-    }
+
     #endregion
     public class PlayerData
     {
@@ -347,7 +363,7 @@ namespace CommonNet
         FriendNameError = 1017,//该用户不存在
         FriendRequestExistError = 1021,//已经申请过该好友
         FriendExistError = 1022,//好友已存在
-        FriendRequestError= 1023,//好友申请失败
+        FriendRequestError = 1023,//好友申请失败
         FriendRequestRecvLimitError = 1024,//接收好友申请数量达到上限
         FriendRequestRecvExistError = 1025,//已经收到过该好友申请
     }
@@ -381,7 +397,7 @@ namespace CommonNet
     }
     public class IPCfg
     {
-        public const string srvIP = "192.168.1.108";
+        public const string srvIP = "192.168.43.134";
         public const int srvPort = 17666;
     }
 }

@@ -84,7 +84,7 @@ public class FriendsWnd : WindowRoot
         SetWindowVisibility(FriendsListObj, FriendsListBtn.transform);
         ClearFriend(FriendsListContent);
         //获取好友列表
-        List<FriendItem> friendList = GameRoot.Instance.PlayerData.FriendList;
+        List<FriendItem> friendList = GameRoot.Instance.PlayerData.AddFriendList;
         if (friendList != null && friendList.Count > 0)
         {
             for (int i = 0; i < friendList.Count; i++)

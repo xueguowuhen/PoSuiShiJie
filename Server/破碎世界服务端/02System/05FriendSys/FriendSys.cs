@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using 墨染服务端._01Service._01NetSvc;
 
 public class FriendSys
 {
@@ -158,12 +159,13 @@ public class FriendSys
                     {
                         rspAddFriend = new RspAddFriend
                         {
-                            isSucc = true,
+                            isSucc = false,
                             AddFriendList = targetPlayerData.AddFriendList,
                         
                         }
                     };
-                    cacheSvc.GetPlayerDataBySession(targetPlayerData);
+                    ServerSession session= cacheSvc.GetSessionByPlayerData(targetPlayerData);
+                    session.SendMsg(notifyMsg);
                     gameMsg.rspAddFriend = new RspAddFriend { isSucc = true };
                 }
                 else
