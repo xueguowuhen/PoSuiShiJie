@@ -130,7 +130,10 @@ public class MainCitySys : SystemRoot
         }
         else
         {
-            GameRoot.AddTips("好友申请发送失败");
+            PlayerData playerData = GameRoot.Instance.PlayerData;
+            playerData.AddFriendList = msg.rspAddFriend.AddFriendList;
+            
+            //GameRoot.AddTips("好友申请发送失败");
         }
 
     }
