@@ -150,7 +150,7 @@ internal class DBMgr
                                 //好友申请列表
                                 string[] AddFriend = reader.GetString("AddFriend").Split("|");
                                 AddFriendsToPlayerData(playerData.AddFriendList, AddFriend.ToList());
-                                
+
 
                             }//账号存在内容
                             else //存在账号，但没有创建角色
@@ -250,10 +250,8 @@ internal class DBMgr
                             type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
-                            FriendList = reader.GetString("Friend").Split("|")
-                            .Select(idString => int.TryParse(idString, out int id) ? id : 0).ToList(),
-                            AddFriendList = reader.GetString("AddFriend").Split("|")
-                            .Select(idString => int.TryParse(idString, out int id) ? id : 0).ToList(),
+                            FriendList = ParseFriendList(reader.GetString("Friend")),
+                            AddFriendList = ParseFriendList(reader.GetString("AddFriend")),
                         };
                         return friendItem;
                     }
@@ -269,6 +267,17 @@ internal class DBMgr
                 return null;
             }
         }
+    }
+    private List<int> ParseFriendList(string friendData)
+    {
+        if (string.IsNullOrEmpty(friendData))
+        {
+            return new List<int>(); // 返回空列表
+        }
+        return friendData.Split('|')
+                         .Select(idString => int.TryParse(idString, out int id) ? id : 0)
+                         .Where(id => id != 0) // 过滤掉无效值
+                         .ToList();
     }
 
     /// <summary>

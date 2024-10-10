@@ -204,6 +204,7 @@ namespace CommonNet
     }
     public class RspAddFriend
     {
+        public List<FriendItem> AddFriendList;//好友申请列表
         public bool isSucc;//是否申请成功
     }
     public class ReqDelFriend//好友删除

@@ -117,6 +117,10 @@ public class CacheSvc
             return null;
         }
     }
+    public ServerSession GetSessionByPlayerData(PlayerData playerData)
+    {
+        return null;
+    }
     public List<PlayerData> GetPlayerData(PlayerData playerData)
     {
         List<PlayerData> sessions = new List<PlayerData>();

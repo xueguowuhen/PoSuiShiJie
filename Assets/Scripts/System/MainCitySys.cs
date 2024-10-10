@@ -123,6 +123,15 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspAddFriend(GameMsg msg)
     {
+        bool isSuccess = msg.rspAddFriend.isSucc;
+        if (isSuccess)
+        {
+            GameRoot.AddTips("好友申请已发送");
+        }
+        else
+        {
+            GameRoot.AddTips("好友申请发送失败");
+        }
 
     }
     #endregion

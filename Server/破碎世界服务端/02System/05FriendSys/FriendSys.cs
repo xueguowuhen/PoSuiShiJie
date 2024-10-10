@@ -117,46 +117,83 @@ public class FriendSys
             }
             else
             {
-                PlayerData targetPlayerData = cacheSvc.GetPlayerData(name);
-                #region 该用户在线中
-                if (targetPlayerData != null)
+                ProcessFriendRequest(playerData, friendData, gameMsg);
+            }
+        }
+        pack.session.SendMsg(gameMsg);
+    }
+    /// <summary>
+    /// 处理好友申请
+    /// </summary>
+    /// <param name="playerData"></param>
+    /// <param name="friendData"></param>
+    /// <param name="gameMsg"></param>
+    private void ProcessFriendRequest(PlayerData playerData, FriendItem friendData, GameMsg gameMsg)
+    {
+        PlayerData targetPlayerData = cacheSvc.GetPlayerData(friendData.name);
+        bool isRequestPending = friendData.AddFriendList.Contains(playerData.id);//判断好友列表中是否存在该id
+
+        if (targetPlayerData != null) // 好友在线
+        {
+            if (isRequestPending)
+            {
+                gameMsg.err = (int)Error.FriendRequestExistError; // 该好友已经在申请列表中
+            }
+            else
+            {
+
+                // 添加到目标好友的申请列表
+                targetPlayerData.AddFriendList.Add(new FriendItem
                 {
-                    //该好友的申请列表中存在自己
-                    FriendItem addFriendItem = targetPlayerData.AddFriendList.Find(f => f.name == playerData.name);
-                    if (addFriendItem != null)
+                    id = playerData.id,
+                    name = playerData.name,
+                    type = playerData.type.ToString(),
+                    level = playerData.level,
+                });
+
+                if (cacheSvc.UpdatePlayerData(targetPlayerData))
+                {
+                    // 向对方传输更新后的数据
+                    GameMsg notifyMsg = new GameMsg
                     {
-                        gameMsg.err = (int)Error.FriendRequestExistError; // 该好友已经在申请列表中
-                    }
-                    else
-                    {
-                        //添加到申请列表
-                        targetPlayerData.AddFriendList.Add(new FriendItem()
-                        {
-                            id = playerData.id,
-                            name = playerData.name,
-                            type = playerData.type.ToString(),
-                            level = playerData.level,
-                        });
-                        if (!cacheSvc.UpdatePlayerData(targetPlayerData))
-                        {
-                            gameMsg.err = (int)Error.FriendRequestError; //好友申请失败
-                        }
-                        gameMsg.rspAddFriend = new RspAddFriend()
+                        rspAddFriend = new RspAddFriend
                         {
                             isSucc = true,
-                        };
-                    }
+                            AddFriendList = targetPlayerData.AddFriendList,
+                        
+                        }
+                    };
+                    cacheSvc.GetPlayerDataBySession(targetPlayerData);
+                    gameMsg.rspAddFriend = new RspAddFriend { isSucc = true };
                 }
-                #endregion
                 else
                 {
-                    //向好友发起添加申请
-                    friendData.AddFriendList.Add(playerData.id);
-
+                    gameMsg.err = (int)Error.FriendRequestError; // 好友申请失败
                 }
             }
         }
+        else // 好友离线
+        {
+            if (!isRequestPending)
+            {
+                friendData.AddFriendList.Add(playerData.id);
+
+                if (!cacheSvc.UpdateFriend(friendData))
+                {
+                    gameMsg.err = (int)Error.FriendRequestError; // 好友申请失败
+                }
+                else
+                {
+                    gameMsg.rspAddFriend = new RspAddFriend { isSucc = true };
+                }
+            }
+            else
+            {
+                gameMsg.err = (int)Error.FriendRequestExistError; // 该好友已经在申请列表中
+            }
+        }
     }
+
     public void ReqDelFriend(MsgPack pack)
     {
 
