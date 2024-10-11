@@ -9,6 +9,7 @@ using CommonNet;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 public class FriendsWnd : WindowRoot
@@ -26,7 +27,9 @@ public class FriendsWnd : WindowRoot
     public InputField FriendName;
     public Button SearchBtn;
     public Button CloseBtn;
+    public FriendsTipWnd friendsTipWnd;
     private GameObjectPool pool;
+    private bool IsSearch = false;
     protected override void InitWnd()
     {
         base.InitWnd();
@@ -42,6 +45,7 @@ public class FriendsWnd : WindowRoot
         AddListener(SearchBtn, ClickSearch);
         AddListener(CloseBtn, ClickClose);
         InitFriendsPool();
+        friendsTipWnd.SetWndState(false);
     }
     /// <summary>
     /// 初始化好友池
@@ -57,7 +61,7 @@ public class FriendsWnd : WindowRoot
         pool.cullDelay = 2;
         pool.Init();
     }
-    private void ClickFriend()
+    public void ClickFriend()
     {
         SetWindowVisibility(FriendObj, FriendBtn.transform);
         ClearFriend(FriendContent);//清空面板
@@ -68,7 +72,7 @@ public class FriendsWnd : WindowRoot
             for (int i = 0; i < friendList.Count; i++)
             {
                 FriendsItem item = CreateFriends(friendList[i], FriendContent);
-                item.SetFriend();
+                item.SetFriend(friendsTipWnd);
             }
         }
     }
@@ -94,10 +98,14 @@ public class FriendsWnd : WindowRoot
     }
     public void AddFriend(FriendItem friendItem)
     {
-        FriendsItem item = CreateFriends(friendItem,AddContent);
-        item.SetSearch(ClearItem);
+        ClearFriend(AddContent);
+        FriendsItem item = CreateFriends(friendItem, AddContent);
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        bool isFriend = playerData.FriendList.Any(f => f.id == friendItem.id);
+        item.SetSearch(ClearItem, isFriend);
+
     }
-    private FriendsItem CreateFriends(FriendItem friendItem,GameObject game)
+    private FriendsItem CreateFriends(FriendItem friendItem, GameObject game)
     {
         GameObject obj = pool.GetObject();
         obj.transform.SetParent(game.transform, false);
@@ -111,26 +119,34 @@ public class FriendsWnd : WindowRoot
     /// </summary>
     private void ClickSearch()
     {
-        ClickWithDelay(() =>
+        if (IsSearch)
         {
-            string name = FriendName.text;
-            if (string.IsNullOrEmpty(name))
+            GameRoot.AddTips("请稍等，操作频率过快。");
+            return;
+        }
+
+        string name = FriendName.text;
+        if (string.IsNullOrEmpty(name))
+        {
+            Debug.Log("请输入好友名称");
+        }
+        else
+        {
+            GameMsg gameMsg = new GameMsg
             {
-                Debug.Log("请输入好友名称");
-            }
-            else
-            {
-                GameMsg gameMsg = new GameMsg
+                cmd = (int)CMD.ReqSearchFriend,
+                reqSearchFriend = new ReqSearchFriend
                 {
-                    cmd = (int)CMD.ReqSearchFriend,
-                    reqSearchFriend = new ReqSearchFriend
-                    {
-                        name = name
-                    }
-                };
-                netSvc.SendMsg(gameMsg);
-            }
-        });
+                    name = name
+                }
+            };
+            netSvc.SendMsg(gameMsg);
+        }
+        IsSearch = true;
+        TimerSvc.Instance.AddTimeTask((tid) =>
+        {
+            IsSearch = false;
+        }, 2f);
     }
     /// <summary>
     /// 清空面板

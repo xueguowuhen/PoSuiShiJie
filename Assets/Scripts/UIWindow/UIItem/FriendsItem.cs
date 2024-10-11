@@ -11,7 +11,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class FriendsItem : WindowItem
 {
     public Image headImage;
@@ -25,6 +24,9 @@ public class FriendsItem : WindowItem
     private Action<GameObject> CancelAction;
     private float lastClickTime = 0f; // 上一次点击的时间
     private float clickInterval = 2f; // 两次点击的间隔时间
+    private bool IsDel = false;
+    private bool IsAdd = false;
+    private FriendsTipWnd friendsTipWnd;
     public void SetUI(FriendItem info)
     {
         friendId = info.id;
@@ -35,29 +37,65 @@ public class FriendsItem : WindowItem
     /// <summary>
     /// 设置为好友
     /// </summary>
-    public void SetFriend()
+    public void SetFriend(FriendsTipWnd friendsTipWnd)
     {
+        this.friendsTipWnd = friendsTipWnd;
         AddListener(OneBtn, ClickGift);
         OneText.text = "赠送彩晶";
         TwoText.text = "删除好友";
         AddListener(TwoBtn, ClickDel);
     }
-
+    /// <summary>
+    /// 删除好友
+    /// </summary>
     private void ClickDel()
     {
+        if (IsDel)
+        {
+            GameRoot.AddTips("请稍等，操作频率过快。");
+            return;
+        }
+
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.ReqDelFriend,
+            reqDelFriend = new ReqDelFriend()
+            {
+                id = friendId,
+                name = nameText.text,
+            }
+        };
+        NetSvc.instance.SendMsg(gameMsg);
+        IsDel = true;
+        TimerSvc.Instance.AddTimeTask((tid) =>
+        {
+            IsDel = false;
+        }, 2f);
 
     }
-
+    /// <summary>
+    /// 赠送彩晶
+    /// </summary>
     private void ClickGift()
     {
 
+        friendsTipWnd.SetWndState();
+        friendsTipWnd.ShowWnd(friendId, nameText.text, BuyType.crystal);
     }
 
     /// <summary>
     /// 设置为搜索
     /// </summary>
-    public void SetSearch(Action<GameObject> CancelAction)
+    public void SetSearch(Action<GameObject> CancelAction, bool isSelf = false)
     {
+        if (isSelf)
+        {
+            OneBtn.interactable = false;
+        }
+        else
+        {
+            OneBtn.interactable = true;
+        }
         AddListener(OneBtn, ClickAdd);
         OneText.text = "添加好友";
         TwoText.text = "取消";
@@ -135,19 +173,27 @@ public class FriendsItem : WindowItem
     /// </summary>
     private void ClickAdd()
     {
-        ClickWithDelay(() =>
+        if (IsAdd)
         {
-            GameMsg gameMsg = new GameMsg()
+            GameRoot.AddTips("请稍等，操作频率过快。");
+            return;
+        }
+
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.ReqAddFriend,
+            reqAddFriend = new ReqAddFriend()
             {
-                cmd = (int)CMD.ReqAddFriend,
-                reqAddFriend = new ReqAddFriend()
-                {
-                    id = friendId,
-                    name = nameText.text,
-                }
-            };
-            NetSvc.instance.SendMsg(gameMsg);
-        });
+                id = friendId,
+                name = nameText.text,
+            }
+        };
+        NetSvc.instance.SendMsg(gameMsg);
+        IsAdd = true;
+        TimerSvc.Instance.AddTimeTask((tid) =>
+        {
+            IsAdd = false;
+        }, 2f);
     }
 
 
