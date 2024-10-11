@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="40001">
+		<mName>血药瓶</mName>
+		<mInfo>回血的药</mInfo>
+		<Price>100</Price>
+		<type>consume</type>
+		<quantity>1</quantity>
+		<Img>xueyaoping</Img>
+	</item>
+	<item ID="40002">
+		<mName>豪华礼物</mName>
+		<mInfo>使用后获得很多道具</mInfo>
+		<Price>200</Price>
+		<type>consume</type>
+		<quantity>4</quantity>
+		<Img>haohualiwu</Img>
+	</item>
+	<item ID="40003">
+		<mName>珍稀礼物</mName>
+		<mInfo>使用后获得一些道具</mInfo>
+		<Price>200</Price>
+		<type>consume</type>
+		<quantity>1</quantity>
+		<Img>zhenxiliwu</Img>
+	</item>
+	<item ID="40004">
+		<mName>火焰剑</mName>
+		<mInfo>有火焰的剑</mInfo>
+		<Price>1000</Price>
+		<type>equip</type>
+		<quantity>1</quantity>
+		<Img>weapon_2</Img>
+	</item>
+	<item ID="40005">
+		<mName>饮血剑</mName>
+		<mInfo>有血光的剑</mInfo>
+		<Price>1000</Price>
+		<type>equip</type>
+		<quantity>2</quantity>
+		<Img>weapon_1</Img>
+	</item>
+	<item ID="40006">
+		<mName>木板</mName>
+		<mInfo>低级强化材料</mInfo>
+		<Price>50</Price>
+		<type>material</type>
+		<quantity>5</quantity>
+		<Img>muban</Img>
+	</item>
+	<item ID="40007">
+		<mName>九品灵芝</mName>
+		<mInfo>中级强化材料</mInfo>
+		<Price>51</Price>
+		<type>material</type>
+		<quantity>3</quantity>
+		<Img>lingzhi</Img>
+	</item>
+</root>
