@@ -23,6 +23,8 @@ public class FriendsItem : WindowItem
     public Text TwoText;
     private int friendId;
     private Action<GameObject> CancelAction;
+    private float lastClickTime = 0f; // 上一次点击的时间
+    private float clickInterval = 2f; // 两次点击的间隔时间
     public void SetUI(FriendItem info)
     {
         friendId = info.id;
@@ -73,39 +75,53 @@ public class FriendsItem : WindowItem
         TwoText.text = "拒绝";
         AddListener(TwoBtn, ClickRefuse);
     }
-
+    /// <summary>
+    /// 拒绝好友申请
+    /// </summary>
     private void ClickRefuse()
     {
-        ClickWithDelay(() =>
+        if (Time.time - lastClickTime < clickInterval) // 检查时间间隔
         {
-            GameMsg gameMsg = new GameMsg()
+            GameRoot.AddTips("请稍等，操作频率过快。");
+            return;
+        }
+
+        lastClickTime = Time.time; // 更新上一次点击时间
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.ReqFriendAddConfirm,
+            reqFriendAddConfirm = new ReqFriendAddConfirm()
             {
-                cmd = (int)CMD.ReqAddFriend,
-                reqAddFriend = new ReqAddFriend()
-                {
-                    id = friendId,
-                    name = nameText.text,
-                }
-            };
-            NetSvc.instance.SendMsg(gameMsg);
-        });
+                id = friendId,
+                name = nameText.text,
+                isAgree = false,
+            }
+        };
+        NetSvc.instance.SendMsg(gameMsg);
+
     }
 
     private void ClickAgree()
     {
-        ClickWithDelay(() =>
+        if (Time.time - lastClickTime < clickInterval) // 检查时间间隔
         {
-            GameMsg gameMsg = new GameMsg()
+            GameRoot.AddTips("请稍等，操作频率过快。");
+            return;
+        }
+
+        lastClickTime = Time.time; // 更新上一次点击时间
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.ReqFriendAddConfirm,
+            reqFriendAddConfirm = new ReqFriendAddConfirm()
             {
-                cmd = (int)CMD.ReqAddFriend,
-                reqAddFriend = new ReqAddFriend()
-                {
-                    id = friendId,
-                    name = nameText.text,
-                }
-            };
-            NetSvc.instance.SendMsg(gameMsg);
-        });
+                id = friendId,
+                name = nameText.text,
+                isAgree = true,
+            }
+        };
+        NetSvc.instance.SendMsg(gameMsg);
+
     }
     /// <summary>
     /// 点击取消

@@ -366,3 +366,5 @@ posui.apk
 bfg.jar
 Temp/
 Library/
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-Editor-firstpass.csproj
