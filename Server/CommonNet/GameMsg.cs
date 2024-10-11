@@ -127,6 +127,9 @@ namespace CommonNet
     }
     public class RspAddFriend
     {
+        public float aura;//角色星晶
+        public float ruvia;//角色云晶
+        public float crystal; //角色彩晶
         public List<FriendItem> FriendList;//好友列表
         public List<FriendItem> AddFriendList;//好友申请列表
         public bool isSucc;//是否申请成功
@@ -138,12 +141,13 @@ namespace CommonNet
     }
     public class RspDelFriend
     {
-        public FriendItem Friend;//好友数据
+        public List<FriendItem> FriendList;//好友列表
     }
     public class ReqFriendGift//好友赠送
     {
         public int id;//好友id
-        public int GoodsID;//物品id
+        public string name;//好友名字
+        public BuyType buyType;//赠送类型
         public int count;//数量
     }
     public class RspFriendGift
@@ -297,6 +301,9 @@ namespace CommonNet
         public string type;
         public string name;
         public int level;
+        public float aura;//角色星晶
+        public float ruvia;//角色云晶
+        public float crystal; //角色彩晶
         public List<int> FriendList;//好友id列表
         public List<int> AddFriendList;//好友id申请列表
     }
@@ -368,8 +375,10 @@ namespace CommonNet
         FriendRequestExistError = 1021,//已经申请过该好友
         FriendExistError = 1022,//好友已存在
         FriendRequestError = 1023,//好友申请失败
-        friendAddConfirmError = 1024,//好友拒绝失败
-        FriendRequestRecvExistError = 1025,//已经收到过该好友申请
+        FriendAddConfirmError = 1024,//好友拒绝失败
+        FriendDelError = 1025,//删除好友失败
+        FriendGiftError = 1026,//赠送失败
+        GoldNotEnoughError=1027,//货币不足
     }
 
     public enum BuyType
@@ -402,7 +411,7 @@ namespace CommonNet
     public class IPCfg
     {
 
-        public const string srvIP = "127.0.0.1";
+        public const string srvIP = "192.168.1.116";
 
         public const int srvPort = 17666;
     }

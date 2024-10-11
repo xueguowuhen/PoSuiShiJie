@@ -201,7 +201,7 @@ internal class DBMgr
                 conn.Open();
 
                 // 创建查询字符串，使用IN来查询多个账号
-                string query = "SELECT id,type, name, level FROM account WHERE id IN (" +
+                string query = "SELECT id,type, name, level,aura,ruvia,crystal FROM account WHERE id IN (" +
                                string.Join(", ", accounts.Select(a => $"'{a}'")) + ")";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -216,6 +216,9 @@ internal class DBMgr
                             type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
+                            aura = reader.GetInt32("aura"),
+                            ruvia = reader.GetInt32("ruvia"),
+                            crystal = reader.GetInt32("crystal"),
                         });
                     }
                 }
@@ -250,6 +253,9 @@ internal class DBMgr
                             type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
+                            aura = reader.GetInt32("aura"),
+                            ruvia = reader.GetInt32("ruvia"),
+                            crystal = reader.GetInt32("crystal"),
                             FriendList = ParseFriendList(reader.GetString("Friend")),
                             AddFriendList = ParseFriendList(reader.GetString("AddFriend")),
                         };
@@ -319,8 +325,11 @@ internal class DBMgr
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(
-                "update account set Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
+                "update account set Friend=@Friend,AddFriend=@AddFriend,aura=@aura,ruvia=@ruvia,crystal=@crystal where id=@id", conn);
                 cmd.Parameters.AddWithValue("id", friendItem.id);
+                cmd.Parameters.AddWithValue("aura", friendItem.aura);
+                cmd.Parameters.AddWithValue("ruvia", friendItem.ruvia);
+                cmd.Parameters.AddWithValue("crystal", friendItem.crystal);
                 cmd.Parameters.AddWithValue("Friend", string.Join("|", friendItem.FriendList.Select(f => f)));
                 cmd.Parameters.AddWithValue("AddFriend", string.Join("|", friendItem.AddFriendList.Select(f => f)));
                 cmd.ExecuteNonQuery();
