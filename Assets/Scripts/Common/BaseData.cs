@@ -192,10 +192,10 @@ public enum SkillType
 }
 public enum ItemType
 {
-    all,//全部
     consume,//消耗品
     equip,//武器,装备
     material,//材料(可堆叠)
+    all,//全部
 }
 public enum EnemyType
 {
