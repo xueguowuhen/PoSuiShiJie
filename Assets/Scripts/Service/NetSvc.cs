@@ -174,7 +174,6 @@ public class NetSvc : MonoBehaviour
             case CMD.RspDelFriend:
                 MainCitySys.instance.RspDelFriend(msg);
                 break;
-
             case CMD.RspCreatePlayer:
                 BattleSys.instance.RspCreatePlayer(msg);
                 break;

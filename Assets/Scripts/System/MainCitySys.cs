@@ -131,9 +131,13 @@ public class MainCitySys : SystemRoot
         else
         {
             PlayerData playerData = GameRoot.Instance.PlayerData;
+            playerData.aura = msg.rspAddFriend.aura;
+            playerData.ruvia = msg.rspAddFriend.ruvia;
+            playerData.crystal = msg.rspAddFriend.crystal;
             playerData.AddFriendList = msg.rspAddFriend.AddFriendList;
             playerData.FriendList = msg.rspAddFriend.FriendList;
-           // GameRoot.AddTips("好友申请发送失败");
+            // GameRoot.AddTips("好友申请发送失败");
+            RefreshUI();
         }
 
     }
@@ -145,7 +149,14 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspFriendGift(GameMsg msg)
     {
-
+        RspFriendGift rspFriendGift = msg.rspFriendGift;
+        GameRoot.AddTips("赠送成功");
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.Bag = rspFriendGift.Bag;
+        playerData.aura = rspFriendGift.aura;
+        playerData.ruvia = rspFriendGift.ruvia;
+        playerData.crystal = rspFriendGift.crystal;
+        RefreshUI();
     }
     #endregion
     #region RspFriendGift 好友申请确认
@@ -178,7 +189,11 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspDelFriend(GameMsg msg)
     {
-
+        RspDelFriend rspDelFriend = msg.rspDelFriend;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.FriendList = rspDelFriend.FriendList;
+        GameRoot.AddTips("删除好友成功");
+        ClickFriend();
     }
     #endregion
     private bool isNavGuide = false;
@@ -300,7 +315,10 @@ public class MainCitySys : SystemRoot
     }
     public void RefreshUI()
     {
-        mainCityWnd.RefreshUI();
+        if (mainCityWnd.gameObject.activeSelf)
+        {
+            mainCityWnd.RefreshUI();
+        }
     }
     /// <summary>
     /// 商店界面
@@ -329,9 +347,16 @@ public class MainCitySys : SystemRoot
     }
     public void FriendSearch(FriendItem item)
     {
-        if (friendsWnd.gameObject.activeSelf)
+        if (friendsWnd.AddContent.gameObject.activeSelf)
         {
             friendsWnd.AddFriend(item);
+        }
+    }
+    public void ClickFriend()
+    {
+        if (friendsWnd.FriendContent.gameObject.activeSelf)
+        {
+            friendsWnd.ClickFriend();
         }
     }
     /// <summary>
