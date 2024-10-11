@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	  <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
-    <BaseOutputPath>E:\xiangmmu\PoSuiShiJie\Assets\Scripts\Net</BaseOutputPath>
+    <BaseOutputPath>E:\UnityRes\GitHub\posuishijie\PoSuiShiJie-master\Assets\Scripts\Net</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

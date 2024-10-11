@@ -397,7 +397,7 @@ namespace CommonNet
     }
     public class IPCfg
     {
-        public const string srvIP = "192.168.43.134";
+        public const string srvIP = "127.0.0.1";
         public const int srvPort = 17666;
     }
 }
