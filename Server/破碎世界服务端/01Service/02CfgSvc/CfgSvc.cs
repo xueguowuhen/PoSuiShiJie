@@ -8,10 +8,12 @@
 using ComNet;
 using System.Resources;
 using System.Xml;
+using System.IO;
+using Org.BouncyCastle.Ocsp;
 
 public class CfgSvc
 {
-    private static CfgSvc instance = null;
+    private static CfgSvc instance = null!;
     public static CfgSvc Instance
     {
         get
@@ -23,7 +25,7 @@ public class CfgSvc
             return instance;
         }
     }
-    private string Path = "E:\\xiangmmu\\PoSuiShiJie\\Assets\\Resources\\ResCfg\\";
+    private string Path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName,"ResCfg/");
     public void Init()
     {
         InitCharaterCfg();
@@ -39,20 +41,20 @@ public class CfgSvc
         XmlDocument doc = new XmlDocument();
         doc.Load(Path+"person.xml");//读取文本数据
         //doc.Load(@"ResCfg/person.xml");//读取文本数据
-        XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+        XmlNodeList nodeList = doc.SelectSingleNode("root")!.ChildNodes;//选择根节点为root的节点
         for (int i = 0; i < nodeList.Count; i++)
         {
-            XmlElement ele = nodeList[i] as XmlElement;
+            XmlElement ele = (nodeList[i] as XmlElement)!;
             if (ele.GetAttributeNode("ID") == null)
             {
                 continue;
             }
-            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID")!.InnerText);//获取ID中的数据
             personCfg person = new personCfg()
             {
                 ID = ID,
             };
-            foreach (XmlElement node in nodeList[i].ChildNodes)
+            foreach (XmlElement node in nodeList[i]!.ChildNodes)
             {
                 switch (node.Name)
                 {
@@ -106,12 +108,12 @@ public class CfgSvc
     }
     public personCfg GetPersonCfgData(int id)
     {
-        personCfg personCfg = null;
-        if (personDic.TryGetValue(id, out personCfg))
+        personCfg personCfg = null!;
+        if (personDic.TryGetValue(id, out personCfg!))
         {
             return personCfg;
         }
-        return null;
+        return null!;
     }
     #endregion
     #region 加载天赋配置
@@ -121,20 +123,20 @@ public class CfgSvc
         XmlDocument doc = new XmlDocument();
         doc.Load(Path + "TalentList.xml");//读取文本数据
         //doc.Load(@"ResCfg/TalentList.xml");//读取文本数据
-        XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+        XmlNodeList nodeList = doc.SelectSingleNode(("root"))!.ChildNodes;//选择根节点为root的节点
         for (int i = 0; i < nodeList.Count; i++)
         {
-            XmlElement ele = nodeList[i] as XmlElement;
+            XmlElement ele = (nodeList[i] as XmlElement)!;
             if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
             {
                 continue;
             }
-            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID")!.InnerText);//获取ID中的数据
             TalentCfg talentCfg = new TalentCfg()
             {
                 ID = ID,
             };
-            foreach (XmlElement node in nodeList[i].ChildNodes)
+            foreach (XmlElement node in nodeList[i]!.ChildNodes)
             {
                 switch (node.Name)
                 {
@@ -185,12 +187,12 @@ public class CfgSvc
     }
     public TalentCfg GetTalentCfgData(int id)
     {
-        TalentCfg talentCfg = null;
-        if (TalentDic.TryGetValue(id, out talentCfg))
+        TalentCfg talentCfg = null!;
+        if (TalentDic.TryGetValue(id, out talentCfg!))
         {
             return talentCfg;
         }
-        return null;
+        return null!;
     }
     public int GetTalentCount()
     {
