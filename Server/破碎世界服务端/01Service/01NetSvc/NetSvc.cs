@@ -88,6 +88,9 @@ public class NetSvc
             case CMD.ReqAddFriend:
                 FriendSys.Instance.ReqAddFriend(pack);
                 break;
+            case CMD.ReqFriendAddConfirm:
+                FriendSys.Instance.ReqFriendAddConfirm(pack);
+                break;
             case CMD.ReqDelFriend:
                 FriendSys.Instance.ReqDelFriend(pack);
                 break;

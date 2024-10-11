@@ -168,6 +168,9 @@ public class NetSvc : MonoBehaviour
             case CMD.RspFriendGift:
                 MainCitySys.instance.RspFriendGift(msg);
                 break;
+            case CMD.RspFriendAddConfirm:
+                MainCitySys.instance.RspFriendAddConfirm(msg);
+                break;
             case CMD.RspDelFriend:
                 MainCitySys.instance.RspDelFriend(msg);
                 break;

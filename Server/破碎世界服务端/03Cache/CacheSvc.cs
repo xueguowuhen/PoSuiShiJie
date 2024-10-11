@@ -169,9 +169,9 @@ public class CacheSvc
     public void AcctOutLine(ServerSession server)
     {
 
-        //foreach(var session in onLineSessionDic)
+        //foreach (var session in onLineSessionDic)
         //{
-        //    if(server ==session.Key)
+        //    if (server == session.Key)
         //    {
         //        onLineSessionDic.Remove(server);
         //        break;

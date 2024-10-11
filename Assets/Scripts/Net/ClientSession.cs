@@ -27,7 +27,7 @@ public class ClientSession : TraSession<GameMsg>
     }
     protected override void OnReciveMsg(GameMsg msg)
     {
-        //GameCommon.Log("RcvPack CMD:" + ((CMD)msg.cmd).ToString());
+        GameCommon.Log("RcvPack CMD:" + ((CMD)msg.cmd).ToString());
         NetSvc.instance.AddMsgQue(msg);
     }
     protected override void OnDisConnected()

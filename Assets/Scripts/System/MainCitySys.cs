@@ -132,8 +132,8 @@ public class MainCitySys : SystemRoot
         {
             PlayerData playerData = GameRoot.Instance.PlayerData;
             playerData.AddFriendList = msg.rspAddFriend.AddFriendList;
-            
-            //GameRoot.AddTips("好友申请发送失败");
+            playerData.FriendList = msg.rspAddFriend.FriendList;
+           // GameRoot.AddTips("好友申请发送失败");
         }
 
     }
@@ -146,6 +146,29 @@ public class MainCitySys : SystemRoot
     public void RspFriendGift(GameMsg msg)
     {
 
+    }
+    #endregion
+    #region RspFriendGift 好友申请确认
+    /// <summary>
+    /// 好友申请确认
+    /// </summary>
+    /// <param name="msg"></param>
+    public void RspFriendAddConfirm(GameMsg msg)
+    {
+        RspFriendAddConfirm rspFriendAddConfirm = msg.rspFriendAddConfirm;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.AddFriendList = rspFriendAddConfirm.AddFriendList;
+        playerData.FriendList = rspFriendAddConfirm.FriendList;
+        if (rspFriendAddConfirm.isAgree)
+        {
+            GameRoot.AddTips("好友申请已同意");
+
+        }
+        else
+        {
+            GameRoot.AddTips("好友申请已拒绝");
+        }
+        RefreshFriendList();
     }
     #endregion
     #region RspDelFriend 删除好友信息
@@ -309,6 +332,17 @@ public class MainCitySys : SystemRoot
         if (friendsWnd.gameObject.activeSelf)
         {
             friendsWnd.AddFriend(item);
+        }
+    }
+    /// <summary>
+    /// 刷新好友列表
+    /// </summary>
+    /// <param name="item"></param>
+    public void RefreshFriendList()
+    {
+        if (friendsWnd.FriendsListBtn.gameObject.activeSelf)
+        {
+            friendsWnd.ClickFriendsList();
         }
     }
     public void ClickArena()
