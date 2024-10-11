@@ -39,7 +39,8 @@ namespace CommonNet
         public RspDelFriend rspDelFriend; // 好友删除响应
         public ReqFriendGift reqFriendGift; // 好友赠送请求
         public RspFriendGift rspFriendGift; // 好友赠送响应
-
+        public ReqFriendAddConfirm reqFriendAddConfirm; // 好友添加确认请求
+        public RspFriendAddConfirm rspFriendAddConfirm; // 好友添加确认响应
         public HeartbeatMessage heartbeatMessage;
     }
     #region 登录注册相关
@@ -126,6 +127,7 @@ namespace CommonNet
     }
     public class RspAddFriend
     {
+        public List<FriendItem> FriendList;//好友列表
         public List<FriendItem> AddFriendList;//好友申请列表
         public bool isSucc;//是否申请成功
     }
@@ -341,6 +343,8 @@ namespace CommonNet
         RspDelFriend = 128,//好友删除响应
         ReqFriendGift = 129,//好友赠送请求
         RspFriendGift = 130,//好友赠送响应
+        ReqFriendAddConfirm = 131,//好友添加确认请求
+        RspFriendAddConfirm = 132,//好友添加确认响应
     }
     public enum Error
     {
@@ -364,7 +368,7 @@ namespace CommonNet
         FriendRequestExistError = 1021,//已经申请过该好友
         FriendExistError = 1022,//好友已存在
         FriendRequestError = 1023,//好友申请失败
-        FriendRequestRecvLimitError = 1024,//接收好友申请数量达到上限
+        friendAddConfirmError = 1024,//好友拒绝失败
         FriendRequestRecvExistError = 1025,//已经收到过该好友申请
     }
 
@@ -397,7 +401,9 @@ namespace CommonNet
     }
     public class IPCfg
     {
+
         public const string srvIP = "127.0.0.1";
+
         public const int srvPort = 17666;
     }
 }

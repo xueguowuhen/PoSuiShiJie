@@ -11,8 +11,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-
 public class FriendsWnd : WindowRoot
 {
     public Button FriendBtn;
@@ -79,7 +77,7 @@ public class FriendsWnd : WindowRoot
         SetWindowVisibility(AddObj, AddBtn.transform);
         ClearFriend(AddContent);
     }
-    private void ClickFriendsList()
+    public void ClickFriendsList()
     {
         SetWindowVisibility(FriendsListObj, FriendsListBtn.transform);
         ClearFriend(FriendsListContent);
