@@ -22,10 +22,10 @@ public class MsgPack
 
 public class NetSvc
 {
-    private static NetSvc instance = null;
+    private static NetSvc instance = null!;
     private static readonly string Lock = "lock";
     private Queue<MsgPack> queue = new Queue<MsgPack>();
-    private TraSocket<ServerSession, GameMsg> traSocket = null;
+    private TraSocket<ServerSession, GameMsg> traSocket = null!;
     public static NetSvc Instance
     {
         get
