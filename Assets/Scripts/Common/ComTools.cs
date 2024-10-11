@@ -5,6 +5,7 @@
     日期：2024-04-24 9:05:18
 	功能：工具类
 *****************************************************/
+using CommonNet;
 using System;
 using UnityEngine;
 using Random = System.Random;
@@ -39,6 +40,19 @@ public class ComTools
             case ItemType.equip:
                 return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "ruvia");
             case ItemType.material:
+                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "crystal");
+        }
+        return null;
+    }
+    public static Sprite GetIconSprite(BuyType itemType)
+    {
+        switch (itemType)
+        {
+            case BuyType.aura:
+                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "aura");
+            case BuyType.ruvia:
+                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "ruvia");
+            case BuyType.crystal:
                 return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "crystal");
         }
         return null;

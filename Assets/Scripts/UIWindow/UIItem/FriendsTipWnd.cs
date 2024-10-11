@@ -1,20 +1,23 @@
+/****************************************************
+    文件：FriendsTipWnd.cs
+    作者：无痕
+    邮箱: 1450411269@qq.com
+    日期：2024/10/11 14:28:42
+    功能：Nothing
+*****************************************************/
+using CommonNet;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using CommonNet;
-using System.Diagnostics;
 
-public class BuyTipWnd : WindowRoot
+public class FriendsTipWnd : WindowRoot
 {
     #region One
+
     public Image GoodsImage;
     public Image Goods2Image;
-    public Text Name;//物品名称
-    public Image BuyImag;
-    public Image Buy2Imag;
-    public Text GoodsPrice;
-    public Text GoodsmInfo;
     #endregion
 
     #region Two
@@ -22,13 +25,13 @@ public class BuyTipWnd : WindowRoot
     public Text Goods2Price;
     public InputField Goods2Count;
     public Button Increase;
-    public Button Buy;
+    public Button Gift;
     public Button Close;
     #endregion
     private int m_ItemId;
     private int quantity = 1;
-    private float Price;
     private BuyType m_BuyType;
+    private string m_Name;
     //public 
     protected override void InitWnd()
     {
@@ -37,38 +40,40 @@ public class BuyTipWnd : WindowRoot
     protected override void SetGameObject()
     {
         base.SetGameObject();
+
         AddListener(Decrease, OnClickDecrease);
         AddListener(Increase, OnClickIncrease);
-        AddListener(Buy, OnClickBuy);
+        AddListener(Gift, OnClickGift);
         AddListener(Close, OnClickClose);
     }
-    public void ShowWnd(int id)
+    public void ShowWnd(int id, string name, BuyType buyType)
     {
         base.SetWndState();
+        m_BuyType = buyType;
+        m_ItemId = id;
+        m_Name = name;
         quantity = 1;
         UpdateQuantityText();
-        ItemCfg shopItemCfg = resSvc.GetShopItemCfg(id);
-        Name.text = shopItemCfg.mName;
-        GoodsmInfo.text = shopItemCfg.mInfo.ToString();
-        GoodsPrice.text = shopItemCfg.Price.ToString();
-        Goods2Image.sprite = GoodsImage.sprite = ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg);
-        BuyImag.sprite = Buy2Imag.sprite = ComTools.GetIconSprite(shopItemCfg.type);
-        m_ItemId = shopItemCfg.ID;
-        Price = shopItemCfg.Price;
-        Goods2Price.text = (quantity * Price).ToString();
-        m_BuyType = (BuyType)shopItemCfg.type;
+
+        Goods2Image.sprite = GoodsImage.sprite = ComTools.GetIconSprite(buyType);
+        //BuyImag.sprite = Buy2Imag.sprite = ComTools.GetIconSprite(shopItemCfg.type);
+        Goods2Price.text = (quantity).ToString();
+        //m_BuyType = (BuyType)shopItemCfg.type;
     }
-    private void OnClickBuy()//点击购买
+    private void OnClickGift()//点击礼物按钮
     {
+
         string id = m_ItemId.ToString();
         string quantity = this.quantity.ToString();
         GameMsg gameMsg = new GameMsg
         {
-            cmd = (int)CMD.ReqShop,
-            reqShop = new ReqShop
+            cmd = (int)CMD.ReqFriendGift,
+            reqFriendGift = new ReqFriendGift
             {
+
                 buyType = m_BuyType,
                 id = int.Parse(id),
+                name = m_Name,
                 count = int.Parse(quantity),
             }
         };
@@ -95,6 +100,6 @@ public class BuyTipWnd : WindowRoot
     private void UpdateQuantityText()
     {
         Goods2Count.text = quantity.ToString();
-        Goods2Price.text = (quantity * Price).ToString();
+        Goods2Price.text = (quantity).ToString();
     }
 }
