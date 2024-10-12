@@ -34,6 +34,8 @@ public class personCfg : BaseData<personCfg>
     public int PreText;
     public List<int> NormalAtkList;
     public List<int> SkillList;
+    public int BaseExp;
+    public float ExpMul;
 }
 public class MapCfg : BaseData<MapCfg>
 {
@@ -74,7 +76,7 @@ public class ItemCfg : BaseData<ItemCfg>
     public string mImg;   //物品图标
     public float Price;  //物价价格
     public ItemType type;  //物品类型
-    
+
     public int quantity; //数量
 
 }
