@@ -126,6 +126,7 @@
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityEnemy.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\ShopItem.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\FriendsTipWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\TipInfoWnd.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\CreateWnd.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIItem\FriendsTipWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />
