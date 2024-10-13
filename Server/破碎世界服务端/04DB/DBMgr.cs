@@ -312,6 +312,33 @@ internal class DBMgr
     }
 
     /// <summary>
+    /// 检查该名称是否已经被使用
+    /// </summary>
+    /// <param name="name">要检查的账户名称</param>
+    /// <returns>如果名称已被使用则返回 true，否则返回 false</returns>
+    public bool CheckName(string name)
+    {
+        using (var conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM account WHERE acct = @acct", conn);
+                cmd.Parameters.AddWithValue("acct", name);
+
+                // 执行查询并获取结果
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0; // 如果计数大于 0，表示该名称已被使用
+            }
+            catch (Exception ex)
+            {
+                GameCommon.Log("CheckName Error: " + ex, ComLogType.Error);
+                return true; 
+            }
+        }
+    }
+
+    /// <summary>
     /// 更新好友数据
     /// </summary>
     /// <param name="id"></param>
