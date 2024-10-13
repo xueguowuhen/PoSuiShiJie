@@ -194,7 +194,7 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     private void ClickTalent()
     {
-
+        MainCitySys.instance.EnterTalentWnd();
     }
     /// <summary>
     /// 点击开始游戏界面

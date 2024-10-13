@@ -12,7 +12,7 @@ public class PathDefine
 {
     #region Configs
     public const string personCfg = "ResCfg/person";
-    public const string TalentCfg = "ResCfg/TalentList";
+    public const string TalentCfg = "ResCfg/Talent";
     public const string RdnameCfg = "ResCfg/rdname";
     public const string ShopItemCfg = "ResCfg/ShopItem";
     public const string mapCfg = "ResCfg/map";

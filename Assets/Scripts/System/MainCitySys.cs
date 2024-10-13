@@ -13,6 +13,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 public class MainCitySys : SystemRoot
 {
+    #region 公开字段/属性
     public static MainCitySys instance;
     public MainCityWnd mainCityWnd;
     public CharacterController characterController;
@@ -22,14 +23,29 @@ public class MainCitySys : SystemRoot
     public BagWnd bagWnd;
     public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
+    public TalentWnd talentWnd;
+
+    public TaskCfg GetTaskCfg()
+    {
+        return taskCfg;
+    }
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
+    public Transform[] GetNpcTra()
+    {
+        return NpcPosTrans;
+    }
+    #endregion
+
+    #region 私有字段
     private TaskCfg taskCfg;
     private NavMeshAgent navMesh;
     private Transform[] NpcPosTrans;
     private GameObject player;
-    //private bool isCreate = false;
-    public Text text;
-    //private Dictionary<int, GameObject> RemotePlayerDic = new Dictionary<int, GameObject>();
-
+    #endregion
     public override void InitSyc()
     {
         base.InitSyc();
@@ -67,15 +83,12 @@ public class MainCitySys : SystemRoot
             //CityEnemy.SetCtrl(Enemy.GetComponent<EnemyController>());
             //entityEnemy = CityEnemy;
             //entityEnemy.Init(resSvc.GetEnemyData(1001));
-
             //#endregion
         }, false));
     }
-    public void SetMoveDir(Vector2 dir, bool IsRun = false)
-    {
-        BattleSys.instance.SetSelfPlayerMoveDir(dir, IsRun);
-        StopNavTask();
-    }
+
+    #region 服务器消息处理
+    #region RspShop 购买成功
     public void RspShop(GameMsg msg)
     {
         GameRoot.AddTips("购买成功");
@@ -87,6 +100,8 @@ public class MainCitySys : SystemRoot
         playerData.crystal = rspShop.crystal;
         RefreshUI();
     }
+    #endregion
+
     #region RspTask 接收任务信息
     /// <summary>
     /// 接收任务信息
@@ -104,6 +119,7 @@ public class MainCitySys : SystemRoot
         GameRoot.AddTips("已完成该任务");
     }
     #endregion
+
     #region RspSearchFriend 搜索好友
     /// <summary>
     /// 搜索好友
@@ -116,6 +132,7 @@ public class MainCitySys : SystemRoot
         FriendSearch(friendItem);
     }
     #endregion
+
     #region RspAddFriend 添加好友信息
     /// <summary>
     /// 添加好友信息
@@ -142,6 +159,7 @@ public class MainCitySys : SystemRoot
 
     }
     #endregion
+
     #region RspFriendGift 赠送好友道具
     /// <summary>
     /// 赠送好友道具
@@ -159,6 +177,7 @@ public class MainCitySys : SystemRoot
         RefreshUI();
     }
     #endregion
+
     #region RspFriendGift 好友申请确认
     /// <summary>
     /// 好友申请确认
@@ -182,6 +201,7 @@ public class MainCitySys : SystemRoot
         RefreshFriendList();
     }
     #endregion
+
     #region RspDelFriend 删除好友信息
     /// <summary>
     /// 删除好友信息
@@ -196,11 +216,16 @@ public class MainCitySys : SystemRoot
         ClickFriend();
     }
     #endregion
+    #endregion
+
+    #region 玩家移动相关
+    public void SetMoveDir(Vector2 dir, bool IsRun = false)
+    {
+        BattleSys.instance.SetSelfPlayerMoveDir(dir, IsRun);
+        StopNavTask();
+    }
+
     private bool isNavGuide = false;
-    /// <summary>
-    /// 自动寻路功能
-    /// </summary>
-    /// <param name="taskCfg"></param>
     //public void RunTask(TaskCfg taskCfg)
     //{
     //    if (taskCfg != null)
@@ -231,24 +256,7 @@ public class MainCitySys : SystemRoot
     //        }
     //    }
     //}
-    public void Update()
-    {
-        //if (isNavGuide)
-        //{
-        //    IsArriveNavPos();
-        //    playerController.SetCam();
 
-        //}
-
-        //#region 敌人测试
-        //if (entityEnemy != null)
-        //{
-        //    entityEnemy.TickAILogic();
-        //}
-        //#endregion
-
-
-    }
     //判断是否到达导航点
     //private void IsArriveNavPos()
     //{
@@ -275,27 +283,29 @@ public class MainCitySys : SystemRoot
             playerController.SetVelocity(Constants.VelocityIdle);
         }
     }
-    public TaskCfg GetTaskCfg()
-    {
-        return taskCfg;
-    }
-    public GameObject GetPlayer()
-    {
-        return player;
-    }
+    #endregion
 
-    //#region 敌人测试
-    //public Transform Enemy;
-    //public EntityEnemy entityEnemy;
-    //public Transform GetEnemy()
-    //{
-    //    return Enemy;
-    //}
-    //#endregion
-    public Transform[] GetNpcTra()
+    #region 引擎回调
+    public void Update()
     {
-        return NpcPosTrans;
+        //if (isNavGuide)
+        //{
+        //    IsArriveNavPos();
+        //    playerController.SetCam();
+
+        //}
+
+        //#region 敌人测试
+        //if (entityEnemy != null)
+        //{
+        //    entityEnemy.TickAILogic();
+        //}
+        //#endregion
+
+
     }
+    #endregion
+
     //public List<GameObject> GetPlayerList()
     //{
     //    List<GameObject> list = new List<GameObject>();
@@ -305,6 +315,7 @@ public class MainCitySys : SystemRoot
     //    }
     //    return list;
     //}
+
     /// <summary>
     /// 
     /// </summary>
@@ -320,6 +331,9 @@ public class MainCitySys : SystemRoot
             mainCityWnd.RefreshUI();
         }
     }
+
+    #region 主城系统对外开放的UI点击事件处理
+
     /// <summary>
     /// 商店界面
     /// </summary>
@@ -359,6 +373,11 @@ public class MainCitySys : SystemRoot
             friendsWnd.ClickFriend();
         }
     }
+
+    public void EnterTalentWnd()
+    {
+        talentWnd.SetWndState();
+    }
     /// <summary>
     /// 刷新好友列表
     /// </summary>
@@ -374,5 +393,6 @@ public class MainCitySys : SystemRoot
     {
         mainCityWnd.SetWndState(false);
         BattleSys.instance.SetBattleWnd();
-    }
+    } 
+    #endregion
 }

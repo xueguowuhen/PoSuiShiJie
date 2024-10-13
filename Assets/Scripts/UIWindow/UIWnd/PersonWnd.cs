@@ -80,7 +80,7 @@ public class PersonWnd : WindowRoot
             obj2= resSvc.LoadPrefab("ResPerfer/talentOne");
             List<int> talent = GameRoot.Instance.PlayerData.TalentID;
             obj2.transform.SetParent(Talent.transform, false); 
-            obj2.GetComponent<Text>().text = resSvc.GetTalentCfgData(talent[i]).mName;   
+            //obj2.GetComponent<Text>().text = resSvc.GetTalentCfgData(talent[i]).mName;   
         }
         BtnPerson = obj.GetComponent<Button>();
         BtnPerson.onClick.AddListener(OnPersonClick);  //三个按钮点击都一样

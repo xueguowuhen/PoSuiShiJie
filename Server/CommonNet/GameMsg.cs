@@ -3,45 +3,45 @@ namespace CommonNet
 {
     public class GameMsg : TraMsg
     {
-        public ReqLogin reqLogin;//请求登录
-        public RspLogin rspLogin;
-        public ReqRegister reqRegister;//请求注册
-        public RspRegister rspRegister;
-        public ReqCreateGame reqCreateGame;
-        public RspCreateGame rspCreateGame;
-        public ReqShop reqShop;//商店请求
-        public RspShop rspShop;
-        public ReqBag reqBag;//背包请求
-        public RspBag rspBag;
+        public ReqLogin? reqLogin;//请求登录
+        public RspLogin? rspLogin;
+        public ReqRegister? reqRegister;//请求注册
+        public RspRegister? rspRegister;
+        public ReqCreateGame? reqCreateGame;
+        public RspCreateGame? rspCreateGame;
+        public ReqShop? reqShop;//商店请求
+        public RspShop? rspShop;
+        public ReqBag? reqBag;//背包请求
+        public RspBag? rspBag;
 
-        public ReqTask reqTask;//任务请求
-        public RspTask rspTask;
+        public ReqTask? reqTask;//任务请求
+        public RspTask? rspTask;
 
-        public RspCreatePlayer rspCreatePlayer;
-        public RspDeletePlayer rspDeletePlayer;
+        public RspCreatePlayer? rspCreatePlayer;
+        public RspDeletePlayer? rspDeletePlayer;
 
-        public ReqTransform reqTransform;
-        public RspTransform rspTransform;
+        public ReqTransform? reqTransform;
+        public RspTransform? rspTransform;
 
-        public ReqPlayerState reqPlayerState;//玩家状态请求
-        public RspPlayerState rspPlayerState;
-        public ReqDamage reqDamage;
-        public RspDamage rspDamage;
-        public ReqRevive reqRevive;
-        public RspRevive rspRevive;
+        public ReqPlayerState? reqPlayerState;//玩家状态请求
+        public RspPlayerState? rspPlayerState;
+        public ReqDamage? reqDamage;
+        public RspDamage? rspDamage;
+        public ReqRevive? reqRevive;
+        public RspRevive? rspRevive;
 
         // 新增的好友请求与响应
-        public ReqSearchFriend reqSearchFriend; // 好友搜索请求
-        public RspSearchFriend rspSearchFriend; // 好友搜索响应
-        public ReqAddFriend reqAddFriend; // 好友申请请求
-        public RspAddFriend rspAddFriend; // 好友申请响应
-        public ReqDelFriend reqDelFriend; // 好友删除请求
-        public RspDelFriend rspDelFriend; // 好友删除响应
-        public ReqFriendGift reqFriendGift; // 好友赠送请求
-        public RspFriendGift rspFriendGift; // 好友赠送响应
-        public ReqFriendAddConfirm reqFriendAddConfirm; // 好友添加确认请求
-        public RspFriendAddConfirm rspFriendAddConfirm; // 好友添加确认响应
-        public HeartbeatMessage heartbeatMessage;
+        public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
+        public RspSearchFriend? rspSearchFriend; // 好友搜索响应
+        public ReqAddFriend? reqAddFriend; // 好友申请请求
+        public RspAddFriend? rspAddFriend; // 好友申请响应
+        public ReqDelFriend? reqDelFriend; // 好友删除请求
+        public RspDelFriend? rspDelFriend; // 好友删除响应
+        public ReqFriendGift? reqFriendGift; // 好友赠送请求
+        public RspFriendGift? rspFriendGift; // 好友赠送响应
+        public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
+        public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
+        public HeartbeatMessage? heartbeatMessage;
     }
     #region 登录注册相关
     public class ReqLogin
@@ -255,7 +255,7 @@ namespace CommonNet
     public class PlayerData
     {
         public int id;
-        public string name;//角色名称
+        public string? name;//角色名称
         public int type;//角色类型
         public int exp;//角色经验
         public int level;//角色等级
@@ -275,10 +275,11 @@ namespace CommonNet
         public int dodge;//闪避概率
         public float practice;//修炼速度
         public int critical;//暴击概率
-        public List<int> TalentID;//天赋id
-        public List<BagList> Bag;//背包数据
-        public List<FriendItem> FriendList;//好友列表
-        public List<FriendItem> AddFriendList;//好友申请列表
+        public List<int>? TalentID;//当前选中的天赋ID
+        public List<Talent>? TalentsData; //所有天赋数据
+        public List<BagList>? Bag;//背包数据
+        public List<FriendItem>? FriendList;//好友列表
+        public List<FriendItem>? AddFriendList;//好友申请列表
         public int Taskid;
         public int SkillID;
         public int AniState;
@@ -295,17 +296,23 @@ namespace CommonNet
         public int count;
 
     }
+
+    public class Talent
+    {
+        public int TalentID;
+        public int Level;
+    }
     public class FriendItem
     {
         public int id;
-        public string type;
-        public string name;
+        public string? type;
+        public string? name;
         public int level;
         public float aura;//角色星晶
         public float ruvia;//角色云晶
         public float crystal; //角色彩晶
-        public List<int> FriendList;//好友id列表
-        public List<int> AddFriendList;//好友id申请列表
+        public List<int>? FriendList;//好友id列表
+        public List<int>? AddFriendList;//好友id申请列表
     }
     public class TaskList
     {
@@ -411,7 +418,7 @@ namespace CommonNet
     public class IPCfg
     {
 
-        public const string srvIP = "192.168.1.116";
+        public const string srvIP = "127.0.0.1";
 
         public const int srvPort = 17666;
     }
