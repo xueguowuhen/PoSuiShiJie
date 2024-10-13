@@ -320,6 +320,12 @@ public class ResSvc : MonoBehaviour
                                 person.NormalAtkList.Add(int.Parse(str2));
                             }
                             break;
+                        case "BaseExp":
+                            person.BaseExp = int.Parse(node.InnerText);
+                            break;
+                        case "ExpMul":
+                            person.ExpMul = float.Parse(node.InnerText);
+                            break;
                     }
                 }
                 personDic.Add(ID, person);
@@ -1239,9 +1245,8 @@ public class ResSvc : MonoBehaviour
     }
     //任务
     //副本（2-3个）（副本实现时间冻结效果）
-    //
-    //商店(UI改一改）ok
-    //背包(强化，装备)
+
+    //背包(强化，装备) 强化和装备暂无
 
     //签到
     //成就

@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.24213827, g: 0.7838066, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.63529414, b: 0.30980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -236,7 +236,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b5ba494c292776d44b298c69eaa01b0e, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
@@ -245,10 +245,10 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Tips:\u6682\u65F6\u6CA1\u7528\u8981\u8BF4\u7684\u54E6"
+  m_Text: "Tips:\u6682\u65F6\u6CA1\u6709\u9700\u8981\u8BF4\u7684\u5185\u5BB9"
 --- !u!1 &1233553294850998276
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a235d569358e0034893e3f87a088299b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6e498ace640eb5448395b2ad91be483, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -341,7 +341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1233553295594019002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 1233553295879923880}
   - component: {fileID: 1233553295879923882}
   - component: {fileID: 1233553295879923883}
+  - component: {fileID: 1518938847}
   m_Layer: 5
   m_Name: loadingfg
   m_TagString: Untagged
@@ -465,7 +466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6f26621e7419f142a8903f658333f18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 977393fd573fe3b43916bfa4651885f0, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -475,3 +476,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1518938847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233553295879923881}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ff40ce47202ef48b6d05aa1ee67833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteName: Bar_
+  Path: ResUI/frames/Bar/
+  Speed: 3
+  PlayStartIndex: 1
+  PlayEndIndex: 9
+  Loop: 1

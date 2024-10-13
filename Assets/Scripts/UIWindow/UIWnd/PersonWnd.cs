@@ -1,140 +1,152 @@
+using CommonNet;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PersonWnd : WindowRoot
 {
     #region one
-    public GameObject itemOne;
-    public RectTransform PersonItem;
-    public GameObject PersonOne;
-    public GameObject Close;
-    public Button BtnClose;
-    public Button BtnPerson;
+    public Image headImg;
+    public Text TypeName;
+    public Text Level;
+    //public GameObject itemOne;
+    //public RectTransform PersonItem;
+    //public GameObject PersonOne;
+    //public GameObject Close;
+    //public Button BtnClose;
+    //public Button BtnPerson;
     #endregion
+
     #region two
-    public GameObject itemTwo;
-    public Image image;
-    public Text Person;
-    public GameObject Talent;
-    public Text TalentOne;
-    public GameObject arrtBute;
-    public Text arrtButeOne;
-    public GameObject Experience;
-    public Slider slider;
-    public Slider HpSlider;
-    public Slider MagicSlider;
+    public Image ExpSlider;
+    public Text ExpPercent;
+    public Text ExpText;
+    public Text PowerText;
+    public Image PoweSlider;
+    public Text HpText;
+    public Image HpSlider;
+    public GameObject AttributeContent;
+    private GameObjectPool pool;
+    public Button BtnClose;
+    //public Slider slider;
+    //public Slider HpSlider;
+    //public Slider MagicSlider;
     #endregion
     protected override void InitWnd()
     {
         base.InitWnd();
-        SetPersonBtn();
-        Complete();
-  
+        //SetPersonBtn();
+        ClearFriend(AttributeContent);
+        SetPersonInfo();
     }
-    private void SetPersonBtn()
+    protected override void SetGameObject()
     {
-        #region one
-        itemOne = GetGameObject(PathDefine.ItemOne);
-        PersonItem = GetGameObject(itemOne, PathDefine.PersonItem).GetComponent<RectTransform>();
-        Close = GetGameObject(itemOne, PathDefine.BtnClose);
-        BtnClose = Close.GetComponent<Button>();
-        BtnClose.onClick.AddListener(OnCloseClick);
-        #endregion
-
-        #region two
-        itemTwo = GetGameObject(PathDefine.ItemTwo);
-        image = GetGameObject(itemTwo, PathDefine.Img).GetComponent<Image>();
-        Person = GetGameObject(itemTwo, PathDefine.Person).GetComponent<Text>();
-        Talent = GetGameObject(itemTwo,PathDefine.Talent);
-
-        arrtBute = GetGameObject(itemTwo, PathDefine.attribute);
-
-        Experience = GetGameObject(itemTwo, PathDefine.Experience);
-        slider = GetGameObject(Experience, PathDefine.Slider).GetComponent<Slider>();
-        HpSlider = GetGameObject(Experience, PathDefine.HpSlider).GetComponent<Slider>();
-        MagicSlider = GetGameObject(Experience, PathDefine.MagicSlider).GetComponent<Slider>();
-        #endregion
+        base.SetGameObject();
+        AddListener(BtnClose, ClickClose);
+        InitPersonPool();
     }
 
-    #region ÍêÉÆĞÅÏ¢
     /// <summary>
-    /// °Ñ°´Å¥ ÊôĞÔÊ²Ã´µÄÈ«²¿³õÊ¼»¯³öÀ´
+    /// åˆå§‹åŒ–äººç‰©æ± 
     /// </summary>
-    private void Complete()
+    private void InitPersonPool()
     {
-        //ÈËÎï°´Å¥  Ìì¸³
-        GameObject obj = null;
-        GameObject obj2 = null;
-        GameObject obj3 = null;
-        for (int i = 0; i < 3; i++)
-        {
-            obj= resSvc.LoadPrefab("ResPerfer/PersonOne");
-            obj.transform.SetParent(PersonItem.transform, false);
-            personCfg temp = resSvc.GetPersonCfgData(20001+i);
-            obj.GetComponent<Text>().text = temp.type;
-            obj2= resSvc.LoadPrefab("ResPerfer/talentOne");
-            List<int> talent = GameRoot.Instance.PlayerData.TalentID;
-            obj2.transform.SetParent(Talent.transform, false); 
-            //obj2.GetComponent<Text>().text = resSvc.GetTalentCfgData(talent[i]).mName;   
-        }
-        BtnPerson = obj.GetComponent<Button>();
-        BtnPerson.onClick.AddListener(OnPersonClick);  //Èı¸ö°´Å¥µã»÷¶¼Ò»Ñù
-        //ÊôĞÔ
-        string[] temp1 = attr();
-        for (int i = 0; i < 5; i++)
-        {
-            obj3= resSvc.LoadPrefab("Resperfer/Hp");
-            SetText(obj3, temp1[i]);
-            obj3.transform.SetParent(arrtBute.transform, false);
-            
-        }
+        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResAttributeText, cache: true, instan: false);
+        pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+        pool.MaxCount = 15;//è®¾ç½®æœ€å¤§ç¼“å­˜æ•°é‡
+        pool.cullMaxPerPass = 5;
+        pool.cullAbove = 15;
+        pool.cullDespawned = true;
+        pool.cullDelay = 2;
+        pool.Init();
     }
-    private string[] attr()
+
+    private void SetPersonInfo()
     {
-        GameCommon.Log(GameRoot.Instance.PlayerData.type.ToString());
-        personCfg temp = resSvc.GetPersonCfgData(GameRoot.Instance.PlayerData.type);
-        Debug.Log(temp == null);     //Ëæ×ÅµÈ¼¶±ä»¯¶ø±ä»¯
-        List<string> temp1 = new List<string>();
-        temp1.Add("Hp:"+temp.HP.ToString());
-        temp1.Add("Mana:" + temp.Mana.ToString());
-        temp1.Add("Power:" + temp.Power.ToString());
-        temp1.Add("Ad:" + temp.ad.ToString());
-        temp1.Add("Ap:" + temp.ap.ToString());
-        return temp1.ToArray();
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        int headid = playerData.type;
+        headImg.sprite = resSvc.GetPersonCfgHard(headid);
+        personCfg personCfg = resSvc.GetPersonCfgData(headid);
+        TypeName.SetText(personCfg.type, true);
+        Level.SetText(string.Format("ç­‰çº§:Lv{0}", playerData.level), true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);
+        float Levelexp = ComTools.GetExperienceForLevel(playerData.level, personCfg.BaseExp, personCfg.ExpMul);
+        float curExp = playerData.exp;
+        float expPercent = curExp / Levelexp;
+        ExpSlider.SetImageFillAmount(expPercent, true);
+        ExpPercent.SetText(string.Format("{0}%", (int)(expPercent * 100), true));
+        ExpText.SetText(string.Format("ç»éªŒ:{0}/{1}", curExp, Levelexp), true);
+        PowerText.SetText(string.Format("é­”æ³•å€¼:{0}/{1}", playerData.power, playerData.powerMax), true);
+        PoweSlider.SetImageFillAmount((float)playerData.power / playerData.powerMax, true);
+        HpText.SetText(string.Format("ç”Ÿå‘½å€¼:{0}/{1}", playerData.Hp, playerData.Hpmax), true);
+        HpSlider.SetImageFillAmount((float)playerData.Hp / playerData.Hpmax, true);
+        DisplayStatus(playerData);
+    }
+
+    private void CreateAttribute(GameObject game, string name)
+    {
+        GameObject obj = pool.GetObject();
+        obj.transform.SetParent(game.transform, false);
+        obj.transform.localScale = Vector3.one;
+        Text txt = obj.GetComponent<Text>();
+        txt.SetText(name, true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);
 
     }
-   
-    #endregion
+    public void DisplayStatus(PlayerData data)
+    {
+        string[] statusLines = new string[]
+        {
+    $"ç­‰çº§:     LV{data.level}",
+    $"ç»éªŒ:       {data.exp}",
+    //$"ç”Ÿå‘½å€¼:     {data.Hp}",
+    //$"ç”Ÿå‘½å€¼ä¸Šé™: {data.Hpmax}",
+    //$"æ³•åŠ›å€¼:     {data.Mana}",
+    //$"æ³•åŠ›å€¼ä¸Šé™: {data.ManaMax}",
+    $"ä½“åŠ›:       {data.power}" ,
+    $"ä½“åŠ›ä¸Šé™:   {data.powerMax}",
+    $"ç‰©æ”»:       {data.ad}",
+    $"é­”æ”»:       {data.ap}",
+    $"ç‰©æŠ—:       {data.addef}",
+    $"é­”æŠ—:       {data.apdef}",
+    $"é—ªé¿æ¦‚ç‡:   {data.dodge}%",
+    $"æš´å‡»æ¦‚ç‡:   {data.critical}%",
+    $"ä¿®ç‚¼é€Ÿåº¦:   {data.practice}",
+    $"æ˜Ÿæ™¶:       {data.aura}",
+    $"äº‘æ™¶:       {data.ruvia}",
+    $"å½©æ™¶:       {data.crystal}"
+        };
 
-    #region °´Å¥
-    private void OnPersonClick()
-    {
-        //Èı¸öÈËÎïÖ®¼äµÄÌø×ª È»ºóÌø×ªºóĞÅÏ¢¿ÉÄÜ±ä»¯¿ÉÄÜ²»±ä»¯
-    }
-    private void OnCloseClick()
-    {
-        //¹Ø±ÕÃæ°å
-        this.SetWndState(false);
-        //Çå¿ÕÃæ°å
-        for(int i = 0; i < PersonItem.childCount; i++)
+        foreach (var line in statusLines) // ä½¿ç”¨å¾ªç¯è¾“å‡ºçŠ¶æ€ä¿¡æ¯
         {
-            Destroy(PersonItem.GetChild(i).gameObject);
-        }
-        
-        for (int i = 0; i < Talent.GetComponent<RectTransform>().childCount; i++)
-        {
-            Destroy(Talent.GetComponent<RectTransform>().GetChild(i).gameObject);
-        }
-        for (int i = 0; i < arrtBute.GetComponent<RectTransform>().childCount; i++)
-        {
-            Destroy(arrtBute.GetComponent<RectTransform>().GetChild(i).gameObject);
+            CreateAttribute(AttributeContent, line);
         }
     }
-    #endregion
+
+    /// <summary>
+    /// æ¸…ç©ºé¢æ¿
+    /// </summary>
+    private void ClearFriend(GameObject Content)
+    {
+        if (Content != null)  //æ¸…ç©ºå½“å‰çš„å•†åº—ç‰©å“
+        {
+            for (int i = Content.transform.childCount - 1; i >= 0; i--)
+            {
+                pool.ReturnObject(Content.transform.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    /// <summary>
+    /// ç‚¹å‡»å…³é—­æŒ‰é’®
+    /// </summary>
+    private void ClickClose()
+    {
+        SetWndState(false);
+    }
 
 }
