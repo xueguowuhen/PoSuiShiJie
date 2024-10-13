@@ -53,13 +53,13 @@ public class PersonWnd : WindowRoot
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ÈËÎï³Ø
+    /// åˆå§‹åŒ–äººç‰©æ± 
     /// </summary>
     private void InitPersonPool()
     {
         GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResAttributeText, cache: true, instan: false);
         pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        pool.MaxCount = 15;//ÉèÖÃ×î´ó»º´æÊıÁ¿
+        pool.MaxCount = 15;//è®¾ç½®æœ€å¤§ç¼“å­˜æ•°é‡
         pool.cullMaxPerPass = 5;
         pool.cullAbove = 15;
         pool.cullDespawned = true;
@@ -74,16 +74,16 @@ public class PersonWnd : WindowRoot
         headImg.sprite = resSvc.GetPersonCfgHard(headid);
         personCfg personCfg = resSvc.GetPersonCfgData(headid);
         TypeName.SetText(personCfg.type, true);
-        Level.SetText(string.Format("µÈ¼¶:Lv{0}", playerData.level), true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);
+        Level.SetText(string.Format("ç­‰çº§:Lv{0}", playerData.level), true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);
         float Levelexp = ComTools.GetExperienceForLevel(playerData.level, personCfg.BaseExp, personCfg.ExpMul);
         float curExp = playerData.exp;
         float expPercent = curExp / Levelexp;
         ExpSlider.SetImageFillAmount(expPercent, true);
         ExpPercent.SetText(string.Format("{0}%", (int)(expPercent * 100), true));
-        ExpText.SetText(string.Format("¾­Ñé:{0}/{1}", curExp, Levelexp), true);
-        PowerText.SetText(string.Format("Ä§·¨Öµ:{0}/{1}", playerData.power, playerData.powerMax), true);
+        ExpText.SetText(string.Format("ç»éªŒ:{0}/{1}", curExp, Levelexp), true);
+        PowerText.SetText(string.Format("é­”æ³•å€¼:{0}/{1}", playerData.power, playerData.powerMax), true);
         PoweSlider.SetImageFillAmount((float)playerData.power / playerData.powerMax, true);
-        HpText.SetText(string.Format("ÉúÃüÖµ:{0}/{1}", playerData.Hp, playerData.Hpmax), true);
+        HpText.SetText(string.Format("ç”Ÿå‘½å€¼:{0}/{1}", playerData.Hp, playerData.Hpmax), true);
         HpSlider.SetImageFillAmount((float)playerData.Hp / playerData.Hpmax, true);
         DisplayStatus(playerData);
     }
@@ -101,38 +101,38 @@ public class PersonWnd : WindowRoot
     {
         string[] statusLines = new string[]
         {
-    $"µÈ¼¶:     LV{data.level}",
-    $"¾­Ñé:       {data.exp}",
-    //$"ÉúÃüÖµ:     {data.Hp}",
-    //$"ÉúÃüÖµÉÏÏŞ: {data.Hpmax}",
-    //$"·¨Á¦Öµ:     {data.Mana}",
-    //$"·¨Á¦ÖµÉÏÏŞ: {data.ManaMax}",
-    $"ÌåÁ¦:       {data.power}" ,
-    $"ÌåÁ¦ÉÏÏŞ:   {data.powerMax}",
-    $"Îï¹¥:       {data.ad}",
-    $"Ä§¹¥:       {data.ap}",
-    $"Îï¿¹:       {data.addef}",
-    $"Ä§¿¹:       {data.apdef}",
-    $"ÉÁ±Ü¸ÅÂÊ:   {data.dodge}%",
-    $"±©»÷¸ÅÂÊ:   {data.critical}%",
-    $"ĞŞÁ¶ËÙ¶È:   {data.practice}",
-    $"ĞÇ¾§:       {data.aura}",
-    $"ÔÆ¾§:       {data.ruvia}",
-    $"²Ê¾§:       {data.crystal}"
+    $"ç­‰çº§:     LV{data.level}",
+    $"ç»éªŒ:       {data.exp}",
+    //$"ç”Ÿå‘½å€¼:     {data.Hp}",
+    //$"ç”Ÿå‘½å€¼ä¸Šé™: {data.Hpmax}",
+    //$"æ³•åŠ›å€¼:     {data.Mana}",
+    //$"æ³•åŠ›å€¼ä¸Šé™: {data.ManaMax}",
+    $"ä½“åŠ›:       {data.power}" ,
+    $"ä½“åŠ›ä¸Šé™:   {data.powerMax}",
+    $"ç‰©æ”»:       {data.ad}",
+    $"é­”æ”»:       {data.ap}",
+    $"ç‰©æŠ—:       {data.addef}",
+    $"é­”æŠ—:       {data.apdef}",
+    $"é—ªé¿æ¦‚ç‡:   {data.dodge}%",
+    $"æš´å‡»æ¦‚ç‡:   {data.critical}%",
+    $"ä¿®ç‚¼é€Ÿåº¦:   {data.practice}",
+    $"æ˜Ÿæ™¶:       {data.aura}",
+    $"äº‘æ™¶:       {data.ruvia}",
+    $"å½©æ™¶:       {data.crystal}"
         };
 
-        foreach (var line in statusLines) // Ê¹ÓÃÑ­»·Êä³ö×´Ì¬ĞÅÏ¢
+        foreach (var line in statusLines) // ä½¿ç”¨å¾ªç¯è¾“å‡ºçŠ¶æ€ä¿¡æ¯
         {
             CreateAttribute(AttributeContent, line);
         }
     }
 
     /// <summary>
-    /// Çå¿ÕÃæ°å
+    /// æ¸…ç©ºé¢æ¿
     /// </summary>
     private void ClearFriend(GameObject Content)
     {
-        if (Content != null)  //Çå¿Õµ±Ç°µÄÉÌµêÎïÆ·
+        if (Content != null)  //æ¸…ç©ºå½“å‰çš„å•†åº—ç‰©å“
         {
             for (int i = Content.transform.childCount - 1; i >= 0; i--)
             {
@@ -142,7 +142,7 @@ public class PersonWnd : WindowRoot
     }
 
     /// <summary>
-    /// µã»÷¹Ø±Õ°´Å¥
+    /// ç‚¹å‡»å…³é—­æŒ‰é’®
     /// </summary>
     private void ClickClose()
     {

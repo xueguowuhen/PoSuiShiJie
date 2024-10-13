@@ -108,10 +108,12 @@ internal class DBMgr
                                     practice = reader.GetInt32("practice"),
                                     critical = reader.GetInt32("critical"),
                                     TalentID = new List<int>(),
+                                    TalentsData = new List<Talent>(),
                                     Bag = new List<BagList>(),
                                     Taskid = reader.GetInt32("Taskid"),
                                     FriendList = new List<FriendItem>(),
                                     AddFriendList = new List<FriendItem>(),
+                                    
 
                                 };
                                 string[] powers = reader.GetString("power").Split("|");
@@ -125,20 +127,35 @@ internal class DBMgr
                                 playerData.ManaMax = int.Parse(Manas[1]);
                                 // 解析 TalentID，过滤掉空字符串
                                 playerData.TalentID = reader.GetString("TalentID")
-                                    .Split('#')
+                                    .Split('|')
                                     .Where(t => !string.IsNullOrEmpty(t)) // 过滤掉空字符串
                                     .Select(int.Parse)
                                     .ToList();
-
-                                string[] Bag = reader.GetString("Bag").Split("|");
-                                for (int i = 0; i < Bag.Length - 1; i++)
+                                // 解析 TalentsData
+                                string[] talent = reader.GetString("TalentsData").Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for(int i = 0; i < talent.Length; i++)
+                                {
+                                    string[] strs = talent[i].Split("#");
+                                    int result;
+                                    if (int.TryParse(strs[0], out result))
+                                    {
+                                        playerData.TalentsData.Add(new Talent
+                                        {
+                                            TalentID = int.Parse(strs[0]),
+                                            Level = int.Parse(strs[1]),
+                                        });
+                                    }
+                                }
+                                //解析bag
+                                string[] Bag = reader.GetString("Bag").Split("|").Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for (int i = 0; i < Bag.Length; i++)
                                 {
                                     string[] strs = Bag[i].Split("#");
                                     int result;
                                     if (int.TryParse(strs[0], out result))
                                     {
                                         playerData.Bag.Add(new BagList
-                                        {
+                                        { 
                                             GoodsID = int.Parse(strs[0]),
                                             count = int.Parse(strs[1]),
                                         });
