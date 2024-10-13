@@ -50,22 +50,11 @@ public class MapCfg : BaseData<MapCfg>
 }
 public class TalentCfg : BaseData<TalentCfg>
 {
-    public string mName;
-    public int HP;
-    public int Mana;
-    public int Power;
-    public int aura;
-    public int ruvia;
-    public int crystal;
-    public int ad;
-    public int ap;
-    public int addef;
-    public int adpdef;
-    public int dodge;
-    public float practice;
-    public int critical;
-    public TalentQuality quality;
-    public string tips;
+    public string Name;
+    public string Info;
+    public int MaxLevel;
+    public string Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
+    public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
 }
 public class ItemCfg : BaseData<ItemCfg>
 {

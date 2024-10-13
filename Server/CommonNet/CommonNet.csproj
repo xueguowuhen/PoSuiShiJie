@@ -5,11 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	  <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
-    <BaseOutputPath>E:\xiangmmu\PoSuiShiJie\Assets\Scripts\Net</BaseOutputPath>
+    <BaseOutputPath>..\..\Assets\Scripts\Net\</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ComNet\ComNet.csproj" />
   </ItemGroup>
-
 </Project>
