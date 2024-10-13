@@ -219,6 +219,9 @@ public class WindowRoot : MonoBehaviour
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(call);
     }
+    /// <summary>
+    /// 设置对象物体 只设置一次
+    /// </summary>
     protected virtual void SetGameObject()
     {
 
