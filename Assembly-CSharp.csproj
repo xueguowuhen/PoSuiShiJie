@@ -137,6 +137,7 @@
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />

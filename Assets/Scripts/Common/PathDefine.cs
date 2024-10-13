@@ -43,6 +43,7 @@ public class PathDefine
     public const string ResBagItem = "ResPerfer/Item/BagItem";
     public const string ResUseTipWnd = "ResPerfer/UseTipWnd";
     public const string ResFriendsItem = "ResPerfer/Item/FriendsItem";
+    public const string ResAttributeText = "ResPerfer/Item/attributeText";
     public const string HPItemPrefab = "ResPerfer/ItemEntityHp";
     public const string ResHard = "ResUI/Hard/";
     public const string ResUI = "ResUI/";
