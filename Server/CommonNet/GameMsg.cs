@@ -7,7 +7,7 @@ namespace CommonNet
         public RspLogin? rspLogin;
         public ReqRegister? reqRegister;//请求注册
         public RspRegister? rspRegister;
-        public ReqCreateGame? reqCreateGame;
+        public ReqCreateGame? reqCreateGame; //玩家创建角色请求
         public RspCreateGame? rspCreateGame;
         public ReqShop? reqShop;//商店请求
         public RspShop? rspShop;
@@ -50,19 +50,19 @@ namespace CommonNet
     #region 登录注册相关
     public class ReqLogin
     {
-        public string acct;
-        public string pass;
+        public string ?acct;
+        public string ?pass;
     }
     public class RspLogin//玩家个人数据
     {
-        public PlayerData playerData;
-        public List<PlayerData> playerList;//其他玩家id数据
+        public PlayerData ?playerData;
+        public List<PlayerData> ?playerList;//其他玩家id数据
     }
 
     public class ReqRegister
     {
-        public string acct;
-        public string pass;
+        public string ?acct;
+        public string ?pass;
     }
     public class RspRegister
     {
@@ -71,14 +71,13 @@ namespace CommonNet
     public class ReqCreateGame
     {
         public int id;
-        public string name;
-        public List<int> TalentIDList;
+        public string ?name;
 
     }
     public class RspCreateGame
     {
-        public PlayerData playerData;
-        public List<PlayerData> playerDataList;
+        public PlayerData ?playerData;
+        public List<PlayerData> ?playerDataList;
     }
     #endregion
     #region 城镇系统请求
@@ -298,8 +297,8 @@ namespace CommonNet
         public int dodge;//闪避概率
         public float practice;//修炼速度
         public int critical;//暴击概率
-        public RewardTask rewardTask;//每日任务进度
-        public List<DailyTask> dailyTasks;//每日任务数据
+        public RewardTask ?rewardTask;//每日任务进度
+        public List<DailyTask> ?dailyTasks;//每日任务数据
         public List<int>? TalentID;//当前选中的天赋ID
         public List<Talent>? TalentsData; //所有天赋数据
         public List<BagList>? Bag;//背包数据
@@ -393,6 +392,8 @@ namespace CommonNet
         RspDailyTask = 134,//领取每日任务奖励响应
         ReqRewardTask = 135,//领取活跃奖励任务请求
         RspRewardTask = 136,//领取活跃奖励任务响应
+        //天赋相关
+        //RspRefresh
     }
     public enum Error
     {
@@ -478,7 +479,7 @@ namespace CommonNet
     public class IPCfg
     {
 
-        public const string srvIP = "10.201.19.236";
+        public const string srvIP = "127.0.0.1";
 
         public const int srvPort = 17666;
     }

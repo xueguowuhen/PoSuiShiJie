@@ -19,10 +19,30 @@ public class TalentWnd : WindowRoot
     #endregion
 
     #region 私有字段
+    /// <summary>
+    /// 所有天赋数据 不含当前等级数据
+    /// </summary>
     private TalentCfg[] cfgs;
+    /// <summary>
+    /// 所有天赋等级
+    /// </summary>
     private Text[] Levels;
+    /// <summary>
+    /// 所有的天赋按钮
+    /// </summary>
     private Button[] Talents;
+    /// <summary>
+    /// 玩家数据
+    /// </summary>
     private PlayerData playerData;
+    /// <summary>
+    /// 是否有选中的天赋
+    /// </summary>
+    private bool IsSelect = false;
+    /// <summary>
+    /// 选中天赋的ID
+    /// </summary>
+    private int SelectID = 0;
     #endregion
 
     #region 基类回调重写

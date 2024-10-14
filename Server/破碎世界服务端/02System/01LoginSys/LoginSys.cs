@@ -12,6 +12,7 @@ using static CfgSvc;
 
 public class LoginSys
 {
+    #region 单例
     private static LoginSys instance = null;
     public static LoginSys Instance
     {
@@ -24,14 +25,18 @@ public class LoginSys
             return instance;
         }
     }
-    private CacheSvc cacheSvc;
-    private CfgSvc cfgSvc;
+    #endregion
+
+    private CacheSvc? cacheSvc;
+    private CfgSvc? cfgSvc;
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
         cfgSvc = CfgSvc.Instance;
         GameCommon.Log("Login Init Done");
     }
+
+    #region ReqLogin处理登录请求
     /// <summary>
     /// 处理登录请求
     /// </summary>
@@ -72,13 +77,16 @@ public class LoginSys
         }
         pack.session.SendMsg(msg);
     }
+    #endregion
+
+    #region ReqRegister处理注册请求
     /// <summary>
     /// 处理注册请求
     /// </summary>
     /// <param name="pack"></param>
     public void ReqRegister(MsgPack pack)
     {
-        ReqRegister reqRegister = pack.gameMsg.reqRegister;
+        ReqRegister? reqRegister = pack.gameMsg.reqRegister;
         GameMsg gameMsg = new GameMsg
         {
             cmd = (int)CMD.RspRegister
@@ -108,12 +116,15 @@ public class LoginSys
         pack.session.SendMsg(gameMsg);
 
     }
+    #endregion
+
+    #region ReqCreateGame处理创建新玩家请求
     /// <summary>
-    /// 注册角色请求
+    /// 处理创建角色请求
     /// </summary>
     public void ReqCreateGame(MsgPack pack)
     {
-        ReqCreateGame reqCreateGame = pack.gameMsg.reqCreateGame;
+        ReqCreateGame? reqCreateGame = pack.gameMsg.reqCreateGame;
         PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
         GameMsg msg = new GameMsg
         {
@@ -130,7 +141,7 @@ public class LoginSys
             //TODO校验玩家名称不可重复
             if (!cacheSvc.CheckName(reqCreateGame.name))
             {
-                if (SetPlayerDataTalent(reqCreateGame, msg, playerData, personCfg, talentCount))
+                if (InitNewPlayerData(reqCreateGame, msg, playerData, personCfg))
                 {
                     cacheSvc.AcctOnline(pack.session, playerData);
                     ReqCreatePlayer(pack, playerData);
@@ -143,30 +154,27 @@ public class LoginSys
         }
         pack.session.SendMsg(msg);
     }
-    private bool SetPlayerDataTalent(ReqCreateGame reqCreateGame, GameMsg msg, PlayerData playerData, personCfg personCfg, TalentCfg talentCount)
+    /// <summary>
+    /// 初始化新玩家数据
+    /// </summary>
+    /// <param name="reqCreateGame"></param>
+    /// <param name="msg"></param>
+    /// <param name="playerData"></param>
+    /// <param name="personCfg"></param>
+    /// <param name="talentCount"></param>
+    /// <returns></returns>
+    private bool InitNewPlayerData(ReqCreateGame reqCreateGame, GameMsg msg, PlayerData playerData, personCfg personCfg)
     {
-        //累加天赋数据
-        List<int> TalentIDList = reqCreateGame.TalentIDList;
-        for (int i = 0; i < TalentIDList.Count; i++)
+        playerData.TalentID = new List<int> { 50001, 50011 };
+        playerData.TalentsData = new List<Talent>();
+        int[] talentsData = cfgSvc.GetTalentsId();
+        for (int i = 0; i < talentsData.Length; i++)
         {
-            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(TalentIDList[i]);
-            if (talentCfg == null)
-            {
-                msg.err = (int)Error.PerSonError;
-                break;
-            }
-            else
-            {
-                talentCount = GetTalent(talentCount, talentCfg);
-                talentCount = GetTalent(talentCount, talentCfg);
-            }
+            playerData.TalentsData.Add(new Talent() { TalentID = talentsData[i], Level = 0 });
         }
-        //累加进玩家属性
-        personCfg = GetPerson(personCfg, talentCount);
         //更新玩家数据
 
         playerData.name = reqCreateGame.name;
-        playerData.TalentID = TalentIDList;
         playerData.level = 1;
         playerData.type = reqCreateGame.id;
         playerData.Taskid = cfgSvc.GetTaskCfgOne();
@@ -176,7 +184,7 @@ public class LoginSys
         playerData.dailyTasks = cfgSvc.GetTaskDailyCfgData();
         playerData.FriendList = new List<FriendItem>();
         playerData.AddFriendList = new List<FriendItem>();
-        playerData = GetPlayerData(playerData, personCfg);
+        CalcPlayerProp(playerData, personCfg);
         if (!cacheSvc.UpdatePlayerData(playerData))
         {
             msg.err = (int)Error.PerSonError;
@@ -193,6 +201,69 @@ public class LoginSys
             return true;
         }
     }
+
+    public TalentCfg GetTalent(TalentCfg talent, TalentCfg talentCfg)
+    {
+        //talent.HP += talentCfg.HP;
+        //talent.Mana += talentCfg.Mana;
+        //talent.Power += talentCfg.Power;
+        //talent.aura += talentCfg.aura;
+        //talent.ruvia += talentCfg.ruvia;
+        //talent.crystal += talentCfg.crystal;
+        //talent.ad += talentCfg.ad;
+        //talent.ap += talentCfg.ap;
+        //talent.addef += talentCfg.addef;
+        //talent.dodge += talentCfg.dodge;
+        //talent.practice += talentCfg.practice;
+        //talent.critical += talentCfg.critical;
+        return talent;
+    }
+    /// <summary>
+    /// 计算玩家属性值
+    /// </summary>
+    public void CalcPlayerProp(PlayerData playerData, personCfg personCfg)
+    {
+        for (int i = 0; i < playerData.TalentID.Count; i++)
+        {
+            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(playerData.TalentID[i]);
+            switch (talentCfg.Attribute)
+            {
+                case "Hp":
+                    { playerData.Hp += (int)talentCfg.Value * playerData.level; break; }
+                case "addef": 
+                    { playerData.addef += (int)talentCfg.Value * playerData.level; break; }
+                case "apdef":
+                    { playerData.apdef += (int)talentCfg.Value * playerData.level; break; }
+                case "dodge":
+                    { playerData.dodge += (int)talentCfg.Value * playerData.level; break; }
+                case "ad":
+                    { playerData.ad += (int)talentCfg.Value * playerData.level; break; }
+                case "critical":
+                    { playerData.critical += (int)talentCfg.Value * playerData.level; break; }
+                case "ap":
+                    { playerData.ap += (int)talentCfg.Value * playerData.level; break; }
+            }
+        }
+        playerData.Hp += personCfg.HP;
+        playerData.Hpmax += personCfg.HP;
+        playerData.ManaMax += personCfg.Mana;
+        playerData.Mana += personCfg.Mana;
+        playerData.ruvia += personCfg.ruvia;
+        playerData.crystal += personCfg.crystal;
+        playerData.power += personCfg.Power;
+        playerData.powerMax += personCfg.Power;
+        playerData.aura += personCfg.aura;
+        playerData.ad += personCfg.ad;
+        playerData.ap += personCfg.ap;
+        playerData.addef += personCfg.addef;
+        playerData.dodge += personCfg.dodge;
+        playerData.practice += personCfg.practice;
+        playerData.critical += personCfg.critical;
+
+
+    }
+    #endregion
+
     /// <summary>
     /// 广播创建角色通知
     /// </summary>
@@ -233,59 +304,7 @@ public class LoginSys
             cacheSvc.GetSession(pack.session, msg);
         }
     }
-    public TalentCfg GetTalent(TalentCfg talent, TalentCfg talentCfg)
-    {
-        talent.HP += talentCfg.HP;
-        talent.Mana += talentCfg.Mana;
-        talent.Power += talentCfg.Power;
-        talent.aura += talentCfg.aura;
-        talent.ruvia += talentCfg.ruvia;
-        talent.crystal += talentCfg.crystal;
-        talent.ad += talentCfg.ad;
-        talent.ap += talentCfg.ap;
-        talent.addef += talentCfg.addef;
-        talent.dodge += talentCfg.dodge;
-        talent.practice += talentCfg.practice;
-        talent.critical += talentCfg.critical;
-        return talent;
-    }
-    public personCfg GetPerson(personCfg person, TalentCfg talentCfg)
-    {
-        person.HP += talentCfg.HP;
-        person.Mana += talentCfg.Mana;
-        person.Power += talentCfg.Power;
 
-        person.aura += talentCfg.aura;
-        person.ruvia += talentCfg.ruvia;
-        person.crystal += talentCfg.crystal;
-        person.ad += talentCfg.ad;
-        person.ap += talentCfg.ap;
-        person.addef += talentCfg.addef;
-        person.dodge += talentCfg.dodge;
-        person.practice += talentCfg.practice;
-        person.critical += talentCfg.critical;
-        return person;
-    }
-
-    public PlayerData GetPlayerData(PlayerData playerData, personCfg personCfg)
-    {
-        playerData.Hp += personCfg.HP;
-        playerData.Hpmax += personCfg.HP;
-        playerData.ManaMax += personCfg.Mana;
-        playerData.Mana += personCfg.Mana;
-        playerData.ruvia += personCfg.ruvia;
-        playerData.crystal += personCfg.crystal;
-        playerData.power += personCfg.Power;
-        playerData.powerMax += personCfg.Power;
-        playerData.aura += personCfg.aura;
-        playerData.ad += personCfg.ad;
-        playerData.ap += personCfg.ap;
-        playerData.addef += personCfg.addef;
-        playerData.dodge += personCfg.dodge;
-        playerData.practice += personCfg.practice;
-        playerData.critical += personCfg.critical;
-        return playerData;
-    }
     /// <summary>
     /// 下线操作
     /// </summary>
