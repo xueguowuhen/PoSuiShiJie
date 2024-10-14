@@ -41,10 +41,9 @@ public class ShopSys
         if (shopItemCfg != null)
         {
             PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
-            BuyType buyType = reqShop.buyType;
-            float count = shopItemCfg.Price * reqShop.count;//购买总价格
+            DailyTaskSys.Instance.UpdateRewardTask(playerData);
             // 处理购买
-            ProcessPurchase(buyType, count, playerData, reqShop, msg);
+            ProcessPurchase(shopItemCfg, playerData, reqShop, msg);
         }
         else
         {
@@ -60,32 +59,40 @@ public class ShopSys
     /// <param name="playerData"> 玩家数据 </param>
     /// <param name="reqShop"> 请求购买数据 </param>
     /// <param name="msg"> 返回消息 </param>
-    private void ProcessPurchase(BuyType buyType, float count, PlayerData playerData, ReqShop reqShop, GameMsg msg)
+    private void ProcessPurchase(ShopItemCfg shopItemCfg, PlayerData playerData, ReqShop reqShop, GameMsg msg)
     {
+        float count = shopItemCfg.Price * reqShop.count;//购买总价格
         // 使用数组映射货币类型
         float[] currencies = { playerData.aura, playerData.ruvia, playerData.crystal };
-        int index = (int)buyType;
+        int index = (int)reqShop.buyType;
         float currencyAmount = currencies[index];
 
         if (currencyAmount >= count) // 判断是否有足够的货币
         {
             // 扣除货币
-            switch (buyType)
+            switch (reqShop.buyType)
             {
                 case BuyType.aura:
                     playerData.aura -= count;
+                    ref int auraDailyTask = ref DailyTaskSys.Instance.GetPlayerDailyTask(DailyTaskType.aura, playerData);
+                    auraDailyTask += (int)count;
                     break;
                 case BuyType.ruvia:
                     playerData.ruvia -= count;
+                    ref int ruviaDailyTask = ref DailyTaskSys.Instance.GetPlayerDailyTask(DailyTaskType.ruvia, playerData);
+                    ruviaDailyTask += (int)count;
                     break;
                 case BuyType.crystal:
                     playerData.crystal -= count;
+                    ref int crystalDailyTask = ref DailyTaskSys.Instance.GetPlayerDailyTask(DailyTaskType.crystal, playerData);
+                    crystalDailyTask += (int)count;
                     break;
             }
 
             // 添加到背包
             AddOrUpdateItemInBag(playerData, reqShop.id, reqShop.count);
-
+            ref int DailyTask = ref DailyTaskSys.Instance.GetPlayerDailyTask(Enum.Parse<DailyTaskType>(shopItemCfg.bagType.ToString()), playerData);
+            DailyTask += reqShop.count;
             if (!cacheSvc.UpdatePlayerData(playerData))
             {
                 msg.err = (int)Error.PerSonError;
@@ -97,13 +104,14 @@ public class ShopSys
                     Bag = playerData.Bag,
                     aura = playerData.aura,
                     ruvia = playerData.ruvia,
-                    crystal = playerData.crystal
+                    crystal = playerData.crystal,
+                    dailyTasks = playerData.dailyTasks,
                 };
             }
         }
         else
         {
-            switch (buyType)
+            switch (reqShop.buyType)
             {
                 case BuyType.aura:
                     msg.err = (int)Error.NotAuraError;

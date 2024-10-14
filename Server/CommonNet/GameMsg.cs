@@ -41,6 +41,10 @@ namespace CommonNet
         public RspFriendGift? rspFriendGift; // 好友赠送响应
         public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
+        public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
+        public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
+        public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
+        public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         public HeartbeatMessage? heartbeatMessage;
     }
     #region 登录注册相关
@@ -90,6 +94,7 @@ namespace CommonNet
         public float aura;
         public float ruvia;
         public float crystal;
+        public List<DailyTask> dailyTasks;//每日任务数据
     }
 
     public class ReqBag//使用资源
@@ -171,6 +176,24 @@ namespace CommonNet
         public bool isAgree;//同意或失败
         public List<FriendItem> FriendList;//好友列表
         public List<FriendItem> AddFriendList;//好友申请列表
+    }
+    public class ReqDailyTask//根据ID领取奖励
+    {
+        public int TaskID;
+
+    }
+    public class RspDailyTask
+    {
+        public List<DailyTask> dailyTasks;//每日任务数据
+    }
+    public class ReqRewardTask//根据ID领取活跃奖励任务
+    {
+        public int RewardTaskID;
+    }
+    public class RspRewardTask
+    {
+        public RewardTask rewardTask;
+        public List<BagList>? Bag;//背包数据
     }
     #endregion
     #region 心跳机制请求
@@ -275,11 +298,14 @@ namespace CommonNet
         public int dodge;//闪避概率
         public float practice;//修炼速度
         public int critical;//暴击概率
+        public RewardTask rewardTask;//每日任务进度
+        public List<DailyTask> dailyTasks;//每日任务数据
         public List<int>? TalentID;//当前选中的天赋ID
         public List<Talent>? TalentsData; //所有天赋数据
         public List<BagList>? Bag;//背包数据
         public List<FriendItem>? FriendList;//好友列表
         public List<FriendItem>? AddFriendList;//好友申请列表
+
         public int Taskid;
         public int SkillID;
         public int AniState;
@@ -294,7 +320,6 @@ namespace CommonNet
     {
         public int GoodsID;
         public int count;
-
     }
 
     public class Talent
@@ -314,11 +339,16 @@ namespace CommonNet
         public List<int>? FriendList;//好友id列表
         public List<int>? AddFriendList;//好友id申请列表
     }
-    public class TaskList
+    public class RewardTask
     {
-        public int TaskID;
-        public int TaskReward;
-        public int TaskFinish;
+        public List<int>? TaskProgress;//每日任务领取进度0为未领取，1为领取第一个奖励
+        public DateTime LastTime;//上次更新时间
+    }
+    public class DailyTask
+    {
+        public int TaskID;//每日任务id
+        public int TaskReward;//任务进度
+        public bool TaskFinish;//任务完成状态
     }
     public enum CMD
     {
@@ -359,6 +389,10 @@ namespace CommonNet
         RspFriendGift = 130,//好友赠送响应
         ReqFriendAddConfirm = 131,//好友添加确认请求
         RspFriendAddConfirm = 132,//好友添加确认响应
+        ReqDailyTask = 133,//领取每日任务奖励请求
+        RspDailyTask = 134,//领取每日任务奖励响应
+        ReqRewardTask = 135,//领取活跃奖励任务请求
+        RspRewardTask = 136,//领取活跃奖励任务响应
     }
     public enum Error
     {
@@ -385,7 +419,15 @@ namespace CommonNet
         FriendAddConfirmError = 1024,//好友拒绝失败
         FriendDelError = 1025,//删除好友失败
         FriendGiftError = 1026,//赠送失败
-        GoldNotEnoughError=1027,//货币不足
+        GoldNotEnoughError = 1027,//货币不足
+        NameExistError = 1028,//名字已存在
+        RewardTaskRefreshError = 1029, //本日任务已刷新
+        RewardActiveNotTaskError = 1030, //活跃度不足领取错误
+        RewardTaskError = 1031, //奖励已领取
+        DailyTaskNotError=1032, //没有该每日任务
+        DailyTaskFinishError = 1033, //该每日任务未完成
+        DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
+        RewardActiveError = 1035, //活跃度奖励领取失败
     }
 
     public enum BuyType
@@ -412,13 +454,31 @@ namespace CommonNet
     public enum BagType
     {
         consume,//消耗品
-        euqip,//装备
+        equip,//装备
+        material,//材料
+    }
+    public enum DailyTaskType
+    {
+        /// <summary>
+        /// 星晶购买补给
+        /// </summary>
+        aura,
+        /// <summary>
+        /// 云晶购买装备
+        /// </summary>
+        ruvia,//角色云晶
+        /// <summary>
+        /// 彩晶购买材料
+        /// </summary>
+        crystal, //角色彩晶
+        consume,//消耗品
+        equip,//装备
         material,//材料
     }
     public class IPCfg
     {
 
-        public const string srvIP = "192.168.1.110";
+        public const string srvIP = "10.201.19.236";
 
         public const int srvPort = 17666;
     }
