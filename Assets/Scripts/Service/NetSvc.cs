@@ -103,6 +103,18 @@ public class NetSvc : MonoBehaviour
                     LoginSys.instance.ReLoginClick();
                     GameCommon.Log("账号或密码无效", ComLogType.Error);
                     break;
+                case Error.PerSonError:
+                    GameRoot.AddTips("该角色不存在");
+                    GameCommon.Log("该角色不存在", ComLogType.Error);
+                    break;
+                case Error.TalentError:
+                    GameRoot.AddTips("天赋选择错误");
+                    GameCommon.Log("天赋选择错误", ComLogType.Error);
+                    break;
+                case Error.AcctUpdateError:
+                    GameRoot.AddTips("账号信息更新失败");
+                    GameCommon.Log("账号信息更新失败", ComLogType.Error);
+                    break;
                 case Error.NotGoodError:
                     GameRoot.AddTips("没有该物品购买失败");
                     GameCommon.Log("没有该物品ID", ComLogType.Error);
@@ -118,6 +130,14 @@ public class NetSvc : MonoBehaviour
                 case Error.NotCrystalError:
                     GameRoot.AddTips("彩晶不足购买失败");
                     GameCommon.Log("彩晶不足购买失败", ComLogType.Error);
+                    break;
+                case Error.TaskIDError://任务id错误
+                    GameRoot.AddTips("任务id错误");
+                    GameCommon.Log("任务id错误", ComLogType.Error);
+                    break;
+                case Error.DamageError://造成伤害异常
+                    GameRoot.AddTips("造成伤害异常");
+                    GameCommon.Log("造成伤害异常", ComLogType.Error);
                     break;
                 case Error.NotFriendError://好友不存在
                     GameRoot.AddTips("好友不存在");
@@ -138,6 +158,30 @@ public class NetSvc : MonoBehaviour
                 case Error.FriendExistError://好友已存在
                     GameRoot.AddTips("好友已存在");
                     GameCommon.Log("好友已存在", ComLogType.Error);
+                    break;
+                case Error.FriendRequestError://好友申请失败
+                    GameRoot.AddTips("好友申请失败");
+                    GameCommon.Log("好友申请失败", ComLogType.Error);
+                    break;
+                case Error.FriendAddConfirmError://好友拒绝失败
+                    GameRoot.AddTips("好友拒绝失败");
+                    GameCommon.Log("好友拒绝失败", ComLogType.Error);
+                    break;
+                case Error.FriendDelError://删除好友失败
+                    GameRoot.AddTips("删除好友失败");
+                    GameCommon.Log("删除好友失败", ComLogType.Error);
+                    break;
+                case Error.FriendGiftError://赠送失败
+                    GameRoot.AddTips("赠送失败");
+                    GameCommon.Log("赠送失败", ComLogType.Error);
+                    break;
+                case Error.GoldNotEnoughError://货币不足
+                    GameRoot.AddTips("货币不足");
+                    GameCommon.Log("货币不足", ComLogType.Error);
+                    break;
+                case Error.NameExistError://名字已存在
+                    GameRoot.AddTips("名字已存在");
+                    GameCommon.Log("名字已存在", ComLogType.Error);
                     break;
             }
             return;
@@ -173,6 +217,12 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.RspDelFriend:
                 MainCitySys.instance.RspDelFriend(msg);
+                break;
+            case CMD.RspRewardTask:
+                MainCitySys.instance.RspRewardTask(msg);
+                break;
+            case CMD.RspDailyTask:
+                MainCitySys.instance.RspDailyTask(msg);
                 break;
             case CMD.RspCreatePlayer:
                 BattleSys.instance.RspCreatePlayer(msg);

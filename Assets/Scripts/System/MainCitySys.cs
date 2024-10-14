@@ -24,7 +24,7 @@ public class MainCitySys : SystemRoot
     public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
     public TalentWnd talentWnd;
-
+    public DailyTaskWnd dailyTaskWnd;
     public TaskCfg GetTaskCfg()
     {
         return taskCfg;
@@ -98,6 +98,7 @@ public class MainCitySys : SystemRoot
         playerData.aura = rspShop.aura;
         playerData.ruvia = rspShop.ruvia;
         playerData.crystal = rspShop.crystal;
+        playerData.dailyTasks = rspShop.dailyTasks;
         RefreshUI();
     }
     #endregion
@@ -129,7 +130,7 @@ public class MainCitySys : SystemRoot
     {
         GameRoot.AddTips("已找到该好友");
         FriendItem friendItem = msg.rspSearchFriend.Friend;
-        FriendSearch(friendItem);
+        FriendReFresh(friendItem);
     }
     #endregion
 
@@ -155,6 +156,7 @@ public class MainCitySys : SystemRoot
             playerData.FriendList = msg.rspAddFriend.FriendList;
             // GameRoot.AddTips("好友申请发送失败");
             RefreshUI();
+            FriendReFresh();
         }
 
     }
@@ -198,7 +200,7 @@ public class MainCitySys : SystemRoot
         {
             GameRoot.AddTips("好友申请已拒绝");
         }
-        RefreshFriendList();
+        FriendReFresh();
     }
     #endregion
 
@@ -213,7 +215,29 @@ public class MainCitySys : SystemRoot
         PlayerData playerData = GameRoot.Instance.PlayerData;
         playerData.FriendList = rspDelFriend.FriendList;
         GameRoot.AddTips("删除好友成功");
-        ClickFriend();
+        FriendReFresh();
+    }
+    #endregion
+
+    #region RspRewardTask 领取奖励
+
+    public void RspRewardTask(GameMsg msg)
+    {
+        RspRewardTask rspRewardTask = msg.rspRewardTask;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.rewardTask = rspRewardTask.rewardTask;
+        playerData.Bag=rspRewardTask.Bag;
+        RefreshTaskUI();
+    }
+    #endregion
+
+    #region RspDailyTask 领取活跃度
+    public void RspDailyTask(GameMsg msg)
+    {
+        RspDailyTask rspDailyTask = msg.rspDailyTask;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.dailyTasks = rspDailyTask.dailyTasks;
+        RefreshTaskUI();
     }
     #endregion
     #endregion
@@ -331,6 +355,13 @@ public class MainCitySys : SystemRoot
             mainCityWnd.RefreshUI();
         }
     }
+    public void RefreshTaskUI()
+    {
+        if (dailyTaskWnd.gameObject.activeSelf)
+        {
+            dailyTaskWnd.RefreshTask();
+        }
+    }
 
     #region 主城系统对外开放的UI点击事件处理
 
@@ -349,6 +380,13 @@ public class MainCitySys : SystemRoot
         bagWnd.SetWndState();
     }
     /// <summary>
+    /// 每日任务界面
+    /// </summary>
+    public void EnterDailyTaskWnd()
+    {
+        dailyTaskWnd.SetWndState();
+    }
+    /// <summary>
     /// 人物界面
     /// </summary>
     public void ClickPerson()
@@ -359,40 +397,24 @@ public class MainCitySys : SystemRoot
     {
         friendsWnd.SetWndState();
     }
-    public void FriendSearch(FriendItem item)
+    /// <summary>
+    /// TODO修改刷新UI
+    /// </summary>
+    /// <param name="item"></param>
+    public void FriendReFresh(FriendItem item=null)
     {
-        if (friendsWnd.AddContent.gameObject.activeSelf)
-        {
-            friendsWnd.AddFriend(item);
-        }
-    }
-    public void ClickFriend()
-    {
-        if (friendsWnd.FriendContent.gameObject.activeSelf)
-        {
-            friendsWnd.ClickFriend();
-        }
+        friendsWnd. RefreshFriends(item);
     }
 
     public void EnterTalentWnd()
     {
         talentWnd.SetWndState();
     }
-    /// <summary>
-    /// 刷新好友列表
-    /// </summary>
-    /// <param name="item"></param>
-    public void RefreshFriendList()
-    {
-        if (friendsWnd.FriendsListBtn.gameObject.activeSelf)
-        {
-            friendsWnd.ClickFriendsList();
-        }
-    }
+
     public void ClickArena()
     {
         mainCityWnd.SetWndState(false);
         BattleSys.instance.SetBattleWnd();
-    } 
+    }
     #endregion
 }

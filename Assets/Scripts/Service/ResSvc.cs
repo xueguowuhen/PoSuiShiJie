@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,9 @@ public class ResSvc : MonoBehaviour
         InitShopItemCfg(PathDefine.ShopItemCfg);
         InitMapCfg(PathDefine.mapCfg);
         InitTaskCfg(PathDefine.TaskCfg);
+        InitTaskDailyCfg(PathDefine.TaskDailyCfg);
+        InitTaskRewardCfg(PathDefine.TaskRewardCfg);
+
         InitSkillCfg(PathDefine.SkillCfg);
         InitSkillMoveCfg(PathDefine.SkillMoveCfg);
         InitSkillActionCfg(PathDefine.SkillActionCfg);
@@ -772,7 +776,161 @@ public class ResSvc : MonoBehaviour
         return null;
     }
     #endregion
+    #region 加载任务奖励配置
+    private Dictionary<int, TaskRewardCfg> TaskRewardDic = new Dictionary<int, TaskRewardCfg>();
+    private void InitTaskRewardCfg(string Path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(Path);
+        if (!xml)
+        {
+            GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);//读取文本数据
+            XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                XmlElement ele = nodeList[i] as XmlElement;
+                if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
+                {
+                    continue;
+                }
+                int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+                TaskRewardCfg taskRewardCfg = new TaskRewardCfg()
+                {
+                    ID = ID,
+                };
+                foreach (XmlElement node in nodeList[i].ChildNodes)
+                {
+                    switch (node.Name)
+                    {
+                        case "Value":
+                            taskRewardCfg.Value = int.Parse(node.InnerText);
+                            break;
+                        case "Reward":
+                            string[] strs = node.InnerText.Split('|');
+                            taskRewardCfg.rewardItems = new List<TaskRewardItem>();
+                            for (int j = 0; j < strs.Length; j++)
+                            {
+                                string[] Reward = strs[j].Split('#');
 
+                                taskRewardCfg.rewardItems.Add(new TaskRewardItem()
+                                {
+                                    ItemID = int.Parse(Reward[0]),
+                                    Count = int.Parse(Reward[1]),
+                                });
+
+                            }
+                            break;
+                    }
+                }
+                TaskRewardDic.Add(ID, taskRewardCfg);
+            }
+        }
+    }
+
+    public int GetTaskRewardCount()
+    {
+        return TaskRewardDic.Count;
+    }
+    public TaskRewardCfg GetTaskRewardCfgData(int id)
+    {
+        TaskRewardCfg taskRewardCfg = null;
+        if (TaskRewardDic.TryGetValue(id, out taskRewardCfg))
+        {
+            return taskRewardCfg;
+        }
+        return null;
+    }
+    public TaskRewardCfg GetTaskRewardCfgListData(int id)
+    {
+        List<TaskRewardCfg> rewardItems = TaskRewardDic.Values.ToList();
+        if (id >= rewardItems.Count)
+        {
+            return null;
+        }
+        return rewardItems[id];
+    }
+    #endregion
+    #region 加载每日任务配置
+    private Dictionary<int, TaskDailyCfg> TaskDailyDic = new Dictionary<int, TaskDailyCfg>();
+    private void InitTaskDailyCfg(string Path)
+    {
+        TextAsset xml = Resources.Load<TextAsset>(Path);
+        if (!xml)
+        {
+            GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);//读取文本数据
+            XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                XmlElement ele = nodeList[i] as XmlElement;
+                if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
+                {
+                    continue;
+                }
+                int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+                TaskDailyCfg taskDailyCfg = new TaskDailyCfg()
+                {
+                    ID = ID,
+                };
+                foreach (XmlElement node in nodeList[i].ChildNodes)
+                {
+                    switch (node.Name)
+                    {
+                        case "mTitle":
+                            taskDailyCfg.mTitle = node.InnerText;
+                            break;
+                        case "mTask":
+                            taskDailyCfg.mTask = node.InnerText;
+                            break;
+                        case "Active":
+                            taskDailyCfg.Active = int.Parse(node.InnerText);
+                            break;
+                        case "Count":
+                            taskDailyCfg.Count = int.Parse(node.InnerText);
+                            break;
+
+                    }
+                }
+                TaskDailyDic.Add(ID, taskDailyCfg);
+            }
+        }
+    }
+    public int GetTaskDailyCount()
+    {
+        return TaskDailyDic.Count;
+    }
+    /// <summary>
+    /// 根据id获取活跃度
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public int GettTaskDailyActive(int id)
+    {
+        TaskDailyCfg taskDailyCfg = null;
+        if (TaskDailyDic.TryGetValue(id, out taskDailyCfg))
+        {
+            return taskDailyCfg.Active;
+        }
+        return 0;
+    }
+    public TaskDailyCfg GetTaskDailyCfgListData(int id)
+    {
+        List<TaskDailyCfg> rewardItems = TaskDailyDic.Values.ToList();
+        if (id >= rewardItems.Count)
+        {
+            return null;
+        }
+        return rewardItems[id];
+    }
+    #endregion
     #region 加载技能配置
     private Dictionary<int, SkillCfg> SkillDic = new Dictionary<int, SkillCfg>();
     private void InitSkillCfg(string Path)

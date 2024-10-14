@@ -11,19 +11,10 @@ using UnityEngine.UI;
 
 public class PersonWnd : WindowRoot
 {
-    #region one
+    #region 公开字段/属性
     public Image headImg;
     public Text TypeName;
     public Text Level;
-    //public GameObject itemOne;
-    //public RectTransform PersonItem;
-    //public GameObject PersonOne;
-    //public GameObject Close;
-    //public Button BtnClose;
-    //public Button BtnPerson;
-    #endregion
-
-    #region two
     public Image ExpSlider;
     public Text ExpPercent;
     public Text ExpText;
@@ -32,11 +23,11 @@ public class PersonWnd : WindowRoot
     public Text HpText;
     public Image HpSlider;
     public GameObject AttributeContent;
-    private GameObjectPool pool;
     public Button BtnClose;
-    //public Slider slider;
-    //public Slider HpSlider;
-    //public Slider MagicSlider;
+    #endregion
+
+    #region 私有字段
+    private GameObjectPool pool;
     #endregion
     protected override void InitWnd()
     {

@@ -107,14 +107,14 @@ internal class DBMgr
                                     dodge = reader.GetInt32("dodge"),
                                     practice = reader.GetInt32("practice"),
                                     critical = reader.GetInt32("critical"),
+                                    rewardTask=new RewardTask(),
                                     TalentID = new List<int>(),
                                     TalentsData = new List<Talent>(),
                                     Bag = new List<BagList>(),
                                     Taskid = reader.GetInt32("Taskid"),
+                                    dailyTasks = new List<DailyTask>(),
                                     FriendList = new List<FriendItem>(),
                                     AddFriendList = new List<FriendItem>(),
-                                    
-
                                 };
                                 string[] powers = reader.GetString("power").Split("|");
                                 playerData.power = int.Parse(powers[0]);
@@ -133,7 +133,7 @@ internal class DBMgr
                                     .ToList();
                                 // 解析 TalentsData
                                 string[] talent = reader.GetString("TalentsData").Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
-                                for(int i = 0; i < talent.Length; i++)
+                                for (int i = 0; i < talent.Length; i++)
                                 {
                                     string[] strs = talent[i].Split("#");
                                     int result;
@@ -155,9 +155,34 @@ internal class DBMgr
                                     if (int.TryParse(strs[0], out result))
                                     {
                                         playerData.Bag.Add(new BagList
-                                        { 
+                                        {
                                             GoodsID = int.Parse(strs[0]),
                                             count = int.Parse(strs[1]),
+                                        });
+                                    }
+                                }
+
+                                string[] RewardTask = reader.GetString("RewardTask").Split("|");
+                                string[] reward= RewardTask[0].Split("#");
+                                playerData.rewardTask.TaskProgress=new List<int>();
+                                for (int i = 0; i < reward.Length; i++)
+                                {
+                                    playerData.rewardTask.TaskProgress.Add(int.Parse(reward[i]));
+                                }
+                                playerData.rewardTask.LastTime = DateTime.Parse(RewardTask[1]);
+                                //解析DailyTask
+                                string[] DailyTask = reader.GetString("DailyTask").Split("|").Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for (int i = 0; i < DailyTask.Length; i++)
+                                {
+                                    string[] strs = DailyTask[i].Split("#");
+                                    int result;
+                                    if (int.TryParse(strs[0], out result))
+                                    {
+                                        playerData.dailyTasks.Add(new DailyTask
+                                        {
+                                            TaskID = int.Parse(strs[0]),//每日任务id
+                                            TaskReward = int.Parse(strs[1]),//任务进度
+                                            TaskFinish = bool.Parse(strs[2]),//任务完成状态
                                         });
                                     }
                                 }
@@ -340,8 +365,8 @@ internal class DBMgr
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM account WHERE acct = @acct", conn);
-                cmd.Parameters.AddWithValue("acct", name);
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM account WHERE name = @name", conn);
+                cmd.Parameters.AddWithValue("name", name);
 
                 // 执行查询并获取结果
                 int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -350,7 +375,7 @@ internal class DBMgr
             catch (Exception ex)
             {
                 GameCommon.Log("CheckName Error: " + ex, ComLogType.Error);
-                return true; 
+                return true;
             }
         }
     }
@@ -404,7 +429,7 @@ internal class DBMgr
                 MySqlCommand cmd = new MySqlCommand(
                 "update account set name=@name,type=@type,exp=@exp,level=@level,power=@power,aura=@aura," +
                 "ruvia=@ruvia,crystal=@crystal,hp=@hp,mana=@mana,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,practice=@practice," +
-                "critical=@critical,TalentID=@TalentID,Bag=@Bag," +
+                "critical=@critical,TalentID=@TalentID,Bag=@Bag,RewardTask=@RewardTask,DailyTask=@DailyTask," +
                 "Taskid=@Taskid,Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
                 cmd.Parameters.AddWithValue("id", playerData.id);
                 cmd.Parameters.AddWithValue("name", playerData.name);
@@ -439,6 +464,37 @@ internal class DBMgr
                 }
                 cmd.Parameters.AddWithValue("Bag", Bag);
                 cmd.Parameters.AddWithValue("Taskid", playerData.Taskid);
+                string RewardTask = "";
+                if (playerData.rewardTask != null)
+                {
+
+                    foreach (var kvp in playerData.rewardTask.TaskProgress)
+                    {
+                        RewardTask += kvp;
+                        RewardTask += "#";
+                    }
+                    //去掉最后一个字符
+                    if (RewardTask.Length > 0)
+                    {
+                        RewardTask = RewardTask.Substring(0, RewardTask.Length - 1);
+                    }
+                }
+                cmd.Parameters.AddWithValue("RewardTask", $"{RewardTask}|{playerData.rewardTask.LastTime}");
+                string DailyTask = "";
+                if (playerData.dailyTasks != null)
+                {
+
+                    foreach (var kvp in playerData.dailyTasks)
+                    {
+                        DailyTask += kvp.TaskID;
+                        DailyTask += "#";
+                        DailyTask += kvp.TaskReward;
+                        DailyTask += "#";
+                        DailyTask += kvp.TaskFinish;
+                        DailyTask += "|";
+                    }
+                }
+                cmd.Parameters.AddWithValue("DailyTask", DailyTask);
                 cmd.Parameters.AddWithValue("Friend", string.Join("|", playerData.FriendList.Select(f => f.id)));
                 cmd.Parameters.AddWithValue("AddFriend", string.Join("|", playerData.AddFriendList.Select(f => f.id)));
                 cmd.ExecuteNonQuery();

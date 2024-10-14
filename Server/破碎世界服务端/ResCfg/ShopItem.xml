@@ -2,7 +2,7 @@
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<item ID="40001">
 		<mName>血药瓶</mName>
-		<mInfo>回血的药</mInfo>
+		<mInfo>恢复少量生命值，迅速治疗伤势。</mInfo>
 		<Price>100</Price>
 		<type>consume</type>
 		<quantity>1</quantity>
@@ -55,5 +55,37 @@
 		<type>material</type>
 		<quantity>3</quantity>
 		<Img>lingzhi</Img>
+	</item>
+	<item ID="40008">
+		<mName>普通护符</mName>
+		<mInfo>使用后可提升攻击</mInfo>
+		<Price>150</Price>
+		<type>consume</type>
+		<quantity>3</quantity>
+		<Img>hufu</Img>
+	</item>
+	<item ID="40009">
+		<mName>天地书</mName>
+		<mInfo>高级强化材料</mInfo>
+		<Price>200</Price>
+		<type>material</type>
+		<quantity>3</quantity>
+		<Img>tiandishu</Img>
+	</item>
+	<item ID="40010">
+		<mName>星辰馈赠</mName>
+		<mInfo>打开后可获得大量稀有道具，尊贵象征。</mInfo>
+		<Price>200</Price>
+		<type>consume</type>
+		<quantity>4</quantity>
+		<Img>xingchenkuizeng</Img>
+	</item>
+	<item ID="40011">
+		<mName>神秘福袋</mName>
+		<mInfo> 使用后随机获得一些道具，充满惊喜。</mInfo>
+		<Price>132</Price>
+		<type>consume</type>
+		<quantity>2</quantity>
+		<Img>shenmifudai</Img>
 	</item>
 </root>
