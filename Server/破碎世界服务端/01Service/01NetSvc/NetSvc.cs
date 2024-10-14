@@ -100,6 +100,12 @@ public class NetSvc
             case CMD.ReqTask:
                 TaskSys.Instance.ReqTask(pack);
                 break;
+            case CMD.ReqDailyTask:
+                DailyTaskSys.Instance.ReqDailyTask(pack);
+                break;
+            case CMD.ReqRewardTask:
+                DailyTaskSys.Instance.ReqRewardTask(pack);
+                break;
             case CMD.ReqTransform:
                 BattleSys.Instance.ReqTransform(pack);
                 break;

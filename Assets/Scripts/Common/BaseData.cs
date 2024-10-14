@@ -78,7 +78,23 @@ public class TaskCfg : BaseData<TalentCfg>
     public int crystal;
     public int exp;
 }
-
+public class TaskRewardCfg : BaseData<TaskRewardCfg>
+{
+    public int Value;//每日奖励的目标值
+    public List<TaskRewardItem> rewardItems;
+}
+public class TaskRewardItem
+{
+    public int ItemID;  //奖励物品ID
+    public int Count;  //奖励物品数量
+}
+public class TaskDailyCfg : BaseData<TaskDailyCfg>
+{
+    public string mTitle;//任务标题
+    public string mTask;//任务内容
+    public int Active;
+    public int Count;
+}
 public class SkillCfg : BaseData<SkillCfg>
 {
     public string mName;//技能名

@@ -180,6 +180,10 @@ public class CacheSvc
         bool scct = onLineSessionDic.Remove(server);
         GameCommon.Log("该账号下线：" + scct);
     }
+    public bool CheckName(string name)
+    {
+        return dBMgr.CheckName(name);
+    }
     public bool UpdatePlayerData(PlayerData playerData)
     {
         return dBMgr.UpdatePlayerData(playerData);

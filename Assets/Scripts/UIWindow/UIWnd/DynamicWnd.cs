@@ -27,7 +27,7 @@ public class DynamicWnd : WindowRoot
     protected override void SetGameObject()
     {
         tipsAni = SetTranFind(PathDefine.TextTips).GetComponent<Animation>();
-        tipsText = SetTranFind(PathDefine.TextTips).GetComponent<Text>();
+        //tipsText = SetTranFind(PathDefine.TextTips).GetComponent<Text>();
         hpItemRoot = SetTranFind(PathDefine.hpItemRoot);
     }
     public void AddTips(string tips)
@@ -80,14 +80,14 @@ public class DynamicWnd : WindowRoot
     }
     public void SetTips(string tips)
     {
-        SetActive(tipsText);
+        SetActive(tipsAni.gameObject);
         SetText(tipsText, tips);
 
         AnimationClip clip = tipsAni.GetClip("AniTips");
         tipsAni.Play();
         timerSvc.AddTimeTask((int tid) =>
         {
-            SetActive(tipsText, false);
+            SetActive(tipsAni.gameObject, false);
             tipsShow = false;
         }, clip.length, TimeUnit.Second);
     }
