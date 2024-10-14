@@ -54,8 +54,9 @@ public class LoginSys
             else
             {
                 List<PlayerData> playerDataList = cacheSvc.GetPlayerData(playerData);
-                if (playerDataList.Count > 0)
-                    GameCommon.Log(playerDataList[0].AniState.ToString());
+                //if (playerDataList.Count > 0)
+                //    GameCommon.Log(playerDataList[0].AniState.ToString());
+                DailyTaskSys.Instance.UpdateRewardTask(playerData);
                 msg.rspLogin = new RspLogin
                 {
                     playerData = playerData,
@@ -127,50 +128,70 @@ public class LoginSys
         else
         {
             //TODO校验玩家名称不可重复
-            //累加天赋数据
-            List<int> TalentIDList = reqCreateGame.TalentIDList;
-            for (int i = 0; i < TalentIDList.Count; i++)
+            if (!cacheSvc.CheckName(reqCreateGame.name))
             {
-                TalentCfg talentCfg = cfgSvc.GetTalentCfgData(TalentIDList[i]);
-                if (talentCfg == null)
+                if (SetPlayerDataTalent(reqCreateGame, msg, playerData, personCfg, talentCount))
                 {
-                    msg.err = (int)Error.PerSonError;
-                    break;
+                    cacheSvc.AcctOnline(pack.session, playerData);
+                    ReqCreatePlayer(pack, playerData);
                 }
-                else
-                {
-                    talentCount = GetTalent(talentCount, talentCfg);
-                }
-            }
-            //累加进玩家属性
-            personCfg = GetPerson(personCfg, talentCount);
-            //更新玩家数据
-
-            playerData.name = reqCreateGame.name;
-            playerData.TalentID = TalentIDList;
-            playerData.level = 1;
-            playerData.type = reqCreateGame.id;
-            playerData.Taskid = cfgSvc.GetTaskCfgOne();
-            playerData.FriendList=new List<FriendItem>();
-            playerData.AddFriendList=new List<FriendItem>();
-            playerData = GetPlayerData(playerData, personCfg);
-            if (!cacheSvc.UpdatePlayerData(playerData))
-            {
-                msg.err = (int)Error.PerSonError;
             }
             else
             {
-                List<PlayerData> playerDataList = cacheSvc.GetPlayerData(playerData);
-                msg.rspCreateGame = new RspCreateGame
-                {
-                    playerData = playerData,
-                    playerDataList = playerDataList,
-                };
-                cacheSvc.AcctOnline(pack.session, playerData);
-                ReqCreatePlayer(pack, playerData);
+                msg.err = (int)Error.NameExistError;
             }
         }
         pack.session.SendMsg(msg);
+    }
+    private bool SetPlayerDataTalent(ReqCreateGame reqCreateGame, GameMsg msg, PlayerData playerData, personCfg personCfg, TalentCfg talentCount)
+    {
+        //累加天赋数据
+        List<int> TalentIDList = reqCreateGame.TalentIDList;
+        for (int i = 0; i < TalentIDList.Count; i++)
+        {
+            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(TalentIDList[i]);
+            if (talentCfg == null)
+            {
+                msg.err = (int)Error.PerSonError;
+                break;
+            }
+            else
+            {
+                talentCount = GetTalent(talentCount, talentCfg);
+                talentCount = GetTalent(talentCount, talentCfg);
+            }
+        }
+        //累加进玩家属性
+        personCfg = GetPerson(personCfg, talentCount);
+        //更新玩家数据
+
+        playerData.name = reqCreateGame.name;
+        playerData.TalentID = TalentIDList;
+        playerData.level = 1;
+        playerData.type = reqCreateGame.id;
+        playerData.Taskid = cfgSvc.GetTaskCfgOne();
+        playerData.rewardTask = new RewardTask();
+        playerData.rewardTask.TaskProgress = new List<int>(new int[cfgSvc.GetTaskRewardCount()]);//任务进度初始化
+        playerData.rewardTask.LastTime = DateTime.Now;
+        playerData.dailyTasks = cfgSvc.GetTaskDailyCfgData();
+        playerData.FriendList = new List<FriendItem>();
+        playerData.AddFriendList = new List<FriendItem>();
+        playerData = GetPlayerData(playerData, personCfg);
+        if (!cacheSvc.UpdatePlayerData(playerData))
+        {
+            msg.err = (int)Error.PerSonError;
+            return false;
+        }
+        else
+        {
+            List<PlayerData> playerDataList = cacheSvc.GetPlayerData(playerData);
+            msg.rspCreateGame = new RspCreateGame
+            {
+                playerData = playerData,
+                playerDataList = playerDataList,
+            };
+            return true;
+        }
     }
     /// <summary>
     /// 广播创建角色通知

@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 public class FriendsWnd : WindowRoot
 {
@@ -61,6 +62,9 @@ public class FriendsWnd : WindowRoot
         pool.cullDelay = 2;
         pool.Init();
     }
+    /// <summary>
+    /// 点击好友按钮
+    /// </summary>
     public void ClickFriend()
     {
         SetWindowVisibility(FriendObj, FriendBtn.transform);
@@ -76,11 +80,17 @@ public class FriendsWnd : WindowRoot
             }
         }
     }
+    /// <summary>
+    /// 点击添加按钮
+    /// </summary>
     private void ClickAdd()
     {
         SetWindowVisibility(AddObj, AddBtn.transform);
         ClearFriend(AddContent);
     }
+    /// <summary>
+    /// 点击好友请求列表按钮
+    /// </summary>
     public void ClickFriendsList()
     {
         SetWindowVisibility(FriendsListObj, FriendsListBtn.transform);
@@ -99,6 +109,10 @@ public class FriendsWnd : WindowRoot
     public void AddFriend(FriendItem friendItem)
     {
         ClearFriend(AddContent);
+        if (friendItem == null)
+        {
+            return;
+        }
         FriendsItem item = CreateFriends(friendItem, AddContent);
         PlayerData playerData = GameRoot.Instance.PlayerData;
         bool isFriend = playerData.FriendList.Any(f => f.id == friendItem.id);
@@ -177,6 +191,25 @@ public class FriendsWnd : WindowRoot
         Vector3 newPosition = pointer.transform.position;
         newPosition.y = targetPointer.position.y;
         pointer.transform.position = newPosition;
+    }
+
+    public void RefreshFriends(FriendItem item)
+    {
+        // 创建一个字典，将需要检查的内容及其对应的操作关联起来
+        var actions = new Dictionary<GameObject, UnityAction>
+{
+    { AddObj.gameObject, () => AddFriend(item) },
+    { FriendObj.gameObject, ClickFriend },
+    { FriendsListObj.gameObject, ClickFriendsList },
+};
+        // 遍历字典，执行对应的操作
+        foreach (var action in actions)
+        {
+            if (action.Key.activeSelf)
+            {
+                action.Value();
+            }
+        }
     }
 
     private void ClickClose()

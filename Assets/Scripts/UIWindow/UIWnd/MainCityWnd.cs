@@ -29,7 +29,7 @@ public class MainCityWnd : WindowRoot
     #region function
     //public Text TaskText;
     public Button StartGameBtn;//开始游戏
-    public Button TaskButton;//任务
+    public Button DailyTaskButton;//任务
     //public GameObject TaskPro;
     //public Button SignBtn;
     public Button TalentBtn;//天赋
@@ -85,7 +85,7 @@ public class MainCityWnd : WindowRoot
         #region function
         //TaskText = GetText(PathDefine.Task);
         //TaskButton = GetButton(PathDefine.Task);
-        //AddListener(TaskButton, ClickTaskBtn);
+        AddListener(DailyTaskButton, ClickDailyTask);
         //TaskPro =GetGameObject(PathDefine.TaskPro);
         //SignBtn = GetButton(PathDefine.SignBtn);
         //AchivementBtn = GetButton(PathDefine.AchivementBtn);
@@ -196,6 +196,12 @@ public class MainCityWnd : WindowRoot
     {
         MainCitySys.instance.EnterTalentWnd();
     }
+
+    private void ClickDailyTask()
+    {
+        MainCitySys.instance.EnterDailyTaskWnd();
+    }
+
     /// <summary>
     /// 点击开始游戏界面
     /// </summary>
