@@ -124,7 +124,7 @@ public class CfgSvc
     private void InitTalentCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(Path + "TalentList.xml");//读取文本数据
+        doc.Load(Path + "Talent.xml");//读取文本数据
         //doc.Load(@"ResCfg/TalentList.xml");//读取文本数据
         XmlNodeList nodeList = doc.SelectSingleNode(("root"))!.ChildNodes;//选择根节点为root的节点
         for (int i = 0; i < nodeList.Count; i++)
@@ -143,46 +143,12 @@ public class CfgSvc
             {
                 switch (node.Name)
                 {
-                    case "HP":
-                        talentCfg.HP = int.Parse(node.InnerText);
+                    case "Attribute":
+                        talentCfg.Attribute = node.InnerText;
                         break;
-                    case "Mana":
-                        talentCfg.Mana = int.Parse(node.InnerText);
+                    case "Value":
+                        talentCfg.Value = float.Parse(node.InnerText);
                         break;
-                    case "Power":
-                        talentCfg.Power = int.Parse(node.InnerText);
-                        break;
-                    case "aura":
-                        talentCfg.aura = int.Parse(node.InnerText);
-                        break;
-                    case "ruvia":
-                        talentCfg.ruvia = int.Parse(node.InnerText);
-                        break;
-                    case "crystal":
-                        talentCfg.crystal = int.Parse(node.InnerText);
-                        break;
-                    case "ad":
-                        talentCfg.ad = int.Parse(node.InnerText);
-                        break;
-                    case "ap":
-                        talentCfg.ap = int.Parse(node.InnerText);
-                        break;
-                    case "addef":
-                        talentCfg.addef = int.Parse(node.InnerText);
-                        break;
-                    case "adpdef":
-                        talentCfg.adpdef = int.Parse(node.InnerText);
-                        break;
-                    case "dodge":
-                        talentCfg.dodge = int.Parse(node.InnerText);
-                        break;
-                    case "practice":
-                        talentCfg.practice = float.Parse(node.InnerText);
-                        break;
-                    case "critical":
-                        talentCfg.critical = int.Parse(node.InnerText);
-                        break;
-
                 }
             }
             TalentDic.Add(ID, talentCfg);
@@ -197,9 +163,16 @@ public class CfgSvc
         }
         return null!;
     }
-    public int GetTalentCount()
+    public int[] GetTalentsId()
     {
-        return TalentDic.Count;
+        int[] temp = new int[TalentDic.Count];
+        int j = 0;
+        foreach(KeyValuePair<int,TalentCfg> i in TalentDic)
+        {
+            temp[j] = i.Key;
+            j++;
+        }
+        return temp;
     }
     #endregion
     #region 加载商店物品配置
@@ -254,6 +227,7 @@ public class CfgSvc
         return null;
     }
     #endregion
+
     #region 加载任务配置
     private Dictionary<int, TaskCfg> TaskDic = new Dictionary<int, TaskCfg>();
     private void InitTaskCfg()
@@ -302,6 +276,7 @@ public class CfgSvc
         return TaskDic.FirstOrDefault().Value.ID;
     }
     #endregion
+
     #region 加载任务奖励配置
     private Dictionary<int, TaskRewardCfg> TaskRewardDic = new Dictionary<int, TaskRewardCfg>();
     private void InitTaskRewardCfg()
@@ -383,6 +358,7 @@ public class CfgSvc
         return TaskRewardDic.Count;
     }
     #endregion
+
     #region 加载每日任务配置
     private Dictionary<int, TaskDailyCfg> TaskDailyDic = new Dictionary<int, TaskDailyCfg>();
     private void InitTaskDailyCfg()
@@ -462,7 +438,7 @@ public class CfgSvc
     #endregion
     public class personCfg : BaseData<personCfg>
     {
-        public string type;
+        public string ?type;
         public int HP;
         public int Mana;
         public int Power;
@@ -477,21 +453,10 @@ public class CfgSvc
         public float practice;
         public int critical;
     }
-    public class TalentCfg : BaseData<personCfg>
+    public class TalentCfg : BaseData<TalentCfg>
     {
-        public int HP;
-        public int Mana;
-        public int Power;
-        public int aura;
-        public int ruvia;
-        public int crystal;
-        public int ad;
-        public int ap;
-        public int addef;
-        public int adpdef;
-        public int dodge;
-        public float practice;
-        public int critical;
+            public string ?Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
+            public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
     }
     public class TaskCfg : BaseData<TaskCfg>
     {

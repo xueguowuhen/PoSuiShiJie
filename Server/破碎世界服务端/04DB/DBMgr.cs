@@ -192,14 +192,16 @@ internal class DBMgr
                                 //好友申请列表
                                 string[] AddFriend = reader.GetString("AddFriend").Split("|");
                                 AddFriendsToPlayerData(playerData.AddFriendList, AddFriend.ToList());
-
-
                             }//账号存在内容
                             else //存在账号，但没有创建角色
                             {
                                 playerData = new PlayerData
                                 {
                                     id = reader.GetInt32("id"),
+                                    TalentsData = new List<Talent>
+                                    {
+
+                                    }
                                 };
                             }
                             return playerData;
