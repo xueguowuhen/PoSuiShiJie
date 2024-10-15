@@ -88,6 +88,7 @@ public class MainCitySys : SystemRoot
     }
 
     #region 服务器消息处理
+
     #region RspShop 购买成功
     public void RspShop(GameMsg msg)
     {
@@ -240,6 +241,26 @@ public class MainCitySys : SystemRoot
         RefreshTaskUI();
     }
     #endregion
+
+
+    #region RspTalentUpHandler 处理天赋升级的服务器响应
+    /// <summary>
+    /// 处理天赋升级的服务器响应
+    /// </summary>
+    public void RspTalentUpHandler(GameMsg msg)
+    {
+        RspTalentUp rspTalentUp = msg.rspTalentUp;
+        if (rspTalentUp.IsUpSuccess)
+        {
+            Debug.Log("升级成功");
+        }
+        else
+        {
+            Debug.Log("升级失败");
+        }
+    } 
+    #endregion
+
     #endregion
 
     #region 玩家移动相关
@@ -340,10 +361,6 @@ public class MainCitySys : SystemRoot
     //    return list;
     //}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// 打开对话界面
     public void OpenGuideWnd()
     {
         guideWnd.SetWndState();

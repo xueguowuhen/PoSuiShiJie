@@ -173,7 +173,6 @@ public class LoginSys
             playerData.TalentsData.Add(new Talent() { TalentID = talentsData[i], Level = 0 });
         }
         //更新玩家数据
-
         playerData.name = reqCreateGame.name;
         playerData.level = 1;
         playerData.type = reqCreateGame.id;

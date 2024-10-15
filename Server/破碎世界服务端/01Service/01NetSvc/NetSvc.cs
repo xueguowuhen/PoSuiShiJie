@@ -118,6 +118,9 @@ public class NetSvc
             case CMD.ReqRevive:
                 BattleSys.Instance.ReqRevive(pack);
                 break;
+            case CMD.ReqTalentUp:
+                TalentSys.Instance.ReqTalentUpHandle(pack);
+                break;
         }
     }
 
