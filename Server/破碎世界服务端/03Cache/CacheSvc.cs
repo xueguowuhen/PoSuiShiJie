@@ -192,4 +192,13 @@ public class CacheSvc
     {
         return dBMgr.UpdateFriend(friendItem);
     }
+
+    /// <summary>
+    /// 检查并升级天赋
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel)
+    {
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel);
+    }
 }

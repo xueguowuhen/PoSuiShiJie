@@ -11,6 +11,7 @@ using CommonNet;
 using System.Data;
 using static CfgSvc;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 
 internal class DBMgr
 {
@@ -107,7 +108,7 @@ internal class DBMgr
                                     dodge = reader.GetInt32("dodge"),
                                     practice = reader.GetInt32("practice"),
                                     critical = reader.GetInt32("critical"),
-                                    rewardTask=new RewardTask(),
+                                    rewardTask = new RewardTask(),
                                     TalentID = new List<int>(),
                                     TalentsData = new List<Talent>(),
                                     Bag = new List<BagList>(),
@@ -125,13 +126,13 @@ internal class DBMgr
                                 string[] Manas = reader.GetString("Mana").Split("|");
                                 playerData.Mana = int.Parse(Manas[0]);
                                 playerData.ManaMax = int.Parse(Manas[1]);
-                                // 解析 TalentID，过滤掉空字符串
+                                // 解析 TalentID，过滤掉空字符串 
                                 playerData.TalentID = reader.GetString("TalentID")
                                     .Split('|')
-                                    .Where(t => !string.IsNullOrEmpty(t)) // 过滤掉空字符串
+                                    .Where(t => !string.IsNullOrEmpty(t)) // 过滤掉空字符串 
                                     .Select(int.Parse)
                                     .ToList();
-                                // 解析 TalentsData
+                                // 解析 TalentsData 
                                 string[] talent = reader.GetString("TalentsData").Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
                                 for (int i = 0; i < talent.Length; i++)
                                 {
@@ -163,8 +164,8 @@ internal class DBMgr
                                 }
 
                                 string[] RewardTask = reader.GetString("RewardTask").Split("|");
-                                string[] reward= RewardTask[0].Split("#");
-                                playerData.rewardTask.TaskProgress=new List<int>();
+                                string[] reward = RewardTask[0].Split("#");
+                                playerData.rewardTask.TaskProgress = new List<int>();
                                 for (int i = 0; i < reward.Length; i++)
                                 {
                                     playerData.rewardTask.TaskProgress.Add(int.Parse(reward[i]));
@@ -404,7 +405,6 @@ internal class DBMgr
                 cmd.Parameters.AddWithValue("Friend", string.Join("|", friendItem.FriendList.Select(f => f)));
                 cmd.Parameters.AddWithValue("AddFriend", string.Join("|", friendItem.AddFriendList.Select(f => f)));
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception e)
             {
@@ -413,6 +413,81 @@ internal class DBMgr
             }
             return true;
         }
+    }
+
+    /// <summary>
+    /// 检查并更新天赋数据
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel)
+    {
+        using (var conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                string talentsdata = "";
+                conn.Open();
+                MySqlCommand cmd1 = new MySqlCommand("SELECT TalentsData FROM account WHERE id=@id", conn);
+                cmd1.Parameters.AddWithValue("id", id);
+                using (MySqlDataReader reader = cmd1.ExecuteReader())
+                {
+                    Console.WriteLine(reader.Read());
+                    talentsdata = reader.GetString("TalentsData");
+                }
+                Talent[] talents = ParseTalentDataFromMysql(talentsdata);
+                for (int i = 0; i < talents.Length; i++)
+                {
+                    if (talentID == talents[i].TalentID && talentLevel - talents[i].Level == 1)
+                    {
+                        talents[i].Level++;
+                        string Talents = "";
+                        foreach (Talent j in talents)
+                        {
+                            Talents += j.TalentID;
+                            Talents += "#";
+                            Talents += j.Level;
+                            Talents += "|";
+                        }
+                        MySqlCommand cmd2 = new MySqlCommand("UPDATE account set TalentsData=@data WHERE id=@id", conn);
+                        cmd2.Parameters.AddWithValue("data", Talents);
+                        cmd2.Parameters.AddWithValue("id", id);
+                        cmd2.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            catch (Exception e)
+            {
+                GameCommon.Log("CheckAndUpdateTalent:" + e, ComLogType.Error);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 解析数据库天赋数据
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public Talent[] ParseTalentDataFromMysql(string data)
+    {
+        string[] talent = data.Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
+        List<Talent> talents = new List<Talent>();
+        for (int i = 0; i < talent.Length; i++)
+        {
+            string[] strs = talent[i].Split("#");
+            if (int.TryParse(strs[0], out int result))
+            {
+                talents.Add(new Talent
+                {
+                    TalentID = int.Parse(strs[0]),
+                    Level = int.Parse(strs[1]),
+                });
+            }
+        }
+        return talents.ToArray();
     }
 
     /// <summary>
@@ -431,7 +506,7 @@ internal class DBMgr
                 MySqlCommand cmd = new MySqlCommand(
                 "update account set name=@name,type=@type,exp=@exp,level=@level,power=@power,aura=@aura," +
                 "ruvia=@ruvia,crystal=@crystal,hp=@hp,mana=@mana,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,practice=@practice," +
-                "critical=@critical,TalentID=@TalentID,Bag=@Bag,RewardTask=@RewardTask,DailyTask=@DailyTask," +
+                "critical=@critical,TalentID=@TalentID,TalentsData=@TalentsData,Bag=@Bag,RewardTask=@RewardTask,DailyTask=@DailyTask," +
                 "Taskid=@Taskid,Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
                 cmd.Parameters.AddWithValue("id", playerData.id);
                 cmd.Parameters.AddWithValue("name", playerData.name);
@@ -451,11 +526,21 @@ internal class DBMgr
                 cmd.Parameters.AddWithValue("power", $"{playerData.power}|{playerData.powerMax}");
                 cmd.Parameters.AddWithValue("hp", $"{playerData.Hp}|{playerData.Hpmax}");
                 cmd.Parameters.AddWithValue("mana", $"{playerData.Mana}|{playerData.ManaMax}");
-                cmd.Parameters.AddWithValue("TalentID", string.Join("#", playerData.TalentID));
+                cmd.Parameters.AddWithValue("TalentID", string.Join("|", playerData.TalentID));
+                //拼接天赋数据
+                string Talents = "";
+                foreach (Talent i in playerData.TalentsData)
+                {
+                    Talents += i.TalentID;
+                    Talents += "#";
+                    Talents += i.Level;
+                    Talents += "|";
+                }
+                cmd.Parameters.AddWithValue("TalentsData", Talents);
+                //拼接背包数据
                 string Bag = "";
                 if (playerData.Bag != null)
                 {
-
                     foreach (var kvp in playerData.Bag)
                     {
                         Bag += kvp.GoodsID;
@@ -465,7 +550,10 @@ internal class DBMgr
                     }
                 }
                 cmd.Parameters.AddWithValue("Bag", Bag);
+
                 cmd.Parameters.AddWithValue("Taskid", playerData.Taskid);
+
+                //拼接每日奖励数据
                 string RewardTask = "";
                 if (playerData.rewardTask != null)
                 {
@@ -482,6 +570,7 @@ internal class DBMgr
                     }
                 }
                 cmd.Parameters.AddWithValue("RewardTask", $"{RewardTask}|{playerData.rewardTask.LastTime}");
+
                 string DailyTask = "";
                 if (playerData.dailyTasks != null)
                 {

@@ -41,11 +41,17 @@ namespace CommonNet
         public RspFriendGift? rspFriendGift; // 好友赠送响应
         public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
+
+        //每日任务的请求与响应
         public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
         public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
         public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
         public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         public HeartbeatMessage? heartbeatMessage;
+
+        //天赋相关请求与响应
+        public ReqTalentUp? reqTalentUp;
+        public RspTalentUp? rspTalentUp;
     }
     #region 登录注册相关
     public class ReqLogin
@@ -80,7 +86,10 @@ namespace CommonNet
         public List<PlayerData> ?playerDataList;
     }
     #endregion
+
     #region 城镇系统请求
+
+    #region 商店相关请求与响应
     public class ReqShop
     {
         public BuyType buyType;
@@ -96,6 +105,7 @@ namespace CommonNet
         public List<DailyTask> dailyTasks;//每日任务数据
     }
 
+    #endregion
     public class ReqBag//使用资源
     {
         public int id;
@@ -105,17 +115,8 @@ namespace CommonNet
     {
         public PlayerData playerData;
     }
-    public class ReqTask
-    {
-        public int Taskid;
-    }
-    public class RspTask
-    {
-        public int Taskid;
-        public float aura;
-        public int lv;
-        public int exp;
-    }
+    #region 好友请求与响应
+
     public class ReqSearchFriend//好友搜索
     {
         public string name;
@@ -176,6 +177,20 @@ namespace CommonNet
         public List<FriendItem> FriendList;//好友列表
         public List<FriendItem> AddFriendList;//好友申请列表
     }
+    #endregion
+
+    #region 每日任务相关请求与响应
+    public class ReqTask
+    {
+        public int Taskid;
+    }
+    public class RspTask
+    {
+        public int Taskid;
+        public float aura;
+        public int lv;
+        public int exp;
+    }
     public class ReqDailyTask//根据ID领取奖励
     {
         public int TaskID;
@@ -194,13 +209,47 @@ namespace CommonNet
         public RewardTask rewardTask;
         public List<BagList>? Bag;//背包数据
     }
+    public class RewardTask
+    {
+        public List<int>? TaskProgress;//每日任务领取进度0为未领取，1为领取第一个奖励
+        public DateTime LastTime;//上次更新时间
+    }
     #endregion
+
+    #region 天赋相关请求与响应
+    /// <summary>
+    /// 天赋升级请求
+    /// </summary>
+    public class ReqTalentUp
+    {
+        public int TalentId;
+        public int NextLevel;
+    }
+    /// <summary>
+    /// 天赋升级响应
+    /// </summary>
+    public class RspTalentUp
+    {
+        public bool IsUpSuccess;
+        public int ruvia; //升级后剩余的云晶 用于比对客户端数据
+    }
+    /// <summary>
+    /// 天赋切换请求
+    /// </summary>
+    public class ReqChangeTalent
+    {
+        //public int
+    }
+    #endregion
+    #endregion
+
     #region 心跳机制请求
     public class HeartbeatMessage
     {
         public string Heartbeat = "Heartbeat";
     }
     #endregion
+
     #region 战斗同步请求
 
     public class ReqTransform
@@ -338,11 +387,7 @@ namespace CommonNet
         public List<int>? FriendList;//好友id列表
         public List<int>? AddFriendList;//好友id申请列表
     }
-    public class RewardTask
-    {
-        public List<int>? TaskProgress;//每日任务领取进度0为未领取，1为领取第一个奖励
-        public DateTime LastTime;//上次更新时间
-    }
+
     public class DailyTask
     {
         public int TaskID;//每日任务id
@@ -393,7 +438,10 @@ namespace CommonNet
         ReqRewardTask = 135,//领取活跃奖励任务请求
         RspRewardTask = 136,//领取活跃奖励任务响应
         //天赋相关
-        //RspRefresh
+        ReqTalentUp = 200, //天赋升级请求
+        RspTalentUp = 201, //天赋升级响应
+        ReqChangeTalent = 202, //天赋切换的请求
+        RspChangeTalent = 203, //天赋切换的响应
     }
     public enum Error
     {
@@ -429,6 +477,7 @@ namespace CommonNet
         DailyTaskFinishError = 1033, //该每日任务未完成
         DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
         RewardActiveError = 1035, //活跃度奖励领取失败
+        MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
     }
 
     public enum BuyType

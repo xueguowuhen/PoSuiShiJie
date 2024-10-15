@@ -64,6 +64,26 @@ public class TalentWnd : WindowRoot
     {
 
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.F))
+        {
+            //netSvc.SendMsg
+            Debug.Log("按下测试");
+            GameMsg reqmsg = new GameMsg()
+            {
+                cmd = (int)CMD.ReqTalentUp,
+                reqTalentUp = new ReqTalentUp
+                {
+                    TalentId = 50001,
+                    NextLevel = 2,
+                }
+            };
+            netSvc.SendMsg(reqmsg);
+            //Debug.Log(netSvc.client.session.)
+        }
+    }
+    //override 
     #endregion
 
     private void Init()
@@ -78,7 +98,7 @@ public class TalentWnd : WindowRoot
         List<Text> Texts = new List<Text>();
         foreach (Button button in allButtons)
         {
-            if (button.name.Contains("talent"))
+            if (button.name.Contains("Talent"))
             {
                 talentsbutton.Add(button);
                 Texts.Add(button.gameObject.GetComponentInChildren<Text>());
@@ -95,7 +115,6 @@ public class TalentWnd : WindowRoot
         for (int i = 0; i < talents.Count; i++)
         {
             Levels[i].text = talents[i].Level + "/" + cfgs[i].MaxLevel;
-
         }
         #endregion
     }
