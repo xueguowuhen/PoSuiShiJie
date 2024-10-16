@@ -26,6 +26,13 @@ public class TalentWnd : WindowRoot
         get { return m_IsSelect; }
         private set { if (value == true && m_IsSelect == false) { RefreshInfoUI(); m_IsSelect = true; } }
     }
+    public bool NeewUpdate
+    {
+        get { return m_NeewUpdate; }
+        set { m_NeewUpdate = value; }
+    }
+
+    //public bool NeedUpdate
     #endregion
 
     #region 私有字段
@@ -61,10 +68,28 @@ public class TalentWnd : WindowRoot
     /// 选中天赋的ID
     /// </summary>
     private int SelectTalentID;
+
+    private Talent CurrTalentData;
+
+    //======logic==========
+
     /// <summary>
     /// 是否有显示天赋信息
     /// </summary>
     private bool IsShowInfo = false;
+    /// <summary>
+    /// 假如有天赋升级 需要更新
+    /// </summary>
+    private bool m_NeewUpdate = false;
+
+    /// <summary>
+    /// 记录当前的天赋
+    /// </summary>
+    private List<int> CurrTalentId;
+    /// <summary>
+    /// 记录初始的天赋
+    /// </summary>
+    private List<int> RecodeTalentId;
     #endregion
 
     #region 基类回调重写
@@ -75,7 +100,6 @@ public class TalentWnd : WindowRoot
     }
     protected override void ClearWnd()
     {
-        Debug.Log("关闭清除数据");
         base.ClearWnd();
         CloseBtn.onClick.RemoveAllListeners();
         InfoBtn.onClick.RemoveAllListeners();
@@ -85,7 +109,6 @@ public class TalentWnd : WindowRoot
         if (Select.Length > 0) Select = null;
         if (InfobtnBg.Length > 0) InfobtnBg = null;
         if (playerData != null) playerData = null;
-
     }
     protected override void SetGameObject()
     {
@@ -102,10 +125,11 @@ public class TalentWnd : WindowRoot
 
     private void Init()
     {
-        Debug.Log("初始化获取数据");
         #region Data
         playerData = GameRoot.Instance.PlayerData;
         cfgs = resSvc.GetAllTalentCfgData();
+        CurrTalentId = playerData.TalentID;
+        RecodeTalentId = new List<int> { CurrTalentId[0], CurrTalentId[1] };
         #endregion
 
         #region GAMEOBJECT
@@ -138,17 +162,22 @@ public class TalentWnd : WindowRoot
             talentsbutton[j].onClick.RemoveAllListeners();
             talentsbutton[j].onClick.AddListener(() => { BtnTanlentClick(cfgs[j].ID); });
         }
-        CloseBtn.onClick.AddListener(() => { SetWndState(false); });
+        CloseBtn.onClick.AddListener(BtnCloseHandler);
         InfoBtn.onClick.AddListener(() => { BtnShowInfoHandler(); });
         #endregion
 
         #region UI
-        m_IsSelect = false;
-        IsShowInfo = false;
+
         RefreshInfoUI(false);
         RefreshLevelUI();
         RefreshSelectUI();
         talentInfoWnd.InitUI();
+        #endregion
+
+        #region logic
+        m_IsSelect = false;
+        IsShowInfo = false;
+        NeewUpdate = false;
         #endregion
     }
 
@@ -156,17 +185,25 @@ public class TalentWnd : WindowRoot
     private void BtnTanlentClick(int TalentId)
     {
         SelectTalentID = TalentId;
-        Debug.Log("按钮天赋响应");
+        foreach (Talent j in playerData.TalentsData)
+        {
+            if (j.TalentID == SelectTalentID)
+            {
+                CurrTalentData = j;
+            }
+        }
         IsSelect = true;
         foreach (int i in playerData.TalentID)
         {
             if (i == SelectTalentID)
             {
+
                 break;
             }
             else
             {
                 ChangeTalent(SelectTalentID);
+
                 break;
             }
         }
@@ -175,33 +212,34 @@ public class TalentWnd : WindowRoot
     {
         if (!IsShowInfo)
         {
-            Debug.Log("展开");
+            //Debug.Log("展开");
             TalentRect.DOAnchorMax(new Vector2(0.4f, 0.5f), time);
             TalentCfg currcfg = resSvc.GetTalentCfgData(SelectTalentID);
             talentInfoWnd.SetUi(currcfg.BackGround, currcfg.Info, currcfg.Name);
+            talentInfoWnd.RefreshLevel(CurrTalentData.Level,currcfg.MaxLevel,CurrTalentData.TalentID);
             talentInfoWnd.TweenShow(time);
             IsShowInfo = true;
         }
         else
         {
-            Debug.Log("退出");
+            //Debug.Log("退出");
             TalentRect.DOAnchorMax(new Vector2(0.5f, 0.5f), time);
             talentInfoWnd.TweenQuit(time);
             IsShowInfo = false;
         }
     }
-
     private void ChangeTalent(int TalentID)
     {
         int temp = TalentID - 50010;
         if (temp > 0) //切换下一行的天赋
         {
             playerData.TalentID[1] = TalentID;
-
+            CurrTalentId[1] = TalentID;
         }
         else //切换上一行的天赋
         {
             playerData.TalentID[0] = TalentID;
+            CurrTalentId[0] = TalentID;
         }
         RefreshSelectUI();
         if (IsShowInfo)
@@ -209,10 +247,28 @@ public class TalentWnd : WindowRoot
             TalentCfg currcfg = resSvc.GetTalentCfgData(TalentID);
             talentInfoWnd.TweenQuit(0.15f);
             talentInfoWnd.SetUi(currcfg.BackGround, currcfg.Info, currcfg.Name);
+            talentInfoWnd.RefreshLevel(CurrTalentData.Level, currcfg.MaxLevel,CurrTalentData.TalentID);
             talentInfoWnd.TweenShow(0.15f);
         }
 
+    }
+    private void BtnCloseHandler()
+    {
+        bool temp = (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1])) || NeewUpdate;
 
+        if (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]) || NeewUpdate)
+        {
+            GameMsg gameMsg = new GameMsg()
+            {
+                cmd = (int)CMD.ReqChangeTalent,
+                reqChangeTalent = new ReqChangeTalent()
+                {
+                    CurrTalents = CurrTalentId,
+                },
+            };
+            netSvc.SendMsg(gameMsg);
+        }
+        SetWndState(false);
     }
     #endregion
 
@@ -247,7 +303,6 @@ public class TalentWnd : WindowRoot
     }
     private void RefreshInfoUI(bool show = true)
     {
-        Debug.Log("是否刷新显示" + show);
         if (show)
         {
             foreach (Image i in InfobtnBg)
@@ -267,6 +322,11 @@ public class TalentWnd : WindowRoot
 
     }
 
+    public void RefreshLevelUp()
+    {
+        RefreshLevelUI();
+        talentInfoWnd.RefreshLevelUp();
+    }
 
     #endregion
 }

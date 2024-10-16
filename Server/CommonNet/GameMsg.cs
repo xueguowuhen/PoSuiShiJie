@@ -52,6 +52,8 @@ namespace CommonNet
         //天赋相关请求与响应
         public ReqTalentUp? reqTalentUp;
         public RspTalentUp? rspTalentUp;
+        public ReqChangeTalent? reqChangeTalent;
+        public RspChangeTalent? rspChangeTalent;
     }
     #region 登录注册相关
     public class ReqLogin
@@ -106,15 +108,12 @@ namespace CommonNet
     }
 
     #endregion
-    public class ReqBag//使用资源
-    {
-        public int id;
-        public int count;
-    }
+
     public class RspBag
     {
         public PlayerData playerData;
     }
+
     #region 好友请求与响应
 
     public class ReqSearchFriend//好友搜索
@@ -217,6 +216,7 @@ namespace CommonNet
     #endregion
 
     #region 天赋相关请求与响应
+
     /// <summary>
     /// 天赋升级请求
     /// </summary>
@@ -232,13 +232,23 @@ namespace CommonNet
     {
         public bool IsUpSuccess;
         public int ruvia; //升级后剩余的云晶 用于比对客户端数据
+        public List<Talent>? talents; //最新的天赋数据
     }
     /// <summary>
     /// 天赋切换请求
     /// </summary>
     public class ReqChangeTalent
     {
-        //public int
+        public List<int>? CurrTalents;
+    }
+
+    /// <summary>
+    /// 天赋切换响应
+    /// </summary>
+    public class RspChangeTalent
+    {
+        public bool IsChangeSuccess;
+        public PlayerData? playerData;
     }
     #endregion
     #endregion
@@ -323,6 +333,13 @@ namespace CommonNet
     }
 
     #endregion
+
+    #region 自定义数据/枚举
+    public class ReqBag//使用资源
+    {
+        public int id;
+        public int count;
+    }
     public class PlayerData
     {
         public int id;
@@ -346,8 +363,8 @@ namespace CommonNet
         public int dodge;//闪避概率
         public float practice;//修炼速度
         public int critical;//暴击概率
-        public RewardTask ?rewardTask;//每日任务进度
-        public List<DailyTask> ?dailyTasks;//每日任务数据
+        public RewardTask? rewardTask;//每日任务进度
+        public List<DailyTask>? dailyTasks;//每日任务数据
         public List<int>? TalentID;//当前选中的天赋ID
         public List<Talent>? TalentsData; //所有天赋数据
         public List<BagList>? Bag;//背包数据
@@ -394,6 +411,53 @@ namespace CommonNet
         public int TaskReward;//任务进度
         public bool TaskFinish;//任务完成状态
     }
+
+    public enum BuyType
+    {
+        /// <summary>
+        /// 星晶购买补给
+        /// </summary>
+        aura,
+        /// <summary>
+        /// 云晶购买装备
+        /// </summary>
+        ruvia,//角色云晶
+        /// <summary>
+        /// 彩晶购买材料
+        /// </summary>
+        crystal, //角色彩晶
+    }
+    public enum DamageState
+    {
+        None = 0,
+        Critical = 1,//暴击
+        Dodge = 2//闪避
+    }
+    public enum BagType
+    {
+        consume,//消耗品
+        equip,//装备
+        material,//材料
+    }
+    public enum DailyTaskType
+    {
+        /// <summary>
+        /// 星晶购买补给
+        /// </summary>
+        aura,
+        /// <summary>
+        /// 云晶购买装备
+        /// </summary>
+        ruvia,//角色云晶
+        /// <summary>
+        /// 彩晶购买材料
+        /// </summary>
+        crystal, //角色彩晶
+        consume,//消耗品
+        equip,//装备
+        material,//材料
+    }
+    #endregion
     public enum CMD
     {
         None = 0,
@@ -480,56 +544,14 @@ namespace CommonNet
         MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
     }
 
-    public enum BuyType
-    {
-        /// <summary>
-        /// 星晶购买补给
-        /// </summary>
-        aura,
-        /// <summary>
-        /// 云晶购买装备
-        /// </summary>
-        ruvia,//角色云晶
-        /// <summary>
-        /// 彩晶购买材料
-        /// </summary>
-        crystal, //角色彩晶
-    }
-    public enum DamageState
-    {
-        None = 0,
-        Critical = 1,//暴击
-        Dodge = 2//闪避
-    }
-    public enum BagType
-    {
-        consume,//消耗品
-        equip,//装备
-        material,//材料
-    }
-    public enum DailyTaskType
-    {
-        /// <summary>
-        /// 星晶购买补给
-        /// </summary>
-        aura,
-        /// <summary>
-        /// 云晶购买装备
-        /// </summary>
-        ruvia,//角色云晶
-        /// <summary>
-        /// 彩晶购买材料
-        /// </summary>
-        crystal, //角色彩晶
-        consume,//消耗品
-        equip,//装备
-        material,//材料
-    }
+
+    #region 配置信息
     public class IPCfg
     {
 
         public const string srvIP = "127.0.0.1";
 
         public const int srvPort = 17666;
-    }
+    } 
+    #endregion
 }

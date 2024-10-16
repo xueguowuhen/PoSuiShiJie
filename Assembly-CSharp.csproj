@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\BagWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\FriendsWnd.cs" />
     <Compile Include="Assets\Scripts\Common\WindowAnimation.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentInfoWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\BattleWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\ISate.cs" />
     <Compile Include="Assets\Scripts\Service\NetSvc.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentInfoWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />

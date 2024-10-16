@@ -146,6 +146,9 @@ public class CfgSvc
                     case "Attribute":
                         talentCfg.Attribute = node.InnerText;
                         break;
+                    case "MaxLevel":
+                        talentCfg.MaxLevel = int.Parse(node.InnerText);
+                        break;
                     case "Value":
                         talentCfg.Value = float.Parse(node.InnerText);
                         break;
@@ -167,7 +170,7 @@ public class CfgSvc
     {
         int[] temp = new int[TalentDic.Count];
         int j = 0;
-        foreach(KeyValuePair<int,TalentCfg> i in TalentDic)
+        foreach (KeyValuePair<int, TalentCfg> i in TalentDic)
         {
             temp[j] = i.Key;
             j++;
@@ -305,7 +308,7 @@ public class CfgSvc
                         break;
                     case "Reward":
                         string[] strs = node.InnerText.Split('|');
-                        taskRewardCfg.rewardItems=new List<TaskRewardItem>();
+                        taskRewardCfg.rewardItems = new List<TaskRewardItem>();
                         for (int j = 0; j < strs.Length; j++)
                         {
                             string[] Reward = strs[j].Split('#');
@@ -438,7 +441,7 @@ public class CfgSvc
     #endregion
     public class personCfg : BaseData<personCfg>
     {
-        public string ?type;
+        public string? type;
         public int HP;
         public int Mana;
         public int Power;
@@ -455,8 +458,9 @@ public class CfgSvc
     }
     public class TalentCfg : BaseData<TalentCfg>
     {
-            public string ?Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
-            public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
+        public int MaxLevel;
+        public string? Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
+        public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
     }
     public class TaskCfg : BaseData<TaskCfg>
     {

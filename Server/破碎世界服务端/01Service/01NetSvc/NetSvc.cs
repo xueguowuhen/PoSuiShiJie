@@ -121,6 +121,9 @@ public class NetSvc
             case CMD.ReqTalentUp:
                 TalentSys.Instance.ReqTalentUpHandle(pack);
                 break;
+            case CMD.ReqChangeTalent:
+                TalentSys.Instance.ReqChangeTalentHandle(pack);
+                break;
         }
     }
 
