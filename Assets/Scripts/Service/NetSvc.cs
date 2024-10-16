@@ -245,6 +245,9 @@ public class NetSvc : MonoBehaviour
             case CMD.RspTalentUp:
                 MainCitySys.instance.RspTalentUpHandler(msg);
                 break;
+            case CMD.RspChangeTalent:
+                MainCitySys.instance.RspTalentChangeHandler(msg);
+                break;
         }
     }
     private void OnDestroy()

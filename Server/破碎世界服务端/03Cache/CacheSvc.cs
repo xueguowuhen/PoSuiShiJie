@@ -10,6 +10,7 @@ using ComNet;
 using MySqlX.XDevAPI;
 using System.Collections.Generic;
 using 墨染服务端._01Service._01NetSvc;
+using static CfgSvc;
 
 public class CacheSvc
 {
@@ -192,13 +193,12 @@ public class CacheSvc
     {
         return dBMgr.UpdateFriend(friendItem);
     }
-
     /// <summary>
     /// 检查并升级天赋
     /// </summary>
     /// <returns></returns>
-    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel)
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg)
     {
-        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel);
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg);
     }
 }

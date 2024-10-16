@@ -28,7 +28,6 @@ internal class DBMgr
         }
     }
     private MySqlConnection conn;
-    private CfgSvc cfgSvc = null;
     private string connectionString = "datasource=121.40.86.210;port=3306;database=morangData;user=root;pwd=CRY3ajSbR4sXAR4B;";
 
 
@@ -68,7 +67,7 @@ internal class DBMgr
     /// <summary>
     /// 获取该账号数据
     /// </summary>
-    /// <param name="acct"></param>
+    /// <param name="acct"></param> 
     /// <param name="pass"></param>
     /// <returns></returns>
     public PlayerData? GetPlayerData(string acct, string pass)
@@ -415,11 +414,12 @@ internal class DBMgr
         }
     }
 
+    #region 天赋相关的数据库检索
     /// <summary>
     /// 检查并更新天赋数据
     /// </summary>
     /// <returns></returns>
-    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel)
+    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel,TalentCfg talentCfg)
     {
         using (var conn = new MySqlConnection(connectionString))
         {
@@ -437,7 +437,7 @@ internal class DBMgr
                 Talent[] talents = ParseTalentDataFromMysql(talentsdata);
                 for (int i = 0; i < talents.Length; i++)
                 {
-                    if (talentID == talents[i].TalentID && talentLevel - talents[i].Level == 1)
+                    if (talentID == talents[i].TalentID && talentLevel - talents[i].Level == 1 &&talentLevel<=talentCfg.MaxLevel)
                     {
                         talents[i].Level++;
                         string Talents = "";
@@ -466,12 +466,15 @@ internal class DBMgr
         }
     }
 
+
+
+
     /// <summary>
-    /// 解析数据库天赋数据
+    /// 解析数据库天赋数据(工具方法)
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public Talent[] ParseTalentDataFromMysql(string data)
+    public static Talent[] ParseTalentDataFromMysql(string data)
     {
         string[] talent = data.Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
         List<Talent> talents = new List<Talent>();
@@ -488,7 +491,8 @@ internal class DBMgr
             }
         }
         return talents.ToArray();
-    }
+    } 
+    #endregion
 
     /// <summary>
     /// 更新服务器用户数据

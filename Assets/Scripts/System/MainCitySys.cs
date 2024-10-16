@@ -242,7 +242,6 @@ public class MainCitySys : SystemRoot
     }
     #endregion
 
-
     #region RspTalentUpHandler 处理天赋升级的服务器响应
     /// <summary>
     /// 处理天赋升级的服务器响应
@@ -250,16 +249,34 @@ public class MainCitySys : SystemRoot
     public void RspTalentUpHandler(GameMsg msg)
     {
         RspTalentUp rspTalentUp = msg.rspTalentUp;
+        Debug.Log(rspTalentUp.IsUpSuccess);
         if (rspTalentUp.IsUpSuccess)
         {
-            Debug.Log("升级成功");
+            GameRoot.Instance.PlayerData.TalentsData = rspTalentUp.talents;
+            talentWnd.NeewUpdate = true;
+            talentWnd.RefreshLevelUp();
         }
         else
         {
-            Debug.Log("升级失败");
+            Debug.LogError("数据异常,升级失败");
         }
     } 
     #endregion
+
+    public void RspTalentChangeHandler(GameMsg msg)
+    {
+        RspChangeTalent rspChangeTalent = msg.rspChangeTalent;
+        if (rspChangeTalent.IsChangeSuccess)
+        {
+            //Debug.Log("更新成功");
+            GameRoot.Instance.PlayerData = rspChangeTalent.playerData;
+        }
+        else
+        {
+            //Debug.Log("更新失败");
+            Debug.LogError("数据更新失败");
+        }
+    }
 
     #endregion
 

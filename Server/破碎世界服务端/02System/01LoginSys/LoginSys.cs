@@ -170,7 +170,7 @@ public class LoginSys
         int[] talentsData = cfgSvc.GetTalentsId();
         for (int i = 0; i < talentsData.Length; i++)
         {
-            playerData.TalentsData.Add(new Talent() { TalentID = talentsData[i], Level = 0 });
+            playerData.TalentsData.Add(new Talent() { TalentID = talentsData[i], Level = 1 });
         }
         //更新玩家数据
         playerData.name = reqCreateGame.name;
@@ -201,22 +201,6 @@ public class LoginSys
         }
     }
 
-    public TalentCfg GetTalent(TalentCfg talent, TalentCfg talentCfg)
-    {
-        //talent.HP += talentCfg.HP;
-        //talent.Mana += talentCfg.Mana;
-        //talent.Power += talentCfg.Power;
-        //talent.aura += talentCfg.aura;
-        //talent.ruvia += talentCfg.ruvia;
-        //talent.crystal += talentCfg.crystal;
-        //talent.ad += talentCfg.ad;
-        //talent.ap += talentCfg.ap;
-        //talent.addef += talentCfg.addef;
-        //talent.dodge += talentCfg.dodge;
-        //talent.practice += talentCfg.practice;
-        //talent.critical += talentCfg.critical;
-        return talent;
-    }
     /// <summary>
     /// 计算玩家属性值
     /// </summary>
@@ -228,7 +212,7 @@ public class LoginSys
             switch (talentCfg.Attribute)
             {
                 case "Hp":
-                    { playerData.Hp += (int)talentCfg.Value * playerData.level; break; }
+                    { playerData.Hpmax += (int)talentCfg.Value * playerData.level; playerData.Hp += (int)talentCfg.Value * playerData.level; break; }
                 case "addef": 
                     { playerData.addef += (int)talentCfg.Value * playerData.level; break; }
                 case "apdef":
