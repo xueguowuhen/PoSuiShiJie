@@ -6,6 +6,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>Hp</Attribute>
 		<Value>10</Value>
+		<Desc>据传从远古大能处获取的力量，传说只有那些经过生死考验的强者才能拥有不灭之躯。这股力量将穿越时空，强化持有者的生命力，使其变得近乎不死，任何致命伤害对他们来说不过是轻微的挫折。</Desc>
+		<BackGround>很久以前，神秘的远古战士发现了生命的奥秘，凝聚出了一种不灭的力量。这种力量如今以天赋的形式传承下来，唯有极少数人能唤醒其真正潜能。</BackGround>
 	</item>
 	<item ID="50002">
 		<Name>顽强复苏</Name>
@@ -13,6 +15,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>addef</Attribute>
 		<Value>10</Value>
+		<Desc>这是一种源自自然界生命本能的力量，它能让持有者如同大自然般顽强地生长与复苏。当体力殆尽之时，这股天赋会让持有者的生命力加速恢复，宛如烈焰中的凤凰般重生。</Desc>
+		<BackGround>顽强复苏是自然法则的一部分，被认为是生命之母的恩赐。持有此天赋的人，将永远不会轻易被战场所摧毁，无论多么严重的创伤，他们的身体都能迅速恢复如初。</BackGround>
 	</item>
 	<item ID="50003">
 		<Name>生命之泉</Name>
@@ -20,6 +24,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>apdef</Attribute>
 		<Value>10</Value>
+		<Desc>传说生命之泉是世上最纯净的生命能量源泉，它拥有着无尽的治愈力量。掌握此天赋的人，其身体能时刻吸收这种生命能量，从而极大提升自我恢复能力。</Desc>
+		<BackGround>据说生命之泉曾是一处仙境中的奇迹之水，但如今已湮灭在历史长河中。尽管如此，它的力量以另一种形式遗留下来，成为可以赋予凡人无尽生命力的天赋。</BackGround>
 	</item>
 	<item ID="50004">
 		<Name>坚如磐石</Name>
@@ -27,6 +33,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>dodge</Attribute>
 		<Value>10</Value>
+		<Desc>大地的坚韧与磐石的稳固赋予了此天赋不可动摇的防御力。持有此天赋的人如同大山般坚定，无论多么强大的力量击打，他们的身体都能减少所受的伤害。</Desc>
+		<BackGround>坚如磐石的力量起源于古老的岩石巨人，据说他们拥有天生的防御天赋。那些掌握此天赋的勇士，往往能够在最危急的战斗中坚持到最后一刻，令敌人绝望。</BackGround>
 	</item>
 	<item ID="50011">
 		<Name>狂暴之力</Name>
@@ -34,6 +42,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>ad</Attribute>
 		<Value>10</Value>
+		<Desc>这是一股源自狂战士的力量，拥有它的人会在战斗中变得极为狂暴。每一击都充满了破坏性的力量，令人畏惧。他们的攻击带有狂野的力量，轻易就能击碎敌人的防御。</Desc>
+		<BackGround>狂暴之力据说来源于古代狂战士的灵魂，那些嗜战如命的战士在死后，他们的灵魂仍然在战场上游荡，寻找有资格继承他们力量的战士。</BackGround>
 	</item>
 	<item ID="50012">
 		<Name>无尽怒火</Name>
@@ -41,6 +51,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>critical</Attribute>
 		<Value>10</Value>
+		<Desc>掌握此天赋的人拥有永不熄灭的怒火。他们的每一击都充满了无穷的愤怒，甚至在他们的攻击中还有几率释放出恐怖的暴击，让敌人猝不及防。</Desc>
+		<BackGround>据说，无尽怒火是某位战神的遗物，蕴含着他生前无法平息的愤怒。传说持有这份天赋的人在战斗时会爆发出不寻常的愤怒，这种愤怒能直接转化为毁灭性的打击。</BackGround>
 	</item>
 	<item ID="50013">
 		<Name>致命一击</Name>
@@ -48,6 +60,8 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>ap</Attribute>
 		<Value>10</Value>
+		<Desc>传说中的暗杀者们曾经掌握的技巧，能够让他们的每一次攻击都充满毁灭性的力量。一旦触发致命一击，敌人将毫无招架之力，瞬间倒地。</Desc>
+		<BackGround>致命一击被认为是古代刺客组织传下来的终极技艺，只有极少数人能够完全掌握这种力量。一旦成功释放，敌人将瞬间被撕裂，连最坚固的防御也无法抵挡。</BackGround>
 	</item>
 	<item ID="50014">
 		<Name>攻势如潮</Name>
@@ -55,5 +69,7 @@
 		<MaxLevel>10</MaxLevel>
 		<Attribute>critical</Attribute>
 		<Value>10</Value>
+		<Desc>如同潮水般无尽的攻击让持有者在战场上成为噩梦般的存在。攻势迅猛且无懈可击，他们的每一击都连接得天衣无缝，让敌人毫无喘息的机会。</Desc>
+		<BackGround>据传，这种力量源自某位战神的祝福，能让战士们在战斗中不断加快攻击频率，直到敌人彻底崩溃为止。这种攻势让他们的敌人无法防御，最终在狂风暴雨般的打击下被摧毁。</BackGround>
 	</item>
 </root>

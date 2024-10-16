@@ -48,8 +48,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Library\PackageCache\com.unity.sysroot@2.0.10\Editor\NiceIO.cs" />
-     <Compile Include="Library\PackageCache\com.unity.sysroot@2.0.10\Editor\Unity.SysrootPackage.cs" />
      <Compile Include="Library\PackageCache\com.unity.sysroot@2.0.10\Editor\AssemblyInfo.cs" />
+     <Compile Include="Library\PackageCache\com.unity.sysroot@2.0.10\Editor\Unity.SysrootPackage.cs" />
      <None Include="Library\PackageCache\com.unity.sysroot@2.0.10\Editor\Unity.SysrootPackage.Editor.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>D:/unity_control/2020.3.29f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -315,14 +315,14 @@
  <Reference Include="DOTween">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/DOTWeen/DOTween/DOTween.dll</HintPath>
  </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
  <Reference Include="CommonNet">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/Scripts/Net/Debug/netstandard2.0/CommonNet.dll</HintPath>
  </Reference>
  <Reference Include="ComNet">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/Scripts/Net/Debug/netstandard2.0/ComNet.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

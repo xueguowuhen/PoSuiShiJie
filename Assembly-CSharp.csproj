@@ -64,7 +64,7 @@
     <Compile Include="Assets\Scripts\Common\BaseData.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectPool\GameObjectPool.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\RemotePlayerWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityPlayer.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DynamicWnd.cs" />
@@ -140,6 +140,7 @@
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentInfoWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />
