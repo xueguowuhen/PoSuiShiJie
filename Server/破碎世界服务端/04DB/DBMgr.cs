@@ -419,7 +419,7 @@ internal class DBMgr
     /// 检查并更新天赋数据
     /// </summary>
     /// <returns></returns>
-    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel,TalentCfg talentCfg)
+    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel,TalentCfg talentCfg,int aura)
     {
         using (var conn = new MySqlConnection(connectionString))
         {
@@ -448,8 +448,9 @@ internal class DBMgr
                             Talents += j.Level;
                             Talents += "|";
                         }
-                        MySqlCommand cmd2 = new MySqlCommand("UPDATE account set TalentsData=@data WHERE id=@id", conn);
+                        MySqlCommand cmd2 = new MySqlCommand("UPDATE account set TalentsData=@data,aura=@aura WHERE id=@id", conn);
                         cmd2.Parameters.AddWithValue("data", Talents);
+                        cmd2.Parameters.AddWithValue("aura", aura);
                         cmd2.Parameters.AddWithValue("id", id);
                         cmd2.ExecuteNonQuery();
                         return true;

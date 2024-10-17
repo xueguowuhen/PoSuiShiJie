@@ -44,6 +44,7 @@ public class TalentSys
         };
         PlayerData playerData = cacheSvc.GetPlayerDataBySession(gameMsg.session);
         TalentCfg talentCfg = cfgSvc.GetTalentCfgData(talentid);
+        playerData.aura -= 100 * (NextLevel - 1);
         foreach (int i in playerData.TalentID!)
         {
             if (i == talentid) //升级天赋为当前选择天赋
@@ -59,7 +60,7 @@ public class TalentSys
             }
         }
         rspmsg.rspTalentUp.NeedUpdate = needupdate;
-        if (cacheSvc.CheckAndUpdateTalentsData(playerData.id, talentid, NextLevel, talentCfg)) //数据库仅更新天赋ID与等级 
+        if (cacheSvc.CheckAndUpdateTalentsData(playerData.id, talentid, NextLevel, talentCfg,(int)playerData.aura)) //数据库仅更新天赋ID、等级与灵石 
         {
             rspmsg.rspTalentUp.IsUpSuccess = true;
             for (int i = 0; i < playerData.TalentsData!.Count; i++)
