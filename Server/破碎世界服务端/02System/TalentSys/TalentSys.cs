@@ -34,8 +34,9 @@ public class TalentSys
     public void ReqTalentUpHandle(MsgPack gameMsg)
     {
         ReqTalentUp? msg = gameMsg.gameMsg.reqTalentUp;
-        int talentid = msg.TalentId;
-        int level = msg.NextLevel;
+        int talentid = msg!.TalentId;
+        int NextLevel = msg.NextLevel;
+        bool needupdate = false;
         GameMsg rspmsg = new GameMsg
         {
             cmd = (int)CMD.RspTalentUp,
@@ -51,15 +52,16 @@ public class TalentSys
                     if (j.TalentID == i)
                     {
                         CurrTalentUp(j, talentCfg, playerData);
+                        needupdate = true;
                         break;
                     }
                 break;
             }
         }
-        if (cacheSvc.CheckAndUpdateTalentsData(playerData.id, talentid, level, talentCfg))
+        rspmsg.rspTalentUp.NeedUpdate = needupdate;
+        if (cacheSvc.CheckAndUpdateTalentsData(playerData.id, talentid, NextLevel, talentCfg)) //数据库仅更新天赋ID与等级 
         {
             rspmsg.rspTalentUp.IsUpSuccess = true;
-            //数据库仅更新天赋ID与等级 
             for (int i = 0; i < playerData.TalentsData!.Count; i++)
             {
                 if (talentid == playerData.TalentsData[i].TalentID)
@@ -68,8 +70,10 @@ public class TalentSys
                     break;
                 }
             }
+            if (needupdate)
+            { rspmsg.rspTalentUp.battleData = GetDataFromPlayerData(playerData); }
+            else { rspmsg.rspTalentUp.battleData = null; }
             rspmsg.rspTalentUp.talents = playerData.TalentsData;
-            rspmsg.rspTalentUp.battleData = GetDataFromPlayerData(playerData);
         }
         else
         {
@@ -88,12 +92,12 @@ public class TalentSys
             cmd = (int)CMD.RspChangeTalent,
             rspChangeTalent = new RspChangeTalent(),
         };
-        playerData.TalentID = currTalentsID;
-        if (cacheSvc.UpdatePlayerData(playerData))
+        if (CalcPlayerProp(playerData, currTalentsID!))
         {
-            PlayerData newplayerdata = CalcPlayerProp(playerData, currTalentsID);
+
             rspmsg.rspChangeTalent.IsChangeSuccess = true;
-            rspmsg.rspChangeTalent.playerData = newplayerdata;
+            rspmsg.rspChangeTalent.playerData = playerData;
+            playerData.TalentID = currTalentsID;
         }
         else
         {
@@ -102,8 +106,9 @@ public class TalentSys
         }
         gameMsg.session.SendMsg(rspmsg);
     }
-    public PlayerData CalcPlayerProp(PlayerData playerData, List<int> newtalentsId = null!)
+    public bool CalcPlayerProp(PlayerData playerData, List<int> newtalentsId = null!)
     {
+        bool UpdateSuccess = true;
         if (newtalentsId != null)
         {
             for (int i = 0; i < playerData.TalentID!.Count; i++) //去除旧天赋数据
@@ -117,10 +122,12 @@ public class TalentSys
                 UpdateAttribute(talentCfg.Attribute!, talentCfg, level, playerData, false);
             }
         }
-        else
+        else //玩家上线获取天赋数据
         {
             newtalentsId = playerData.TalentID!;
         }
+        playerData.TalentID = newtalentsId;
+        UpdateSuccess = cacheSvc.UpdatePlayerData(playerData);
         for (int i = 0; i < newtalentsId!.Count; i++) //修正最新天赋数据
         {
             TalentCfg talentCfg = cfgSvc.GetTalentCfgData(newtalentsId[i]);
@@ -132,12 +139,12 @@ public class TalentSys
             UpdateAttribute(talentCfg.Attribute!, talentCfg, level, playerData, true);
         }
         playerData.TalentID = newtalentsId;
-        return playerData;
+        return UpdateSuccess;
     }
 
     private void CurrTalentUp(Talent talent, TalentCfg talentCfg, PlayerData playerData)
     {
-        UpdateAttribute(talentCfg.Attribute!, talentCfg, talent.Level++, playerData, true);
+        UpdateAttribute(talentCfg.Attribute!, talentCfg, 1, playerData, true);
     }
     private BattleData GetDataFromPlayerData(PlayerData playerData)
     {
@@ -163,7 +170,7 @@ public class TalentSys
         switch (attribute)
         {
             case "Hp":
-                { playerData.Hpmax += temp * (int)talentCfg.Value * level; playerData.Hp += (int)talentCfg.Value * level; return; }
+                { playerData.Hpmax += temp * (int)talentCfg.Value * level; playerData.Hp += temp * (int)talentCfg.Value * level; return; }
             case "addef":
                 { playerData.addef += temp * (int)talentCfg.Value * level; return; }
             case "apdef":
@@ -171,7 +178,7 @@ public class TalentSys
             case "dodge":
                 { playerData.dodge += temp * (int)talentCfg.Value * level; return; }
             case "ad":
-                { playerData.ad += (int)talentCfg.Value * level; return; }
+                { playerData.ad += temp * (int)talentCfg.Value * level; return; }
             case "critical":
                 { playerData.critical += temp * (int)talentCfg.Value * level; return; }
             case "ap":

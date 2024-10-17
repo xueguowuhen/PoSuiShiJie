@@ -233,7 +233,8 @@ namespace CommonNet
         public bool IsUpSuccess;
         //public int ruvia; //升级后剩余的云晶 用于比对客户端数据
         public List<Talent>? talents; //最新的天赋数据
-        public BattleData battleData;
+        public BattleData? battleData;
+        public bool NeedUpdate; //需要更新战斗数据
     }
     /// <summary>
     /// 天赋切换请求
@@ -250,7 +251,6 @@ namespace CommonNet
     public class RspChangeTalent
     {
         public bool IsChangeSuccess;
-        public BattleData battleData;
         public PlayerData? playerData;
     }
     #endregion

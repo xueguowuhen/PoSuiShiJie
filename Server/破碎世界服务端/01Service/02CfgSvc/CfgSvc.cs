@@ -91,8 +91,8 @@ public class CfgSvc
                     case "addef":
                         person.addef = int.Parse(node.InnerText);
                         break;
-                    case "adpdef":
-                        person.adpdef = int.Parse(node.InnerText);
+                    case "apdef":
+                        person.apdef = int.Parse(node.InnerText);
                         break;
                     case "dodge":
                         person.dodge = int.Parse(node.InnerText);
@@ -451,7 +451,7 @@ public class CfgSvc
         public int ad;
         public int ap;
         public int addef;
-        public int adpdef;
+        public int apdef;
         public int dodge;
         public float practice;
         public int critical;
