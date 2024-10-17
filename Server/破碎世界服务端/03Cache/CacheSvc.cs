@@ -194,8 +194,8 @@ public class CacheSvc
     /// 检查并升级天赋
     /// </summary>
     /// <returns></returns>
-    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg)
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg,int aura)
     {
-        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg);
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg,aura);
     }
 }

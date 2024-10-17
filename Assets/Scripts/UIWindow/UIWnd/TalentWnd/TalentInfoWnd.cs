@@ -20,13 +20,16 @@ public class TalentInfoWnd : MonoBehaviour
     public Text Name;
     public Text Level;
     public Text LevelUpBtnTxt;
+    public Text AuraTxt;
     public Button LevelUpBtn;
     #endregion
 
     #region 私有字段
-    int CurrLevel;
-    int SelectId;
-    int maxLevel;
+    int CurrLevel;  //当前选中天赋等级
+    int SelectId;   //当前选中天赋的ID
+    int maxLevel;  //当前选中天赋的最大等级
+    TalentCfg SelectCfg; //选中天赋的配置信息
+    PlayerData playerData;
     #endregion
 
     #region 对外开放的方法
@@ -36,21 +39,27 @@ public class TalentInfoWnd : MonoBehaviour
         BackGround.text = "<b>背景</b>:" + background;
         Effect.text = "<b>作用</b>:" + effect;
     }
-    public void RefreshLevel(int level, int maxlevel, int talentid)
+    public void RefreshLevel(int level, int talentid, TalentCfg talentCfg)
     {
-        Level.text = "当前等级:" + level + "/" + maxlevel;
+        SelectCfg = talentCfg;
+        maxLevel = talentCfg.MaxLevel;
+        Level.text = "当前等级:" + level + "/" + maxLevel;
         CurrLevel = level;
         SelectId = talentid;
-        maxLevel = maxlevel;
-        if (level == maxlevel)
+        int needaura = level * 100;
+
+
+        if (level == maxLevel)
         {
             LevelUpBtnTxt.text = "最大等级";
             LevelUpBtn.interactable = false;
         }
         else
         {
+            if (needaura <= playerData.aura)
+            { LevelUpBtn.interactable = true; AuraTxt.text = "<color=black>" + (level * 100).ToString() + "/" + (playerData.aura).ToString() + "</color>"; }
+            else { LevelUpBtn.interactable = false; AuraTxt.text = "<color=red>" + (level * 100).ToString() + "/" + (playerData.aura).ToString() + "</color>"; }
             LevelUpBtnTxt.text = "升级";
-            LevelUpBtn.interactable = true;
         }
     }
     public void TweenShow(float time)
@@ -64,13 +73,27 @@ public class TalentInfoWnd : MonoBehaviour
     }
     public void RefreshLevelUp()
     {
-        RefreshLevel(CurrLevel, maxLevel, SelectId);
+        RefreshLevel(CurrLevel, maxLevel, SelectCfg);
     }
     public void InitUI()
     {
+        playerData = GameRoot.Instance.PlayerData;
         transform.localPosition = new Vector3(1212f, transform.localPosition.y);
         LevelUpBtn.onClick.RemoveAllListeners();
-        LevelUpBtn.onClick.AddListener(() => { CurrLevel++; GameMsg gameMsg = new GameMsg { cmd = (int)CMD.ReqTalentUp, reqTalentUp = new ReqTalentUp() { NextLevel = CurrLevel, TalentId = SelectId }, }; Debug.Log(CurrLevel); NetSvc.instance.SendMsg(gameMsg); });
+        LevelUpBtn.onClick.AddListener(SendMsg);
+    }
+
+    private void SendMsg()
+    {
+        playerData.aura -= CurrLevel * 100;
+        CurrLevel++;
+        GameMsg gameMsg = new GameMsg
+        {
+            cmd = (int)CMD.ReqTalentUp,
+            reqTalentUp = new ReqTalentUp()
+            { NextLevel = CurrLevel, TalentId = SelectId },
+        };
+        NetSvc.instance.SendMsg(gameMsg);
     }
     #endregion
 }
