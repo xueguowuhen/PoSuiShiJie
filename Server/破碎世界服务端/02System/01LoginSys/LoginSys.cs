@@ -48,7 +48,7 @@ public class LoginSys
         {
             cmd = (int)CMD.RspLogin
         };
-        bool isAcct = cacheSvc.Isacct(reqLogin.acct);
+        bool isAcct = cacheSvc!.Isacct(reqLogin.acct);
         if (isAcct)//存在账号
         {
             PlayerData? playerData = cacheSvc.GetPlayerData(reqLogin.acct, reqLogin.pass);
@@ -139,7 +139,7 @@ public class LoginSys
         else
         {
             //TODO校验玩家名称不可重复
-            if (!cacheSvc.CheckName(reqCreateGame.name))
+            if (!cacheSvc.CheckName(reqCreateGame.name!))
             {
                 if (InitNewPlayerData(reqCreateGame, msg, playerData, personCfg))
                 {
@@ -167,7 +167,7 @@ public class LoginSys
     {
         playerData.TalentID = new List<int> { 50001, 50011 };
         playerData.TalentsData = new List<Talent>();
-        int[] talentsData = cfgSvc.GetTalentsId();
+        int[] talentsData = cfgSvc!.GetTalentsId();
         for (int i = 0; i < talentsData.Length; i++)
         {
             playerData.TalentsData.Add(new Talent() { TalentID = talentsData[i], Level = 1 });
@@ -183,7 +183,7 @@ public class LoginSys
         playerData.dailyTasks = cfgSvc.GetTaskDailyCfgData();
         playerData.FriendList = new List<FriendItem>();
         playerData.AddFriendList = new List<FriendItem>();
-        //CalcPlayerProp(playerData, personCfg);
+        CalcPlayerProp(playerData, personCfg);
         if (!cacheSvc.UpdatePlayerData(playerData))
         {
             msg.err = (int)Error.PerSonError;
@@ -191,6 +191,9 @@ public class LoginSys
         }
         else
         {
+            playerData.Hp += 10;
+            playerData.Hpmax += 10;
+            playerData.ad += 10;
             List<PlayerData> playerDataList = cacheSvc.GetPlayerData(playerData);
             msg.rspCreateGame = new RspCreateGame
             {
@@ -206,27 +209,27 @@ public class LoginSys
     /// </summary>
     public void CalcPlayerProp(PlayerData playerData, personCfg personCfg)
     {
-        for (int i = 0; i < playerData.TalentID.Count; i++)
-        {
-            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(playerData.TalentID[i]);
-            switch (talentCfg.Attribute)
-            {
-                case "Hp":
-                    { playerData.Hpmax += (int)talentCfg.Value * playerData.level; playerData.Hp += (int)talentCfg.Value * playerData.level; break; }
-                case "addef": 
-                    { playerData.addef += (int)talentCfg.Value * playerData.level; break; }
-                case "apdef":
-                    { playerData.apdef += (int)talentCfg.Value * playerData.level; break; }
-                case "dodge":
-                    { playerData.dodge += (int)talentCfg.Value * playerData.level; break; }
-                case "ad":
-                    { playerData.ad += (int)talentCfg.Value * playerData.level; break; }
-                case "critical":
-                    { playerData.critical += (int)talentCfg.Value * playerData.level; break; }
-                case "ap":
-                    { playerData.ap += (int)talentCfg.Value * playerData.level; break; }
-            }
-        }
+        //for (int i = 0; i < playerData.TalentID.Count; i++)
+        //{
+        //    TalentCfg talentCfg = cfgSvc.GetTalentCfgData(playerData.TalentID[i]);
+        //    switch (talentCfg.Attribute)
+        //    {
+        //        case "Hp":
+        //            { playerData.Hpmax += (int)talentCfg.Value * playerData.level; playerData.Hp += (int)talentCfg.Value * playerData.level; break; }
+        //        case "addef": 
+        //            { playerData.addef += (int)talentCfg.Value * playerData.level; break; }
+        //        case "apdef":
+        //            { playerData.apdef += (int)talentCfg.Value * playerData.level; break; }
+        //        case "dodge":
+        //            { playerData.dodge += (int)talentCfg.Value * playerData.level; break; }
+        //        case "ad":
+        //            { playerData.ad += (int)talentCfg.Value * playerData.level; break; }
+        //        case "critical":
+        //            { playerData.critical += (int)talentCfg.Value * playerData.level; break; }
+        //        case "ap":
+        //            { playerData.ap += (int)talentCfg.Value * playerData.level; break; }
+        //    }
+        //}
         playerData.Hp += personCfg.HP;
         playerData.Hpmax += personCfg.HP;
         playerData.ManaMax += personCfg.Mana;
@@ -239,6 +242,7 @@ public class LoginSys
         playerData.ad += personCfg.ad;
         playerData.ap += personCfg.ap;
         playerData.addef += personCfg.addef;
+        playerData.apdef += personCfg.apdef;
         playerData.dodge += personCfg.dodge;
         playerData.practice += personCfg.practice;
         playerData.critical += personCfg.critical;
@@ -294,7 +298,7 @@ public class LoginSys
     /// <param name="server"></param>
     public void ClearOfflineData(ServerSession server)
     {
-        ReqDeletePlayer(new MsgPack(server, null));
-        cacheSvc.AcctOutLine(server);
+        ReqDeletePlayer(new MsgPack(server, null!));
+        cacheSvc!.AcctOutLine(server);
     }
 }

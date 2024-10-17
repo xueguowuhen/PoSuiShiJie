@@ -36,8 +36,12 @@ public class CacheSvc
     }
     public PlayerData? GetPlayerData(string acct, string pass)
     {
-        PlayerData ?playerData =  dBMgr.GetPlayerData(acct, pass); //玩家原始数据
-        playerData = TalentSys.Instance.CalcPlayerProp(playerData!); //叠加的天赋数据
+        PlayerData? playerData = dBMgr.GetPlayerData(acct, pass); //玩家原始数据
+
+        if (playerData!.TalentID != null && TalentSys.Instance.CalcPlayerProp(playerData!))//叠加的天赋数据
+        {
+
+        }
         return playerData;
     }
     /// <summary>
@@ -171,7 +175,6 @@ public class CacheSvc
     /// </summary>
     public void AcctOutLine(ServerSession server)
     {
-
         bool scct = onLineSessionDic.Remove(server);
         GameCommon.Log("该账号下线：" + scct);
     }

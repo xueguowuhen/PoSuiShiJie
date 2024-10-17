@@ -227,7 +227,7 @@ public class MainCitySys : SystemRoot
         RspRewardTask rspRewardTask = msg.rspRewardTask;
         PlayerData playerData = GameRoot.Instance.PlayerData;
         playerData.rewardTask = rspRewardTask.rewardTask;
-        playerData.Bag=rspRewardTask.Bag;
+        playerData.Bag = rspRewardTask.Bag;
         RefreshTaskUI();
     }
     #endregion
@@ -249,18 +249,22 @@ public class MainCitySys : SystemRoot
     public void RspTalentUpHandler(GameMsg msg)
     {
         RspTalentUp rspTalentUp = msg.rspTalentUp;
-        Debug.Log(rspTalentUp.IsUpSuccess);
+        //Debug.Log(rspTalentUp.IsUpSuccess);
         if (rspTalentUp.IsUpSuccess)
         {
             GameRoot.Instance.PlayerData.TalentsData = rspTalentUp.talents;
-            talentWnd.NeewUpdate = true;
+            //Debug.Log()
+            if (rspTalentUp.NeedUpdate)
+            {
+                GameRoot.Instance.SetPlayerData(rspTalentUp.battleData);
+            }
             talentWnd.RefreshLevelUp();
         }
         else
         {
             Debug.LogError("数据异常,升级失败");
         }
-    } 
+    }
     #endregion
 
     public void RspTalentChangeHandler(GameMsg msg)
@@ -365,6 +369,32 @@ public class MainCitySys : SystemRoot
         //#endregion
 
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlayerData playerData = GameRoot.Instance.PlayerData;
+            Debug.Log("====================================");
+            Debug.Log("当前天赋ID:" + playerData.TalentID[0] + "," + playerData.TalentID[1]);
+            string temp = "";
+            foreach (Talent i in playerData.TalentsData)
+            {
+                temp += i.TalentID;
+                temp += "|";
+                temp += i.Level;
+                temp += "|";
+            }
+            Debug.Log("当前天赋数据:" + temp);
+            Debug.Log("ad:" + playerData.ad);
+            Debug.Log("addef:" + playerData.addef);
+            Debug.Log("apdef:" + playerData.apdef);
+            Debug.Log("hp:" + playerData.Hp);
+            Debug.Log("hpmax:" + playerData.Hpmax);
+            Debug.Log("ap:" + playerData.ap);
+            Debug.Log("critical:" + playerData.critical);
+            Debug.Log("dodge:" + playerData.dodge);
+            Debug.Log("Mana:" + playerData.Mana);
+        }
+
+
     }
     #endregion
 
@@ -435,9 +465,9 @@ public class MainCitySys : SystemRoot
     /// TODO修改刷新UI
     /// </summary>
     /// <param name="item"></param>
-    public void FriendReFresh(FriendItem item=null)
+    public void FriendReFresh(FriendItem item = null)
     {
-        friendsWnd. RefreshFriends(item);
+        friendsWnd.RefreshFriends(item);
     }
 
     public void EnterTalentWnd()

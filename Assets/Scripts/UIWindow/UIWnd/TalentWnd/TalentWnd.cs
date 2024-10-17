@@ -26,11 +26,6 @@ public class TalentWnd : WindowRoot
         get { return m_IsSelect; }
         private set { if (value == true && m_IsSelect == false) { RefreshInfoUI(); m_IsSelect = true; } }
     }
-    public bool NeewUpdate
-    {
-        get { return m_NeewUpdate; }
-        set { m_NeewUpdate = value; }
-    }
 
     //public bool NeedUpdate
     #endregion
@@ -77,10 +72,6 @@ public class TalentWnd : WindowRoot
     /// 是否有显示天赋信息
     /// </summary>
     private bool IsShowInfo = false;
-    /// <summary>
-    /// 假如有天赋升级 需要更新
-    /// </summary>
-    private bool m_NeewUpdate = false;
 
     /// <summary>
     /// 记录当前的天赋
@@ -177,7 +168,6 @@ public class TalentWnd : WindowRoot
         #region logic
         m_IsSelect = false;
         IsShowInfo = false;
-        NeewUpdate = false;
         #endregion
     }
 
@@ -254,9 +244,9 @@ public class TalentWnd : WindowRoot
     }
     private void BtnCloseHandler()
     {
-        bool temp = (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1])) || NeewUpdate;
+        bool temp = (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]));
 
-        if (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]) || NeewUpdate)
+        if (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]))
         {
             GameMsg gameMsg = new GameMsg()
             {
