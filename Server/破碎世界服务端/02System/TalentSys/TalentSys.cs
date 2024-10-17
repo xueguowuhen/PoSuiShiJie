@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static CfgSvc;
+using static Mysqlx.Notice.Warning.Types;
 
 
 public class TalentSys
@@ -35,20 +36,31 @@ public class TalentSys
         ReqTalentUp? msg = gameMsg.gameMsg.reqTalentUp;
         int talentid = msg.TalentId;
         int level = msg.NextLevel;
-        //TalentCfg cfg = cfgSvc.GetTalentCfgData(talentid);
         GameMsg rspmsg = new GameMsg
         {
             cmd = (int)CMD.RspTalentUp,
             rspTalentUp = new RspTalentUp(),
         };
-        //RspTalentUp rspmsg = new RspTalentUp();
         PlayerData playerData = cacheSvc.GetPlayerDataBySession(gameMsg.session);
         TalentCfg talentCfg = cfgSvc.GetTalentCfgData(talentid);
+        foreach (int i in playerData.TalentID!)
+        {
+            if (i == talentid) //升级天赋为当前选择天赋
+            {
+                foreach (Talent j in playerData.TalentsData!)
+                    if (j.TalentID == i)
+                    {
+                        CurrTalentUp(j, talentCfg, playerData);
+                        break;
+                    }
+                break;
+            }
+        }
         if (cacheSvc.CheckAndUpdateTalentsData(playerData.id, talentid, level, talentCfg))
         {
             rspmsg.rspTalentUp.IsUpSuccess = true;
-            //数据库更新成功 服务端数据更新
-            for (int i = 0; i < playerData.TalentsData.Count; i++)
+            //数据库仅更新天赋ID与等级 
+            for (int i = 0; i < playerData.TalentsData!.Count; i++)
             {
                 if (talentid == playerData.TalentsData[i].TalentID)
                 {
@@ -57,6 +69,7 @@ public class TalentSys
                 }
             }
             rspmsg.rspTalentUp.talents = playerData.TalentsData;
+            rspmsg.rspTalentUp.battleData = GetDataFromPlayerData(playerData);
         }
         else
         {
@@ -75,76 +88,94 @@ public class TalentSys
             cmd = (int)CMD.RspChangeTalent,
             rspChangeTalent = new RspChangeTalent(),
         };
-        PlayerData newplayerdata = CalcPlayerProp(playerData, currTalentsID);
-        if (cacheSvc.UpdatePlayerData(newplayerdata))
+        playerData.TalentID = currTalentsID;
+        if (cacheSvc.UpdatePlayerData(playerData))
         {
+            PlayerData newplayerdata = CalcPlayerProp(playerData, currTalentsID);
             rspmsg.rspChangeTalent.IsChangeSuccess = true;
             rspmsg.rspChangeTalent.playerData = newplayerdata;
-            //Console.WriteLine("修改完成");
         }
         else
         {
             rspmsg.rspChangeTalent.IsChangeSuccess = false;
             rspmsg.rspChangeTalent.playerData = playerData;
-            //Console.WriteLine("修改失败");
         }
         gameMsg.session.SendMsg(rspmsg);
     }
-    public PlayerData CalcPlayerProp(PlayerData playerData, List<int> newalentsId)
+    public PlayerData CalcPlayerProp(PlayerData playerData, List<int> newtalentsId = null!)
     {
-        for (int i = 0; i < playerData.TalentID.Count; i++) //去除旧天赋数据
+        if (newtalentsId != null)
         {
-            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(playerData.TalentID[i]);
-            int level = 1;
-            foreach (Talent j in playerData.TalentsData)
+            for (int i = 0; i < playerData.TalentID!.Count; i++) //去除旧天赋数据
             {
-                if (j.TalentID == talentCfg.ID) { level = j.Level;break; }
-            }
-            switch (talentCfg.Attribute)
-            {
-                case "Hp":
-                    { playerData.Hpmax -= (int)talentCfg.Value * level; break; }
-                case "addef":
-                    { playerData.addef -= (int)talentCfg.Value * level; break; }
-                case "apdef":
-                    { playerData.apdef -= (int)talentCfg.Value * level; break; }
-                case "dodge":
-                    { playerData.dodge -= (int)talentCfg.Value * level; break; }
-                case "ad":
-                    { playerData.ad -= (int)talentCfg.Value * level; break; }
-                case "critical":
-                    { playerData.critical -= (int)talentCfg.Value * level; break; }
-                case "ap":
-                    { playerData.ap -= (int)talentCfg.Value * level; break; }
+                TalentCfg talentCfg = cfgSvc.GetTalentCfgData(playerData.TalentID[i]);
+                int level = 1;
+                foreach (Talent j in playerData.TalentsData!)
+                {
+                    if (j.TalentID == talentCfg.ID) { level = j.Level; break; }
+                }
+                UpdateAttribute(talentCfg.Attribute!, talentCfg, level, playerData, false);
             }
         }
-        for (int i = 0; i < newalentsId.Count; i++) //修正最新天赋数据
+        else
         {
-            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(newalentsId[i]);
+            newtalentsId = playerData.TalentID!;
+        }
+        for (int i = 0; i < newtalentsId!.Count; i++) //修正最新天赋数据
+        {
+            TalentCfg talentCfg = cfgSvc.GetTalentCfgData(newtalentsId[i]);
             int level = 1;
-            foreach (Talent j in playerData.TalentsData)
+            foreach (Talent j in playerData.TalentsData!)
             {
                 if (j.TalentID == talentCfg.ID) { level = j.Level; break; }
             }
-            switch (talentCfg.Attribute)
-            {
-                case "Hp":
-                    { playerData.Hpmax += (int)talentCfg.Value * level; break; }
-                case "addef":
-                    { playerData.addef += (int)talentCfg.Value * level; break; }
-                case "apdef":
-                    { playerData.apdef += (int)talentCfg.Value * level; break; }
-                case "dodge":
-                    { playerData.dodge += (int)talentCfg.Value * level; break; }
-                case "ad":
-                    { playerData.ad += (int)talentCfg.Value * level; break; }
-                case "critical":
-                    { playerData.critical += (int)talentCfg.Value * level; break; }
-                case "ap":
-                    { playerData.ap += (int)talentCfg.Value * level; break; }
-            }
+            UpdateAttribute(talentCfg.Attribute!, talentCfg, level, playerData, true);
         }
-        playerData.TalentID = newalentsId;
+        playerData.TalentID = newtalentsId;
         return playerData;
+    }
+
+    private void CurrTalentUp(Talent talent, TalentCfg talentCfg, PlayerData playerData)
+    {
+        UpdateAttribute(talentCfg.Attribute!, talentCfg, talent.Level++, playerData, true);
+    }
+    private BattleData GetDataFromPlayerData(PlayerData playerData)
+    {
+        BattleData data = new BattleData()
+        {
+            Hp = playerData.Hp,
+            Hpmax = playerData.Hpmax,
+            Mana = playerData.Mana,
+            ManaMax = playerData.ManaMax,
+            ad = playerData.ad,
+            addef = playerData.addef,
+            ap = playerData.ap,
+            apdef = playerData.apdef,
+            dodge = playerData.dodge,
+            critical = playerData.critical,
+        };
+        return data;
+    }
+    public void UpdateAttribute(string attribute, TalentCfg talentCfg, int level, PlayerData playerData, bool IsAdd)
+    {
+        int temp = 1;
+        if (IsAdd) { temp = 1; } else { temp = -1; }
+        switch (attribute)
+        {
+            case "Hp":
+                { playerData.Hpmax += temp * (int)talentCfg.Value * level; playerData.Hp += (int)talentCfg.Value * level; return; }
+            case "addef":
+                { playerData.addef += temp * (int)talentCfg.Value * level; return; }
+            case "apdef":
+                { playerData.apdef += temp * (int)talentCfg.Value * level; return; }
+            case "dodge":
+                { playerData.dodge += temp * (int)talentCfg.Value * level; return; }
+            case "ad":
+                { playerData.ad += (int)talentCfg.Value * level; return; }
+            case "critical":
+                { playerData.critical += temp * (int)talentCfg.Value * level; return; }
+            case "ap":
+                { playerData.ap += temp * (int)talentCfg.Value * level; return; }
+        }
     }
 }

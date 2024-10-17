@@ -183,7 +183,7 @@ public class LoginSys
         playerData.dailyTasks = cfgSvc.GetTaskDailyCfgData();
         playerData.FriendList = new List<FriendItem>();
         playerData.AddFriendList = new List<FriendItem>();
-        CalcPlayerProp(playerData, personCfg);
+        //CalcPlayerProp(playerData, personCfg);
         if (!cacheSvc.UpdatePlayerData(playerData))
         {
             msg.err = (int)Error.PerSonError;

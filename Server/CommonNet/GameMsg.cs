@@ -231,8 +231,9 @@ namespace CommonNet
     public class RspTalentUp
     {
         public bool IsUpSuccess;
-        public int ruvia; //升级后剩余的云晶 用于比对客户端数据
+        //public int ruvia; //升级后剩余的云晶 用于比对客户端数据
         public List<Talent>? talents; //最新的天赋数据
+        public BattleData battleData;
     }
     /// <summary>
     /// 天赋切换请求
@@ -240,6 +241,7 @@ namespace CommonNet
     public class ReqChangeTalent
     {
         public List<int>? CurrTalents;
+        //public BattleData battleData;
     }
 
     /// <summary>
@@ -248,6 +250,7 @@ namespace CommonNet
     public class RspChangeTalent
     {
         public bool IsChangeSuccess;
+        public BattleData battleData;
         public PlayerData? playerData;
     }
     #endregion
@@ -361,8 +364,8 @@ namespace CommonNet
         public int addef;//物抗
         public int apdef;//魔抗
         public int dodge;//闪避概率
-        public float practice;//修炼速度
         public int critical;//暴击概率
+        public float practice;//修炼速度
         public RewardTask? rewardTask;//每日任务进度
         public List<DailyTask>? dailyTasks;//每日任务数据
         public List<int>? TalentID;//当前选中的天赋ID
@@ -385,6 +388,23 @@ namespace CommonNet
     {
         public int GoodsID;
         public int count;
+    }
+
+    /// <summary>
+    /// 战斗相关数据
+    /// </summary>
+    public class BattleData 
+    {
+        public int Hp;//生命
+        public int Hpmax;//生命上限
+        public int Mana;//法力
+        public int ManaMax;//法力上限
+        public int ad;//物攻
+        public int ap;//魔攻
+        public int addef;//物抗
+        public int apdef;//魔抗
+        public int dodge;//闪避概率
+        public int critical;//暴击概率
     }
 
     public class Talent
