@@ -39,6 +39,7 @@ public class ServerRoot
         BattleSys.Instance.Init();
         FriendSys.Instance.Init();
         DailyTaskSys.Instance.Init();
+        TalentSys.Instance.Init();
     }
     public void Update()
     {

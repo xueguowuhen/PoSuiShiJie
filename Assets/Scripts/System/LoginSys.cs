@@ -52,8 +52,6 @@ public class LoginSys : SystemRoot
         GameRoot.AddTips("登录成功");
         if (msg.rspLogin.playerData.name == null)//判断该账号是否需要进入创建界面
         {
-            //GameCommon.Log("创建账号");
-            //loginWnd.imgbg.SetActive(false);
             loginWnd.SetWndState(false);
             createWnd.SetWndState();
         }

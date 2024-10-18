@@ -7,7 +7,7 @@ namespace CommonNet
         public RspLogin? rspLogin;
         public ReqRegister? reqRegister;//请求注册
         public RspRegister? rspRegister;
-        public ReqCreateGame? reqCreateGame;
+        public ReqCreateGame? reqCreateGame; //玩家创建角色请求
         public RspCreateGame? rspCreateGame;
         public ReqShop? reqShop;//商店请求
         public RspShop? rspShop;
@@ -41,28 +41,36 @@ namespace CommonNet
         public RspFriendGift? rspFriendGift; // 好友赠送响应
         public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
+
+        //每日任务的请求与响应
         public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
         public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
         public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
         public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         public HeartbeatMessage? heartbeatMessage;
+
+        //天赋相关请求与响应
+        public ReqTalentUp? reqTalentUp;
+        public RspTalentUp? rspTalentUp;
+        public ReqChangeTalent? reqChangeTalent;
+        public RspChangeTalent? rspChangeTalent;
     }
     #region 登录注册相关
     public class ReqLogin
     {
-        public string acct;
-        public string pass;
+        public string ?acct;
+        public string ?pass;
     }
     public class RspLogin//玩家个人数据
     {
-        public PlayerData playerData;
-        public List<PlayerData> playerList;//其他玩家id数据
+        public PlayerData ?playerData;
+        public List<PlayerData> ?playerList;//其他玩家id数据
     }
 
     public class ReqRegister
     {
-        public string acct;
-        public string pass;
+        public string ?acct;
+        public string ?pass;
     }
     public class RspRegister
     {
@@ -71,17 +79,19 @@ namespace CommonNet
     public class ReqCreateGame
     {
         public int id;
-        public string name;
-        public List<int> TalentIDList;
+        public string ?name;
 
     }
     public class RspCreateGame
     {
-        public PlayerData playerData;
-        public List<PlayerData> playerDataList;
+        public PlayerData ?playerData;
+        public List<PlayerData> ?playerDataList;
     }
     #endregion
+
     #region 城镇系统请求
+
+    #region 商店相关请求与响应
     public class ReqShop
     {
         public BuyType buyType;
@@ -97,26 +107,15 @@ namespace CommonNet
         public List<DailyTask> dailyTasks;//每日任务数据
     }
 
-    public class ReqBag//使用资源
-    {
-        public int id;
-        public int count;
-    }
+    #endregion
+
     public class RspBag
     {
         public PlayerData playerData;
     }
-    public class ReqTask
-    {
-        public int Taskid;
-    }
-    public class RspTask
-    {
-        public int Taskid;
-        public float aura;
-        public int lv;
-        public int exp;
-    }
+
+    #region 好友请求与响应
+
     public class ReqSearchFriend//好友搜索
     {
         public string name;
@@ -177,6 +176,20 @@ namespace CommonNet
         public List<FriendItem> FriendList;//好友列表
         public List<FriendItem> AddFriendList;//好友申请列表
     }
+    #endregion
+
+    #region 每日任务相关请求与响应
+    public class ReqTask
+    {
+        public int Taskid;
+    }
+    public class RspTask
+    {
+        public int Taskid;
+        public float aura;
+        public int lv;
+        public int exp;
+    }
     public class ReqDailyTask//根据ID领取奖励
     {
         public int TaskID;
@@ -195,13 +208,61 @@ namespace CommonNet
         public RewardTask rewardTask;
         public List<BagList>? Bag;//背包数据
     }
+    public class RewardTask
+    {
+        public List<int>? TaskProgress;//每日任务领取进度0为未领取，1为领取第一个奖励
+        public DateTime LastTime;//上次更新时间
+    }
     #endregion
+
+    #region 天赋相关请求与响应
+
+    /// <summary>
+    /// 天赋升级请求
+    /// </summary>
+    public class ReqTalentUp
+    {
+        public int TalentId;
+        public int NextLevel;
+    }
+    /// <summary>
+    /// 天赋升级响应
+    /// </summary>
+    public class RspTalentUp
+    {
+        public bool IsUpSuccess;
+        //public int ruvia; //升级后剩余的云晶 用于比对客户端数据
+        public List<Talent>? talents; //最新的天赋数据
+        public BattleData? battleData;
+        public bool NeedUpdate; //需要更新战斗数据
+    }
+    /// <summary>
+    /// 天赋切换请求
+    /// </summary>
+    public class ReqChangeTalent
+    {
+        public List<int>? CurrTalents;
+        //public BattleData battleData;
+    }
+
+    /// <summary>
+    /// 天赋切换响应
+    /// </summary>
+    public class RspChangeTalent
+    {
+        public bool IsChangeSuccess;
+        public PlayerData? playerData;
+    }
+    #endregion
+    #endregion
+
     #region 心跳机制请求
     public class HeartbeatMessage
     {
         public string Heartbeat = "Heartbeat";
     }
     #endregion
+
     #region 战斗同步请求
 
     public class ReqTransform
@@ -275,6 +336,13 @@ namespace CommonNet
     }
 
     #endregion
+
+    #region 自定义数据/枚举
+    public class ReqBag//使用资源
+    {
+        public int id;
+        public int count;
+    }
     public class PlayerData
     {
         public int id;
@@ -296,10 +364,10 @@ namespace CommonNet
         public int addef;//物抗
         public int apdef;//魔抗
         public int dodge;//闪避概率
-        public float practice;//修炼速度
         public int critical;//暴击概率
-        public RewardTask rewardTask;//每日任务进度
-        public List<DailyTask> dailyTasks;//每日任务数据
+        public float practice;//修炼速度
+        public RewardTask? rewardTask;//每日任务进度
+        public List<DailyTask>? dailyTasks;//每日任务数据
         public List<int>? TalentID;//当前选中的天赋ID
         public List<Talent>? TalentsData; //所有天赋数据
         public List<BagList>? Bag;//背包数据
@@ -322,6 +390,23 @@ namespace CommonNet
         public int count;
     }
 
+    /// <summary>
+    /// 战斗相关数据
+    /// </summary>
+    public class BattleData 
+    {
+        public int Hp;//生命
+        public int Hpmax;//生命上限
+        public int Mana;//法力
+        public int ManaMax;//法力上限
+        public int ad;//物攻
+        public int ap;//魔攻
+        public int addef;//物抗
+        public int apdef;//魔抗
+        public int dodge;//闪避概率
+        public int critical;//暴击概率
+    }
+
     public class Talent
     {
         public int TalentID;
@@ -339,95 +424,12 @@ namespace CommonNet
         public List<int>? FriendList;//好友id列表
         public List<int>? AddFriendList;//好友id申请列表
     }
-    public class RewardTask
-    {
-        public List<int>? TaskProgress;//每日任务领取进度0为未领取，1为领取第一个奖励
-        public DateTime LastTime;//上次更新时间
-    }
+
     public class DailyTask
     {
         public int TaskID;//每日任务id
         public int TaskReward;//任务进度
         public bool TaskFinish;//任务完成状态
-    }
-    public enum CMD
-    {
-        None = 0,
-        heartbeatMessage = 1,
-        ReqLogin = 101,//登录相关请求
-        RspLogin = 102,//
-        ReqRegister = 103,//注册相关请求
-        RspRegister = 104,
-        ReqCreateGame = 105,//创建角色请求
-        RspCreateGame = 106,//
-
-        ReqShop = 107,//商店
-        RspShop = 108,
-        ReqBag = 109,//背包
-        RspBag = 110,
-        ReqTask = 111,//任务
-        RspTask = 112,
-        RspCreatePlayer = 113,//创建角色
-        RspDeletePlayer = 114,//删除角色
-
-        ReqTransform = 115,//转发位置请求
-        RspTransform = 116,//
-        ReqState = 119,//玩家状态请求
-        RspState = 120,
-        ReqDamage = 117,//玩家伤害请求
-        RspDamage = 118,
-        ReqRevive = 121,
-        RspRevive = 122,
-        // 新增的好友功能命令
-        ReqSearchFriend = 123,//好友搜索请求
-        RspSearchFriend = 124,//好友搜索响应
-        ReqAddFriend = 125,//好友申请请求
-        RspAddFriend = 126,//好友申请响应
-        ReqDelFriend = 127,//好友删除请求
-        RspDelFriend = 128,//好友删除响应
-        ReqFriendGift = 129,//好友赠送请求
-        RspFriendGift = 130,//好友赠送响应
-        ReqFriendAddConfirm = 131,//好友添加确认请求
-        RspFriendAddConfirm = 132,//好友添加确认响应
-        ReqDailyTask = 133,//领取每日任务奖励请求
-        RspDailyTask = 134,//领取每日任务奖励响应
-        ReqRewardTask = 135,//领取活跃奖励任务请求
-        RspRewardTask = 136,//领取活跃奖励任务响应
-    }
-    public enum Error
-    {
-        None = 0,
-        RegisterError = 1001,//注册失败
-        AcctExistError = 1002,//账号已存在
-        LoginExistError = 1003,//不存在该账号
-        LoginInvalidError = 1004,//账号或密码无效
-        PerSonError = 1005,//该角色不存在
-        TalentError = 1006,//天赋选择错误
-        AcctUpdateError = 1007,//更新失败
-        NotGoodError = 1008,//没有该物品
-        NotAuraError = 1009,//星晶不足
-        NotRuviaError = 1010,//云晶不足
-        NotCrystalError = 1011,//彩晶不足
-        TaskIDError = 1013,//任务id错误
-        DamageError = 1014,//造成伤害异常
-        NotFriendError = 1015,//好友不存在
-        FriendMeError = 1016,//不能添加自己为好友
-        FriendNameError = 1017,//该用户不存在
-        FriendRequestExistError = 1021,//已经申请过该好友
-        FriendExistError = 1022,//好友已存在
-        FriendRequestError = 1023,//好友申请失败
-        FriendAddConfirmError = 1024,//好友拒绝失败
-        FriendDelError = 1025,//删除好友失败
-        FriendGiftError = 1026,//赠送失败
-        GoldNotEnoughError = 1027,//货币不足
-        NameExistError = 1028,//名字已存在
-        RewardTaskRefreshError = 1029, //本日任务已刷新
-        RewardActiveNotTaskError = 1030, //活跃度不足领取错误
-        RewardTaskError = 1031, //奖励已领取
-        DailyTaskNotError=1032, //没有该每日任务
-        DailyTaskFinishError = 1033, //该每日任务未完成
-        DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
-        RewardActiveError = 1035, //活跃度奖励领取失败
     }
 
     public enum BuyType
@@ -475,11 +477,101 @@ namespace CommonNet
         equip,//装备
         material,//材料
     }
+    #endregion
+    public enum CMD
+    {
+        None = 0,
+        heartbeatMessage = 1,
+        ReqLogin = 101,//登录相关请求
+        RspLogin = 102,//
+        ReqRegister = 103,//注册相关请求
+        RspRegister = 104,
+        ReqCreateGame = 105,//创建角色请求
+        RspCreateGame = 106,//
+
+        ReqShop = 107,//商店
+        RspShop = 108,
+        ReqBag = 109,//背包
+        RspBag = 110,
+        ReqTask = 111,//任务
+        RspTask = 112,
+        RspCreatePlayer = 113,//创建角色
+        RspDeletePlayer = 114,//删除角色
+
+        ReqTransform = 115,//转发位置请求
+        RspTransform = 116,//
+        ReqState = 119,//玩家状态请求
+        RspState = 120,
+        ReqDamage = 117,//玩家伤害请求
+        RspDamage = 118,
+        ReqRevive = 121,
+        RspRevive = 122,
+        // 新增的好友功能命令
+        ReqSearchFriend = 123,//好友搜索请求
+        RspSearchFriend = 124,//好友搜索响应
+        ReqAddFriend = 125,//好友申请请求
+        RspAddFriend = 126,//好友申请响应
+        ReqDelFriend = 127,//好友删除请求
+        RspDelFriend = 128,//好友删除响应
+        ReqFriendGift = 129,//好友赠送请求
+        RspFriendGift = 130,//好友赠送响应
+        ReqFriendAddConfirm = 131,//好友添加确认请求
+        RspFriendAddConfirm = 132,//好友添加确认响应
+        ReqDailyTask = 133,//领取每日任务奖励请求
+        RspDailyTask = 134,//领取每日任务奖励响应
+        ReqRewardTask = 135,//领取活跃奖励任务请求
+        RspRewardTask = 136,//领取活跃奖励任务响应
+        //天赋相关
+        ReqTalentUp = 200, //天赋升级请求
+        RspTalentUp = 201, //天赋升级响应
+        ReqChangeTalent = 202, //天赋切换的请求
+        RspChangeTalent = 203, //天赋切换的响应
+    }
+    public enum Error
+    {
+        None = 0,
+        RegisterError = 1001,//注册失败
+        AcctExistError = 1002,//账号已存在
+        LoginExistError = 1003,//不存在该账号
+        LoginInvalidError = 1004,//账号或密码无效
+        PerSonError = 1005,//该角色不存在
+        TalentError = 1006,//天赋选择错误
+        AcctUpdateError = 1007,//更新失败
+        NotGoodError = 1008,//没有该物品
+        NotAuraError = 1009,//星晶不足
+        NotRuviaError = 1010,//云晶不足
+        NotCrystalError = 1011,//彩晶不足
+        TaskIDError = 1013,//任务id错误
+        DamageError = 1014,//造成伤害异常
+        NotFriendError = 1015,//好友不存在
+        FriendMeError = 1016,//不能添加自己为好友
+        FriendNameError = 1017,//该用户不存在
+        FriendRequestExistError = 1021,//已经申请过该好友
+        FriendExistError = 1022,//好友已存在
+        FriendRequestError = 1023,//好友申请失败
+        FriendAddConfirmError = 1024,//好友拒绝失败
+        FriendDelError = 1025,//删除好友失败
+        FriendGiftError = 1026,//赠送失败
+        GoldNotEnoughError = 1027,//货币不足
+        NameExistError = 1028,//名字已存在
+        RewardTaskRefreshError = 1029, //本日任务已刷新
+        RewardActiveNotTaskError = 1030, //活跃度不足领取错误
+        RewardTaskError = 1031, //奖励已领取
+        DailyTaskNotError=1032, //没有该每日任务
+        DailyTaskFinishError = 1033, //该每日任务未完成
+        DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
+        RewardActiveError = 1035, //活跃度奖励领取失败
+        MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
+    }
+
+
+    #region 配置信息
     public class IPCfg
     {
 
-        public const string srvIP = "10.201.19.236";
+        public const string srvIP = "127.0.0.1";
 
         public const int srvPort = 17666;
-    }
+    } 
+    #endregion
 }

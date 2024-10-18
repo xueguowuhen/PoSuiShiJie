@@ -92,6 +92,19 @@ public class GameRoot : MonoBehaviour
     {
         this.playerData = playerData;
     }
+    public void SetPlayerData(CommonNet.BattleData battleData)
+    {
+        this.playerData.Hp = battleData.Hp;
+        this.playerData.Hpmax = battleData.Hpmax;
+        this.playerData.critical = battleData.critical;
+        this.playerData.Mana = battleData.Mana;
+        this.playerData.ManaMax = battleData.ManaMax;
+        this.playerData.ad = battleData.ad;
+        this.playerData.addef = battleData.addef;
+        this.playerData.ap = battleData.ap;
+        this.playerData.apdef = battleData.apdef;
+        this.playerData.dodge = battleData.dodge;
+    }
     public void SetPlayerDataList(List<PlayerData> playerDataList)
     {
         this.playerDataList = playerDataList;

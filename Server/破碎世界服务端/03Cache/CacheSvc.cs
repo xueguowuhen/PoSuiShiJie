@@ -10,6 +10,7 @@ using ComNet;
 using MySqlX.XDevAPI;
 using System.Collections.Generic;
 using 墨染服务端._01Service._01NetSvc;
+using static CfgSvc;
 
 public class CacheSvc
 {
@@ -35,7 +36,13 @@ public class CacheSvc
     }
     public PlayerData? GetPlayerData(string acct, string pass)
     {
-        return dBMgr.GetPlayerData(acct, pass);
+        PlayerData? playerData = dBMgr.GetPlayerData(acct, pass); //玩家原始数据
+
+        if (playerData!.TalentID != null && TalentSys.Instance.CalcPlayerProp(playerData!))//叠加的天赋数据
+        {
+
+        }
+        return playerData;
     }
     /// <summary>
     /// 判断账号是否存在
@@ -168,15 +175,6 @@ public class CacheSvc
     /// </summary>
     public void AcctOutLine(ServerSession server)
     {
-
-        //foreach (var session in onLineSessionDic)
-        //{
-        //    if (server == session.Key)
-        //    {
-        //        onLineSessionDic.Remove(server);
-        //        break;
-        //    }
-        //}
         bool scct = onLineSessionDic.Remove(server);
         GameCommon.Log("该账号下线：" + scct);
     }
@@ -191,5 +189,13 @@ public class CacheSvc
     public bool UpdateFriend(FriendItem friendItem)
     {
         return dBMgr.UpdateFriend(friendItem);
+    }
+    /// <summary>
+    /// 检查并升级天赋
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg,int aura)
+    {
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg,aura);
     }
 }

@@ -28,28 +28,28 @@
 		<Attribute>dodge</Attribute>
 		<Value>10</Value>
 	</item>
-	<item ID="50005">
+	<item ID="50011">
 		<Name>狂暴之力</Name>
 		<Info>增加基础攻击力。</Info>
 		<MaxLevel>10</MaxLevel>
 		<Attribute>ad</Attribute>
 		<Value>10</Value>
 	</item>
-	<item ID="50006">
+	<item ID="50012">
 		<Name>无尽怒火</Name>
 		<Info>攻击时有几率提升暴击率。</Info>
 		<MaxLevel>10</MaxLevel>
 		<Attribute>critical</Attribute>
 		<Value>10</Value>
 	</item>
-	<item ID="50007">
+	<item ID="50013">
 		<Name>致命一击</Name>
 		<Info>提高暴击伤害。</Info>
 		<MaxLevel>10</MaxLevel>
 		<Attribute>ap</Attribute>
 		<Value>10</Value>
 	</item>
-	<item ID="50008">
+	<item ID="50014">
 		<Name>攻势如潮</Name>
 		<Info>提升攻击速度，连击更频繁。</Info>
 		<MaxLevel>10</MaxLevel>
