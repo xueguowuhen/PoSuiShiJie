@@ -422,14 +422,14 @@
  <Reference Include="DOTween">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/DOTWeen/DOTween/DOTween.dll</HintPath>
  </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
  <Reference Include="CommonNet">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/Scripts/Net/Debug/netstandard2.0/CommonNet.dll</HintPath>
  </Reference>
  <Reference Include="ComNet">
  <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Assets/Scripts/Net/Debug/netstandard2.0/ComNet.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>E:/UnityRes/GitHub/posuishijie/PoSuiShiJie-master/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>D:/unity_control/2020.3.29f1c1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -88,6 +88,7 @@ public class MainCitySys : SystemRoot
     }
 
     #region 服务器消息处理
+
     #region RspShop 购买成功
     public void RspShop(GameMsg msg)
     {
@@ -226,7 +227,7 @@ public class MainCitySys : SystemRoot
         RspRewardTask rspRewardTask = msg.rspRewardTask;
         PlayerData playerData = GameRoot.Instance.PlayerData;
         playerData.rewardTask = rspRewardTask.rewardTask;
-        playerData.Bag=rspRewardTask.Bag;
+        playerData.Bag = rspRewardTask.Bag;
         RefreshTaskUI();
     }
     #endregion
@@ -240,6 +241,47 @@ public class MainCitySys : SystemRoot
         RefreshTaskUI();
     }
     #endregion
+
+    #region RspTalentUpHandler 处理天赋升级的服务器响应
+    /// <summary>
+    /// 处理天赋升级的服务器响应
+    /// </summary>
+    public void RspTalentUpHandler(GameMsg msg)
+    {
+        RspTalentUp rspTalentUp = msg.rspTalentUp;
+        //Debug.Log(rspTalentUp.IsUpSuccess);
+        if (rspTalentUp.IsUpSuccess)
+        {
+            GameRoot.Instance.PlayerData.TalentsData = rspTalentUp.talents;
+            //Debug.Log()
+            if (rspTalentUp.NeedUpdate)
+            {
+                GameRoot.Instance.SetPlayerData(rspTalentUp.battleData);
+            }
+            talentWnd.RefreshLevelUp();
+        }
+        else
+        {
+            Debug.LogError("数据异常,升级失败");
+        }
+    }
+    #endregion
+
+    public void RspTalentChangeHandler(GameMsg msg)
+    {
+        RspChangeTalent rspChangeTalent = msg.rspChangeTalent;
+        if (rspChangeTalent.IsChangeSuccess)
+        {
+            //Debug.Log("更新成功");
+            GameRoot.Instance.PlayerData = rspChangeTalent.playerData;
+        }
+        else
+        {
+            //Debug.Log("更新失败");
+            Debug.LogError("数据更新失败");
+        }
+    }
+
     #endregion
 
     #region 玩家移动相关
@@ -327,6 +369,32 @@ public class MainCitySys : SystemRoot
         //#endregion
 
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlayerData playerData = GameRoot.Instance.PlayerData;
+            Debug.Log("====================================");
+            Debug.Log("当前天赋ID:" + playerData.TalentID[0] + "," + playerData.TalentID[1]);
+            string temp = "";
+            foreach (Talent i in playerData.TalentsData)
+            {
+                temp += i.TalentID;
+                temp += "|";
+                temp += i.Level;
+                temp += "|";
+            }
+            Debug.Log("当前天赋数据:" + temp);
+            Debug.Log("ad:" + playerData.ad);
+            Debug.Log("addef:" + playerData.addef);
+            Debug.Log("apdef:" + playerData.apdef);
+            Debug.Log("hp:" + playerData.Hp);
+            Debug.Log("hpmax:" + playerData.Hpmax);
+            Debug.Log("ap:" + playerData.ap);
+            Debug.Log("critical:" + playerData.critical);
+            Debug.Log("dodge:" + playerData.dodge);
+            Debug.Log("Mana:" + playerData.Mana);
+        }
+
+
     }
     #endregion
 
@@ -340,10 +408,6 @@ public class MainCitySys : SystemRoot
     //    return list;
     //}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// 打开对话界面
     public void OpenGuideWnd()
     {
         guideWnd.SetWndState();
@@ -401,9 +465,9 @@ public class MainCitySys : SystemRoot
     /// TODO修改刷新UI
     /// </summary>
     /// <param name="item"></param>
-    public void FriendReFresh(FriendItem item=null)
+    public void FriendReFresh(FriendItem item = null)
     {
-        friendsWnd. RefreshFriends(item);
+        friendsWnd.RefreshFriends(item);
     }
 
     public void EnterTalentWnd()

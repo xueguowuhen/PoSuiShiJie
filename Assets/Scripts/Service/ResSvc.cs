@@ -1370,6 +1370,10 @@ public class ResSvc : MonoBehaviour
                         case "Value":
                             talentCfg.Value = float.Parse(node.InnerText);
                             break;
+                        case "BackGround":
+                            talentCfg.BackGround = node.InnerText;
+                            break;
+
                     }
                 }
                 TalentDic.Add(ID, talentCfg);
