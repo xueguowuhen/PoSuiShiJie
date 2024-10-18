@@ -79,4 +79,21 @@ public class ComTools
         return experience; // 返回指定级别的经验需求
     }
 
+    public CommonNet.BattleData GetBattleDataFromPlayerData(PlayerData playerData)
+    {
+        CommonNet.BattleData data = new CommonNet.BattleData
+        {
+            Hp = playerData.Hp,
+            Hpmax = playerData.Hpmax,
+            Mana = playerData.Mana,
+            ManaMax = playerData.ManaMax,
+            ad = playerData.ad,
+            addef = playerData.addef,
+            ap = playerData.ap,
+            apdef = playerData.apdef,
+            dodge = playerData.dodge,
+            critical = playerData.critical,
+        };
+        return data;
+    }
 }

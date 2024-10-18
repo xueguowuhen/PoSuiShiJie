@@ -52,10 +52,11 @@ public class MapCfg : BaseData<MapCfg>
 }
 public class TalentCfg : BaseData<TalentCfg>
 {
-    public string Name;
-    public string Info;
-    public int MaxLevel;
+    public string Name; //天赋名字
+    public string Info; //天赋作用介绍
+    public int MaxLevel; //天赋最大等级
     public string Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
+    public string BackGround; //背景介绍
     public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
 }
 public class ItemCfg : BaseData<ItemCfg>

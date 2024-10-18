@@ -3474,7 +3474,7 @@ MonoBehaviour:
   Headimg: {fileID: 4388295138412174698}
   Head1: {fileID: 4388295139672817571}
   StartGameBtn: {fileID: 4388295140031509660}
-  TaskButton: {fileID: 4388295139820542522}
+  DailyTaskButton: {fileID: 4388295139820542522}
   TalentBtn: {fileID: 4388295139751429854}
   ShopBtn: {fileID: 4388295139121140430}
   BagBtn: {fileID: 4388295138307584456}
@@ -4093,7 +4093,7 @@ GameObject:
   - component: {fileID: 4388295139820542520}
   - component: {fileID: 4388295139820542522}
   m_Layer: 5
-  m_Name: TaskBtn
+  m_Name: DailyTaskBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

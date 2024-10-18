@@ -64,12 +64,13 @@
     <Compile Include="Assets\Scripts\Common\BaseData.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectPool\GameObjectPool.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\RemotePlayerWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityPlayer.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DynamicWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateRun.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DowningWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\StartGameWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DailyTaskWnd.cs" />
     <Compile Include="Assets\Scripts\Service\AudioSvc.cs" />
     <Compile Include="Assets\Scripts\System\BattleSys.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\BagWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\FriendsWnd.cs" />
     <Compile Include="Assets\Scripts\Common\WindowAnimation.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\TalentWnd\TalentInfoWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\BattleWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\ISate.cs" />
     <Compile Include="Assets\Scripts\Service\NetSvc.cs" />
@@ -140,7 +142,6 @@
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\StartGameWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />
