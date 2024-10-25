@@ -19,17 +19,19 @@ namespace CommonNet
 
         public RspCreatePlayer? rspCreatePlayer;
         public RspDeletePlayer? rspDeletePlayer;
-
+        public ReqEnterPVP? reqEnterPVP;
+        public RspEnterPVP? rspEnterPVP;
+        public ReqExitPVP? reqExitPVP;
+        public RspExitPVP? rspExitPVP;
         public ReqTransform? reqTransform;
         public RspTransform? rspTransform;
-
         public ReqPlayerState? reqPlayerState;//玩家状态请求
         public RspPlayerState? rspPlayerState;
         public ReqDamage? reqDamage;
         public RspDamage? rspDamage;
         public ReqRevive? reqRevive;
         public RspRevive? rspRevive;
-
+        #region 好友请求与响应
         // 新增的好友请求与响应
         public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
         public RspSearchFriend? rspSearchFriend; // 好友搜索响应
@@ -41,36 +43,37 @@ namespace CommonNet
         public RspFriendGift? rspFriendGift; // 好友赠送响应
         public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
-
-        //每日任务的请求与响应
+        #endregion
+        #region 每日任务的请求与响应
         public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
         public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
         public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
         public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         public HeartbeatMessage? heartbeatMessage;
-
-        //天赋相关请求与响应
+        #endregion
+        #region 天赋相关请求与响应
         public ReqTalentUp? reqTalentUp;
         public RspTalentUp? rspTalentUp;
         public ReqChangeTalent? reqChangeTalent;
         public RspChangeTalent? rspChangeTalent;
+        #endregion
     }
     #region 登录注册相关
     public class ReqLogin
     {
-        public string ?acct;
-        public string ?pass;
+        public string? acct;
+        public string? pass;
     }
     public class RspLogin//玩家个人数据
     {
-        public PlayerData ?playerData;
-        public List<PlayerData> ?playerList;//其他玩家id数据
+        public PlayerData? playerData;
+        public List<PlayerData>? playerList;//其他玩家id数据
     }
 
     public class ReqRegister
     {
-        public string ?acct;
-        public string ?pass;
+        public string? acct;
+        public string? pass;
     }
     public class RspRegister
     {
@@ -79,13 +82,13 @@ namespace CommonNet
     public class ReqCreateGame
     {
         public int id;
-        public string ?name;
+        public string? name;
 
     }
     public class RspCreateGame
     {
-        public PlayerData ?playerData;
-        public List<PlayerData> ?playerDataList;
+        public PlayerData? playerData;
+        public List<PlayerData>? playerDataList;
     }
     #endregion
 
@@ -106,13 +109,13 @@ namespace CommonNet
         public float crystal;
         public List<DailyTask> dailyTasks;//每日任务数据
     }
-
-    #endregion
-
     public class RspBag
     {
         public PlayerData playerData;
     }
+
+    #endregion
+
 
     #region 好友请求与响应
 
@@ -256,6 +259,26 @@ namespace CommonNet
     #endregion
     #endregion
 
+    #region PVP战斗请求
+
+    public class ReqEnterPVP
+    {
+        public int id;
+    }
+    public class RspEnterPVP
+    {
+        public bool isSucc;
+    }
+    public class ReqExitPVP
+    {
+        public int id;
+    }
+    public class RspExitPVP
+    {
+        public bool isSucc;
+    }
+    #endregion
+
     #region 心跳机制请求
     public class HeartbeatMessage
     {
@@ -393,7 +416,7 @@ namespace CommonNet
     /// <summary>
     /// 战斗相关数据
     /// </summary>
-    public class BattleData 
+    public class BattleData
     {
         public int Hp;//生命
         public int Hpmax;//生命上限
@@ -497,15 +520,6 @@ namespace CommonNet
         RspTask = 112,
         RspCreatePlayer = 113,//创建角色
         RspDeletePlayer = 114,//删除角色
-
-        ReqTransform = 115,//转发位置请求
-        RspTransform = 116,//
-        ReqState = 119,//玩家状态请求
-        RspState = 120,
-        ReqDamage = 117,//玩家伤害请求
-        RspDamage = 118,
-        ReqRevive = 121,
-        RspRevive = 122,
         // 新增的好友功能命令
         ReqSearchFriend = 123,//好友搜索请求
         RspSearchFriend = 124,//好友搜索响应
@@ -521,11 +535,25 @@ namespace CommonNet
         RspDailyTask = 134,//领取每日任务奖励响应
         ReqRewardTask = 135,//领取活跃奖励任务请求
         RspRewardTask = 136,//领取活跃奖励任务响应
-        //天赋相关
+                            //天赋相关
         ReqTalentUp = 200, //天赋升级请求
         RspTalentUp = 201, //天赋升级响应
         ReqChangeTalent = 202, //天赋切换的请求
         RspChangeTalent = 203, //天赋切换的响应
+        #region PVP战斗
+        ReqEnterPVP = 300,
+        RspEnterPVP = 301,
+        ReqTransform = 302,//转发位置请求
+        RspTransform = 303,//
+        ReqState = 304,//玩家状态请求
+        RspState = 305,
+        ReqDamage = 306,//玩家伤害请求
+        RspDamage = 307,
+        ReqRevive = 308,
+        RspRevive = 309,
+        ReqExitPVP = 310,
+        RspExitPVP = 311,
+        #endregion
     }
     public enum Error
     {
@@ -557,11 +585,15 @@ namespace CommonNet
         RewardTaskRefreshError = 1029, //本日任务已刷新
         RewardActiveNotTaskError = 1030, //活跃度不足领取错误
         RewardTaskError = 1031, //奖励已领取
-        DailyTaskNotError=1032, //没有该每日任务
+        DailyTaskNotError = 1032, //没有该每日任务
         DailyTaskFinishError = 1033, //该每日任务未完成
         DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
         RewardActiveError = 1035, //活跃度奖励领取失败
         MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
+        EnterPVPError=1100, //进入PVP失败
+        ExitPVPError=1101, //退出PVP失败
+        TransformError=1102, //位置同步失败
+        StateError=1103, //玩家状态同步失败
     }
 
 
@@ -572,6 +604,6 @@ namespace CommonNet
         public const string srvIP = "127.0.0.1";
 
         public const int srvPort = 17666;
-    } 
+    }
     #endregion
 }

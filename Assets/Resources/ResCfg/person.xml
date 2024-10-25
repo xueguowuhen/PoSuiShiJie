@@ -2,7 +2,7 @@
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<item ID="20001">
 		<mName>法师</mName>
-		<Hard>Fighter</Hard>
+		<Hard>Manage</Hard>
 		<HP>1000</HP>
 		<Mana>150</Mana>
 		<Power>380</Power>
@@ -18,7 +18,7 @@
 		<critical>8</critical>
 		<Intro>御道士，云行于万象之间，天生剑心通明，道心坚不可摧。御风御雷，</Intro>
 		<fight>近战/远程：擅长近战，但远程御剑的能力十分突出，招招致命</fight>
-		<Prefab>road</Prefab>
+		<Prefab>Manage</Prefab>
 		<PreText>12</PreText>
 		<Skill>101|102|103</Skill>
 		<NormalAtk>121|122|123|124|125</NormalAtk>
@@ -27,7 +27,7 @@
 	</item>
 	<item ID="20002">
 		<mName>战士</mName>
-		<Hard>Manage</Hard>
+		<Hard>Fighter</Hard>
 		<HP>700</HP>
 		<Mana>300</Mana>
 		<Power>300</Power>
@@ -43,7 +43,7 @@
 		<critical>3</critical>
 		<Intro>太虚剑士，御剑苍穹，道心刚毅。行走于虚空之中，纵横捭阖，霸气逼人。他是剑道的顶峰，身负使命，铸就不朽传说。</Intro>
 		<fight>近战/远程：擅长近战，但远程御剑的能力十分突出，招招致命</fight>
-		<Prefab>kaixiya</Prefab>
+		<Prefab>Fighter</Prefab>
 		<PreText>12</PreText>
 		<Skill>201|202|203</Skill>
 		<NormalAtk>221|222|223|224|225</NormalAtk>

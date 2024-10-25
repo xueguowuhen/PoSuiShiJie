@@ -37,6 +37,41 @@ public class BattleSys : SystemRoot
         go.transform.SetParent(GameRoot.Instance.transform);
         battleMgr = go.AddComponent<BattleMgr>();
         battleMgr.Init(mapData);
+
+    }
+    /// <summary>
+    /// 进入主城
+    /// </summary>
+    public void EnterBattlePVP()
+    {
+        MapCfg mapData = resSvc.GetMapCfgData(Constants.BattlePVPMapID);
+        GameCommon.Log("异步地图中");
+        StartCoroutine(resSvc.AsyncLoadScene(mapData.sceneName, () =>
+        {
+            GameCommon.Log("Enter BattlePVP...");
+            //isCreate = true;
+            SetBattleWnd();
+            EnterBattleMap(mapData);
+           // GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
+            //GameObject map = GameObject.Find(PathDefine.MapRoot);
+        }, false));
+    }
+
+    /// <summary>
+    /// 发送进入PVP
+    /// </summary>
+    public void SendEnterBattlePVP()
+    {
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.ReqEnterPVP,
+            reqEnterPVP = new ReqEnterPVP
+            {
+                id = playerData.id,
+            }
+        };
+        netSvc.SendMsg(msg);
     }
     public void SetBattleWnd()
     {
@@ -47,6 +82,10 @@ public class BattleSys : SystemRoot
         Dir = dir;
         this.IsRun = IsRun;
         battleMgr.SetSelfPlayerMove(dir, IsRun);
+    }
+    public void SetCamMoveDir(Vector2 dir)
+    {
+        battleMgr.SetCamMove(dir);
     }
     /// <summary>
     /// 普通攻击 
@@ -156,6 +195,23 @@ public class BattleSys : SystemRoot
             battleMgr.RspState(msg);
         }
     }
+    public void RspEnterPVP(GameMsg msg)
+    {
+        RspEnterPVP rspEnterPVP = msg.rspEnterPVP;
+        if (rspEnterPVP.isSucc)
+        {
+            // 进入PVP
+            GameCommon.Log("进入PVP成功");
+            MainCitySys.instance.CloseStartGamePVPWnd();
+            EnterBattlePVP();
+        }
+    }
+
+
+    public void RspExitPVP(GameMsg msg)
+    {
+
+    }
     /// <summary>
     /// 远程创建人物
     /// </summary>
@@ -179,7 +235,7 @@ public class BattleSys : SystemRoot
     {
         int playerID = msg.rspDeletePlayer.PlayerID;
         List<PlayerData> playerDataToRemove = new List<PlayerData>(); // 存储需要移除的玩家数据
-        // 遍历玩家数据列表
+                                                                      // 遍历玩家数据列表
         foreach (PlayerData playerData in GameRoot.Instance.PlayerDataList)
         {
             if (playerData.id == playerID)
@@ -221,11 +277,11 @@ public class BattleSys : SystemRoot
                 //GameCommon.Log("收到旋转" + rspTransform.Rot_Y);
                 if (rspTransform.isShoolr)
                 {
-                    player.SetTrans(rspTransform.time,pos, Rot);
+                    player.SetTrans(rspTransform.time, pos, Rot);
                 }
                 else
                 {
-                   // GameCommon.Log("接收到" + rspTransform.isShoolr + "," + Rot);
+                    // GameCommon.Log("接收到" + rspTransform.isShoolr + "," + Rot);
                     player.SetRotation(Rot);
                 }
             }

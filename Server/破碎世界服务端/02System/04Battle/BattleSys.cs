@@ -31,6 +31,33 @@ public class BattleSys
         cfgSvc = CfgSvc.Instance;
         GameCommon.Log("BattleSys Init Done");
     }
+    public void ReqEnterPVP(MsgPack pack)
+    {
+        ReqEnterPVP reqEnterPVP = pack.gameMsg.reqEnterPVP;
+        PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
+        GameMsg gameMsg = new GameMsg
+        {
+            cmd = (int)CMD.RspEnterPVP,
+        };
+        if (reqEnterPVP.id != playerData.id)
+        {
+            gameMsg.err = (int)Error.EnterPVPError;
+            pack.session.SendMsg(gameMsg);
+            return;
+        }
+        //加入房间
+        cacheSvc.AcctEnterBattelPVP(playerData, pack.session);
+        //向其他玩家广播进入PVP
+        gameMsg.rspEnterPVP = new RspEnterPVP
+        {
+            isSucc = true,
+        };
+        pack.session.SendMsg(gameMsg);
+    }
+    public void ReqExitPVP(MsgPack pack)
+    {
+
+    }
     public void ReqTransform(MsgPack pack)
     {
         PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);

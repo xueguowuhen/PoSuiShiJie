@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SceneMainCity.unity
     guid: 573d241271bdc0d43b68db8c54388419
+  - enabled: 1
+    path: Assets/Scenes/SceneGamePVP.unity
+    guid: a549f0861af758e4ba51fb7a6d21819f
   m_configObjects: {}

@@ -12,6 +12,7 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class BattleMgr : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class BattleMgr : MonoBehaviour
     public EntityPlayer entitySelfPlayer;
     public CharacterController characterController;
     public PlayerController playerController;
+    public CameraPlayerCtrl cameraPlayerCtrl;
     public Dictionary<int, EntityBase> RemoteEntityDic = new Dictionary<int, EntityBase>();
     public GameObject player;
     public NavMeshAgent navMesh;
@@ -41,19 +43,20 @@ public class BattleMgr : MonoBehaviour
         skillMgr.Init();
         LoadPlayer(mapData);
         entitySelfPlayer.Idle();//创建完成后进入idle状态
-        RemotePlayer();
+        //RemotePlayer();
     }
+    #region 玩家与远程玩家初始化操作
     private void LoadPlayer(MapCfg mapData)
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
-        player = resSvc.LoadPrefab(PathDefine.ResMainProns + personCfg.Prefab);
+        player = resSvc.LoadPrefab(PathDefine.ResPerson + personCfg.Prefab);
         // player = resSvc.ABLoadPrefab(personCfg.Prefab, personCfg.Prefab); ;
         // 在移动之前禁用角色控制器
         characterController = player.GetComponent<CharacterController>();
         //相机初始化
-        Camera.main.transform.position = mapData.mainCamPos;
-        Camera.main.transform.localEulerAngles = mapData.mainCamRote;
+        cameraPlayerCtrl=GameObject.Find("CameraFollowAndRotate").GetOrAddComponent<CameraPlayerCtrl>();
+        cameraPlayerCtrl.Init(mapData,player.transform);
         //人物初始化
         playerController = player.GetComponent<PlayerController>();
         characterController.enabled = false;
@@ -68,7 +71,7 @@ public class BattleMgr : MonoBehaviour
         navMesh = player.GetComponent<NavMeshAgent>();
         navMesh.enabled = false;
         //初始化生物UI
-        GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
+        //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
         entitySelfPlayer = new EntityPlayer
         {
             stateMgr = stateMgr,
@@ -93,7 +96,7 @@ public class BattleMgr : MonoBehaviour
     public void SetRemoteEntity(PlayerData playerData)
     {
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
-        GameObject player = resSvc.LoadPrefab(PathDefine.ResMainProns + personCfg.Prefab);
+        GameObject player = resSvc.LoadPrefab(PathDefine.ResPerson + personCfg.Prefab);
 
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.RemotePlayerId = playerData.id;
@@ -142,6 +145,8 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region 玩家操作控制
     public void SetSelfPlayerMove(Vector2 dir, bool IsRun = false)
     {
         this.dir = dir;
@@ -150,7 +155,7 @@ public class BattleMgr : MonoBehaviour
             return;
         }
         AniState aniState = entitySelfPlayer.currentAniState;
-        if (aniState == AniState.Idle || aniState == AniState.Move || aniState == AniState.Run)
+        if (aniState == AniState.Idle || aniState == AniState.Move)
         {
             if (dir == Vector2.zero)
             {
@@ -160,19 +165,18 @@ public class BattleMgr : MonoBehaviour
             }
             else
             {
-                if (!IsRun)
-                {
-                    entitySelfPlayer.Move();
+                entitySelfPlayer.Move();
 
-                }
-                else
-                {
-                    entitySelfPlayer.Run();
-                }
             }
             entitySelfPlayer.SetDir(dir);
         }
     }
+    public void SetCamMove(Vector2 dir)
+    {
+        cameraPlayerCtrl.SetDir(dir);
+    }
+    #endregion
+    #region 玩家攻击操作
     public double lastAtkTime = 0;
     public int comboIndex = 0;
     public double nowAtkTime;
@@ -205,7 +209,7 @@ public class BattleMgr : MonoBehaviour
             }
         }
 
-        else if (aniState == AniState.Idle || aniState == AniState.Move || aniState == AniState.Run)
+        else if (aniState == AniState.Idle || aniState == AniState.Move)
         {
             comboIndex = 0;
             lastAtkTime = TimerSvc.Instance.GetNwTime();
@@ -219,7 +223,7 @@ public class BattleMgr : MonoBehaviour
     public void ReleaseSkill1()
     {
         AniState aniState = entitySelfPlayer.currentAniState;
-        if (aniState == AniState.Idle || aniState == AniState.Move || aniState == AniState.Run)
+        if (aniState == AniState.Idle || aniState == AniState.Move)
         {
 
             PlayerData pd = GameRoot.Instance.PlayerData;
@@ -238,7 +242,7 @@ public class BattleMgr : MonoBehaviour
     public void ReleaseSkill2()
     {
         AniState aniState = entitySelfPlayer.currentAniState;
-        if (aniState == AniState.Idle || aniState == AniState.Move || aniState == AniState.Run)
+        if (aniState == AniState.Idle || aniState == AniState.Move)
         {
 
             PlayerData pd = GameRoot.Instance.PlayerData;
@@ -257,7 +261,7 @@ public class BattleMgr : MonoBehaviour
     public void ReleaseSkill3()
     {
         AniState aniState = entitySelfPlayer.currentAniState;
-        if (aniState == AniState.Idle || aniState == AniState.Move || aniState == AniState.Run)
+        if (aniState == AniState.Idle || aniState == AniState.Move)
         {
 
             PlayerData pd = GameRoot.Instance.PlayerData;
@@ -270,6 +274,7 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
+    #endregion
     /// <summary>
     /// 获取场上玩家数量
     /// </summary>

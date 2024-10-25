@@ -13,11 +13,23 @@
 		<crystal>0</crystal>
 	</item>
 	<item ID="10001">
-		<mapName>决斗之地</mapName>
+		<mapName>失落平原</mapName>
 		<sceneName>SceneBattle</sceneName>
-		<power>5</power>
-		<mainCamPos>-0.34,7,-7.06</mainCamPos>
+		<power>0</power>
+		<mainCamPos>-0.34,3.5,-7.06</mainCamPos>
 		<mainCamRote>37,0,0</mainCamRote>
+		<playerBornPos>0,0,0</playerBornPos>
+		<playerBornRote>0,0,0</playerBornRote>
+		<exp>1250</exp>
+		<aura>980</aura>
+		<crystal>48</crystal>
+	</item>
+	<item ID="20001">
+		<mapName>决斗之地</mapName>
+		<sceneName>SceneGamePVP</sceneName>
+		<power>0</power>
+		<mainCamPos>0,2.2,-3.5</mainCamPos>
+		<mainCamRote>-20,-0.524,0.802</mainCamRote>
 		<playerBornPos>0,0,0</playerBornPos>
 		<playerBornRote>0,0,0</playerBornRote>
 		<exp>1250</exp>

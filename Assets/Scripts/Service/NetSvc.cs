@@ -248,6 +248,12 @@ public class NetSvc : MonoBehaviour
             case CMD.RspChangeTalent:
                 MainCitySys.instance.RspTalentChangeHandler(msg);
                 break;
+            case CMD.RspEnterPVP:
+                BattleSys.instance.RspEnterPVP(msg);
+                break;
+            case CMD.RspExitPVP:
+                BattleSys.instance.RspExitPVP(msg);
+                break;
         }
     }
     private void OnDestroy()

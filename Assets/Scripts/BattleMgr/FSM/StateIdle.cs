@@ -5,26 +5,29 @@
     日期：2024-05-10 10:48:21
 	功能：待机状态
 *****************************************************/
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 public class StateIdle : ISate
 {
     public void Enter(EntityBase entity, params object[] objects)
     {
+        switch (entity.currentAniState)//设置动画状态
+        {
+            case AniState.Move:
+                entity.SetAniCrossFade(entity.GetWalkOrRunState().ToString(), Constants.AniSpeed);
+                entity.SetAction((int)entity.GetWalkOrRunState());
+                break;
+            default:
+                entity.SetAction(Constants.ActionDefault);
+                break;
+        }
+        //初始化
         entity.currentAniState = AniState.Idle;
+        entity.SetHasInput(false);
         entity.SetmoveDistance(Constants.PlayerIdleSpeed);
-        entity.SetAction(Constants.ActionDefault);
         entity.SetDir(Vector2.zero);
         entity.skEndCB = -1;
-    }
-
-    public void Exit(EntityBase entity, params object[] objects)
-    {
-
-    }
-
-    public void Process(EntityBase entity, params object[] objects)
-    {
-
         if (entity.nextSkillID != 0)
         {
 
@@ -34,16 +37,11 @@ public class StateIdle : ISate
         {
             entity.canRlskill = true;
             entity.SetSkillMoveSate(true);
-            if (entity.GetDirInput() != Vector2.zero &&entity.isLocal)
+            if (entity.GetDirInput() != Vector2.zero && entity.isLocal)
             {
-                if (entity.GetRunState())
-                {
-                    entity.Run();
-                }
-                else
-                {
-                    entity.Move();
-                }
+
+                entity.Move();
+
                 entity.SetDir(entity.GetDirInput());
             }
             else
@@ -52,5 +50,27 @@ public class StateIdle : ISate
                 entity.SetVelocity(Constants.VelocityIdle);
             }
         }
+        //添加事件监听
+        AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.RunStop, OnRunStopEvent);
+        AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.WalkStop, OnRunStopEvent);
+    }
+
+    public void OnRunStopEvent(EntityBase entity)
+    {
+        entity.SetAction(Constants.ActionDefault);
+    }
+
+    public void Process(EntityBase entity)
+    {
+
+
+    }
+
+    public void Exit(EntityBase entity, params object[] objects)
+    {
+        //移除事件监听
+        AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.RunStop, OnRunStopEvent);
+        AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.WalkStop, OnRunStopEvent);
+        entity.SetAction(Constants.ActionDefault);
     }
 }

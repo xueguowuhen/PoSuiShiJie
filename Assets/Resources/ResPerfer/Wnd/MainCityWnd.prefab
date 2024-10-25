@@ -3473,7 +3473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Headimg: {fileID: 4388295138412174698}
   Head1: {fileID: 4388295139672817571}
-  StartGameBtn: {fileID: 4388295140031509660}
+  StartGamePVPBtn: {fileID: 4388295140031509660}
   DailyTaskButton: {fileID: 4388295139820542522}
   TalentBtn: {fileID: 4388295139751429854}
   ShopBtn: {fileID: 4388295139121140430}

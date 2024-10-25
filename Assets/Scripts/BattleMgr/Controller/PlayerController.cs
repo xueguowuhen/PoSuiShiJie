@@ -8,6 +8,7 @@
 
 using CommonNet;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,6 @@ using UnityEngine.UIElements;
 
 public class PlayerController : Controller
 {
-    private Vector3 camOffset;
     public float currentVelocity;
     public int RemotePlayerId;
     private bool IsRun;
@@ -25,7 +25,7 @@ public class PlayerController : Controller
     public float playerCurrentVelocity;
     public Action TransCB = null;
     public int playerCurrentAction;
-    private float rotationSpeed = 4f;
+    private float rotationSpeed = 20f;
     private Queue<DataTrans> PosQue = new Queue<DataTrans>();
     private Dictionary<string, GameObject> fxDic = new Dictionary<string, GameObject>();
     //private int delayfps = 0;
@@ -34,10 +34,16 @@ public class PlayerController : Controller
     /// 是否由寻路接管旋转
     /// </summary>
     private bool IsNavMeshRos = false;
+    #region 测试数据
+    private float elapsedTime;
+    private float totalDistance;
+    private Vector3 tartgetPos;
+   
+    #endregion
+
     public override void Init()
     {
-        camTran = Camera.main.transform;
-        camOffset = transform.position - camTran.position;
+        camTran=Camera.main.transform;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
     }
@@ -79,21 +85,17 @@ public class PlayerController : Controller
             UpdateMixVelocity();
 
         }
-        if (isLocal)
-        {
+        //if (isLocal)
+        //{
 
-            SetCam();
-        }
+        //    SetCam();
+        //}
     }
     private void FixedUpdate()
     {
         if (skillMove)
         {
             SetSkillMove();
-        }
-        if (isMove)
-        {
-            SetMove();
         }
         if (isLocal)
         {
@@ -104,6 +106,13 @@ public class PlayerController : Controller
             SetDelaySation();
         }
         SetDir();
+    }
+    private void OnAnimatorMove()
+    {
+        if (isMove)
+        {
+            SetMove();
+        }
     }
     public void SendPlayerTransform()
     {
@@ -138,16 +147,14 @@ public class PlayerController : Controller
         {
             //从当前角度到目标角度的方向
             float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTran.eulerAngles.y;
-            float roundedAngle = Mathf.Round(angle / 45) * 45;
-            eulerAngles = new Vector3(0, roundedAngle, 0);
+            // 检查角度是否超过45度
+
+            eulerAngles = new Vector3(0, angle, 0);
         }
         isShoolr = true;
-        // 计算当前角度与目标角度之间的插值
         Quaternion targetRotation = Quaternion.Euler(eulerAngles);
         Quaternion currentRotation = transform.localRotation;
         Quaternion interpolatedRotation = Quaternion.Slerp(currentRotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
-
-        // 应用插值后的角度
         transform.localRotation = interpolatedRotation;
     }
     /// <summary>
@@ -177,17 +184,41 @@ public class PlayerController : Controller
     }
     public override void SetMove()
     {
+
+        float speed;
         if (IsRun)
         {
-            moveDistance = Constants.PlayerRunSpeed;
-            characterController.Move(transform.forward * Time.fixedDeltaTime * Constants.PlayerRunSpeed);
+            speed = Constants.PlayerRunSpeed;
         }
         else
         {
-            moveDistance = Constants.PlayerWalkSpeed;
-            characterController.Move(transform.forward * Time.fixedDeltaTime * Constants.PlayerWalkSpeed);
+            speed = Constants.PlayerWalkSpeed;
         }
+
+        // 计算每秒移动的距离
+        moveDistance = speed *animator.deltaPosition.magnitude;
+
+        // 角色移动
+        characterController.Move(transform.forward * moveDistance);
+        totalDistance += moveDistance;
+     ////   更新经过的时间
+     //  elapsedTime += Time.fixedDeltaTime;
+
+     //   // 每秒打印一次这一秒的移动距离
+     //   if (elapsedTime >= 1f)
+     //   {
+     //       if (tartgetPos != null)
+     //       {
+     //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
+     //       }
+     //       tartgetPos = transform.position;
+     //       Debug.Log("这一秒移动的距离: " + totalDistance);
+     //       totalDistance = 0;
+     //       elapsedTime = 0f; // 重置计时器
+     //   }
     }
+
+
     private void SetSkillMove()
     {
         moveDistance = skillMoveSpeed;
@@ -213,10 +244,10 @@ public class PlayerController : Controller
     }
     public void SetCam()
     {
-        if (camTran != null)
-        {
-            camTran.position = transform.position - camOffset;
-        }
+        //if (camTran != null)
+        //{
+        //    camTran.position = transform.position - camOffset;
+        //}
 
     }
     public void SetNavMeshRot(bool IsRos)

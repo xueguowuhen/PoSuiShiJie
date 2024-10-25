@@ -124,6 +124,12 @@ public class NetSvc
             case CMD.ReqChangeTalent:
                 TalentSys.Instance.ReqChangeTalentHandle(pack);
                 break;
+            case CMD.ReqEnterPVP:
+                BattleSys.Instance.ReqEnterPVP(pack);
+                break;
+            case CMD.ReqExitPVP:
+                BattleSys.Instance.ReqExitPVP(pack);
+                break;
         }
     }
 

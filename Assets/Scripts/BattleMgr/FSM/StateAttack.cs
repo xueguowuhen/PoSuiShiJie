@@ -12,6 +12,8 @@ public class StateAttack : ISate
         entity.currentAniState = AniState.Attack;
         entity.curtSkillCfg = ResSvc.instance.GetSkillCfgData((int)objects[0]);
         entity.SetVelocity(Constants.VelocityDefault);
+        entity.canRlskill = false;
+        entity.SkillAttack((int)objects[0]);
     }
 
     public void Exit(EntityBase entity, params object[] objects)
@@ -19,9 +21,14 @@ public class StateAttack : ISate
         entity.ExitCurtSkill();
     }
 
-    public void Process(EntityBase entity, params object[] objects)
+    public void OnAnimatorEndEvent(EntityBase entity)
     {
-        entity.canRlskill = false;
-        entity.SkillAttack((int)objects[0]);
+        
     }
+
+    public void Process(EntityBase entity)
+    {
+        
+    }
+
 }

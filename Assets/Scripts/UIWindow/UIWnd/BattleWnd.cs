@@ -16,15 +16,16 @@ public class BattleWnd : WindowRoot
 {
     #region Head
     public Image HpProImg;
-    public Text HpText;
+    //public Text HpText;
     public Image ManaProImg;
-    public Text ManaText;
+    public Image PowerImg;
+    //public Text ManaText;
     public Image Headimg;
-    public Button Head1;
-    public Image Head2img;
-    public Button Head2;
-    public Image Head3img;
-    public Button Head3;
+    //public Button Head1;
+    //public Image Head2img;
+    //public Button Head2;
+    //public Image Head3img;
+    //public Button Head3;
     #endregion
     #region Function
     public Button btnNormal;
@@ -44,6 +45,8 @@ public class BattleWnd : WindowRoot
     public Image imgTouch;
     public Image imgDirBg;
     public Image imgDirPoint;
+
+    public Image CamTouch;
     #endregion
     private float pointDis;
     private TaskCfg taskCfg;
@@ -52,6 +55,7 @@ public class BattleWnd : WindowRoot
         base.InitWnd();
         SetGameObject();
         RegisterTouchEvts();
+        ResisterCamTouchEvts();
         RefreshUI();
     }
     public void Update()
@@ -140,63 +144,63 @@ public class BattleWnd : WindowRoot
     protected override void SetGameObject()
     {
         #region Head
-        HpProImg = GetImg(PathDefine.HpProImg);
-        HpText = GetText(PathDefine.HpText);
-        ManaProImg = GetImg(PathDefine.ManaProImg);
-        ManaText = GetText(PathDefine.ManaText);
-        Headimg = GetImg(PathDefine.Headimg);
-        Head1 = GetButton(PathDefine.Head1);
-        AddListener(Head1, ClickHead1);
-        Head2img = GetImg(PathDefine.Head2img);
-        Head2 = GetButton(PathDefine.Head2);
-        AddListener(Head2, ClickHead2);
-        Head3img = GetImg(PathDefine.Head3);
-        Head3 = GetButton(PathDefine.Head3);
-        AddListener(Head3, ClickHead3);
+        // HpProImg = GetImg(PathDefine.HpProImg);
+        //HpText = GetText(PathDefine.HpText);
+        //ManaProImg = GetImg(PathDefine.ManaProImg);
+        // ManaText = GetText(PathDefine.ManaText);
+        //Headimg = GetImg(PathDefine.Headimg);
+        //Head1 = GetButton(PathDefine.Head1);
+        //AddListener(Head1, ClickHead1);
+        //Head2img = GetImg(PathDefine.Head2img);
+        //Head2 = GetButton(PathDefine.Head2);
+        //AddListener(Head2, ClickHead2);
+        //Head3img = GetImg(PathDefine.Head3);
+        //Head3 = GetButton(PathDefine.Head3);
+        //AddListener(Head3, ClickHead3);
         #endregion
         #region Function
-        btnNormal = GetButton(PathDefine.btnNormal);
+        //  btnNormal = GetButton(PathDefine.btnNormal);
         AddListener(btnNormal, ClickNormal);
-        btnSkill = GetButton(PathDefine.btnSkill1);
-        SkillCD1 = GetImg(PathDefine.SkillCD1);
-        SkillTxt1 = GetText(PathDefine.SkillTxt1);
+        //btnSkill = GetButton(PathDefine.btnSkill1);
+        //SkillCD1 = GetImg(PathDefine.SkillCD1);
+        //SkillTxt1 = GetText(PathDefine.SkillTxt1);
 
-        SkillCD2 = GetImg(PathDefine.SkillCD2);
-        btnSkil2 = GetButton(PathDefine.btnSkill2);
+        //  SkillCD2 = GetImg(PathDefine.SkillCD2);
+        //  btnSkil2 = GetButton(PathDefine.btnSkill2);
         AddListener(btnSkil2, ClickSkill2);
-        SkillTxt2 = GetText(PathDefine.SkillTxt2);
+        // SkillTxt2 = GetText(PathDefine.SkillTxt2);
         AddListener(btnSkill, ClickSkill1);
 
-        btnSkil3 = GetButton(PathDefine.btnSkill3);
+        //  btnSkil3 = GetButton(PathDefine.btnSkill3);
         AddListener(btnSkil3, ClickSkill3);
-        SkillCD3 = GetImg(PathDefine.SkillCD3);
-        SkillTxt3 = GetText(PathDefine.SkillTxt3);
+        //  SkillCD3 = GetImg(PathDefine.SkillCD3);
+        //  SkillTxt3 = GetText(PathDefine.SkillTxt3);
 
-        BtnQuitBattle = GetButton(PathDefine.BtnQuitBattle);
+        //   BtnQuitBattle = GetButton(PathDefine.BtnQuitBattle);
         AddListener(BtnQuitBattle, ClickQuitBattle);
         #endregion
         #region PlayerController
-        imgTouch = GetImg(PathDefine.imgTouch);
-        imgDirBg = GetImg(PathDefine.imgDirBg);
-        imgDirPoint = GetImg(PathDefine.imgDirPoint);
+        //     imgTouch = GetImg(PathDefine.imgTouch);
+        //  imgDirBg = GetImg(PathDefine.imgDirBg);
+        // imgDirPoint = GetImg(PathDefine.imgDirPoint);
         #endregion
     }
     public void RefreshUI()
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
-        defaultPos = imgDirBg.transform.position;
+        //defaultPos = imgDirBg.transform.position;
         pointDis = Screen.height * 1.0f / Constants.ScreenStandardHeight * Constants.ScreenOPDis;
-        HpText.text = playerData.Hp + "/" + playerData.Hpmax;
+        //HpText.text = playerData.Hp + "/" + playerData.Hpmax;
         HpProImg.fillAmount = (float)playerData.Hp / playerData.Hpmax;
-        ManaText.text = playerData.Mana + "/" + playerData.ManaMax;
+        //ManaText.text = playerData.Mana + "/" + playerData.ManaMax;
         ManaProImg.fillAmount = (float)playerData.Mana / playerData.ManaMax;
         List<int> SkillList = resSvc.GetPersonCfgData(playerData.type).SkillList;
-        for(int i = 0; i < SkillList.Count; i++)
+        for (int i = 0; i < SkillList.Count; i++)
         {
-            switch(i)
+            switch (i)
             {
                 case 0:
-                    sk1CDTime = resSvc.GetSkillCfgData(SkillList[i]).cdTime/1000.0f;
+                    sk1CDTime = resSvc.GetSkillCfgData(SkillList[i]).cdTime / 1000.0f;
                     break;
                 case 1:
                     sk2CDTime = resSvc.GetSkillCfgData(SkillList[i]).cdTime / 1000.0f;
@@ -215,7 +219,7 @@ public class BattleWnd : WindowRoot
     {
         //加载面板
         //resSvc.LoadPrefab(PathDefine.PersonWnd);
-        MainCitySys.instance.ClickPerson();
+        //    MainCitySys.instance.ClickPerson();
 
     }
     /// <summary>
@@ -234,6 +238,9 @@ public class BattleWnd : WindowRoot
     }
     private Vector2 startPos = Vector2.zero;
     private Vector2 defaultPos = Vector2.zero;
+
+    private Vector2 camStartPos = Vector2.zero;
+    private Vector2 camDefaultPos = Vector2.zero;
     private bool IsRun = false;
     public void ClickNormal()
     {
@@ -290,6 +297,9 @@ public class BattleWnd : WindowRoot
             SetText(SkillTxt3, sk3Num);
         }
     }
+    /// <summary>
+    /// 注册摇杆触摸事件
+    /// </summary>
     public void RegisterTouchEvts()
     {
         OnClickDown(imgTouch.gameObject, (PointerEventData evt) =>
@@ -300,7 +310,7 @@ public class BattleWnd : WindowRoot
         });
         OnClickUp(imgTouch.gameObject, (PointerEventData evt) =>
         {
-            imgDirBg.transform.position = defaultPos;
+            imgDirBg.transform.localPosition = defaultPos;
             SetActive(imgDirPoint, false);//中心点不可见
             imgDirPoint.transform.localPosition = Vector2.zero;
             IsRun = false;
@@ -323,6 +333,26 @@ public class BattleWnd : WindowRoot
                 IsRun = false;
             }
             BattleSys.instance.SetSelfPlayerMoveDir(dir.normalized, IsRun);
+        });
+    }
+    /// <summary>
+    /// 注册摄像机触摸事件
+    /// </summary>
+    public void ResisterCamTouchEvts()
+    {
+        OnClickDown(CamTouch.gameObject, (PointerEventData evt) =>
+        {
+            camStartPos = evt.position;
+            
+        });
+        OnClickUp(CamTouch.gameObject, (PointerEventData evt) =>
+        {
+            BattleSys.instance.SetCamMoveDir(Vector2.zero);
+        });
+        OnDrag(CamTouch.gameObject, (PointerEventData evt) =>
+        {
+            Vector2 dir = evt.position - camStartPos;
+            BattleSys.instance.SetCamMoveDir(dir.normalized);
         });
     }
     public bool GetCanRlsSkill()

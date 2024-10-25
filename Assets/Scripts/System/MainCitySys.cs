@@ -21,10 +21,11 @@ public class MainCitySys : SystemRoot
     public PersonWnd personWnd;
     public ShopWnd shop;
     public BagWnd bagWnd;
-    public GuideWnd guideWnd;
+    //public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
     public TalentWnd talentWnd;
     public DailyTaskWnd dailyTaskWnd;
+    public StartGamePVPWnd starGamePVPWnd;
     public TaskCfg GetTaskCfg()
     {
         return taskCfg;
@@ -63,7 +64,7 @@ public class MainCitySys : SystemRoot
         {
             GameCommon.Log("Enter MainCity...");
             //isCreate = true;
-            mainCityWnd.SetWndState();
+            EnterMainCityWnd();
             GameObject map = GameObject.Find(PathDefine.MapRoot);
             //NpcPosTrans = map.GetComponent<MainCityMap>().NpcPosTrans;
             //BattleSys.instance.EnterBattleMap(mapData);
@@ -410,7 +411,7 @@ public class MainCitySys : SystemRoot
 
     public void OpenGuideWnd()
     {
-        guideWnd.SetWndState();
+       // guideWnd.SetWndState();
     }
     public void RefreshUI()
     {
@@ -457,12 +458,15 @@ public class MainCitySys : SystemRoot
     {
         personWnd.SetWndState();
     }
+    /// <summary>
+    /// 好友界面
+    /// </summary>
     public void EnterFriendWnd()
     {
         friendsWnd.SetWndState();
     }
     /// <summary>
-    /// TODO修改刷新UI
+    /// 好友列表刷新
     /// </summary>
     /// <param name="item"></param>
     public void FriendReFresh(FriendItem item = null)
@@ -474,11 +478,29 @@ public class MainCitySys : SystemRoot
     {
         talentWnd.SetWndState();
     }
-
-    public void ClickArena()
+    /// <summary>
+    /// 开始PVP界面
+    /// </summary>
+    public void EnterStartGamePVPWnd()
     {
         mainCityWnd.SetWndState(false);
-        BattleSys.instance.SetBattleWnd();
+        starGamePVPWnd.SetWndState();
+    }
+    /// <summary>
+    /// 关闭PVP界面
+    /// </summary>
+    public void CloseStartGamePVPWnd()
+    {
+        starGamePVPWnd.SetWndState(false);
+    }
+    public void EnterMainCityWnd()
+    {
+        mainCityWnd.SetWndState();
+    }
+    public void ClickStartGamePVP()
+    {
+       // mainCityWnd.SetWndState(false);
+        BattleSys.instance.SendEnterBattlePVP();
     }
     #endregion
 }

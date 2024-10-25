@@ -28,7 +28,7 @@ public class CacheSvc
     }
     private DBMgr dBMgr;
     private Dictionary<ServerSession, PlayerData> onLineSessionDic = new Dictionary<ServerSession, PlayerData>();
-
+    private Dictionary<PlayerData, ServerSession> onBattelPVPSessionDic = new Dictionary<PlayerData, ServerSession>();
     public void Init()
     {
         dBMgr = DBMgr.Instance;
@@ -76,6 +76,22 @@ public class CacheSvc
             onLineSessionDic.Add(session, playerData);
         }
     }
+    /// <summary>
+    /// 进入战斗房间
+    /// </summary>
+    /// <param name="playerData"></param>
+    public void AcctEnterBattelPVP(PlayerData playerData, ServerSession session)
+    {
+        if (!onBattelPVPSessionDic.ContainsKey(playerData))
+        {
+            onBattelPVPSessionDic.Add(playerData, session);
+        }
+    
+    }
+    /// <summary>
+    /// 根据好友名称查询好友数据
+    /// </summary>
+    /// <param name="session"></param>
     public FriendItem GetPlayerDataByFriendName(string friendName)
     {
         return dBMgr.GetPlayerDataByFriendName(friendName);
@@ -178,14 +194,28 @@ public class CacheSvc
         bool scct = onLineSessionDic.Remove(server);
         GameCommon.Log("该账号下线：" + scct);
     }
+    /// <summary>
+    /// 检查名字是否存在
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public bool CheckName(string name)
     {
         return dBMgr.CheckName(name);
     }
+    /// <summary>
+    /// 更新玩家数据
+    /// </summary>
+    /// <param name="playerData"></param>
     public bool UpdatePlayerData(PlayerData playerData)
     {
         return dBMgr.UpdatePlayerData(playerData);
     }
+    /// <summary>
+    /// 更新好友数据
+    /// </summary>
+    /// <param name="friendItem"></param>
+    /// <returns></returns>
     public bool UpdateFriend(FriendItem friendItem)
     {
         return dBMgr.UpdateFriend(friendItem);

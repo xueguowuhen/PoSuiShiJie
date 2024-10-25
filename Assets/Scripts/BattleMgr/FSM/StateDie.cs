@@ -5,6 +5,7 @@
     日期：2024-05-14 14:14:58
 	功能：死亡状态
 *****************************************************/
+using UnityEngine;
 using UnityEngine.Rendering;
 
 public class StateDie : ISate
@@ -13,16 +14,7 @@ public class StateDie : ISate
     {
         entity.currentAniState = AniState.Die;
         entity.DelePlayerCB();
-    }
-
-    public void Exit(EntityBase entity, params object[] objects)
-    {
-
-    }
-
-    public void Process(EntityBase entity, params object[] objects)
-    {
-        entity.SetAction(Constants.ActionDie);
+        entity.SetAction((int)AniPlayerState.Death);
         if (entity.isLocal)
         {
             entity.canControl = false;//停止移动
@@ -34,5 +26,20 @@ public class StateDie : ISate
                 MainCitySys.instance.mainCityWnd.SetWndState(true);
             }, Constants.Revive, TimeUnit.Second);
         }
+    }
+
+    public void Exit(EntityBase entity, params object[] objects)
+    {
+
+    }
+
+    public void OnAnimatorEndEvent(EntityBase entity)
+    {
+        
+    }
+
+    public void Process(EntityBase entity)
+    {
+       
     }
 }

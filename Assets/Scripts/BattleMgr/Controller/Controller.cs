@@ -14,8 +14,9 @@ public class Controller : MonoBehaviour
     public Animator animator;
     public float targetVelocity;
     public int action;
+    public bool isInput;
     protected bool isRos = false;//判断旋转
-    public bool ss=true;
+    public bool ss = true;
     public float moveDistance;
     public bool isSkillRos
     {
@@ -29,7 +30,7 @@ public class Controller : MonoBehaviour
             ss = value;
         }
     }
-    
+
 
     public bool isMove = false;//判断移动
     protected bool skillMove = false;//判断技能移动
@@ -64,11 +65,11 @@ public class Controller : MonoBehaviour
     {
 
     }
-    public virtual void CreateFx(string name,float destroy = 0)
+    public virtual void CreateFx(string name, float destroy = 0)
     {
 
     }
-    public virtual void SetTrans(double time,Vector3 Pos, Vector3 Rot)
+    public virtual void SetTrans(double time, Vector3 Pos, Vector3 Rot)
     {
     }
     protected virtual void SetDir()
@@ -90,7 +91,7 @@ public class Controller : MonoBehaviour
     {
 
     }
-    public virtual void SetVelocity(float Velocity,bool IsRun =false)
+    public virtual void SetVelocity(float Velocity, bool IsRun = false)
     {
         targetVelocity = Velocity;
         animator.SetFloat("Velocity", Velocity);
@@ -100,6 +101,36 @@ public class Controller : MonoBehaviour
     {
         action = act;
         animator.SetInteger("Action", act);
+    }
+    public virtual AniPlayerState GetAction()
+    {
+        action = animator.GetInteger("Action");
+        return (AniPlayerState)action;
+    }
+    public virtual void SetHasInput(bool isInput)
+    {
+        this.isInput = isInput;
+        animator.SetBool("HasInput", isInput);
+    }
+    public virtual bool GetHasInput()
+    {
+        return isInput;
+    }
+    public virtual AniPlayerState GetWalkOrRunState()
+    {
+        if (targetVelocity == Constants.VelocityWalk)
+        {
+            return AniPlayerState.WalkStop;
+        }
+        else if (targetVelocity == Constants.VelocityRun)
+        {
+            return AniPlayerState.RunStop;
+        }
+        return AniPlayerState.WalkStop;
+    }
+    public virtual void SetAniCrossFade(string name, float time)
+    {
+        animator.CrossFade(name, time);
     }
     public virtual void DestroySelf()
     {
@@ -119,6 +150,10 @@ public class Controller : MonoBehaviour
     {
         eulerAngles = atkDir;
         transform.localRotation = Quaternion.Euler(atkDir);
+    }
+    public void SetAniRootMove(bool IsShow = true)
+    {
+        animator.applyRootMotion = IsShow;
     }
     public virtual void Init()
     {

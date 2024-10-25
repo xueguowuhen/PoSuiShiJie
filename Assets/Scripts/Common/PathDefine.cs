@@ -35,15 +35,9 @@ public class PathDefine
     public const string Main = "Main";
     //public const string kaixiya
 
-    public const string ResMainProns = "ResMainProns/";
-    public const string ResIntroItem = "ResPerfer/IntroItem";
-    public const string ResTalentItem = "ResPerfer/TalentItem";
-    public const string ResTalentimg = "ResPerfer/TalenImg";
+    public const string ResPerson = "ResPerfer/Person/";
     public const string ResShopItem = "ResPerfer/Item/ShopItem";
-    public const string ResTipInfoWnd = "ResPerfer/TipInfoWnd";
-    public const string ResBuyTipWnd = "ResPerfer/BuyTipWnd";
     public const string ResBagItem = "ResPerfer/Item/BagItem";
-    public const string ResUseTipWnd = "ResPerfer/UseTipWnd";
     public const string ResFriendsItem = "ResPerfer/Item/FriendsItem";
     public const string ResAttributeText = "ResPerfer/Item/attributeText";
     public const string ResRewardTaskItem = "ResPerfer/Item/RewardTaskItem";
@@ -62,13 +56,7 @@ public class PathDefine
     public const string loadingWndPath = "Canvas/LoadingWnd";
     public const string CharaterCamera = "CharaterCamera";
     #region LoginWnd
-    public const string LoginBtn_close = "LoginCenten/btn_close1";
-    public const string LoginBtn_Register = "LoginCenten/Register";
-    public const string LoginBtn_Toggle = "LoginCenten/remenber/Toggle";
-    public const string LoginBtn_Login = "LoginCenten/LoginBtn";
-    public const string LoginUsername = "LoginCenten/Username/InputField";
-    public const string LoginPassword = "LoginCenten/Password/InputField";
-    public const string imgbg = "bg_big";
+
     #endregion
     #region LoadingWnd
     public const string Loading_txtTips = "BottomWnd/txtTips";
