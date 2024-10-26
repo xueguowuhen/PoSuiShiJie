@@ -9,27 +9,27 @@ using System;
 using UnityEngine;
 public class StateMove : ISate
 {
-
     public void Enter(EntityBase entity, params object[] objects)
     {
+        switch (entity.currentAniState)
+        {
+            case AniState.Evade://从闪避状态进入移动状态
+                entity.SetAniPlay(AniPlayerState.Move.ToString());
+                break;
+            case AniState.TurnBack:
+                entity.SetAniPlay(AniPlayerState.Move.ToString());
+                break;
+            default://从其他状态进入移动状态
+                entity.SetAction((int)AniPlayerState.WalkStart);
+                entity.SetAniCrossFade(AniPlayerState.WalkStart.ToString(), Constants.AniSpeed);
+                break;
+        }
         entity.currentAniState = AniState.Move;
-        entity.SetAction((int)AniPlayerState.WalkStart);
-        entity.SetAniCrossFade(AniPlayerState.WalkStart.ToString(), Constants.AniSpeed);
         entity.SetHasInput(true);
-        entity.SetMove(true);
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.WalkStart, OnWalkStartEvent);
-        AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
     }
 
-    private void OnTurnBackEvent(EntityBase entity)
-    {
 
-        entity.SetAction(Constants.ActionDefault);
-
-        //  entity.SetAction((int)AniPlayerState.WalkStart);
-        //entity.SetAniCrossFade(AniPlayerState.WalkStart.ToString(), Constants.AniSpeed);
-
-    }
 
     public void OnWalkStartEvent(EntityBase entity)
     {
@@ -38,6 +38,7 @@ public class StateMove : ISate
 
     public void Process(EntityBase entity)
     {
+        // SetMove(false);
 
         if (entity.GetRunState())
         {
@@ -47,14 +48,13 @@ public class StateMove : ISate
         {
             entity.SetVelocity(Constants.VelocityWalk);
         }
-
     }
+
     public void Exit(EntityBase entity, params object[] objects)
     {
-        entity.SetMove(false);
-
+        entity.SetHasInput(false);
         AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.WalkStart, OnWalkStartEvent);
-        AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
+
     }
 
 }

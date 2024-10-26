@@ -679,12 +679,6 @@ public class ResSvc : MonoBehaviour
                         case "power":
                             mapCfg.power = int.Parse(node.InnerText);
                             break;
-                        case "mainCamPos":
-                            mapCfg.mainCamPos = GetVector3(node.InnerText);
-                            break;
-                        case "mainCamRote":
-                            mapCfg.mainCamRote = GetVector3(node.InnerText);
-                            break;
                         case "playerBornPos":
                             mapCfg.playerBornPos = GetVector3(node.InnerText);
                             break;
@@ -699,6 +693,24 @@ public class ResSvc : MonoBehaviour
                             break;
                         case "aura":
                             mapCfg.aura = int.Parse(node.InnerText);
+                            break;
+                        case "CameraFollowAndRotatePos":
+                            mapCfg.CameraFollowAndRotatePos = GetVector3(node.InnerText);
+                            break;
+                        case "CameraFollowAndRotateRote":
+                            mapCfg.CameraFollowAndRotateRote = GetVector3(node.InnerText);
+                            break;
+                        case "CameraUpAndDownPos":
+                            mapCfg.CameraUpAndDownPos = GetVector3(node.InnerText);
+                            break;
+                        case "CameraUpAndDownRote":
+                            mapCfg.CameraUpAndDownRote = GetVector3(node.InnerText);
+                            break;
+                        case "CameraZoomContainerPos":
+                            mapCfg.CameraZoomContainerPos = GetVector3(node.InnerText);
+                            break;
+                        case "CameraZoomContainerRote":
+                            mapCfg.CameraZoomContainerRote = GetVector3(node.InnerText);
                             break;
                     }
                 }
@@ -1405,14 +1417,14 @@ public class ResSvc : MonoBehaviour
         string[] valArr = InnerText.Split(',');
         return new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
     }
-    //任务
+    //任务 //每日任务完成
     //副本（2-3个）（副本实现时间冻结效果）
 
     //背包(强化，装备) 强化和装备暂无
 
-    //签到
+    //签到 //完成融入了每日任务了
     //成就
-    //人物属性（展示打字机效果和经验滚动效果）
+    //人物属性（展示打字机效果和经验滚动效果） //TODO需修改滚动效果
     //聊天
     //小地图
     //设置

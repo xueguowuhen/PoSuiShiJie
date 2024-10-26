@@ -48,6 +48,7 @@ public static class GameObjectExt
         }
     }
 
+
     /// <summary>
     /// 设置 Text 对象的文本内容，支持数字递增动画。
     /// </summary>
@@ -95,5 +96,18 @@ public static class GameObjectExt
                 txtObj.fillAmount = endValue;
             }
         }
+    }
+    /// <summary>
+    /// 检查当前动画片段是否是指定Tag
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="tagName"></param>
+    /// <param name="indexLayer"></param>
+    /// <returns></returns>
+    public static bool AnimationAtTag(this Animator animator, string tagName, int indexLayer = 0)
+    {
+        return animator.GetCurrentAnimatorStateInfo(indexLayer).IsTag(tagName);
+
+
     }
 }

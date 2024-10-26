@@ -7511,9 +7511,9 @@ MonoBehaviour:
   animator: {fileID: 1003113132596050252}
   targetVelocity: 0
   action: 0
+  isInput: 0
   ss: 1
   moveDistance: 0
-  isMove: 0
   eulerAngles: {x: 0, y: 0, z: 0}
   isLocal: 0
   isShoolr: 1
@@ -7523,6 +7523,7 @@ MonoBehaviour:
   syncRate: 30
   playerCurrentVelocity: 0
   playerCurrentAction: 0
+  EvadeRange: 4.7
 --- !u!143 &6777910445998182893
 CharacterController:
   m_ObjectHideFlags: 0

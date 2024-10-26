@@ -115,6 +115,10 @@ public class BattleSys : SystemRoot
     {
         battleMgr.ReleaseSkill3();
     }
+    public void Evade()
+    {
+        battleMgr.Evade();
+    }
     public bool CanRlsSkill()
     {
         return battleMgr.CanRlsSkill();

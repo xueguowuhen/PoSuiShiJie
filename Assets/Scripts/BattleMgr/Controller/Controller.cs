@@ -17,7 +17,7 @@ public class Controller : MonoBehaviour
     public bool isInput;
     protected bool isRos = false;//判断旋转
     public bool ss = true;
-    public float moveDistance;
+    public Vector3 moveDistance;
     public bool isSkillRos
     {
         get
@@ -32,7 +32,7 @@ public class Controller : MonoBehaviour
     }
 
 
-    public bool isMove = false;//判断移动
+   // public bool isMove = false;//判断移动
     protected bool skillMove = false;//判断技能移动
     public Vector3 eulerAngles;
     //protected float skillUpMoveSpeed;
@@ -91,11 +91,15 @@ public class Controller : MonoBehaviour
     {
 
     }
-    public virtual void SetVelocity(float Velocity, bool IsRun = false)
+    public virtual void SetVelocity(float Velocity)
     {
         targetVelocity = Velocity;
         animator.SetFloat("Velocity", Velocity);
         //daggerskill1fx.gameObject.SetActive(true);
+    }
+    public virtual void SetEvade(bool isEvade)
+    {
+
     }
     public virtual void SetAction(int act)
     {
@@ -131,6 +135,10 @@ public class Controller : MonoBehaviour
     public virtual void SetAniCrossFade(string name, float time)
     {
         animator.CrossFade(name, time);
+    }
+    public virtual void SetAniPlay(string name)
+    {
+        animator.Play(name);
     }
     public virtual void DestroySelf()
     {

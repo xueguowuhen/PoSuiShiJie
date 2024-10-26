@@ -20,10 +20,10 @@ ModelImporter:
     second: Avatar_Female_Size02_Ellen_Ani_Run_End
   - first:
       74: -1971507913036625926
-    second: Avatar_Female_Size02_Ellen_Ani_Evade_Front
+    second: Evade_Front
   - first:
       74: 6523434946917451925
-    second: Avatar_Female_Size02_Ellen_Ani_Evade_Back
+    second: Evade_Back
   - first:
       74: -3148382312506452662
     second: Avatar_Female_Size02_Ellen_Ani_TurnBack
@@ -261,6 +261,12 @@ ModelImporter:
   - first:
       74: -7753523041682957377
     second: Walk_Start_End
+  - first:
+      74: -1752294980725328889
+    second: Rush
+  - first:
+      74: -9147943192724011018
+    second: Rush_End
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -435,10 +441,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Avatar_Female_Size02_Ellen_Ani_Evade_Front
+      name: Evade_Front
       takeName: Avatar_Female_Size02_Ellen_Ani_Evade_Front
       internalID: 0
-      firstFrame: 0
+      firstFrame: 30
       lastFrame: 241
       wrapMode: 0
       orientationOffsetY: 0
@@ -448,10 +454,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -464,7 +470,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Avatar_Female_Size02_Ellen_Ani_Evade_Back
+      name: Evade_Back
       takeName: Avatar_Female_Size02_Ellen_Ani_Evade_Back
       internalID: 0
       firstFrame: 0
@@ -477,10 +483,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -497,7 +503,7 @@ ModelImporter:
       takeName: Avatar_Female_Size02_Ellen_Ani_TurnBack
       internalID: 0
       firstFrame: 0
-      lastFrame: 89
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -551,11 +557,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Avatar_Female_Size02_Ellen_Ani_Attack_Rush
+      name: Rush
       takeName: Avatar_Female_Size02_Ellen_Ani_Attack_Rush
       internalID: 0
       firstFrame: 0
-      lastFrame: 341
+      lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -564,10 +570,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -899,11 +905,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Avatar_Female_Size02_Ellen_Ani_Attack_Rush_End
+      name: Rush_End
       takeName: Avatar_Female_Size02_Ellen_Ani_Attack_Rush_End
       internalID: 0
       firstFrame: 0
-      lastFrame: 341
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -912,10 +918,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -961,7 +967,7 @@ ModelImporter:
       takeName: Avatar_Female_Size02_Ellen_Ani_Idle_AFK
       internalID: 0
       firstFrame: 0
-      lastFrame: 607
+      lastFrame: 494
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -18,7 +18,8 @@ public class StateMgr : MonoBehaviour
     {
         FSM.Add(AniState.Idle, new StateIdle());
         FSM.Add(AniState.Move, new StateMove());
-      //  FSM.Add(AniState.Run, new StateRun());
+        FSM.Add(AniState.Evade, new StateEvade());
+        FSM.Add(AniState.TurnBack, new StateTurnBack());
         FSM.Add(AniState.Attack, new StateAttack());
         FSM.Add(AniState.Hit, new StateHit());
         FSM.Add(AniState.Die, new StateDie());
@@ -84,7 +85,7 @@ public class StateMgr : MonoBehaviour
                 FSM[entity.currentAniState].Exit(entity, argas);
             }
             FSM[targerState].Enter(entity, argas);
-
+         //   Debug.Log("当前状态" + targerState.ToString());
         }
     }
 }

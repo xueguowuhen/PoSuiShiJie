@@ -19,6 +19,7 @@ public class PlayerController : Controller
     public float currentVelocity;
     public int RemotePlayerId;
     private bool IsRun;
+    public bool IsEvade;
     public CharacterController characterController;
     public int syncRate = 45;
     private Vector3 PlayerCurrentRot;
@@ -30,6 +31,9 @@ public class PlayerController : Controller
     private Dictionary<string, GameObject> fxDic = new Dictionary<string, GameObject>();
     //private int delayfps = 0;
     private DataTrans dataTrans;
+    [SerializeField, Header("闪避移动倍数")]
+    [Range(0f, 10f)]
+    private float EvadeRange;
     /// <summary>
     /// 是否由寻路接管旋转
     /// </summary>
@@ -38,12 +42,12 @@ public class PlayerController : Controller
     private float elapsedTime;
     private float totalDistance;
     private Vector3 tartgetPos;
-   
+
     #endregion
 
     public override void Init()
     {
-        camTran=Camera.main.transform;
+        camTran = Camera.main.transform;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
     }
@@ -109,10 +113,10 @@ public class PlayerController : Controller
     }
     private void OnAnimatorMove()
     {
-        if (isMove)
-        {
-            SetMove();
-        }
+        //if (isMove)
+        //{
+        SetMove();
+        //  }
     }
     public void SendPlayerTransform()
     {
@@ -156,6 +160,7 @@ public class PlayerController : Controller
         Quaternion currentRotation = transform.localRotation;
         Quaternion interpolatedRotation = Quaternion.Slerp(currentRotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
         transform.localRotation = interpolatedRotation;
+        // Debug.Log("目标：" + targetRotation.eulerAngles);
     }
     /// <summary>
     /// 
@@ -184,7 +189,6 @@ public class PlayerController : Controller
     }
     public override void SetMove()
     {
-
         float speed;
         if (IsRun)
         {
@@ -194,34 +198,45 @@ public class PlayerController : Controller
         {
             speed = Constants.PlayerWalkSpeed;
         }
-
-        // 计算每秒移动的距离
-        moveDistance = speed *animator.deltaPosition.magnitude;
+        moveDistance = speed * animator.deltaPosition /** Time.deltaTime*/;
 
         // 角色移动
-        characterController.Move(transform.forward * moveDistance);
-        totalDistance += moveDistance;
-     ////   更新经过的时间
-     //  elapsedTime += Time.fixedDeltaTime;
+        if (animator.AnimationAtTag("Movement"))
+        {
+            characterController.Move(moveDistance);
 
-     //   // 每秒打印一次这一秒的移动距离
-     //   if (elapsedTime >= 1f)
-     //   {
-     //       if (tartgetPos != null)
-     //       {
-     //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
-     //       }
-     //       tartgetPos = transform.position;
-     //       Debug.Log("这一秒移动的距离: " + totalDistance);
-     //       totalDistance = 0;
-     //       elapsedTime = 0f; // 重置计时器
-     //   }
-    }
+        }
+        else
+        {
+            animator.ApplyBuiltinRootMotion();
+        }
+        if (animator.AnimationAtTag("Evade")&& !animator.IsInTransition(0))
+        {
+            moveDistance *= EvadeRange;
+            characterController.Move(moveDistance);
+        }
+
+            ////   更新经过的时间
+            //  elapsedTime += Time.fixedDeltaTime;
+
+            //   // 每秒打印一次这一秒的移动距离
+            //   if (elapsedTime >= 1f)
+            //   {
+            //       if (tartgetPos != null)
+            //       {
+            //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
+            //       }
+            //       tartgetPos = transform.position;
+            //       Debug.Log("这一秒移动的距离: " + totalDistance);
+            //       totalDistance = 0;
+            //       elapsedTime = 0f; // 重置计时器
+            //   }
+        }
 
 
     private void SetSkillMove()
     {
-        moveDistance = skillMoveSpeed;
+        //moveDistance = skillMoveSpeed;
         characterController.Move(transform.forward * Time.fixedDeltaTime * skillMoveSpeed);
 
     }
@@ -242,22 +257,17 @@ public class PlayerController : Controller
         }
         animator.SetFloat("Velocity", currentVelocity);
     }
-    public void SetCam()
-    {
-        //if (camTran != null)
-        //{
-        //    camTran.position = transform.position - camOffset;
-        //}
-
-    }
     public void SetNavMeshRot(bool IsRos)
     {
         IsNavMeshRos = IsRos;
     }
-    public override void SetVelocity(float Velocity, bool IsRun = false)
+    public override void SetVelocity(float Velocity)
     {
         targetVelocity = Velocity;
-        this.IsRun = IsRun;
+    }
+    public override void SetEvade(bool IsEvade)
+    {
+        this.IsEvade = IsEvade;
     }
     public override void SetFx(string name, float destroy = 0)
     {

@@ -57,14 +57,17 @@ public enum EntityType
 }
 public enum AniPlayerState
 {
-    ActionDefault = -1,
+    IdleAFK = -1,
     None = 0,
+    Move=99,
     Death = 100,
     Hit = 101,
     WalkStop = 102,
     RunStop = 103,
     TurnBack = 104,
     WalkStart = 105,
+    Evade_Back = 106,
+    Evade_Front = 107,
     
 }
 public class Constants

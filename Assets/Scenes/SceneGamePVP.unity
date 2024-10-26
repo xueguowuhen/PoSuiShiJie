@@ -777,8 +777,11 @@ MonoBehaviour:
   m_CameraUpAndDown: {fileID: 1648005783}
   m_CameraZoomContainer: {fileID: 827341989}
   m_CameraContainer: {fileID: 1819208836}
-  rotationAgle: 30
-  rotationSpeed: 300
+  rotationSpeed: 450
+  upAndDownSpeed: 450
+  CamTargetOffset: 2.8
+  smoothingSpeed: 5
+  CamPosOffset: 0.2
   minVerticalAngle: -30
   maxVerticalAngle: 30
 --- !u!4 &1414299371

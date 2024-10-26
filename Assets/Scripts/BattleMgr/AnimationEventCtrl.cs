@@ -15,7 +15,7 @@ public class AnimationEventCtrl : StateMachineBehaviour
     public AniPlayerState playerState;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        if (AniPlayerState.None == playerState) return;
     }
 
 
@@ -25,6 +25,7 @@ public class AnimationEventCtrl : StateMachineBehaviour
         if (animator.TryGetComponent(out player))
         {
             AnimatorDispatcher.Instance.Dispatch(playerState, BattleSys.instance.GetBattleMgr().entitySelfPlayer);
+            
         }
     }
 }

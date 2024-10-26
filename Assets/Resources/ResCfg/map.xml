@@ -4,36 +4,48 @@
 		<mapName>圣光主城</mapName>
 		<sceneName>SceneMainCity</sceneName>
 		<power>0</power>
-		<mainCamPos>-0.34,7,-7.06</mainCamPos>
-		<mainCamRote>37,0,0</mainCamRote>
 		<playerBornPos>0,0,0</playerBornPos>
 		<playerBornRote>0,0,0</playerBornRote>
 		<exp>0</exp>
 		<aura>0</aura>
 		<crystal>0</crystal>
+		<CameraFollowAndRotatePos>0,0,0</CameraFollowAndRotatePos>
+		<CameraFollowAndRotateRote>0,0,0</CameraFollowAndRotateRote>
+		<CameraUpAndDownPos>0,0,0</CameraUpAndDownPos>
+		<CameraUpAndDownRote>0,0,0</CameraUpAndDownRote>
+		<CameraZoomContainerPos>0,0,0</CameraZoomContainerPos>
+		<CameraZoomContainerRote>0,0,0</CameraZoomContainerRote>
 	</item>
 	<item ID="10001">
 		<mapName>失落平原</mapName>
 		<sceneName>SceneBattle</sceneName>
 		<power>0</power>
-		<mainCamPos>-0.34,3.5,-7.06</mainCamPos>
-		<mainCamRote>37,0,0</mainCamRote>
 		<playerBornPos>0,0,0</playerBornPos>
 		<playerBornRote>0,0,0</playerBornRote>
 		<exp>1250</exp>
 		<aura>980</aura>
 		<crystal>48</crystal>
+		<CameraFollowAndRotatePos>0,0,0</CameraFollowAndRotatePos>
+		<CameraFollowAndRotateRote>0,0,0</CameraFollowAndRotateRote>
+		<CameraUpAndDownPos>0,0,0</CameraUpAndDownPos>
+		<CameraUpAndDownRote>0,0,0</CameraUpAndDownRote>
+		<CameraZoomContainerPos>0,0,0</CameraZoomContainerPos>
+		<CameraZoomContainerRote>0,0,0</CameraZoomContainerRote>
 	</item>
 	<item ID="20001">
 		<mapName>决斗之地</mapName>
 		<sceneName>SceneGamePVP</sceneName>
 		<power>0</power>
-		<mainCamPos>0,2.2,-3.5</mainCamPos>
-		<mainCamRote>-20,-0.524,0.802</mainCamRote>
 		<playerBornPos>0,0,0</playerBornPos>
 		<playerBornRote>0,0,0</playerBornRote>
 		<exp>1250</exp>
 		<aura>980</aura>
 		<crystal>48</crystal>
+		<CameraFollowAndRotatePos>0,1,0</CameraFollowAndRotatePos>
+		<CameraFollowAndRotateRote>0,90,0</CameraFollowAndRotateRote>
+		<CameraUpAndDownPos>0,0,0</CameraUpAndDownPos>
+		<CameraUpAndDownRote>0,0,20</CameraUpAndDownRote>
+		<CameraZoomContainerPos>2.8,0,0</CameraZoomContainerPos>
+		<CameraZoomContainerRote>0,0,0</CameraZoomContainerRote>
 	</item>
 </root>

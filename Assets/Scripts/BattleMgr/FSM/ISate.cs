@@ -27,4 +27,6 @@ public enum AniState
     Attack,
     Hit,
     Die,
+    Evade,//闪避
+    TurnBack,//转身
 }

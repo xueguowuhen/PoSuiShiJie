@@ -26,12 +26,6 @@ public class StateHit : ISate
     {
 
     }
-
-    public void OnAnimatorEndEvent(EntityBase entity)
-    {
-        
-    }
-
     public void Process(EntityBase entity)
     {
        

@@ -1975,6 +1975,7 @@ MonoBehaviour:
   btnSkil3: {fileID: 1079511772}
   SkillCD3: {fileID: 293204394}
   SkillTxt3: {fileID: 558006259}
+  btnEvade: {fileID: 1352877165}
   BtnQuitBattle: {fileID: 1391749467}
   imgTouch: {fileID: 1179049016}
   imgDirBg: {fileID: 744333255}
@@ -2769,7 +2770,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1352877166}
+  m_TargetGraphic: {fileID: 83532132}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

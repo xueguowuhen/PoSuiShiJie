@@ -42,13 +42,17 @@ public class MapCfg : BaseData<MapCfg>
     public string mapName;
     public string sceneName;
     public int power;
-    public Vector3 mainCamPos;
-    public Vector3 mainCamRote;
     public Vector3 playerBornPos;
     public Vector3 playerBornRote;
     public string monsterLst;
     public int exp;
     public int aura;
+    public Vector3 CameraFollowAndRotatePos;
+    public Vector3 CameraFollowAndRotateRote;
+    public Vector3 CameraUpAndDownPos;
+    public Vector3 CameraUpAndDownRote;
+    public Vector3 CameraZoomContainerPos;
+    public Vector3 CameraZoomContainerRote;
 }
 public class TalentCfg : BaseData<TalentCfg>
 {

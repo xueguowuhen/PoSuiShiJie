@@ -38,7 +38,7 @@ public class BattleWnd : WindowRoot
     public Button btnSkil3;
     public Image SkillCD3;
     public Text SkillTxt3;
-
+    public Button btnEvade;
     public Button BtnQuitBattle;
     #endregion
     #region PlayerController
@@ -53,7 +53,6 @@ public class BattleWnd : WindowRoot
     protected override void InitWnd()
     {
         base.InitWnd();
-        SetGameObject();
         RegisterTouchEvts();
         ResisterCamTouchEvts();
         RefreshUI();
@@ -75,6 +74,10 @@ public class BattleWnd : WindowRoot
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ClickSkill3();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ClickEvade();
         }
         float dalta = Time.deltaTime;
         if (isSk1CD)
@@ -173,6 +176,7 @@ public class BattleWnd : WindowRoot
 
         //  btnSkil3 = GetButton(PathDefine.btnSkill3);
         AddListener(btnSkil3, ClickSkill3);
+        AddListener(btnEvade, ClickEvade);
         //  SkillCD3 = GetImg(PathDefine.SkillCD3);
         //  SkillTxt3 = GetText(PathDefine.SkillTxt3);
 
@@ -297,6 +301,11 @@ public class BattleWnd : WindowRoot
             SetText(SkillTxt3, sk3Num);
         }
     }
+    public void ClickEvade()
+    {
+        BattleSys.instance.Evade();
+    }
+
     /// <summary>
     /// 注册摇杆触摸事件
     /// </summary>
@@ -335,6 +344,9 @@ public class BattleWnd : WindowRoot
             BattleSys.instance.SetSelfPlayerMoveDir(dir.normalized, IsRun);
         });
     }
+    // 记录当前的滑动方向
+    private Vector2 currentCamMoveDir = Vector2.zero;
+
     /// <summary>
     /// 注册摄像机触摸事件
     /// </summary>
@@ -343,7 +355,7 @@ public class BattleWnd : WindowRoot
         OnClickDown(CamTouch.gameObject, (PointerEventData evt) =>
         {
             camStartPos = evt.position;
-            
+            currentCamMoveDir=evt.position;
         });
         OnClickUp(CamTouch.gameObject, (PointerEventData evt) =>
         {
@@ -351,8 +363,35 @@ public class BattleWnd : WindowRoot
         });
         OnDrag(CamTouch.gameObject, (PointerEventData evt) =>
         {
-            Vector2 dir = evt.position - camStartPos;
-            BattleSys.instance.SetCamMoveDir(dir.normalized);
+            Vector2 dir = evt.position - currentCamMoveDir;
+            currentCamMoveDir = evt.position;
+            // 判断滑动的方向
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) // 水平方向滑动更明显
+            {
+                if (dir.x > 0)
+                {
+                    // 向右滑动
+                    BattleSys.instance.SetCamMoveDir(Vector2.right);
+                }
+                else
+                {
+                    // 向左滑动
+                    BattleSys.instance.SetCamMoveDir(Vector2.left);
+                }
+            }
+            else // 垂直方向滑动更明显
+            {
+                if (dir.y > 0)
+                {
+                    // 向上滑动
+                    BattleSys.instance.SetCamMoveDir(Vector2.up);
+                }
+                else
+                {
+                    // 向下滑动
+                    BattleSys.instance.SetCamMoveDir(Vector2.down);
+                }
+            }
         });
     }
     public bool GetCanRlsSkill()

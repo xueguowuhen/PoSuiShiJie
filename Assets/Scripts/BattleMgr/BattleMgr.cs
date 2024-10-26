@@ -55,8 +55,8 @@ public class BattleMgr : MonoBehaviour
         // 在移动之前禁用角色控制器
         characterController = player.GetComponent<CharacterController>();
         //相机初始化
-        cameraPlayerCtrl=GameObject.Find("CameraFollowAndRotate").GetOrAddComponent<CameraPlayerCtrl>();
-        cameraPlayerCtrl.Init(mapData,player.transform);
+        cameraPlayerCtrl = GameObject.Find("CameraFollowAndRotate").GetOrAddComponent<CameraPlayerCtrl>();
+        cameraPlayerCtrl.Init(mapData, player.transform);
         //人物初始化
         playerController = player.GetComponent<PlayerController>();
         characterController.enabled = false;
@@ -273,6 +273,13 @@ public class BattleMgr : MonoBehaviour
                 entitySelfPlayer.Attack(skillID);
             }
         }
+    }
+    /// <summary>
+    /// 闪避
+    /// </summary>
+    public void Evade()
+    {
+        entitySelfPlayer.Evade();
     }
     #endregion
     /// <summary>

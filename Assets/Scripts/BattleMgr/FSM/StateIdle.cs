@@ -19,6 +19,7 @@ public class StateIdle : ISate
                 entity.SetAction((int)entity.GetWalkOrRunState());
                 break;
             default:
+
                 entity.SetAction(Constants.ActionDefault);
                 break;
         }
@@ -27,6 +28,7 @@ public class StateIdle : ISate
         entity.SetHasInput(false);
         entity.SetmoveDistance(Constants.PlayerIdleSpeed);
         entity.SetDir(Vector2.zero);
+        #region 待机时，取消所有技能
         entity.skEndCB = -1;
         if (entity.nextSkillID != 0)
         {
@@ -50,6 +52,7 @@ public class StateIdle : ISate
                 entity.SetVelocity(Constants.VelocityIdle);
             }
         }
+        #endregion
         //添加事件监听
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.RunStop, OnRunStopEvent);
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.WalkStop, OnRunStopEvent);
