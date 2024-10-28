@@ -98,6 +98,7 @@ public class DispatcherBase<T,P,X>: IDisposable
                     if (lstHandler[i] != null)
                     {
                         lstHandler[i](p);
+
                     }
                 }
             }

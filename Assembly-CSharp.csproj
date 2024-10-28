@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Service\ResSvc.cs" />
     <Compile Include="Assets\Scripts\System\GameRoot.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateEvade.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\BagTipWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\DailyTaskItem.cs" />
     <Compile Include="Assets\Scripts\Common\ComTools.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\RegisterWnd.cs" />
     <Compile Include="Assets\Scripts\System\MainCitySys.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\LoginWnd.cs" />
+    <Compile Include="Assets\Scripts\Common\Dispatcher\UIBtnDispatcher.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\PersonWnd.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityBase.cs" />
@@ -141,13 +143,12 @@
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\CreateWnd.cs" />
     <Compile Include="Assets\Scripts\Net\ClientSession.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateTurnBack.cs" />
     <Compile Include="Assets\Scripts\Common\LayoutAdjustment.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectPool\GameObjectPoolManager.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
-    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateEvade.cs" />
-    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateTurnBack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />

@@ -18,26 +18,35 @@ public class StateTurnBack : ISate
     {
         entity.currentAniState = AniState.TurnBack;
         entity.SetAction((int)AniPlayerState.TurnBack);
-        Debug.Log("进入转身状态");
+        entity.SetAniPlay(AniPlayerState.TurnBack.ToString());
+        // entity.SetAniCrossFade(AniPlayerState.TurnBack.ToString(), Constants.AniSpeed);
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
     }
 
     private void OnTurnBackEvent(EntityBase entity)
     {
+        Debug.Log("OnTurnBackEvent");
+        entity.SetAction(Constants.ActionDefault);
         if (entity.GetDirInput() != Vector2.zero)
         {
             entity.Move();
+            Debug.Log("Move");
             entity.SetDir(entity.GetDirInput());
         }
         else
         {
-
+            Debug.Log("Idle");
             entity.Idle();
             entity.SetAniCrossFade(AniPlayerState.IdleAFK.ToString(), Constants.AniSpeed);
         }
     }
     public void Process(EntityBase entity)
     {
+        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f)
+        {
+            AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
+            OnTurnBackEvent(entity);
+        }
         if (entity.GetDirInput() != Vector2.zero)
         {
             entity.SetHasInput(true);
@@ -46,6 +55,11 @@ public class StateTurnBack : ISate
         {
             entity.SetHasInput(false);
         }
+
+        entity.SetVelocity(Constants.VelocityRun);
+
+        entity.SetDir(entity.GetDirInput());
+
     }
     public void Exit(EntityBase entity, params object[] objects)
     {

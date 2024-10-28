@@ -59,7 +59,11 @@ public enum AniPlayerState
 {
     IdleAFK = -1,
     None = 0,
-    Move=99,
+    Attack_Normal_01 = 1,
+    Attack_Normal_02 = 2,
+    Attack_Normal_03 = 3,
+    Attack_Normal_04 = 4,
+    Move =99,
     Death = 100,
     Hit = 101,
     WalkStop = 102,

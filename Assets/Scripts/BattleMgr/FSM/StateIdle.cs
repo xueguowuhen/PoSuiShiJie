@@ -34,6 +34,7 @@ public class StateIdle : ISate
         {
 
             entity.Attack(entity.nextSkillID);
+            entity.EvadeEnd = false;
         }
         else
         {

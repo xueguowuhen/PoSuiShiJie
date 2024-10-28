@@ -304,6 +304,7 @@ public class BattleWnd : WindowRoot
     public void ClickEvade()
     {
         BattleSys.instance.Evade();
+        UIBtnDispatcher.Instance.Dispatch(PathDefine.btnEvade, BattleSys.instance.GetBattleMgr().entitySelfPlayer);
     }
 
     /// <summary>

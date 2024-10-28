@@ -28,7 +28,7 @@ public abstract class EntityBase
     public BattleMgr battleMgr = null;
     public SkillCfg curtSkillCfg;
     public int skEndCB = -1;
-
+    public bool EvadeEnd;
     public bool canRlskill = true;
     /// <summary>
     /// 判断是否是本地
@@ -61,11 +61,12 @@ public abstract class EntityBase
     /// </summary>
     public void Evade()
     {
-        if (currentAniState == AniState.TurnBack) return;
+        // if (currentAniState == AniState.TurnBack) return;
         stateMgr.ChangeStates(this, AniState.Evade);
     }
     public void TurnBack()
     {
+
         stateMgr.ChangeStates(this, AniState.TurnBack);
     }
     public void Attack(int SkillID)
@@ -315,6 +316,22 @@ public abstract class EntityBase
         }
         return default;
 
+    }
+    public bool AnimationAtTag(string tag)
+    {
+        if (controller != null)
+        {
+            return controller.animator.AnimationAtTag(tag);
+        }
+        return false;
+    }
+    public bool IsInTransition()
+    {
+        if (controller != null)
+        {
+            return controller.animator.IsInTransition(0);
+        }
+        return false;
     }
     /// <summary>
     /// 设置状态动画

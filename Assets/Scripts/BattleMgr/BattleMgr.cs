@@ -279,6 +279,7 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     public void Evade()
     {
+        if (entitySelfPlayer.currentAniState == AniState.Attack) return;
         entitySelfPlayer.Evade();
     }
     #endregion

@@ -340,10 +340,10 @@ public class SkillMgr : MonoBehaviour
                 entity.SetRotation(entity.GetRemoteInput());
             }
         }
-        CalcSkillMove(entity, skillCfg);
+       // CalcSkillMove(entity, skillCfg);
         if (skillCfg.type == SkillType.melee)
         {
-            CalcSkillFx(entity, skillCfg);
+           // CalcSkillFx(entity, skillCfg);
         }
         entity.SetSkillMoveSate(false);
 
@@ -352,10 +352,10 @@ public class SkillMgr : MonoBehaviour
         {
             entity.entityState = EntityState.Bati;
         }
-        entity.skEndCB = timerSvc.AddTimeTask((int tid) =>
-        {
-            entity.Idle();
-        }, skillCfg.skilltime);
+        //entity.skEndCB = timerSvc.AddTimeTask((int tid) =>
+        //{
+        //    entity.Idle();
+        //}, skillCfg.skilltime);
 
     }
     /// <summary>

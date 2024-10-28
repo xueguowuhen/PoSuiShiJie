@@ -49,6 +49,7 @@ public class PathDefine
     public const string props = "props/";
     public const string icon = "icon/";
     public const string HpRoot = "HpRoot";
+    public const string btnEvade = "btnEvade";
     #endregion
     #region GameObjectPath
     public const string LoginWndPath = "Canvas/LoginWnd";

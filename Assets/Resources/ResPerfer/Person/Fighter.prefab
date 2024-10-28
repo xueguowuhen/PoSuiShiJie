@@ -7513,17 +7513,18 @@ MonoBehaviour:
   action: 0
   isInput: 0
   ss: 1
-  moveDistance: 0
+  moveDistance: {x: 0, y: 0, z: 0}
   eulerAngles: {x: 0, y: 0, z: 0}
   isLocal: 0
   isShoolr: 1
   currentVelocity: 0
   RemotePlayerId: 0
+  IsEvade: 0
   characterController: {fileID: 0}
   syncRate: 30
   playerCurrentVelocity: 0
   playerCurrentAction: 0
-  EvadeRange: 4.7
+  EvadeRange: 0
 --- !u!143 &6777910445998182893
 CharacterController:
   m_ObjectHideFlags: 0

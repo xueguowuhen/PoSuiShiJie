@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ec5ed71b246f2e64799e337037c3a4ec, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -720,7 +720,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -777,8 +777,8 @@ MonoBehaviour:
   m_CameraUpAndDown: {fileID: 1648005783}
   m_CameraZoomContainer: {fileID: 827341989}
   m_CameraContainer: {fileID: 1819208836}
-  rotationSpeed: 450
-  upAndDownSpeed: 450
+  rotationSpeed: 300
+  upAndDownSpeed: 300
   CamTargetOffset: 2.8
   smoothingSpeed: 5
   CamPosOffset: 0.2

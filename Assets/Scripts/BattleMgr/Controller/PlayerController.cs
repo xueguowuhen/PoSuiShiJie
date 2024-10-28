@@ -103,7 +103,7 @@ public class PlayerController : Controller
         }
         if (isLocal)
         {
-            SendPlayerTransform();
+           // SendPlayerTransform();
         }
         if (!isLocal)//引入延迟补偿机制
         {
@@ -295,24 +295,24 @@ public class PlayerController : Controller
     {
         GameObject go;
         string names = "fx";//包名
-        if (fxDic.TryGetValue(name, out go))
-        {
-            go.SetActive(true);
-            TimerSvc.Instance.AddTimeTask((int tid) =>
-            {
-                go.SetActive(false);
-            }, destroy);
-        }
-        else
-        {
-            go = ResSvc.instance.ABLoadPrefab(names, name);
-            go.transform.SetParent(transform, false);
-            fxDic.Add(name, go);
-            go.SetActive(true);
-            TimerSvc.Instance.AddTimeTask((int tid) =>
-            {
-                go.SetActive(false);
-            }, destroy);
-        }
+        //if (fxDic.TryGetValue(name, out go))
+        //{
+        //    go.SetActive(true);
+        //    TimerSvc.Instance.AddTimeTask((int tid) =>
+        //    {
+        //        go.SetActive(false);
+        //    }, destroy);
+        //}
+        //else
+        //{
+        //    go = ResSvc.instance.ABLoadPrefab(names, name);
+        //    go.transform.SetParent(transform, false);
+        //    fxDic.Add(name, go);
+        //    go.SetActive(true);
+        //    TimerSvc.Instance.AddTimeTask((int tid) =>
+        //    {
+        //        go.SetActive(false);
+        //    }, destroy);
+        //}
     }
 }
