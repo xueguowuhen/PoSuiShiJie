@@ -8,8 +8,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using CommonNet;
-using System.Globalization;
-using System.Security.Principal;
+
 public abstract class EntityBase
 {
     /// <summary>
@@ -29,7 +28,7 @@ public abstract class EntityBase
     public BattleMgr battleMgr = null;
     public SkillCfg curtSkillCfg;
     public int skEndCB = -1;
-
+    public bool EvadeEnd;
     public bool canRlskill = true;
     /// <summary>
     /// 判断是否是本地
@@ -49,13 +48,26 @@ public abstract class EntityBase
     {
         stateMgr.ChangeStates(this, AniState.Idle, null);
     }
+    /// <summary>
+    /// 切换到移动状态
+    /// </summary>
+    /// <param name="isRun"></param>
     public void Move()
     {
         stateMgr.ChangeStates(this, AniState.Move);
     }
-    public void Run()
+    /// <summary>
+    /// 切换到闪避状态
+    /// </summary>
+    public void Evade()
     {
-        stateMgr.ChangeStates(this, AniState.Run);
+        // if (currentAniState == AniState.TurnBack) return;
+        stateMgr.ChangeStates(this, AniState.Evade);
+    }
+    public void TurnBack()
+    {
+
+        stateMgr.ChangeStates(this, AniState.TurnBack);
     }
     public void Attack(int SkillID)
     {
@@ -100,6 +112,15 @@ public abstract class EntityBase
     {
         if (controller != null)
         {
+            // 检查当前方向与上一次方向的差距
+            float angleDifference = Vector2.SignedAngle(controller.Dir, dir);
+            if (Mathf.Abs(angleDifference) > 90f)
+            {
+                // SetMove(false);
+                if (currentAniState == AniState.Attack) { return; }
+                TurnBack();
+                //  Debug.Log("转向");
+            }
             controller.Dir = dir;
         }
     }
@@ -224,19 +245,40 @@ public abstract class EntityBase
     /// </summary>
     /// <param name="Velocity"></param>
     /// <param name="IsRun"></param>
-    public virtual void SetVelocity(float Velocity, bool IsRun = false)
+    public virtual void SetVelocity(float Velocity)
     {
         if (controller != null)
         {
-            controller.SetVelocity(Velocity, IsRun);
+            controller.SetVelocity(Velocity);
         }
     }
-    public virtual void SetMove(bool isMove)
+    public virtual AniPlayerState GetWalkOrRunState()
+    {
+        return controller.GetWalkOrRunState();
+    }
+    //public virtual void SetMove(bool isMove)
+    //{
+    //    if (controller != null)
+    //    {
+    //        controller.isMove = isMove;
+    //    }
+    //}
+    public virtual void SetHasInput(bool hasInput)
     {
         if (controller != null)
         {
-            controller.isMove = isMove;
+            controller.SetHasInput(hasInput);
         }
+
+    }
+    public virtual bool GetHasInput()
+    {
+        if (controller != null)
+        {
+            return controller.GetHasInput();
+        }
+        return false;
+
     }
     public AnimationClip[] GetAniClips()
     {
@@ -245,6 +287,52 @@ public abstract class EntityBase
             return controller.animator.runtimeAnimatorController.animationClips;
         }
         return null;
+    }
+    public void SetAniCrossFade(string name, float time)
+    {
+        if (controller != null)
+        {
+            controller.SetAniCrossFade(name, time);
+        }
+    }
+    public void SetEvade(bool isEvade)
+    {
+        if (controller != null)
+        {
+            controller.SetEvade(isEvade);
+        }
+    }
+    public void SetAniPlay(string name)
+    {
+        if (controller != null)
+        {
+            controller.SetAniPlay(name);
+        }
+    }
+    public AnimatorStateInfo GetCurrentAniStateInfo()
+    {
+        if (controller != null)
+        {
+            return controller.animator.GetCurrentAnimatorStateInfo(0);
+        }
+        return default;
+
+    }
+    public bool AnimationAtTag(string tag)
+    {
+        if (controller != null)
+        {
+            return controller.animator.AnimationAtTag(tag);
+        }
+        return false;
+    }
+    public bool IsInTransition()
+    {
+        if (controller != null)
+        {
+            return controller.animator.IsInTransition(0);
+        }
+        return false;
     }
     /// <summary>
     /// 设置状态动画
@@ -257,11 +345,19 @@ public abstract class EntityBase
             controller.SetAction(act);
         }
     }
+    public virtual AniPlayerState GetAniState()
+    {
+        if (controller != null)
+        {
+            return controller.GetAction();
+        }
+        return AniPlayerState.IdleAFK;
+    }
     public virtual void SetmoveDistance(float moveDistance)
     {
         if (controller != null)
         {
-            controller.moveDistance = moveDistance;
+            //controller.moveDistance = moveDistance;
         }
     }
     public virtual void SetFx(string name, float destroy = 0)

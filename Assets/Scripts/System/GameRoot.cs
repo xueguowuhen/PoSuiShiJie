@@ -16,6 +16,7 @@ public class GameRoot : MonoBehaviour
     public LoadingWnd loadingWnd;
     public DynamicWnd dynamicWnd;
     private Transform canvas;
+    public Camera uiCamera;
     private void Start()
     {
         Instance = this;
@@ -65,8 +66,8 @@ public class GameRoot : MonoBehaviour
     {
         Canvas canvas = this.canvas.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = Camera.main;
-        Camera.main.fieldOfView = Constants.CreatefieldOfView;
+        canvas.worldCamera = uiCamera;
+       // uiCamera.fieldOfView = Constants.CreatefieldOfView;
     }
     /// <summary>
     /// 设置canvas覆盖模式
@@ -75,6 +76,7 @@ public class GameRoot : MonoBehaviour
     {
         Canvas canvas = this.canvas.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.worldCamera = uiCamera;
         Camera.main.fieldOfView = Constants.CamerafieldOfView;
     }
 
@@ -91,6 +93,19 @@ public class GameRoot : MonoBehaviour
     public void SetPlayerData(PlayerData playerData)
     {
         this.playerData = playerData;
+    }
+    public void SetPlayerData(CommonNet.BattleData battleData)
+    {
+        this.playerData.Hp = battleData.Hp;
+        this.playerData.Hpmax = battleData.Hpmax;
+        this.playerData.critical = battleData.critical;
+        this.playerData.Mana = battleData.Mana;
+        this.playerData.ManaMax = battleData.ManaMax;
+        this.playerData.ad = battleData.ad;
+        this.playerData.addef = battleData.addef;
+        this.playerData.ap = battleData.ap;
+        this.playerData.apdef = battleData.apdef;
+        this.playerData.dodge = battleData.dodge;
     }
     public void SetPlayerDataList(List<PlayerData> playerDataList)
     {

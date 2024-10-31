@@ -13,6 +13,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 public class MainCitySys : SystemRoot
 {
+    #region 公开字段/属性
     public static MainCitySys instance;
     public MainCityWnd mainCityWnd;
     public CharacterController characterController;
@@ -20,16 +21,32 @@ public class MainCitySys : SystemRoot
     public PersonWnd personWnd;
     public ShopWnd shop;
     public BagWnd bagWnd;
-    public GuideWnd guideWnd;
+    //public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
+    public TalentWnd talentWnd;
+    public DailyTaskWnd dailyTaskWnd;
+    public StartGamePVPWnd starGamePVPWnd;
+    public TaskCfg GetTaskCfg()
+    {
+        return taskCfg;
+    }
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
+    public Transform[] GetNpcTra()
+    {
+        return NpcPosTrans;
+    }
+    #endregion
+
+    #region 私有字段
     private TaskCfg taskCfg;
     private NavMeshAgent navMesh;
     private Transform[] NpcPosTrans;
     private GameObject player;
-    //private bool isCreate = false;
-    public Text text;
-    //private Dictionary<int, GameObject> RemotePlayerDic = new Dictionary<int, GameObject>();
-
+    #endregion
     public override void InitSyc()
     {
         base.InitSyc();
@@ -47,7 +64,7 @@ public class MainCitySys : SystemRoot
         {
             GameCommon.Log("Enter MainCity...");
             //isCreate = true;
-            mainCityWnd.SetWndState();
+            EnterMainCityWnd();
             GameObject map = GameObject.Find(PathDefine.MapRoot);
             //NpcPosTrans = map.GetComponent<MainCityMap>().NpcPosTrans;
             //BattleSys.instance.EnterBattleMap(mapData);
@@ -67,15 +84,13 @@ public class MainCitySys : SystemRoot
             //CityEnemy.SetCtrl(Enemy.GetComponent<EnemyController>());
             //entityEnemy = CityEnemy;
             //entityEnemy.Init(resSvc.GetEnemyData(1001));
-
             //#endregion
         }, false));
     }
-    public void SetMoveDir(Vector2 dir, bool IsRun = false)
-    {
-        BattleSys.instance.SetSelfPlayerMoveDir(dir, IsRun);
-        StopNavTask();
-    }
+
+    #region 服务器消息处理
+
+    #region RspShop 购买成功
     public void RspShop(GameMsg msg)
     {
         GameRoot.AddTips("购买成功");
@@ -85,8 +100,11 @@ public class MainCitySys : SystemRoot
         playerData.aura = rspShop.aura;
         playerData.ruvia = rspShop.ruvia;
         playerData.crystal = rspShop.crystal;
+        playerData.dailyTasks = rspShop.dailyTasks;
         RefreshUI();
     }
+    #endregion
+
     #region RspTask 接收任务信息
     /// <summary>
     /// 接收任务信息
@@ -104,6 +122,7 @@ public class MainCitySys : SystemRoot
         GameRoot.AddTips("已完成该任务");
     }
     #endregion
+
     #region RspSearchFriend 搜索好友
     /// <summary>
     /// 搜索好友
@@ -113,9 +132,10 @@ public class MainCitySys : SystemRoot
     {
         GameRoot.AddTips("已找到该好友");
         FriendItem friendItem = msg.rspSearchFriend.Friend;
-        FriendSearch(friendItem);
+        FriendReFresh(friendItem);
     }
     #endregion
+
     #region RspAddFriend 添加好友信息
     /// <summary>
     /// 添加好友信息
@@ -130,11 +150,20 @@ public class MainCitySys : SystemRoot
         }
         else
         {
-            GameRoot.AddTips("好友申请发送失败");
+            PlayerData playerData = GameRoot.Instance.PlayerData;
+            playerData.aura = msg.rspAddFriend.aura;
+            playerData.ruvia = msg.rspAddFriend.ruvia;
+            playerData.crystal = msg.rspAddFriend.crystal;
+            playerData.AddFriendList = msg.rspAddFriend.AddFriendList;
+            playerData.FriendList = msg.rspAddFriend.FriendList;
+            // GameRoot.AddTips("好友申请发送失败");
+            RefreshUI();
+            FriendReFresh();
         }
 
     }
     #endregion
+
     #region RspFriendGift 赠送好友道具
     /// <summary>
     /// 赠送好友道具
@@ -142,9 +171,41 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspFriendGift(GameMsg msg)
     {
-
+        RspFriendGift rspFriendGift = msg.rspFriendGift;
+        GameRoot.AddTips("赠送成功");
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.Bag = rspFriendGift.Bag;
+        playerData.aura = rspFriendGift.aura;
+        playerData.ruvia = rspFriendGift.ruvia;
+        playerData.crystal = rspFriendGift.crystal;
+        RefreshUI();
     }
     #endregion
+
+    #region RspFriendGift 好友申请确认
+    /// <summary>
+    /// 好友申请确认
+    /// </summary>
+    /// <param name="msg"></param>
+    public void RspFriendAddConfirm(GameMsg msg)
+    {
+        RspFriendAddConfirm rspFriendAddConfirm = msg.rspFriendAddConfirm;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.AddFriendList = rspFriendAddConfirm.AddFriendList;
+        playerData.FriendList = rspFriendAddConfirm.FriendList;
+        if (rspFriendAddConfirm.isAgree)
+        {
+            GameRoot.AddTips("好友申请已同意");
+
+        }
+        else
+        {
+            GameRoot.AddTips("好友申请已拒绝");
+        }
+        FriendReFresh();
+    }
+    #endregion
+
     #region RspDelFriend 删除好友信息
     /// <summary>
     /// 删除好友信息
@@ -152,14 +213,86 @@ public class MainCitySys : SystemRoot
     /// <param name="msg"></param>
     public void RspDelFriend(GameMsg msg)
     {
-
+        RspDelFriend rspDelFriend = msg.rspDelFriend;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.FriendList = rspDelFriend.FriendList;
+        GameRoot.AddTips("删除好友成功");
+        FriendReFresh();
     }
     #endregion
-    private bool isNavGuide = false;
+
+    #region RspRewardTask 领取奖励
+
+    public void RspRewardTask(GameMsg msg)
+    {
+        RspRewardTask rspRewardTask = msg.rspRewardTask;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.rewardTask = rspRewardTask.rewardTask;
+        playerData.Bag = rspRewardTask.Bag;
+        RefreshTaskUI();
+    }
+    #endregion
+
+    #region RspDailyTask 领取活跃度
+    public void RspDailyTask(GameMsg msg)
+    {
+        RspDailyTask rspDailyTask = msg.rspDailyTask;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        playerData.dailyTasks = rspDailyTask.dailyTasks;
+        RefreshTaskUI();
+    }
+    #endregion
+
+    #region RspTalentUpHandler 处理天赋升级的服务器响应
     /// <summary>
-    /// 自动寻路功能
+    /// 处理天赋升级的服务器响应
     /// </summary>
-    /// <param name="taskCfg"></param>
+    public void RspTalentUpHandler(GameMsg msg)
+    {
+        RspTalentUp rspTalentUp = msg.rspTalentUp;
+        //Debug.Log(rspTalentUp.IsUpSuccess);
+        if (rspTalentUp.IsUpSuccess)
+        {
+            GameRoot.Instance.PlayerData.TalentsData = rspTalentUp.talents;
+            //Debug.Log()
+            if (rspTalentUp.NeedUpdate)
+            {
+                GameRoot.Instance.SetPlayerData(rspTalentUp.battleData);
+            }
+            talentWnd.RefreshLevelUp();
+        }
+        else
+        {
+            Debug.LogError("数据异常,升级失败");
+        }
+    }
+    #endregion
+
+    public void RspTalentChangeHandler(GameMsg msg)
+    {
+        RspChangeTalent rspChangeTalent = msg.rspChangeTalent;
+        if (rspChangeTalent.IsChangeSuccess)
+        {
+            //Debug.Log("更新成功");
+            GameRoot.Instance.PlayerData = rspChangeTalent.playerData;
+        }
+        else
+        {
+            //Debug.Log("更新失败");
+            Debug.LogError("数据更新失败");
+        }
+    }
+
+    #endregion
+
+    #region 玩家移动相关
+    public void SetMoveDir(Vector2 dir, bool IsRun = false)
+    {
+        BattleSys.instance.SetSelfPlayerMoveDir(dir, IsRun);
+        StopNavTask();
+    }
+
+    private bool isNavGuide = false;
     //public void RunTask(TaskCfg taskCfg)
     //{
     //    if (taskCfg != null)
@@ -190,24 +323,7 @@ public class MainCitySys : SystemRoot
     //        }
     //    }
     //}
-    public void Update()
-    {
-        //if (isNavGuide)
-        //{
-        //    IsArriveNavPos();
-        //    playerController.SetCam();
 
-        //}
-
-        //#region 敌人测试
-        //if (entityEnemy != null)
-        //{
-        //    entityEnemy.TickAILogic();
-        //}
-        //#endregion
-
-
-    }
     //判断是否到达导航点
     //private void IsArriveNavPos()
     //{
@@ -234,27 +350,55 @@ public class MainCitySys : SystemRoot
             playerController.SetVelocity(Constants.VelocityIdle);
         }
     }
-    public TaskCfg GetTaskCfg()
-    {
-        return taskCfg;
-    }
-    public GameObject GetPlayer()
-    {
-        return player;
-    }
+    #endregion
 
-    //#region 敌人测试
-    //public Transform Enemy;
-    //public EntityEnemy entityEnemy;
-    //public Transform GetEnemy()
-    //{
-    //    return Enemy;
-    //}
-    //#endregion
-    public Transform[] GetNpcTra()
+    #region 引擎回调
+    public void Update()
     {
-        return NpcPosTrans;
+        //if (isNavGuide)
+        //{
+        //    IsArriveNavPos();
+        //    playerController.SetCam();
+
+        //}
+
+        //#region 敌人测试
+        //if (entityEnemy != null)
+        //{
+        //    entityEnemy.TickAILogic();
+        //}
+        //#endregion
+
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlayerData playerData = GameRoot.Instance.PlayerData;
+            Debug.Log("====================================");
+            Debug.Log("当前天赋ID:" + playerData.TalentID[0] + "," + playerData.TalentID[1]);
+            string temp = "";
+            foreach (Talent i in playerData.TalentsData)
+            {
+                temp += i.TalentID;
+                temp += "|";
+                temp += i.Level;
+                temp += "|";
+            }
+            Debug.Log("当前天赋数据:" + temp);
+            Debug.Log("ad:" + playerData.ad);
+            Debug.Log("addef:" + playerData.addef);
+            Debug.Log("apdef:" + playerData.apdef);
+            Debug.Log("hp:" + playerData.Hp);
+            Debug.Log("hpmax:" + playerData.Hpmax);
+            Debug.Log("ap:" + playerData.ap);
+            Debug.Log("critical:" + playerData.critical);
+            Debug.Log("dodge:" + playerData.dodge);
+            Debug.Log("Mana:" + playerData.Mana);
+        }
+
+
     }
+    #endregion
+
     //public List<GameObject> GetPlayerList()
     //{
     //    List<GameObject> list = new List<GameObject>();
@@ -264,18 +408,28 @@ public class MainCitySys : SystemRoot
     //    }
     //    return list;
     //}
-    /// <summary>
-    /// 
-    /// </summary>
-    /// 打开对话界面
+
     public void OpenGuideWnd()
     {
-        guideWnd.SetWndState();
+       // guideWnd.SetWndState();
     }
     public void RefreshUI()
     {
-        mainCityWnd.RefreshUI();
+        if (mainCityWnd.gameObject.activeSelf)
+        {
+            mainCityWnd.RefreshUI();
+        }
     }
+    public void RefreshTaskUI()
+    {
+        if (dailyTaskWnd.gameObject.activeSelf)
+        {
+            dailyTaskWnd.RefreshTask();
+        }
+    }
+
+    #region 主城系统对外开放的UI点击事件处理
+
     /// <summary>
     /// 商店界面
     /// </summary>
@@ -291,26 +445,62 @@ public class MainCitySys : SystemRoot
         bagWnd.SetWndState();
     }
     /// <summary>
+    /// 每日任务界面
+    /// </summary>
+    public void EnterDailyTaskWnd()
+    {
+        dailyTaskWnd.SetWndState();
+    }
+    /// <summary>
     /// 人物界面
     /// </summary>
     public void ClickPerson()
     {
         personWnd.SetWndState();
     }
+    /// <summary>
+    /// 好友界面
+    /// </summary>
     public void EnterFriendWnd()
     {
         friendsWnd.SetWndState();
     }
-    public void FriendSearch(FriendItem item)
+    /// <summary>
+    /// 好友列表刷新
+    /// </summary>
+    /// <param name="item"></param>
+    public void FriendReFresh(FriendItem item = null)
     {
-        if (friendsWnd.gameObject.activeSelf)
-        {
-            friendsWnd.AddFriend(item);
-        }
+        friendsWnd.RefreshFriends(item);
     }
-    public void ClickArena()
+
+    public void EnterTalentWnd()
+    {
+        talentWnd.SetWndState();
+    }
+    /// <summary>
+    /// 开始PVP界面
+    /// </summary>
+    public void EnterStartGamePVPWnd()
     {
         mainCityWnd.SetWndState(false);
-        BattleSys.instance.SetBattleWnd();
+        starGamePVPWnd.SetWndState();
     }
+    /// <summary>
+    /// 关闭PVP界面
+    /// </summary>
+    public void CloseStartGamePVPWnd()
+    {
+        starGamePVPWnd.SetWndState(false);
+    }
+    public void EnterMainCityWnd()
+    {
+        mainCityWnd.SetWndState();
+    }
+    public void ClickStartGamePVP()
+    {
+       // mainCityWnd.SetWndState(false);
+        BattleSys.instance.SendEnterBattlePVP();
+    }
+    #endregion
 }

@@ -11,6 +11,7 @@ using CommonNet;
 using System.Data;
 using static CfgSvc;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 
 internal class DBMgr
 {
@@ -27,7 +28,6 @@ internal class DBMgr
         }
     }
     private MySqlConnection conn;
-    private CfgSvc cfgSvc = null;
     private string connectionString = "datasource=121.40.86.210;port=3306;database=morangData;user=root;pwd=CRY3ajSbR4sXAR4B;";
 
 
@@ -67,7 +67,7 @@ internal class DBMgr
     /// <summary>
     /// 获取该账号数据
     /// </summary>
-    /// <param name="acct"></param>
+    /// <param name="acct"></param> 
     /// <param name="pass"></param>
     /// <returns></returns>
     public PlayerData? GetPlayerData(string acct, string pass)
@@ -107,12 +107,14 @@ internal class DBMgr
                                     dodge = reader.GetInt32("dodge"),
                                     practice = reader.GetInt32("practice"),
                                     critical = reader.GetInt32("critical"),
+                                    rewardTask = new RewardTask(),
                                     TalentID = new List<int>(),
+                                    TalentsData = new List<Talent>(),
                                     Bag = new List<BagList>(),
                                     Taskid = reader.GetInt32("Taskid"),
+                                    dailyTasks = new List<DailyTask>(),
                                     FriendList = new List<FriendItem>(),
                                     AddFriendList = new List<FriendItem>(),
-
                                 };
                                 string[] powers = reader.GetString("power").Split("|");
                                 playerData.power = int.Parse(powers[0]);
@@ -123,15 +125,30 @@ internal class DBMgr
                                 string[] Manas = reader.GetString("Mana").Split("|");
                                 playerData.Mana = int.Parse(Manas[0]);
                                 playerData.ManaMax = int.Parse(Manas[1]);
-                                // 解析 TalentID，过滤掉空字符串
+                                // 解析 TalentID，过滤掉空字符串 
                                 playerData.TalentID = reader.GetString("TalentID")
-                                    .Split('#')
-                                    .Where(t => !string.IsNullOrEmpty(t)) // 过滤掉空字符串
+                                    .Split('|')
+                                    .Where(t => !string.IsNullOrEmpty(t)) // 过滤掉空字符串 
                                     .Select(int.Parse)
                                     .ToList();
-
-                                string[] Bag = reader.GetString("Bag").Split("|");
-                                for (int i = 0; i < Bag.Length - 1; i++)
+                                // 解析 TalentsData 
+                                string[] talent = reader.GetString("TalentsData").Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for (int i = 0; i < talent.Length; i++)
+                                {
+                                    string[] strs = talent[i].Split("#");
+                                    int result;
+                                    if (int.TryParse(strs[0], out result))
+                                    {
+                                        playerData.TalentsData.Add(new Talent
+                                        {
+                                            TalentID = int.Parse(strs[0]),
+                                            Level = int.Parse(strs[1]),
+                                        });
+                                    }
+                                }
+                                //解析bag
+                                string[] Bag = reader.GetString("Bag").Split("|").Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for (int i = 0; i < Bag.Length; i++)
                                 {
                                     string[] strs = Bag[i].Split("#");
                                     int result;
@@ -144,20 +161,47 @@ internal class DBMgr
                                         });
                                     }
                                 }
+
+                                string[] RewardTask = reader.GetString("RewardTask").Split("|");
+                                string[] reward = RewardTask[0].Split("#");
+                                playerData.rewardTask.TaskProgress = new List<int>();
+                                for (int i = 0; i < reward.Length; i++)
+                                {
+                                    playerData.rewardTask.TaskProgress.Add(int.Parse(reward[i]));
+                                }
+                                playerData.rewardTask.LastTime = DateTime.Parse(RewardTask[1]);
+                                //解析DailyTask
+                                string[] DailyTask = reader.GetString("DailyTask").Split("|").Where(t => !string.IsNullOrEmpty(t)).ToArray();
+                                for (int i = 0; i < DailyTask.Length; i++)
+                                {
+                                    string[] strs = DailyTask[i].Split("#");
+                                    int result;
+                                    if (int.TryParse(strs[0], out result))
+                                    {
+                                        playerData.dailyTasks.Add(new DailyTask
+                                        {
+                                            TaskID = int.Parse(strs[0]),//每日任务id
+                                            TaskReward = int.Parse(strs[1]),//任务进度
+                                            TaskFinish = bool.Parse(strs[2]),//任务完成状态
+                                        });
+                                    }
+                                }
                                 //好友id
                                 string[] FriendId = reader.GetString("Friend").Split("|");
                                 AddFriendsToPlayerData(playerData.FriendList, FriendId.ToList());
                                 //好友申请列表
                                 string[] AddFriend = reader.GetString("AddFriend").Split("|");
                                 AddFriendsToPlayerData(playerData.AddFriendList, AddFriend.ToList());
-
-
                             }//账号存在内容
                             else //存在账号，但没有创建角色
                             {
                                 playerData = new PlayerData
                                 {
                                     id = reader.GetInt32("id"),
+                                    TalentsData = new List<Talent>
+                                    {
+
+                                    }
                                 };
                             }
                             return playerData;
@@ -201,7 +245,7 @@ internal class DBMgr
                 conn.Open();
 
                 // 创建查询字符串，使用IN来查询多个账号
-                string query = "SELECT id, name, level FROM account WHERE id IN (" +
+                string query = "SELECT id,type, name, level,aura,ruvia,crystal FROM account WHERE id IN (" +
                                string.Join(", ", accounts.Select(a => $"'{a}'")) + ")";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -216,6 +260,9 @@ internal class DBMgr
                             type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
+                            aura = reader.GetInt32("aura"),
+                            ruvia = reader.GetInt32("ruvia"),
+                            crystal = reader.GetInt32("crystal"),
                         });
                     }
                 }
@@ -250,6 +297,9 @@ internal class DBMgr
                             type = reader.GetString("type"),
                             name = reader.GetString("name"),
                             level = reader.GetInt32("level"),
+                            aura = reader.GetInt32("aura"),
+                            ruvia = reader.GetInt32("ruvia"),
+                            crystal = reader.GetInt32("crystal"),
                             FriendList = ParseFriendList(reader.GetString("Friend")),
                             AddFriendList = ParseFriendList(reader.GetString("AddFriend")),
                         };
@@ -306,6 +356,33 @@ internal class DBMgr
     }
 
     /// <summary>
+    /// 检查该名称是否已经被使用
+    /// </summary>
+    /// <param name="name">要检查的账户名称</param>
+    /// <returns>如果名称已被使用则返回 true，否则返回 false</returns>
+    public bool CheckName(string name)
+    {
+        using (var conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM account WHERE name = @name", conn);
+                cmd.Parameters.AddWithValue("name", name);
+
+                // 执行查询并获取结果
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0; // 如果计数大于 0，表示该名称已被使用
+            }
+            catch (Exception ex)
+            {
+                GameCommon.Log("CheckName Error: " + ex, ComLogType.Error);
+                return true;
+            }
+        }
+    }
+
+    /// <summary>
     /// 更新好友数据
     /// </summary>
     /// <param name="id"></param>
@@ -319,12 +396,14 @@ internal class DBMgr
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(
-                "update account set Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
+                "update account set Friend=@Friend,AddFriend=@AddFriend,aura=@aura,ruvia=@ruvia,crystal=@crystal where id=@id", conn);
                 cmd.Parameters.AddWithValue("id", friendItem.id);
+                cmd.Parameters.AddWithValue("aura", friendItem.aura);
+                cmd.Parameters.AddWithValue("ruvia", friendItem.ruvia);
+                cmd.Parameters.AddWithValue("crystal", friendItem.crystal);
                 cmd.Parameters.AddWithValue("Friend", string.Join("|", friendItem.FriendList.Select(f => f)));
                 cmd.Parameters.AddWithValue("AddFriend", string.Join("|", friendItem.AddFriendList.Select(f => f)));
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception e)
             {
@@ -334,6 +413,87 @@ internal class DBMgr
             return true;
         }
     }
+
+    #region 天赋相关的数据库检索
+    /// <summary>
+    /// 检查并更新天赋数据
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndUpdateTalent(int id, int talentID, int talentLevel,TalentCfg talentCfg,int aura)
+    {
+        using (var conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                string talentsdata = "";
+                conn.Open();
+                MySqlCommand cmd1 = new MySqlCommand("SELECT TalentsData FROM account WHERE id=@id", conn);
+                cmd1.Parameters.AddWithValue("id", id);
+                using (MySqlDataReader reader = cmd1.ExecuteReader())
+                {
+                    Console.WriteLine(reader.Read());
+                    talentsdata = reader.GetString("TalentsData");
+                }
+                Talent[] talents = ParseTalentDataFromMysql(talentsdata);
+                for (int i = 0; i < talents.Length; i++)
+                {
+                    if (talentID == talents[i].TalentID && talentLevel - talents[i].Level == 1 &&talentLevel<=talentCfg.MaxLevel)
+                    {
+                        talents[i].Level++;
+                        string Talents = "";
+                        foreach (Talent j in talents)
+                        {
+                            Talents += j.TalentID;
+                            Talents += "#";
+                            Talents += j.Level;
+                            Talents += "|";
+                        }
+                        MySqlCommand cmd2 = new MySqlCommand("UPDATE account set TalentsData=@data,aura=@aura WHERE id=@id", conn);
+                        cmd2.Parameters.AddWithValue("data", Talents);
+                        cmd2.Parameters.AddWithValue("aura", aura);
+                        cmd2.Parameters.AddWithValue("id", id);
+                        cmd2.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            catch (Exception e)
+            {
+                GameCommon.Log("CheckAndUpdateTalent:" + e, ComLogType.Error);
+                return false;
+            }
+        }
+    }
+
+
+
+
+    /// <summary>
+    /// 解析数据库天赋数据(工具方法)
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static Talent[] ParseTalentDataFromMysql(string data)
+    {
+        string[] talent = data.Split('|').Where(t => !string.IsNullOrEmpty(t)).ToArray();
+        List<Talent> talents = new List<Talent>();
+        for (int i = 0; i < talent.Length; i++)
+        {
+            string[] strs = talent[i].Split("#");
+            if (int.TryParse(strs[0], out int result))
+            {
+                talents.Add(new Talent
+                {
+                    TalentID = int.Parse(strs[0]),
+                    Level = int.Parse(strs[1]),
+                });
+            }
+        }
+        return talents.ToArray();
+    } 
+    #endregion
 
     /// <summary>
     /// 更新服务器用户数据
@@ -351,7 +511,7 @@ internal class DBMgr
                 MySqlCommand cmd = new MySqlCommand(
                 "update account set name=@name,type=@type,exp=@exp,level=@level,power=@power,aura=@aura," +
                 "ruvia=@ruvia,crystal=@crystal,hp=@hp,mana=@mana,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,practice=@practice," +
-                "critical=@critical,TalentID=@TalentID,Bag=@Bag," +
+                "critical=@critical,TalentID=@TalentID,TalentsData=@TalentsData,Bag=@Bag,RewardTask=@RewardTask,DailyTask=@DailyTask," +
                 "Taskid=@Taskid,Friend=@Friend,AddFriend=@AddFriend where id=@id", conn);
                 cmd.Parameters.AddWithValue("id", playerData.id);
                 cmd.Parameters.AddWithValue("name", playerData.name);
@@ -371,11 +531,21 @@ internal class DBMgr
                 cmd.Parameters.AddWithValue("power", $"{playerData.power}|{playerData.powerMax}");
                 cmd.Parameters.AddWithValue("hp", $"{playerData.Hp}|{playerData.Hpmax}");
                 cmd.Parameters.AddWithValue("mana", $"{playerData.Mana}|{playerData.ManaMax}");
-                cmd.Parameters.AddWithValue("TalentID", string.Join("#", playerData.TalentID));
+                cmd.Parameters.AddWithValue("TalentID", string.Join("|", playerData.TalentID));
+                //拼接天赋数据
+                string Talents = "";
+                foreach (Talent i in playerData.TalentsData)
+                {
+                    Talents += i.TalentID;
+                    Talents += "#";
+                    Talents += i.Level;
+                    Talents += "|";
+                }
+                cmd.Parameters.AddWithValue("TalentsData", Talents);
+                //拼接背包数据
                 string Bag = "";
                 if (playerData.Bag != null)
                 {
-
                     foreach (var kvp in playerData.Bag)
                     {
                         Bag += kvp.GoodsID;
@@ -385,7 +555,42 @@ internal class DBMgr
                     }
                 }
                 cmd.Parameters.AddWithValue("Bag", Bag);
+
                 cmd.Parameters.AddWithValue("Taskid", playerData.Taskid);
+
+                //拼接每日奖励数据
+                string RewardTask = "";
+                if (playerData.rewardTask != null)
+                {
+
+                    foreach (var kvp in playerData.rewardTask.TaskProgress)
+                    {
+                        RewardTask += kvp;
+                        RewardTask += "#";
+                    }
+                    //去掉最后一个字符
+                    if (RewardTask.Length > 0)
+                    {
+                        RewardTask = RewardTask.Substring(0, RewardTask.Length - 1);
+                    }
+                }
+                cmd.Parameters.AddWithValue("RewardTask", $"{RewardTask}|{playerData.rewardTask.LastTime}");
+
+                string DailyTask = "";
+                if (playerData.dailyTasks != null)
+                {
+
+                    foreach (var kvp in playerData.dailyTasks)
+                    {
+                        DailyTask += kvp.TaskID;
+                        DailyTask += "#";
+                        DailyTask += kvp.TaskReward;
+                        DailyTask += "#";
+                        DailyTask += kvp.TaskFinish;
+                        DailyTask += "|";
+                    }
+                }
+                cmd.Parameters.AddWithValue("DailyTask", DailyTask);
                 cmd.Parameters.AddWithValue("Friend", string.Join("|", playerData.FriendList.Select(f => f.id)));
                 cmd.Parameters.AddWithValue("AddFriend", string.Join("|", playerData.AddFriendList.Select(f => f.id)));
                 cmd.ExecuteNonQuery();

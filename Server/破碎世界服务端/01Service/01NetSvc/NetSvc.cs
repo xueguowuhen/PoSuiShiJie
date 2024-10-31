@@ -22,10 +22,10 @@ public class MsgPack
 
 public class NetSvc
 {
-    private static NetSvc instance = null;
+    private static NetSvc instance = null!;
     private static readonly string Lock = "lock";
     private Queue<MsgPack> queue = new Queue<MsgPack>();
-    private TraSocket<ServerSession, GameMsg> traSocket = null;
+    private TraSocket<ServerSession, GameMsg> traSocket = null!;
     public static NetSvc Instance
     {
         get
@@ -88,6 +88,9 @@ public class NetSvc
             case CMD.ReqAddFriend:
                 FriendSys.Instance.ReqAddFriend(pack);
                 break;
+            case CMD.ReqFriendAddConfirm:
+                FriendSys.Instance.ReqFriendAddConfirm(pack);
+                break;
             case CMD.ReqDelFriend:
                 FriendSys.Instance.ReqDelFriend(pack);
                 break;
@@ -96,6 +99,12 @@ public class NetSvc
                 break;
             case CMD.ReqTask:
                 TaskSys.Instance.ReqTask(pack);
+                break;
+            case CMD.ReqDailyTask:
+                DailyTaskSys.Instance.ReqDailyTask(pack);
+                break;
+            case CMD.ReqRewardTask:
+                DailyTaskSys.Instance.ReqRewardTask(pack);
                 break;
             case CMD.ReqTransform:
                 BattleSys.Instance.ReqTransform(pack);
@@ -108,6 +117,21 @@ public class NetSvc
                 break;
             case CMD.ReqRevive:
                 BattleSys.Instance.ReqRevive(pack);
+                break;
+            case CMD.ReqTalentUp:
+                TalentSys.Instance.ReqTalentUpHandle(pack);
+                break;
+            case CMD.ReqChangeTalent:
+                TalentSys.Instance.ReqChangeTalentHandle(pack);
+                break;
+            case CMD.ReqEnterPVP:
+                BattleSys.Instance.ReqEnterPVP(pack);
+                break;
+            case CMD.ReqExitPVP:
+                BattleSys.Instance.ReqExitPVP(pack);
+                break;
+            case CMD.ReqRecover:
+                BattleSys.Instance.ReqRecover(pack);
                 break;
         }
     }

@@ -12,17 +12,8 @@ public class StateHit : ISate
     {
         entity.currentAniState = AniState.Hit;
         entity.DelePlayerCB();
-    }
-
-    public void Exit(EntityBase entity, params object[] objects)
-    {
-
-    }
-
-    public void Process(EntityBase entity, params object[] objects)
-    {
         entity.SetDir(Vector2.zero);
-        entity.SetAction(Constants.ActionHit);
+        entity.SetAction((int)AniPlayerState.Hit);
         entity.canRlskill = false;
         TimerSvc.Instance.AddTimeTask((int tid) =>
         {
@@ -30,6 +21,17 @@ public class StateHit : ISate
             entity.Idle();
         }, (int)(GetHitAniLen(entity) * 1000));
     }
+
+    public void Exit(EntityBase entity, params object[] objects)
+    {
+
+    }
+    public void Process(EntityBase entity)
+    {
+       
+    }
+
+
     private float GetHitAniLen(EntityBase entity)
     {
         AnimationClip[] clips = entity.GetAniClips();

@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\</OutputPath>
-    <DefineConstants>UNITY_2020_3_29;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_CLOUD_FEATURES;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2020_3_29;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_CLOUD_FEATURES;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;AMPLIFY_SHADER_EDITOR;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -58,26 +58,34 @@
   <ItemGroup>
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Controller\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\AnimationEventCtrl.cs" />
     <Compile Include="Assets\Scripts\Common\Listener.cs" />
     <Compile Include="Assets\Scripts\Common\DrawCircle.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectExt.cs" />
     <Compile Include="Assets\Scripts\Common\BaseData.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectPool\GameObjectPool.cs" />
     <Compile Include="Assets\Scripts\Common\Singleton.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\RemotePlayerWnd.cs" />
+    <Compile Include="Assets\Scripts\Common\ExtractRootMotion .cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\TalentWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\RemotePlayerWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityPlayer.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DynamicWnd.cs" />
-    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateRun.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\DowningWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\StartGamePVPWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\DailyTaskWnd.cs" />
     <Compile Include="Assets\Scripts\Service\AudioSvc.cs" />
     <Compile Include="Assets\Scripts\System\BattleSys.cs" />
+    <Compile Include="Assets\Scripts\Common\Dispatcher\DispatcherBase.cs" />
     <Compile Include="Assets\Scripts\Service\ResSvc.cs" />
     <Compile Include="Assets\Scripts\System\GameRoot.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateEvade.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\BagTipWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\DailyTaskItem.cs" />
     <Compile Include="Assets\Scripts\Common\ComTools.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\BattleMgr.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\Common\Dispatcher\AnimatorDispatcher.cs" />
     <Compile Include="Assets\Scripts\Common\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\BuyTipWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\ItemEntityHP.cs" />
@@ -85,25 +93,28 @@
     <Compile Include="Assets\Scripts\Common\UIAnimation.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\StartWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\LoadingWnd.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\GuideWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\GuideWnd.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateAttack.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateDie.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityMap.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\BattleWnd\MainCityMap.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Controller\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\BagWnd.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\FriendsWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\BagWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\FriendsWnd.cs" />
     <Compile Include="Assets\Scripts\Common\WindowAnimation.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\BattleWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\TalentInfoWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\BattleWnd\BattleWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\ISate.cs" />
     <Compile Include="Assets\Scripts\Service\NetSvc.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\UseTipWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateHit.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\RewardTaskItem.cs" />
     <Compile Include="Assets\Scripts\Common\Constants.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\RegisterWnd.cs" />
     <Compile Include="Assets\Scripts\System\MainCitySys.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\LoginWnd.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\PersonWnd.cs" />
+    <Compile Include="Assets\Scripts\Common\Dispatcher\UIBtnDispatcher.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\PersonWnd.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityBase.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
@@ -115,26 +126,30 @@
     <Compile Include="Assets\Scripts\BattleMgr\Controller\Controller.cs" />
     <Compile Include="Assets\Scripts\System\SystemRoot.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\TalentItemWnd.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\ShopWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\ShopWnd.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\FSM\StateIdle.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\Scripts\Common\DataProcess.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\BagItem.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\WindowItem.cs" />
-    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\Controller\CameraPlayerCtrl.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIWnd\MainCityWnd\MainCityWnd.cs" />
     <Compile Include="Assets\Scripts\Service\ShowTimer.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\Entity\EntityEnemy.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIItem\ShopItem.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\FriendsTipWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\TipInfoWnd.cs" />
     <Compile Include="Assets\DOTWeen\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Scripts\UIWindow\UIWnd\CreateWnd.cs" />
     <Compile Include="Assets\Scripts\Net\ClientSession.cs" />
+    <Compile Include="Assets\Scripts\BattleMgr\FSM\StateTurnBack.cs" />
     <Compile Include="Assets\Scripts\Common\LayoutAdjustment.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectPool\GameObjectPoolManager.cs" />
     <Compile Include="Assets\Scripts\BattleMgr\StateMgr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\UIItem\FailTipWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\ResCfg\ShopItem.xml" />
@@ -145,14 +160,19 @@
     <None Include="Assets\DOTWeen\DOTween\DOTween.dll" />
     <None Include="Assets\Resources\ResCfg\skillmove.xml" />
     <None Include="Assets\Resources\ResCfg\rdname.xml" />
+    <None Include="Assets\Resources\ResCfg\Talent.xml" />
+    <None Include="Assets\RoleModel\qinngruo\readme（必读）.txt" />
     <None Include="Assets\DOTWeen\DOTween\readme.txt" />
     <None Include="Assets\Resources\ResCfg\person.xml" />
     <None Include="Assets\Resources\ResCfg\skillaction.xml" />
+    <None Include="Assets\Resources\ResCfg\TaskReward.xml" />
     <None Include="Assets\Resources\ResCfg\map.xml" />
     <None Include="Assets\Resources\ResCfg\TalentList.xml" />
+    <None Include="Assets\Shader\fresnel.shader" />
     <None Include="Assets\DOTWeen\DOTween\DOTween.XML" />
     <None Include="Assets\Scripts\Net\Debug\netstandard2.0\CommonNet.dll" />
     <None Include="Assets\Resources\ResCfg\guide.xml" />
+    <None Include="Assets\Resources\ResCfg\DailyTask.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -758,6 +778,9 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -779,6 +802,9 @@
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
@@ -799,6 +825,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="AmplifyShaderEditor.csproj">
+      <Project>{4BA5E950-E378-554A-D2D6-AEB09FF54DE8}</Project>
+      <Name>AmplifyShaderEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

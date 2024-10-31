@@ -111,7 +111,7 @@ public class EntityEnemy : EntityBase
     private void GotoBorn()
     {
         SetDir(new Vector2(BornPos.x - GetPos().x, BornPos.z - GetPos().z).normalized);
-        Run();
+        Move();
         NeedBack = true;
     }
     /// <summary>
@@ -120,7 +120,7 @@ public class EntityEnemy : EntityBase
     private void Chase()
     {
         SetDir(CalcTarget());
-        Run();
+        Move();
         CheckIdleCount = 0;
     }
     /// <summary>

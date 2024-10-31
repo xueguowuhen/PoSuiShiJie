@@ -37,16 +37,56 @@ public class BattleSys : SystemRoot
         go.transform.SetParent(GameRoot.Instance.transform);
         battleMgr = go.AddComponent<BattleMgr>();
         battleMgr.Init(mapData);
+
     }
-    public void SetBattleWnd()
+    /// <summary>
+    /// 进入主城
+    /// </summary>
+    public void EnterBattlePVP()
     {
-        battleWnd.SetWndState();
+        MapCfg mapData = resSvc.GetMapCfgData(Constants.BattlePVPMapID);
+        GameCommon.Log("异步地图中");
+        StartCoroutine(resSvc.AsyncLoadScene(mapData.sceneName, () =>
+        {
+            GameCommon.Log("Enter BattlePVP...");
+            //isCreate = true;
+            GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
+            SetBattleWnd();
+            EnterBattleMap(mapData);
+            // GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
+            //GameObject map = GameObject.Find(PathDefine.MapRoot);
+        }, false));
+    }
+
+    /// <summary>
+    /// 发送进入PVP
+    /// </summary>
+    public void SendEnterBattlePVP()
+    {
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.ReqEnterPVP,
+            reqEnterPVP = new ReqEnterPVP
+            {
+                id = playerData.id,
+            }
+        };
+        netSvc.SendMsg(msg);
+    }
+    public void SetBattleWnd(bool isShow = true)
+    {
+        battleWnd.SetWndState(isShow);
     }
     public void SetSelfPlayerMoveDir(Vector2 dir, bool IsRun = false)
     {
         Dir = dir;
         this.IsRun = IsRun;
         battleMgr.SetSelfPlayerMove(dir, IsRun);
+    }
+    public void SetCamMoveDir(Vector2 dir)
+    {
+        battleMgr.SetCamMove(dir);
     }
     /// <summary>
     /// 普通攻击 
@@ -76,6 +116,10 @@ public class BattleSys : SystemRoot
     {
         battleMgr.ReleaseSkill3();
     }
+    public void Evade()
+    {
+        battleMgr.Evade();
+    }
     public bool CanRlsSkill()
     {
         return battleMgr.CanRlsSkill();
@@ -91,6 +135,10 @@ public class BattleSys : SystemRoot
     public BattleMgr GetBattleMgr()
     {
         return battleMgr;
+    }
+    public EntityBase GetEntity(int id)
+    {
+        return battleMgr.GetEntity(id);
     }
     public CharacterController GetCharacterController()
     {
@@ -126,7 +174,7 @@ public class BattleSys : SystemRoot
                     playerData.Hp = rspDamage.hp;
                 }
             }
-            return;
+           // return;
         }
         if (GameRoot.Instance.PlayerData.id == rspDamage.id)//是否是自己受伤
         {
@@ -156,6 +204,40 @@ public class BattleSys : SystemRoot
             battleMgr.RspState(msg);
         }
     }
+    public void RspEnterPVP(GameMsg msg)
+    {
+        RspEnterPVP rspEnterPVP = msg.rspEnterPVP;
+        if (rspEnterPVP.isSucc)
+        {
+            // 进入PVP
+            GameCommon.Log("进入PVP成功");
+            GameRoot.Instance.SetPlayerDataList(rspEnterPVP.PlayerDataList);
+            MainCitySys.instance.CloseStartGamePVPWnd();
+            EnterBattlePVP();
+        }
+    }
+
+
+    public void RspExitPVP(GameMsg msg)
+    {
+        RspExitPVP rspExitPVP = msg.rspExitPVP;
+        if (rspExitPVP.isSucc)
+        {
+            // 退出PVP
+            GameCommon.Log("退出PVP成功");
+            SetBattleWnd(false);
+            GameRoot.Instance.SetScreenSpaceCamera();//设置界面
+            MainCitySys.instance.EnterMainCity();
+        }
+    }
+    public void RspRecover(GameMsg msg)
+    {
+        RspRecover rspRecover = msg.rspRecover;
+        if (rspRecover.isRevive)
+        {
+
+        }
+    }
     /// <summary>
     /// 远程创建人物
     /// </summary>
@@ -163,6 +245,14 @@ public class BattleSys : SystemRoot
     public void RspCreatePlayer(GameMsg msg)
     {
         PlayerData playerData = msg.rspCreatePlayer.playerData;
+        foreach (PlayerData data in GameRoot.Instance.PlayerDataList)
+        {
+            if (data.id == playerData.id)
+            {
+                GameCommon.Log("创建人物失败，ID重复");
+                return;
+            }
+        }
         //Debug.Log(playerData.id);
         GameRoot.Instance.PlayerDataList.Add(playerData);
         if (battleMgr == null)
@@ -179,7 +269,7 @@ public class BattleSys : SystemRoot
     {
         int playerID = msg.rspDeletePlayer.PlayerID;
         List<PlayerData> playerDataToRemove = new List<PlayerData>(); // 存储需要移除的玩家数据
-        // 遍历玩家数据列表
+                                                                      // 遍历玩家数据列表
         foreach (PlayerData playerData in GameRoot.Instance.PlayerDataList)
         {
             if (playerData.id == playerID)
@@ -198,7 +288,7 @@ public class BattleSys : SystemRoot
         if (battleMgr.RemoteEntityDic.TryGetValue(playerID, out EntityBase player))
         {
             battleMgr.RemoteEntityDic.Remove(playerID);
-            GameRoot.Instance.dynamicWnd.RemoveHptemInfo(playerID);
+          //  GameRoot.Instance.dynamicWnd.RemoveHptemInfo(playerID);
             player.Destroy();
         }
     }
@@ -221,11 +311,11 @@ public class BattleSys : SystemRoot
                 //GameCommon.Log("收到旋转" + rspTransform.Rot_Y);
                 if (rspTransform.isShoolr)
                 {
-                    player.SetTrans(rspTransform.time,pos, Rot);
+                    player.SetTrans(rspTransform.time, pos, Rot);
                 }
                 else
                 {
-                   // GameCommon.Log("接收到" + rspTransform.isShoolr + "," + Rot);
+                    // GameCommon.Log("接收到" + rspTransform.isShoolr + "," + Rot);
                     player.SetRotation(Rot);
                 }
             }
