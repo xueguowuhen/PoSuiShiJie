@@ -7,6 +7,7 @@
 *****************************************************/
 using CommonNet;
 using ComNet;
+using System.Diagnostics;
 using 墨染服务端._01Service._01NetSvc;
 
 public class BattleSys
@@ -48,15 +49,78 @@ public class BattleSys
         //加入房间
         cacheSvc.AcctEnterBattelPVP(playerData, pack.session);
         //向其他玩家广播进入PVP
+        ReqCreatePlayer(pack, playerData);
         gameMsg.rspEnterPVP = new RspEnterPVP
         {
             isSucc = true,
+            PlayerDataList = cacheSvc.GetPlayerData(playerData),
         };
         pack.session.SendMsg(gameMsg);
     }
     public void ReqExitPVP(MsgPack pack)
     {
+        ReqExitPVP reqExitPVP = pack.gameMsg.reqExitPVP;
+        PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
+        GameMsg gameMsg = new GameMsg
+        {
+            cmd = (int)CMD.RspExitPVP,
+        };
+        if (reqExitPVP.id != playerData.id)
+        {
+            gameMsg.err = (int)Error.ExitPVPError;
+            pack.session.SendMsg(gameMsg);
+            return;
+        }
+        //向其他玩家广播退出PVP
+        ReqDeletePlayer(pack);
 
+        gameMsg.rspExitPVP = new RspExitPVP
+        {
+            isSucc = true,
+        };
+        pack.session.SendMsg(gameMsg);
+    }
+    /// <summary>
+    /// 广播创建角色通知
+    /// </summary>
+    /// <param name="pack"></param>
+    public void ReqCreatePlayer(MsgPack pack, PlayerData playerData)
+    {
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.RspCreatePlayer,
+        };
+        msg.rspCreatePlayer = new RspCreatePlayer
+        {
+            playerData = playerData,
+        };
+        //向其他在线玩家广播创建玩家数据
+        cacheSvc.GetSession(pack.session, msg);
+    }
+    /// <summary>
+    /// 广播删除角色通知
+    /// </summary>
+    /// <param name="pack"></param>
+    /// <param name="playerData"></param>
+    public void ReqDeletePlayer(MsgPack pack)
+    {
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.RspDeletePlayer,
+        };
+        PlayerData playerData = cacheSvc.GetBattlePlayerDataBySession(pack.session);
+        if (playerData != null)
+        {
+
+            msg.rspDeletePlayer = new RspDeletePlayer
+            {
+                PlayerID = playerData.id,
+            };
+            //向其他玩家广播删除玩家数据
+            cacheSvc.GetBattleSession(pack.session, msg);
+            //退出房间
+            cacheSvc.AcctExitBattelPVP(playerData);
+        }
     }
     public void ReqTransform(MsgPack pack)
     {
@@ -111,7 +175,8 @@ public class BattleSys
         };
         playerData.SkillID = reqPlayerState.SkillID;
         playerData.AniState = reqPlayerState.AniState;
-        cacheSvc.GetSession(pack.session, msg);
+        GameCommon.Log("玩家" + playerData.id + "的状态是：" + playerData.AniState + "," + playerData.SkillID);
+        cacheSvc.GetBattleSession(pack.session, msg);
 
     }
     public void ReqDamage(MsgPack pack)

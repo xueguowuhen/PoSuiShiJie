@@ -26,7 +26,7 @@ public class PlayerController : Controller
     public float playerCurrentVelocity;
     public Action TransCB = null;
     public int playerCurrentAction;
-    private float rotationSpeed = 20f;
+    private float rotationSpeed = 15f;
     private Queue<DataTrans> PosQue = new Queue<DataTrans>();
     private Dictionary<string, GameObject> fxDic = new Dictionary<string, GameObject>();
     //private int delayfps = 0;
@@ -38,6 +38,8 @@ public class PlayerController : Controller
     /// 是否由寻路接管旋转
     /// </summary>
     private bool IsNavMeshRos = false;
+    private float sendInterval = 0.2f; // 间隔0.2秒发送一次
+    private float lastSendTime;
     #region 测试数据
     private float elapsedTime;
     private float totalDistance;
@@ -89,11 +91,6 @@ public class PlayerController : Controller
             UpdateMixVelocity();
 
         }
-        //if (isLocal)
-        //{
-
-        //    SetCam();
-        //}
     }
     private void FixedUpdate()
     {
@@ -103,7 +100,7 @@ public class PlayerController : Controller
         }
         if (isLocal)
         {
-           // SendPlayerTransform();
+            SendPlayerTransform();
         }
         if (!isLocal)//引入延迟补偿机制
         {
@@ -113,13 +110,12 @@ public class PlayerController : Controller
     }
     private void OnAnimatorMove()
     {
-        //if (isMove)
-        //{
         SetMove();
-        //  }
     }
     public void SendPlayerTransform()
     {
+        if (Time.time - lastSendTime < sendInterval) return; // 限制发送频率
+
         if (PlayerCurrentRot != eulerAngles)
         {
             PlayerCurrentRot = eulerAngles;
@@ -139,6 +135,7 @@ public class PlayerController : Controller
                 }
             };
             NetSvc.instance.SendMsg(msg);
+            lastSendTime = Time.time; // 记录上次发送时间
         }
 
     }
@@ -151,8 +148,13 @@ public class PlayerController : Controller
         {
             //从当前角度到目标角度的方向
             float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTran.eulerAngles.y;
-            // 检查角度是否超过45度
-
+            // 检查角度是否是0度，45度,90
+            // 检查角度是否是45的倍数
+            if (angle % 45 != 0)
+            {
+                // 找到最近的45的倍数
+                angle = Mathf.Round(angle / 45) * 45;
+            }
             eulerAngles = new Vector3(0, angle, 0);
         }
         isShoolr = true;
@@ -210,28 +212,28 @@ public class PlayerController : Controller
         {
             animator.ApplyBuiltinRootMotion();
         }
-        if (animator.AnimationAtTag("Evade")&& !animator.IsInTransition(0))
+        if (animator.AnimationAtTag("Evade") && !animator.IsInTransition(0))
         {
             moveDistance *= EvadeRange;
             characterController.Move(moveDistance);
         }
 
-            ////   更新经过的时间
-            //  elapsedTime += Time.fixedDeltaTime;
+        ////   更新经过的时间
+        //  elapsedTime += Time.fixedDeltaTime;
 
-            //   // 每秒打印一次这一秒的移动距离
-            //   if (elapsedTime >= 1f)
-            //   {
-            //       if (tartgetPos != null)
-            //       {
-            //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
-            //       }
-            //       tartgetPos = transform.position;
-            //       Debug.Log("这一秒移动的距离: " + totalDistance);
-            //       totalDistance = 0;
-            //       elapsedTime = 0f; // 重置计时器
-            //   }
-        }
+        //   // 每秒打印一次这一秒的移动距离
+        //   if (elapsedTime >= 1f)
+        //   {
+        //       if (tartgetPos != null)
+        //       {
+        //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
+        //       }
+        //       tartgetPos = transform.position;
+        //       Debug.Log("这一秒移动的距离: " + totalDistance);
+        //       totalDistance = 0;
+        //       elapsedTime = 0f; // 重置计时器
+        //   }
+    }
 
 
     private void SetSkillMove()

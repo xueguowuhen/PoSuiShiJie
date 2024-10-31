@@ -19,7 +19,7 @@ public class StateMove : ISate
                 break;
             case AniState.TurnBack:
                 entity.SetAction((int)AniPlayerState.Move);
-                entity.SetAniCrossFade(AniPlayerState.Move.ToString(),0.25f);
+                  entity.SetAniCrossFade(AniPlayerState.Move.ToString(),0.25f);
                 break;
             default://从其他状态进入移动状态
                 entity.SetAction((int)AniPlayerState.WalkStart);
@@ -27,8 +27,7 @@ public class StateMove : ISate
                 break;
         }
         entity.currentAniState = AniState.Move;
-        entity.SetHasInput(true);
-        Debug.Log("进入移动状态");
+        //entity.SetHasInput(true);
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.WalkStart, OnWalkStartEvent);
     }
 
@@ -38,6 +37,7 @@ public class StateMove : ISate
     {
         entity.SetAction((int)AniPlayerState.Move);
         entity.SetAniPlay(AniPlayerState.Move.ToString());
+        Debug.Log("OnWalkStartEvent");
     }
 
     public void Process(EntityBase entity)
@@ -56,7 +56,7 @@ public class StateMove : ISate
 
     public void Exit(EntityBase entity, params object[] objects)
     {
-        entity.SetHasInput(false);
+        //entity.SetHasInput(false);
         AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.WalkStart, OnWalkStartEvent);
 
     }

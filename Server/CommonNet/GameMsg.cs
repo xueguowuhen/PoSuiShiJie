@@ -31,6 +31,8 @@ namespace CommonNet
         public RspDamage? rspDamage;
         public ReqRevive? reqRevive;
         public RspRevive? rspRevive;
+        public ReqRecover? reqRecover;
+        public RspRecover? rspRecover;
         #region 好友请求与响应
         // 新增的好友请求与响应
         public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
@@ -268,6 +270,7 @@ namespace CommonNet
     public class RspEnterPVP
     {
         public bool isSucc;
+        public List<PlayerData> PlayerDataList;
     }
     public class ReqExitPVP
     {
@@ -346,6 +349,25 @@ namespace CommonNet
         public int hp;
         public int damageState;
         public int Damage;
+    }
+    /// <summary>
+    /// 玩家复活请求并返回主页
+    /// </summary>
+    public class ReqRecover
+    {
+        public int id;
+
+    }
+    /// <summary>
+    /// 玩家复活响应并返回主页
+    /// </summary>
+    public class RspRecover
+    {
+        public int id;
+        public int Hp;//生命
+        public int Hpmax;//生命上限
+        public int Mana;//法力
+        public int ManaMax;//法力上限
     }
     public class ReqRevive
     {
@@ -553,6 +575,8 @@ namespace CommonNet
         RspRevive = 309,
         ReqExitPVP = 310,
         RspExitPVP = 311,
+        reqRecover = 312,
+        rspRecover = 313,
         #endregion
     }
     public enum Error
@@ -590,10 +614,10 @@ namespace CommonNet
         DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
         RewardActiveError = 1035, //活跃度奖励领取失败
         MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
-        EnterPVPError=1100, //进入PVP失败
-        ExitPVPError=1101, //退出PVP失败
-        TransformError=1102, //位置同步失败
-        StateError=1103, //玩家状态同步失败
+        EnterPVPError = 1100, //进入PVP失败
+        ExitPVPError = 1101, //退出PVP失败
+        TransformError = 1102, //位置同步失败
+        StateError = 1103, //玩家状态同步失败
     }
 
 

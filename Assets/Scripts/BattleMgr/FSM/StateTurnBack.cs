@@ -19,42 +19,40 @@ public class StateTurnBack : ISate
         entity.currentAniState = AniState.TurnBack;
         entity.SetAction((int)AniPlayerState.TurnBack);
         entity.SetAniPlay(AniPlayerState.TurnBack.ToString());
-        // entity.SetAniCrossFade(AniPlayerState.TurnBack.ToString(), Constants.AniSpeed);
+        //entity.SetHasInput(true);
+        entity.canRlskill = false;
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
     }
 
     private void OnTurnBackEvent(EntityBase entity)
     {
-        Debug.Log("OnTurnBackEvent");
         entity.SetAction(Constants.ActionDefault);
         if (entity.GetDirInput() != Vector2.zero)
         {
             entity.Move();
-            Debug.Log("Move");
             entity.SetDir(entity.GetDirInput());
         }
         else
         {
-            Debug.Log("Idle");
             entity.Idle();
             entity.SetAniCrossFade(AniPlayerState.IdleAFK.ToString(), Constants.AniSpeed);
         }
     }
     public void Process(EntityBase entity)
     {
-        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f)
+        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f && entity.AnimationAtTag("TurnBack"))
         {
             AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
             OnTurnBackEvent(entity);
         }
-        if (entity.GetDirInput() != Vector2.zero)
-        {
-            entity.SetHasInput(true);
-        }
-        else
-        {
-            entity.SetHasInput(false);
-        }
+        //if (entity.GetDirInput() != Vector2.zero)
+        //{
+        //    entity.SetHasInput(true);
+        //}
+        //else
+        //{
+        //    entity.SetHasInput(false);
+        //}
 
         entity.SetVelocity(Constants.VelocityRun);
 
@@ -63,7 +61,9 @@ public class StateTurnBack : ISate
     }
     public void Exit(EntityBase entity, params object[] objects)
     {
-        entity.SetAction(Constants.ActionDefault);
+
+        //entity.SetAction(Constants.ActionDefault);
+        entity.canRlskill = true;
         AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnTurnBackEvent);
     }
 

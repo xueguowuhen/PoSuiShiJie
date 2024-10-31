@@ -114,7 +114,7 @@ public class Controller : MonoBehaviour
     public virtual void SetHasInput(bool isInput)
     {
         this.isInput = isInput;
-        animator.SetBool("HasInput", isInput);
+    //    animator.SetBool("HasInput", isInput);
     }
     public virtual bool GetHasInput()
     {
@@ -142,7 +142,7 @@ public class Controller : MonoBehaviour
     }
     public virtual void DestroySelf()
     {
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.gameObject);
     }
     public virtual void SetAtkRotationLocal(Vector2 atkDir)
     {

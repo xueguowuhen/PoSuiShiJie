@@ -117,6 +117,7 @@ public abstract class EntityBase
             if (Mathf.Abs(angleDifference) > 90f)
             {
                 // SetMove(false);
+                if (currentAniState == AniState.Attack) { return; }
                 TurnBack();
                 //  Debug.Log("转向");
             }

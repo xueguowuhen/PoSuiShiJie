@@ -43,7 +43,7 @@ public class BattleMgr : MonoBehaviour
         skillMgr.Init();
         LoadPlayer(mapData);
         entitySelfPlayer.Idle();//创建完成后进入idle状态
-        //RemotePlayer();
+        RemotePlayer();
     }
     #region 玩家与远程玩家初始化操作
     private void LoadPlayer(MapCfg mapData)
@@ -97,7 +97,6 @@ public class BattleMgr : MonoBehaviour
     {
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
         GameObject player = resSvc.LoadPrefab(PathDefine.ResPerson + personCfg.Prefab);
-
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.RemotePlayerId = playerData.id;
 
@@ -113,7 +112,7 @@ public class BattleMgr : MonoBehaviour
         navMesh.enabled = false;
         BattleMgr battleMgr = BattleSys.instance.GetBattleMgr();
         //初始化生物UI
-        GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
+        //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
         EntityPlayer entityPlayer = new EntityPlayer
         {
             stateMgr = battleMgr.GetStateMgr(),
@@ -213,6 +212,7 @@ public class BattleMgr : MonoBehaviour
         {
             comboIndex = 0;
             lastAtkTime = TimerSvc.Instance.GetNwTime();
+            Debug.Log("普通攻击"+NormalAtkList[comboIndex]);
             entitySelfPlayer.Attack(NormalAtkList[comboIndex]);
         }
 

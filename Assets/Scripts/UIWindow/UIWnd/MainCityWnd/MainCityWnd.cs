@@ -66,7 +66,7 @@ public class MainCityWnd : WindowRoot
     }
     protected override void SetGameObject()
     {
-        GameRoot.Instance.SetScreenSpaceCamera();//设置界面
+        
         #region Head
         //HpProImg = GetImg(PathDefine.HpProImg);
         //HpText = GetText(PathDefine.HpText);

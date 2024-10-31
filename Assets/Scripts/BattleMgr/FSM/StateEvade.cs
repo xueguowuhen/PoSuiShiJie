@@ -22,6 +22,7 @@ public class StateEvade : ISate
         entity.SetEvade(true);
         entity.EvadeEnd=false;
         entity.SetAction((int)AniPlayerState.Evade_Front);
+        entity.canRlskill = false;
         Debug.Log("进入闪避状态");
         AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.Evade_Front, OnEvadeFrontEvent);
         UIBtnDispatcher.Instance.AddEventListener(PathDefine.btnEvade, OnEvadeBtnEvent);
@@ -37,15 +38,15 @@ public class StateEvade : ISate
     }
     public void Process(EntityBase entity)
     {
-        if (entity.GetDirInput() != Vector2.zero)
-        {
-            entity.SetHasInput(true);
-        }
-        else
-        {
-            entity.SetHasInput(false);
-        }
-        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f)
+        //if (entity.GetDirInput() != Vector2.zero)
+        //{
+        //    entity.SetHasInput(true);
+        //}
+        //else
+        //{
+        //    entity.SetHasInput(false);
+        //}
+        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f&& entity.AnimationAtTag("Evade"))
         {
             AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnEvadeFrontEvent);
             OnEvadeFrontEvent(entity);
@@ -74,7 +75,8 @@ public class StateEvade : ISate
     {
         //entity.SetMove(false);
         entity.SetEvade(false);
-        entity.SetAction(Constants.ActionDefault);
+        entity.canRlskill = true;
+     //   entity.SetAction(Constants.ActionDefault);
 
         AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.Evade_Front, OnEvadeFrontEvent);
         UIBtnDispatcher.Instance.RemoveEventListener(PathDefine.btnEvade, OnEvadeBtnEvent);

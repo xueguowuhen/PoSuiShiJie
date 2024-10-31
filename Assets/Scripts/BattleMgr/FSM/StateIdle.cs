@@ -17,6 +17,7 @@ public class StateIdle : ISate
             case AniState.Move:
                 entity.SetAniCrossFade(entity.GetWalkOrRunState().ToString(), Constants.AniSpeed);
                 entity.SetAction((int)entity.GetWalkOrRunState());
+                Debug.Log("进入待机状态"+ entity.GetWalkOrRunState().ToString());
                 break;
             default:
 
@@ -25,7 +26,7 @@ public class StateIdle : ISate
         }
         //初始化
         entity.currentAniState = AniState.Idle;
-        entity.SetHasInput(false);
+        //entity.SetHasInput(false);
         entity.SetmoveDistance(Constants.PlayerIdleSpeed);
         entity.SetDir(Vector2.zero);
         #region 待机时，取消所有技能
@@ -34,7 +35,7 @@ public class StateIdle : ISate
         {
 
             entity.Attack(entity.nextSkillID);
-            entity.EvadeEnd = false;
+
         }
         else
         {

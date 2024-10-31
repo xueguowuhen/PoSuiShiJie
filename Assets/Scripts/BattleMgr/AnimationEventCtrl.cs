@@ -22,9 +22,11 @@ public class AnimationEventCtrl : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (AniPlayerState.None == playerState) return;
+        
         if (animator.TryGetComponent(out player))
         {
-            AnimatorDispatcher.Instance.Dispatch(playerState, BattleSys.instance.GetBattleMgr().entitySelfPlayer);
+            EntityBase entity = BattleSys.instance.GetEntity(player.RemotePlayerId);
+            AnimatorDispatcher.Instance.Dispatch(playerState, entity);
             
         }
     }

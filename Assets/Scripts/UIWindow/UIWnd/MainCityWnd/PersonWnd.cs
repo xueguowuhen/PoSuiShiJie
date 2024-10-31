@@ -83,6 +83,7 @@ public class PersonWnd : WindowRoot
     {
         GameObject obj = pool.GetObject();
         obj.transform.SetParent(game.transform, false);
+        obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = Vector3.one;
         Text txt = obj.GetComponent<Text>();
         txt.SetText(name, true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);

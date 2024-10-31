@@ -86,7 +86,25 @@ public class CacheSvc
         {
             onBattelPVPSessionDic.Add(playerData, session);
         }
-    
+
+    }
+    /// <summary>
+    /// 退出战斗房间
+    /// </summary>
+    /// <param name="playerData"></param>
+    public void AcctExitBattelPVP(PlayerData playerData)
+    {
+        if (onBattelPVPSessionDic.ContainsKey(playerData))
+        {
+            onBattelPVPSessionDic.Remove(playerData);
+        }
+    }
+    public void AcctExitBattelPVP(ServerSession session)
+    {
+        if (onBattelPVPSessionDic.ContainsValue(session))
+        {
+            onBattelPVPSessionDic.Remove(GetBattlePlayerDataBySession(session));
+        }
     }
     /// <summary>
     /// 根据好友名称查询好友数据
@@ -140,6 +158,45 @@ public class CacheSvc
             return null;
         }
     }
+    /// <summary>
+    /// 根据session获取战斗玩家数据
+    /// </summary>
+    /// <param name="session"></param>
+    /// <returns></returns>
+    public PlayerData GetBattlePlayerDataBySession(ServerSession session)
+    {
+        foreach (PlayerData playerData in onBattelPVPSessionDic.Keys)
+        {
+            if (onBattelPVPSessionDic[playerData] == session)
+            {
+                return playerData;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 获取战斗房间session并进行广播
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="msg"></param>
+    public void GetBattleSession(ServerSession session, GameMsg msg)
+    {
+
+        byte[] bytes = TraTool.PackLenInfo(TraTool.Serialize(msg));
+        foreach (ServerSession sessiondic in onBattelPVPSessionDic.Values)
+        {
+            if (session != sessiondic)
+            {
+
+                sessiondic.SendMsg(bytes);
+            }
+        }
+    }
+    /// <summary>
+    /// 根据玩家数据获取session
+    /// </summary>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
     public ServerSession GetSessionByPlayerData(PlayerData playerData)
     {
         if (onLineSessionDic.ContainsValue(playerData))
@@ -224,8 +281,8 @@ public class CacheSvc
     /// 检查并升级天赋
     /// </summary>
     /// <returns></returns>
-    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg,int aura)
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg, int aura)
     {
-        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg,aura);
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg, aura);
     }
 }

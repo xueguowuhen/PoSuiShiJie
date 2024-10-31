@@ -63,6 +63,10 @@ public enum AniPlayerState
     Attack_Normal_02 = 2,
     Attack_Normal_03 = 3,
     Attack_Normal_04 = 4,
+
+    Attack_Skill_01 = 11,
+    Attack_Skill_02 = 12,
+    Attack_Skill_03 = 13,
     Move =99,
     Death = 100,
     Hit = 101,

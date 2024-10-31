@@ -68,24 +68,25 @@ public class StateMgr : MonoBehaviour
                         AniState = (int)targerState,
                     }
                 };
-                //if (argas != null)
-                //{
-                    
-                //    if (argas.Length>0)
-                //    {
+                if (argas != null)
+                {
 
-                //        msg.reqPlayerState.SkillID = (int)argas[0];
-                //    }
-                //}
-                //GameCommon.Log(Enum.GetName(typeof(AniState), targerState));
-              //  NetSvc.instance.SendMsg(msg);
+                    if (argas.Length > 0)
+                    {
+
+                        msg.reqPlayerState.SkillID = (int)argas[0];
+                    }
+                }
+                GameCommon.Log(Enum.GetName(typeof(AniState), targerState));
+                NetSvc.instance.SendMsg(msg);
             }
+       //     Debug.Log("上次状态" + entity.currentAniState.ToString());
             if (entity.currentAniState != AniState.None)
             {
                 FSM[entity.currentAniState].Exit(entity, argas);
             }
             FSM[targerState].Enter(entity, argas);
-         //   Debug.Log("当前状态" + targerState.ToString());
+       //   Debug.Log("当前状态" + targerState.ToString());
         }
     }
 }

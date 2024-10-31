@@ -68,7 +68,7 @@ public class LoginSys
                     playerList = playerDataList,
                 };
                 cacheSvc.AcctOnline(pack.session, playerData);
-                ReqCreatePlayer(pack, playerData);
+                //ReqCreatePlayer(pack, playerData);
             }
         }
         else
@@ -144,7 +144,7 @@ public class LoginSys
                 if (InitNewPlayerData(reqCreateGame, msg, playerData, personCfg))
                 {
                     cacheSvc.AcctOnline(pack.session, playerData);
-                    ReqCreatePlayer(pack, playerData);
+                    //ReqCreatePlayer(pack, playerData);
                 }
             }
             else
@@ -251,46 +251,6 @@ public class LoginSys
     }
     #endregion
 
-    /// <summary>
-    /// 广播创建角色通知
-    /// </summary>
-    /// <param name="pack"></param>
-    public void ReqCreatePlayer(MsgPack pack, PlayerData playerData)
-    {
-        GameMsg msg = new GameMsg
-        {
-            cmd = (int)CMD.RspCreatePlayer,
-        };
-        msg.rspCreatePlayer = new RspCreatePlayer
-        {
-            playerData = playerData,
-        };
-        //向其他在线玩家广播创建玩家数据
-        cacheSvc.GetSession(pack.session, msg);
-    }
-    /// <summary>
-    /// 广播删除角色通知
-    /// </summary>
-    /// <param name="pack"></param>
-    /// <param name="playerData"></param>
-    public void ReqDeletePlayer(MsgPack pack)
-    {
-        GameMsg msg = new GameMsg
-        {
-            cmd = (int)CMD.RspDeletePlayer,
-        };
-        PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
-        if (playerData != null)
-        {
-
-            msg.rspDeletePlayer = new RspDeletePlayer
-            {
-                PlayerID = playerData.id,
-            };
-            //向其他玩家广播删除玩家数据
-            cacheSvc.GetSession(pack.session, msg);
-        }
-    }
 
     /// <summary>
     /// 下线操作
@@ -298,7 +258,8 @@ public class LoginSys
     /// <param name="server"></param>
     public void ClearOfflineData(ServerSession server)
     {
-        ReqDeletePlayer(new MsgPack(server, null!));
+        BattleSys.Instance.ReqDeletePlayer(new MsgPack(server, null!));
+
         cacheSvc!.AcctOutLine(server);
     }
 }

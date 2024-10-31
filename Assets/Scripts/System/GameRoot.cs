@@ -66,17 +66,18 @@ public class GameRoot : MonoBehaviour
     {
         Canvas canvas = this.canvas.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = Camera.main;
-        uiCamera.fieldOfView = Constants.CreatefieldOfView;
+        canvas.worldCamera = uiCamera;
+       // uiCamera.fieldOfView = Constants.CreatefieldOfView;
     }
     /// <summary>
     /// 设置canvas覆盖模式
     /// </summary>
     public void SetScreenSpaceOverlay()
     {
-        //Canvas canvas = this.canvas.GetComponent<Canvas>();
-        //canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        //Camera.main.fieldOfView = Constants.CamerafieldOfView;
+        Canvas canvas = this.canvas.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.worldCamera = uiCamera;
+        Camera.main.fieldOfView = Constants.CamerafieldOfView;
     }
 
     private PlayerData playerData = null;

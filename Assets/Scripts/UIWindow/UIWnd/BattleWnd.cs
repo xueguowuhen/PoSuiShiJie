@@ -262,6 +262,7 @@ public class BattleWnd : WindowRoot
             BattleSys.instance.ReleaseSkill1();
             isSk1CD = true;//设置技能冷却
             SetActive(SkillCD1);
+            Debug.Log("释放技能1"+SkillCD1.gameObject.activeSelf);
             SkillCD1.fillAmount = 1;
             sk1Num = (int)sk1CDTime;
             SetText(SkillTxt1, sk1Num);
@@ -306,7 +307,7 @@ public class BattleWnd : WindowRoot
         BattleSys.instance.Evade();
         UIBtnDispatcher.Instance.Dispatch(PathDefine.btnEvade, BattleSys.instance.GetBattleMgr().entitySelfPlayer);
     }
-
+    #region 摇杆触摸事件
     /// <summary>
     /// 注册摇杆触摸事件
     /// </summary>
@@ -345,9 +346,10 @@ public class BattleWnd : WindowRoot
             BattleSys.instance.SetSelfPlayerMoveDir(dir.normalized, IsRun);
         });
     }
+    #endregion
     // 记录当前的滑动方向
     private Vector2 currentCamMoveDir = Vector2.zero;
-
+    #region 摄像机触摸事件
     /// <summary>
     /// 注册摄像机触摸事件
     /// </summary>
@@ -395,16 +397,26 @@ public class BattleWnd : WindowRoot
             }
         });
     }
+    #endregion
     public bool GetCanRlsSkill()
     {
         return BattleSys.instance.CanRlsSkill();
     }
     public void ClickQuitBattle()
     {
-        SetWndState(false);
-        MainCitySys.instance.mainCityWnd.SetWndState(true);
-        EntityBase player = BattleSys.instance.GetBattleMgr().entitySelfPlayer;
-        player.canControl = true;
-        player.Idle();
+        //SetWndState(false);
+        GameMsg gameMsg = new GameMsg()
+        {
+            cmd = (int)CMD.ReqExitPVP,
+            reqExitPVP = new ReqExitPVP()
+            {
+                id = GameRoot.Instance.PlayerData.id,
+            }
+        };
+        netSvc.SendMsg(gameMsg);
+      //  MainCitySys.instance.mainCityWnd.SetWndState(true);
+        //EntityBase player = BattleSys.instance.GetBattleMgr().entitySelfPlayer;
+        //player.canControl = true;
+        //player.Idle();
     }
 }
