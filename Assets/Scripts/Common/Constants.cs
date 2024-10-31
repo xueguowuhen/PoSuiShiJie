@@ -18,7 +18,7 @@ public enum TxtColor
 }
 public enum WindowType
 {
-    None=0,     //不加载
+    None = 0,     //不加载
     FromTop,    // 从上方加载
     FromBottom, // 从下方加载
     FromLeft,   // 从左侧加载
@@ -54,6 +54,29 @@ public enum EntityType
     /// 怪物
     /// </summary>
     Monster,
+}
+public enum AniPlayerState
+{
+    IdleAFK = -1,
+    None = 0,
+    Attack_Normal_01 = 1,
+    Attack_Normal_02 = 2,
+    Attack_Normal_03 = 3,
+    Attack_Normal_04 = 4,
+
+    Attack_Skill_01 = 11,
+    Attack_Skill_02 = 12,
+    Attack_Skill_03 = 13,
+    Move =99,
+    Death = 100,
+    Hit = 101,
+    WalkStop = 102,
+    RunStop = 103,
+    TurnBack = 104,
+    WalkStart = 105,
+    Evade_Back = 106,
+    Evade_Front = 107,
+    
 }
 public class Constants
 {
@@ -119,17 +142,18 @@ public class Constants
 
     //混合参数
     public const int VelocityIdle = 0;
-    public const int VelocityWalk =5 ;
-    public const int VelocityRun=10;
+    public const int VelocityWalk = 5;
+    public const int VelocityRun = 10;
     //角色移动速度
     public const int PlayerIdleSpeed = 0;
-    public const int PlayerWalkSpeed = 4;
-    public const int PlayerRunSpeed = 8;
+    public const float PlayerWalkSpeed = 1f;
+    public const int PlayerRunSpeed = 2;
     public const int MonsterMoveSpeed = 4;
     //运动平滑加速度
     public const int AccelerSpeed = 20;
     public const float AccelerHPSpeed = 0.3f;
-
+    //动画平滑速度
+    public const float AniSpeed = 0.13f;
     //对话摄像头偏移值
 
     public const int CameraMackNpc = 1 << 6;
@@ -146,8 +170,7 @@ public class Constants
     //战斗默认参数
     public const int ActionDefault = -1;
     public const int VelocityDefault = 0;
-    public const int ActionHit = 101;
-    public const int ActionDie = 100;
+
     //普通连招有效间隔
     public const int ComboSpace = 500;
     //死亡后间隔多久时间复活
@@ -163,7 +186,8 @@ public class Constants
 
     #endregion
     #region MainCity
-    public const int MainCityMapID =10000;//主城地图ID
+    public const int MainCityMapID = 10000;//主城地图ID
+    public const int BattlePVPMapID = 20001;//PVP战斗地图ID
     public const float CamerafieldOfView = 65f;//主摄像头显示
     #endregion
 }

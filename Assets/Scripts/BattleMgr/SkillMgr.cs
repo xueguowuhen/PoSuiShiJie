@@ -103,7 +103,7 @@ public class SkillMgr : MonoBehaviour
     /// <summary>
     /// 技能攻击范围
     /// </summary>
-    /// <param name="Targetentity">攻击方</param>
+    /// <param name="entity">攻击方</param>
     /// <param name="skillCfg"></param>
     /// <param name="index"></param>
     public void SkillAction(EntityBase entity, SkillCfg skillCfg, int index)
@@ -114,28 +114,28 @@ public class SkillMgr : MonoBehaviour
         EntityBase targetentity = null;
         if (PlayerList.Count <= 0)//获取场上玩家和怪物数量
         {
-            //return;
+          //  return;
         }
         if (entity.SetType() == EntityType.Monster)
         {
             targetentity = BattleMgr.entitySelfPlayer;
             InRgeAndAge(entity, targetentity, skillAction, skillCfg, damage);
         }
-        else if (entity.SetType() == EntityType.Player)
+        else if (entity.SetType() == EntityType.Player)//玩家发起攻击
         {
             //查找怪物
-            //targetentity = MainCitySys.instance.entityEnemy;//遍历怪物
+            // targetentity = MainCitySys.instance.entityEnemy;//遍历怪物
             //InRgeAndAge(entity, targetentity, skillAction, skillCfg, damage);
 
-            //EntityPlayer entityPlayer = entity as EntityPlayer;
-            ////遍历范围玩家伤害
-            //foreach (EntityPlayer player in PlayerList)  //遍历玩家
-            //{
-            //    if (player.GetEntityData().ID != entityPlayer.playerData.id)
-            //    {
-            //        InRgeAndAge(entity, player, skillAction, skillCfg, damage);
-            //    }
-            //}
+            EntityPlayer entityPlayer = entity as EntityPlayer;
+            //遍历范围玩家伤害
+            foreach (EntityPlayer player in PlayerList)  //遍历玩家
+            {
+                if (player.GetEntityData().ID != entityPlayer.playerData.id)
+                {
+                    InRgeAndAge(entity, player, skillAction, skillCfg, damage);
+                }
+            }
         }
 
     }
@@ -153,6 +153,7 @@ public class SkillMgr : MonoBehaviour
         if (InRange(entity.GetPos(), targetEntity.GetPos(), skillAction.radius)
             && InAngle(entity.GetTrans(), targetEntity.GetPos(), skillAction.angle))
         {
+
             Damage(entity, targetEntity, skillCfg, damage);
             if (skillCfg.type == SkillType.remote)
             {
@@ -279,6 +280,8 @@ public class SkillMgr : MonoBehaviour
     /// <returns></returns>
     public bool InRange(Vector3 from, Vector3 to, float range)
     {
+        // 绘制从from到to的线
+        Debug.DrawLine(from, to, Color.yellow,1f); // 使用黄色绘制线条，您可以根据需要更改颜色
         float dis = Vector3.Distance(from, to);
         if (dis <= range)
         {
@@ -296,6 +299,8 @@ public class SkillMgr : MonoBehaviour
     public bool InAngle(Transform tranns, Vector3 to, float angle)
     {
         if (angle == 360) return true;
+        // 绘制从物体位置到目标点的方向线
+        Debug.DrawLine(tranns.position, to, Color.blue,1); // 使用蓝色绘制线条，您可以根据需要更改颜色
         // 计算目标点与物体之间的方向向量
         Vector3 dirToTarget = to - tranns.position;
         float agle = Vector3.Angle(tranns.forward, dirToTarget);
@@ -326,6 +331,11 @@ public class SkillMgr : MonoBehaviour
             }, skillCfg.skilltime);
         }
         entity.SetAction(skillCfg.aniAction);
+        if (!entity.AnimationAtTag("Attack"))
+        {
+            Debug.Log(((AniPlayerState)skillCfg.aniAction));
+            entity.SetAniPlay(((AniPlayerState)(skillCfg.aniAction)).ToString());
+        }
         if (entity.isLocal)//判断是否时本地
         {
             if (entity.GetDirInput() != Vector2.zero)
@@ -340,10 +350,10 @@ public class SkillMgr : MonoBehaviour
                 entity.SetRotation(entity.GetRemoteInput());
             }
         }
-        CalcSkillMove(entity, skillCfg);
+        // CalcSkillMove(entity, skillCfg);
         if (skillCfg.type == SkillType.melee)
         {
-            CalcSkillFx(entity, skillCfg);
+            // CalcSkillFx(entity, skillCfg);
         }
         entity.SetSkillMoveSate(false);
 
@@ -352,10 +362,10 @@ public class SkillMgr : MonoBehaviour
         {
             entity.entityState = EntityState.Bati;
         }
-        entity.skEndCB = timerSvc.AddTimeTask((int tid) =>
-        {
-            entity.Idle();
-        }, skillCfg.skilltime);
+        //entity.skEndCB = timerSvc.AddTimeTask((int tid) =>
+        //{
+        //    entity.Idle();
+        //}, skillCfg.skilltime);
 
     }
     /// <summary>

@@ -10,6 +10,7 @@ using ComNet;
 using MySqlX.XDevAPI;
 using System.Collections.Generic;
 using 墨染服务端._01Service._01NetSvc;
+using static CfgSvc;
 
 public class CacheSvc
 {
@@ -27,7 +28,7 @@ public class CacheSvc
     }
     private DBMgr dBMgr;
     private Dictionary<ServerSession, PlayerData> onLineSessionDic = new Dictionary<ServerSession, PlayerData>();
-
+    private Dictionary<PlayerData, ServerSession> onBattelPVPSessionDic = new Dictionary<PlayerData, ServerSession>();
     public void Init()
     {
         dBMgr = DBMgr.Instance;
@@ -35,7 +36,13 @@ public class CacheSvc
     }
     public PlayerData? GetPlayerData(string acct, string pass)
     {
-        return dBMgr.GetPlayerData(acct, pass);
+        PlayerData? playerData = dBMgr.GetPlayerData(acct, pass); //玩家原始数据
+
+        if (playerData!.TalentID != null && TalentSys.Instance.CalcPlayerProp(playerData!))//叠加的天赋数据
+        {
+
+        }
+        return playerData;
     }
     /// <summary>
     /// 判断账号是否存在
@@ -69,6 +76,40 @@ public class CacheSvc
             onLineSessionDic.Add(session, playerData);
         }
     }
+    /// <summary>
+    /// 进入战斗房间
+    /// </summary>
+    /// <param name="playerData"></param>
+    public void AcctEnterBattelPVP(PlayerData playerData, ServerSession session)
+    {
+        if (!onBattelPVPSessionDic.ContainsKey(playerData))
+        {
+            onBattelPVPSessionDic.Add(playerData, session);
+        }
+
+    }
+    /// <summary>
+    /// 退出战斗房间
+    /// </summary>
+    /// <param name="playerData"></param>
+    public void AcctExitBattelPVP(PlayerData playerData)
+    {
+        if (onBattelPVPSessionDic.ContainsKey(playerData))
+        {
+            onBattelPVPSessionDic.Remove(playerData);
+        }
+    }
+    public void AcctExitBattelPVP(ServerSession session)
+    {
+        if (onBattelPVPSessionDic.ContainsValue(session))
+        {
+            onBattelPVPSessionDic.Remove(GetBattlePlayerDataBySession(session));
+        }
+    }
+    /// <summary>
+    /// 根据好友名称查询好友数据
+    /// </summary>
+    /// <param name="session"></param>
     public FriendItem GetPlayerDataByFriendName(string friendName)
     {
         return dBMgr.GetPlayerDataByFriendName(friendName);
@@ -117,9 +158,60 @@ public class CacheSvc
             return null;
         }
     }
+    /// <summary>
+    /// 根据session获取战斗玩家数据
+    /// </summary>
+    /// <param name="session"></param>
+    /// <returns></returns>
+    public PlayerData GetBattlePlayerDataBySession(ServerSession session)
+    {
+        foreach (PlayerData playerData in onBattelPVPSessionDic.Keys)
+        {
+            if (onBattelPVPSessionDic[playerData] == session)
+            {
+                return playerData;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 获取战斗房间session并进行广播
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="msg"></param>
+    public void GetBattleSession(ServerSession session, GameMsg msg)
+    {
+
+        byte[] bytes = TraTool.PackLenInfo(TraTool.Serialize(msg));
+        foreach (ServerSession sessiondic in onBattelPVPSessionDic.Values)
+        {
+            if (session != sessiondic)
+            {
+
+                sessiondic.SendMsg(bytes);
+            }
+        }
+    }
+    /// <summary>
+    /// 根据玩家数据获取session
+    /// </summary>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
     public ServerSession GetSessionByPlayerData(PlayerData playerData)
     {
+        if (onLineSessionDic.ContainsValue(playerData))
+        {
+            foreach (var session in onLineSessionDic)
+            {
+                if (session.Value == playerData)
+                {
+                    return session.Key;
+                }
+
+            }
+        }
         return null;
+
     }
     public List<PlayerData> GetPlayerData(PlayerData playerData)
     {
@@ -156,24 +248,41 @@ public class CacheSvc
     /// </summary>
     public void AcctOutLine(ServerSession server)
     {
-
-        //foreach(var session in onLineSessionDic)
-        //{
-        //    if(server ==session.Key)
-        //    {
-        //        onLineSessionDic.Remove(server);
-        //        break;
-        //    }
-        //}
         bool scct = onLineSessionDic.Remove(server);
         GameCommon.Log("该账号下线：" + scct);
     }
+    /// <summary>
+    /// 检查名字是否存在
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public bool CheckName(string name)
+    {
+        return dBMgr.CheckName(name);
+    }
+    /// <summary>
+    /// 更新玩家数据
+    /// </summary>
+    /// <param name="playerData"></param>
     public bool UpdatePlayerData(PlayerData playerData)
     {
         return dBMgr.UpdatePlayerData(playerData);
     }
+    /// <summary>
+    /// 更新好友数据
+    /// </summary>
+    /// <param name="friendItem"></param>
+    /// <returns></returns>
     public bool UpdateFriend(FriendItem friendItem)
     {
         return dBMgr.UpdateFriend(friendItem);
+    }
+    /// <summary>
+    /// 检查并升级天赋
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndUpdateTalentsData(int id, int talentID, int talentLevel, TalentCfg talentCfg, int aura)
+    {
+        return dBMgr.CheckAndUpdateTalent(id, talentID, talentLevel, talentCfg, aura);
     }
 }

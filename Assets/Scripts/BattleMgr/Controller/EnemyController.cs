@@ -29,7 +29,7 @@ public class EnemyController : Controller
         base.SetAction(act);
         //没有动画
     }
-    public override void SetVelocity(float Velocity,bool IsRun =false)
+    public override void SetVelocity(float Velocity)
     {
         animator.SetFloat("Blend", Velocity);
         //base.SetVelocity(Velocity, IsRun);
@@ -38,14 +38,14 @@ public class EnemyController : Controller
     public void Init(GameObject Enemy)
     {
         characterController = Enemy.GetComponent<CharacterController>();
-        moveDistance = 10;
+      //  moveDistance = 10;
     }
     public void Update()
     {
-        if (isMove)
-        {
-            SetMove();
-        }
+        //if (isMove)
+        //{
+        //    SetMove();
+        //}
         if (IsAiMove)
         {
             characterController.Move(transform.forward * Time.deltaTime * 1.8f);

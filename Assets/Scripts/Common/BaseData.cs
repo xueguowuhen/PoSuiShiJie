@@ -34,38 +34,34 @@ public class personCfg : BaseData<personCfg>
     public int PreText;
     public List<int> NormalAtkList;
     public List<int> SkillList;
+    public int BaseExp;
+    public float ExpMul;
 }
 public class MapCfg : BaseData<MapCfg>
 {
     public string mapName;
     public string sceneName;
     public int power;
-    public Vector3 mainCamPos;
-    public Vector3 mainCamRote;
     public Vector3 playerBornPos;
     public Vector3 playerBornRote;
     public string monsterLst;
     public int exp;
     public int aura;
+    public Vector3 CameraFollowAndRotatePos;
+    public Vector3 CameraFollowAndRotateRote;
+    public Vector3 CameraUpAndDownPos;
+    public Vector3 CameraUpAndDownRote;
+    public Vector3 CameraZoomContainerPos;
+    public Vector3 CameraZoomContainerRote;
 }
 public class TalentCfg : BaseData<TalentCfg>
 {
-    public string mName;
-    public int HP;
-    public int Mana;
-    public int Power;
-    public int aura;
-    public int ruvia;
-    public int crystal;
-    public int ad;
-    public int ap;
-    public int addef;
-    public int adpdef;
-    public int dodge;
-    public float practice;
-    public int critical;
-    public TalentQuality quality;
-    public string tips;
+    public string Name; //天赋名字
+    public string Info; //天赋作用介绍
+    public int MaxLevel; //天赋最大等级
+    public string Attribute; //属性 天赋对应增加的词条(Hp,Atk...)
+    public string BackGround; //背景介绍
+    public float Value; //基础1级数值(与等级×相关系数 = 对应等级数值)
 }
 public class ItemCfg : BaseData<ItemCfg>
 {
@@ -74,7 +70,7 @@ public class ItemCfg : BaseData<ItemCfg>
     public string mImg;   //物品图标
     public float Price;  //物价价格
     public ItemType type;  //物品类型
-    
+
     public int quantity; //数量
 
 }
@@ -87,7 +83,23 @@ public class TaskCfg : BaseData<TalentCfg>
     public int crystal;
     public int exp;
 }
-
+public class TaskRewardCfg : BaseData<TaskRewardCfg>
+{
+    public int Value;//每日奖励的目标值
+    public List<TaskRewardItem> rewardItems;
+}
+public class TaskRewardItem
+{
+    public int ItemID;  //奖励物品ID
+    public int Count;  //奖励物品数量
+}
+public class TaskDailyCfg : BaseData<TaskDailyCfg>
+{
+    public string mTitle;//任务标题
+    public string mTask;//任务内容
+    public int Active;
+    public int Count;
+}
 public class SkillCfg : BaseData<SkillCfg>
 {
     public string mName;//技能名
@@ -192,10 +204,10 @@ public enum SkillType
 }
 public enum ItemType
 {
-    all,//全部
     consume,//消耗品
     equip,//武器,装备
     material,//材料(可堆叠)
+    all,//全部
 }
 public enum EnemyType
 {

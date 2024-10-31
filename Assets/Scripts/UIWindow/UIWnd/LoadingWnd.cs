@@ -27,8 +27,8 @@ public class LoadingWnd : WindowRoot
     protected override void SetGameObject()
     {
         //txtTips = SetTranFind(PathDefine.Loading_txtTips).GetComponent<Text>();
-        //imageFG =SetTranFind(PathDefine.Loading_imageFG).GetComponent<Image>();
-        //txtPrg =SetTranFind(PathDefine.Loading_txtPrg).GetComponent<Text>();
+        //imageFG = SetTranFind(PathDefine.Loading_imageFG).GetComponent<Image>();
+        //txtPrg = SetTranFind(PathDefine.Loading_txtPrg).GetComponent<Text>();
     }
     public void SetProgress(float prg)
     {

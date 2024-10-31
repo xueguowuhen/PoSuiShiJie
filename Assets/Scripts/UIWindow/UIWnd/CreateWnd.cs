@@ -399,8 +399,6 @@ public class CreateWnd : WindowRoot
         }
         else
         {
-
-            //GameRoot.AddTips("注册成功");
             GameMsg msg = new GameMsg()
             {
                 cmd = (int)CMD.ReqCreateGame,
@@ -408,10 +406,10 @@ public class CreateWnd : WindowRoot
                 {
                     id = PersonID,
                     name= GameName.text,
-                    TalentIDList = TalentIdList,
                 }
             };
             netSvc.SendMsg(msg);
+            //发送创建角色信息
         }
     }
     //public void SetTalent(Toggle toggle, TalentCfg talentCfg)

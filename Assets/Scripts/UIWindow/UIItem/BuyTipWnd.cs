@@ -8,7 +8,6 @@ using System.Diagnostics;
 public class BuyTipWnd : WindowRoot
 {
     #region One
-    //public GameObject Buttons;
     public Image GoodsImage;
     public Image Goods2Image;
     public Text Name;//物品名称
@@ -16,7 +15,6 @@ public class BuyTipWnd : WindowRoot
     public Image Buy2Imag;
     public Text GoodsPrice;
     public Text GoodsmInfo;
-    //public Text quantitytext;
     #endregion
 
     #region Two
