@@ -159,6 +159,36 @@ public class BattleSys
         //向其他玩家广播删除玩家数据
         cacheSvc.GetSession(pack.session, msg);
     }
+    /// <summary>
+    /// 请求复活或返回主页
+    /// </summary>
+    /// <param name="pack"></param>
+    public void ReqRecover(MsgPack pack)
+    {
+        ReqRecover reqRecover = pack.gameMsg.reqRecover;
+        PlayerData playerData = cacheSvc.GetPlayerDataBySession(pack.session);
+        GameMsg gameMsg = new GameMsg
+        {
+            cmd = (int)CMD.RspRecover,
+        };
+        playerData.Hp = reqRecover.isRevive ? 1 : playerData.Hpmax;
+
+        if (!cacheSvc.UpdatePlayerData(playerData))
+        {
+            gameMsg.err = (int)Error.PerSonError;
+        }
+        else
+        {
+            gameMsg.rspRecover = new RspRecover
+            {
+                id = playerData.id,
+                isRevive = reqRecover.isRevive,
+                Hp = playerData.Hp,
+                Hpmax = playerData.Hpmax,
+            };
+            pack.session.SendMsg(gameMsg);
+        }
+    }
     public void ReqState(MsgPack pack)
     {
         ReqPlayerState reqPlayerState = pack.gameMsg.reqPlayerState;

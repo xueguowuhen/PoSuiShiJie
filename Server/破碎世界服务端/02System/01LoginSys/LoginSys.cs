@@ -59,6 +59,10 @@ public class LoginSys
             else
             {
                 List<PlayerData> playerDataList = cacheSvc.GetPlayerData(playerData);
+                if (playerData.Hp <= 0)
+                {
+                    playerData.Hp = 1;
+                }
                 //if (playerDataList.Count > 0)
                 //    GameCommon.Log(playerDataList[0].AniState.ToString());
                 DailyTaskSys.Instance.UpdateRewardTask(playerData);

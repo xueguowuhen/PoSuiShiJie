@@ -130,6 +130,9 @@ public class NetSvc
             case CMD.ReqExitPVP:
                 BattleSys.Instance.ReqExitPVP(pack);
                 break;
+            case CMD.ReqRecover:
+                BattleSys.Instance.ReqRecover(pack);
+                break;
         }
     }
 

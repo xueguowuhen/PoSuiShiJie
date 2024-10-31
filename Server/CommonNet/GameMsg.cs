@@ -356,7 +356,7 @@ namespace CommonNet
     public class ReqRecover
     {
         public int id;
-
+        public bool isRevive;//True复活，False死亡返回主页
     }
     /// <summary>
     /// 玩家复活响应并返回主页
@@ -364,10 +364,9 @@ namespace CommonNet
     public class RspRecover
     {
         public int id;
+        public bool isRevive;
         public int Hp;//生命
         public int Hpmax;//生命上限
-        public int Mana;//法力
-        public int ManaMax;//法力上限
     }
     public class ReqRevive
     {
@@ -575,8 +574,8 @@ namespace CommonNet
         RspRevive = 309,
         ReqExitPVP = 310,
         RspExitPVP = 311,
-        reqRecover = 312,
-        rspRecover = 313,
+        ReqRecover = 312,
+        RspRecover = 313,
         #endregion
     }
     public enum Error

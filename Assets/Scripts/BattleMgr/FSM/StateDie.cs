@@ -18,13 +18,14 @@ public class StateDie : ISate
         if (entity.isLocal)
         {
             entity.canControl = false;//停止移动
-            TimerSvc.Instance.AddTimeTask((int tid) =>
-            {
-                entity.canControl = true;
-                entity.Idle();
-                BattleSys.instance.battleWnd.SetWndState(false);
-                MainCitySys.instance.mainCityWnd.SetWndState(true);
-            }, Constants.Revive, TimeUnit.Second);
+            //TimerSvc.Instance.AddTimeTask((int tid) =>
+            //{
+            //    entity.canControl = true;
+            //    entity.Idle();
+            //    BattleSys.instance.battleWnd.SetWndState(false);
+            //    MainCitySys.instance.mainCityWnd.SetWndState(true);
+            //}, Constants.Revive, TimeUnit.Second);
+            BattleSys.instance.battleWnd.ShowFailTipWnd(true);
         }
     }
 
@@ -35,11 +36,11 @@ public class StateDie : ISate
 
     public void OnAnimatorEndEvent(EntityBase entity)
     {
-        
+
     }
 
     public void Process(EntityBase entity)
     {
-       
+
     }
 }

@@ -254,6 +254,9 @@ public class NetSvc : MonoBehaviour
             case CMD.RspExitPVP:
                 BattleSys.instance.RspExitPVP(msg);
                 break;
+            case CMD.RspRecover:
+                BattleSys.instance.RspRecover(msg);
+                break;
         }
     }
     private void OnDestroy()

@@ -40,6 +40,7 @@ public class BattleWnd : WindowRoot
     public Text SkillTxt3;
     public Button btnEvade;
     public Button BtnQuitBattle;
+    public FailTipWnd failTipWnd;
     #endregion
     #region PlayerController
     public Image imgTouch;
@@ -56,6 +57,7 @@ public class BattleWnd : WindowRoot
         RegisterTouchEvts();
         ResisterCamTouchEvts();
         RefreshUI();
+        failTipWnd.SetWndState(false);
     }
     public void Update()
     {
@@ -262,7 +264,7 @@ public class BattleWnd : WindowRoot
             BattleSys.instance.ReleaseSkill1();
             isSk1CD = true;//设置技能冷却
             SetActive(SkillCD1);
-            Debug.Log("释放技能1"+SkillCD1.gameObject.activeSelf);
+            Debug.Log("释放技能1" + SkillCD1.gameObject.activeSelf);
             SkillCD1.fillAmount = 1;
             sk1Num = (int)sk1CDTime;
             SetText(SkillTxt1, sk1Num);
@@ -358,7 +360,7 @@ public class BattleWnd : WindowRoot
         OnClickDown(CamTouch.gameObject, (PointerEventData evt) =>
         {
             camStartPos = evt.position;
-            currentCamMoveDir=evt.position;
+            currentCamMoveDir = evt.position;
         });
         OnClickUp(CamTouch.gameObject, (PointerEventData evt) =>
         {
@@ -414,9 +416,13 @@ public class BattleWnd : WindowRoot
             }
         };
         netSvc.SendMsg(gameMsg);
-      //  MainCitySys.instance.mainCityWnd.SetWndState(true);
+        //  MainCitySys.instance.mainCityWnd.SetWndState(true);
         //EntityBase player = BattleSys.instance.GetBattleMgr().entitySelfPlayer;
         //player.canControl = true;
         //player.Idle();
+    }
+    public void ShowFailTipWnd(bool isShow)
+    {
+        failTipWnd.SetWndState(isShow);
     }
 }

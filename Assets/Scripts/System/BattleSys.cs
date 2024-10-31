@@ -174,7 +174,7 @@ public class BattleSys : SystemRoot
                     playerData.Hp = rspDamage.hp;
                 }
             }
-            return;
+           // return;
         }
         if (GameRoot.Instance.PlayerData.id == rspDamage.id)//是否是自己受伤
         {
@@ -228,6 +228,14 @@ public class BattleSys : SystemRoot
             SetBattleWnd(false);
             GameRoot.Instance.SetScreenSpaceCamera();//设置界面
             MainCitySys.instance.EnterMainCity();
+        }
+    }
+    public void RspRecover(GameMsg msg)
+    {
+        RspRecover rspRecover = msg.rspRecover;
+        if (rspRecover.isRevive)
+        {
+
         }
     }
     /// <summary>
