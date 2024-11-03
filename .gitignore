@@ -362,6 +362,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.csproj
+
 *.sln
 !Server\CommonNet\CommonNet.csproj
 !Server\ComNet\ComNet.csproj
