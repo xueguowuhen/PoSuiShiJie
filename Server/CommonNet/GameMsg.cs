@@ -963,6 +963,7 @@ namespace CommonNet
         [ProtoMember(1)]
         public const string srvIP = "10.201.17.142";
 
+
         [ProtoMember(2)]
         public const int srvPort = 17666;
     }
