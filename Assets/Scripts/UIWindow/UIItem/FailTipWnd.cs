@@ -40,7 +40,7 @@ public class FailTipWnd : WindowRoot
             reqRecover = new ReqRecover()
             {
                 id = playerData.id,
-                isRevive = true,
+                isRevive = false,
             }
         };
         netSvc.SendMsg(gameMsg);
@@ -57,7 +57,7 @@ public class FailTipWnd : WindowRoot
             reqRecover = new ReqRecover()
             {
                 id = playerData.id,
-                isRevive = false,
+                isRevive = true,
             }
         };
         netSvc.SendMsg(gameMsg);

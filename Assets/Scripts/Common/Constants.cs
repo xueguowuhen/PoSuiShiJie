@@ -165,8 +165,8 @@ public class Constants
     public const int GuideCameraRos_y = 180;
     public const int GuideCameraRos_z = 0;
     //层级配置
-    public const int PlayerLayer = 7;
-    public const int NPCLayer = 6;
+    public const int PlayerLayer = 6;
+    public const int NPCLayer = 7;
     //战斗默认参数
     public const int ActionDefault = -1;
     public const int VelocityDefault = 0;

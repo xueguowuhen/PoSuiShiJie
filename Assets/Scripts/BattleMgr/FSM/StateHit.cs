@@ -15,16 +15,20 @@ public class StateHit : ISate
         entity.SetDir(Vector2.zero);
         entity.SetAction((int)AniPlayerState.Hit);
         entity.canRlskill = false;
-        TimerSvc.Instance.AddTimeTask((int tid) =>
-        {
-            //entity.SetAction(Constants.ActionDefault);
-            entity.Idle();
-        }, (int)(GetHitAniLen(entity) * 1000));
+        //TimerSvc.Instance.AddTimeTask((int tid) =>
+        //{
+        //    //entity.SetAction(Constants.ActionDefault);
+        //    entity.Idle();
+        //}, (int)(GetHitAniLen(entity) * 1000));
+        AnimatorDispatcher.Instance.AddEventListener(AniPlayerState.Hit, OnHitEvent);
     }
-
+    public void OnHitEvent(EntityBase entity)
+    {
+        entity.Idle();
+    }
     public void Exit(EntityBase entity, params object[] objects)
     {
-
+        AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.Hit, OnHitEvent);
     }
     public void Process(EntityBase entity)
     {
@@ -32,19 +36,19 @@ public class StateHit : ISate
     }
 
 
-    private float GetHitAniLen(EntityBase entity)
-    {
-        AnimationClip[] clips = entity.GetAniClips();
-        for (int i = 0; i < clips.Length; i++)
-        {
-            string clipName = clips[i].name;
-            if (clipName.Contains("hit") ||
-                clipName.Contains("Hit") ||
-                clipName.Contains("HIT"))
-            {
-                return clips[i].length;
-            }
-        }
-        return 1;
-    }
+    //private float GetHitAniLen(EntityBase entity)
+    //{
+    //    AnimationClip[] clips = entity.GetAniClips();
+    //    for (int i = 0; i < clips.Length; i++)
+    //    {
+    //        string clipName = clips[i].name;
+    //        if (clipName.Contains("hit") ||
+    //            clipName.Contains("Hit") ||
+    //            clipName.Contains("HIT"))
+    //        {
+    //            return clips[i].length;
+    //        }
+    //    }
+    //    return 1;
+    //}
 }

@@ -141,9 +141,10 @@ public class BaseData<T>
 }
 public class DataTrans
 {
-    public double time;
+    public long time;
     public Vector3 pos;
     public Vector3 Rot;
+    public float speed;
 }
 public class ABInfo
 {

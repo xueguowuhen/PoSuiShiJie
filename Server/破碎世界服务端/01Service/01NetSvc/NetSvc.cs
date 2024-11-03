@@ -39,8 +39,8 @@ public class NetSvc
     }
     public void Init()
     {
-        TraSocket < ServerSession, GameMsg > socket = new TraSocket<ServerSession, GameMsg>();
-        socket.StartAsServer(IPCfg.srvIP, IPCfg.srvPort);
+        traSocket = new TraSocket<ServerSession, GameMsg>();
+        traSocket.StartAsServer(IPCfg.srvIP, IPCfg.srvPort);
         GameCommon.Log("NetSvc Init Done");
     }
     /// <summary>
@@ -54,6 +54,10 @@ public class NetSvc
         {
             queue.Enqueue(new MsgPack(serverSession, gameMsg));
         }
+    }
+    public void AddSession(int sessionID, ServerSession session)
+    {
+        traSocket.AddSession(sessionID, session);
     }
     public void Update()
     {
@@ -70,6 +74,9 @@ public class NetSvc
     {
         switch ((CMD)pack.gameMsg.cmd)
         {
+            case CMD.ReqSystemTimeMessage:
+                TimeSys.Instance.ReqSystemTimeMessage(pack);
+                break;
             case CMD.ReqRegister:
                 LoginSys.Instance.ReqRegister(pack);
                 break;

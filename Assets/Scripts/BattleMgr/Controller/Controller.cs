@@ -69,7 +69,7 @@ public class Controller : MonoBehaviour
     {
 
     }
-    public virtual void SetTrans(double time, Vector3 Pos, Vector3 Rot)
+    public virtual void SetTrans(long time, Vector3 Pos, Vector3 Rot, float speed)
     {
     }
     protected virtual void SetDir()

@@ -8,7 +8,8 @@
 using System.IO;
 using System;
 using System.IO.Compression;
-using System.Xml.Serialization;
+//using System.Xml.Serialization;
+using ProtoBuf; // 使用 protobuf-net 的命名空间
 namespace ComNet
 {
     public class TraTool
@@ -28,16 +29,27 @@ namespace ComNet
         /// <typeparam name="T"></typeparam>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static byte[] Serialize<T>(T msg) where T : TraMsg
+
+        public static byte[] Serialize<T>(T msg) // 这里的 T 应该是具体的消息类型
         {
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                serializer.Serialize(ms, msg);//将对象进行序列化，写入临时内存流
-                ms.Seek(0, SeekOrigin.Begin);//设置流位置，0表示偏移0，Begin表示从流开头计算偏移
-                return Compress(ms.ToArray());
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    Serializer.Serialize(ms, msg); // 使用 protobuf-net 进行序列化
+                    return Compress(ms.ToArray()); // 压缩序列化数据
+                }
+            }
+            catch (Exception ex)
+            {
+                // 记录异常信息
+                LogMsg($"Serialization failed for type {typeof(T).Name}: {ex.Message}");
+                // 如果可以，记录 msg 的详细信息
+                LogMsg($"Message details: {msg}");
+                throw; // 重新抛出异常，以便外部处理
             }
         }
+
         /// <summary>
         /// 压缩数据
         /// </summary>
@@ -50,9 +62,9 @@ namespace ComNet
                 using (GZipStream gZip = new GZipStream(ms, CompressionMode.Compress, true))//实例化一个用于对数据进行压缩的对象，compress表示压缩，true表示使用基础流
                 {
                     gZip.Write(input, 0, input.Length);//将input的数据写入压缩
-                    gZip.Close();
-                    return ms.ToArray();// 将压缩后的数据转化为字节返回
+                    //gZip.Close();
                 }
+                    return ms.ToArray();// 将压缩后的数据转化为字节返回
             }
         }
         /// <summary>
@@ -61,28 +73,14 @@ namespace ComNet
         /// <typeparam name="T"></typeparam>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static T DeSerialize<T>(byte[] msg) where T : TraMsg
+        public static T DeSerialize<T>(byte[] msg) // T 代表反序列化后的类型
         {
             using (MemoryStream ms = new MemoryStream(DeCompress(msg)))
             {
-                try
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(T));
-                    object obj = serializer.Deserialize(ms);
-                    if (obj != null)
-                    {
-                        T msgdata = (T)obj;
-                        return msgdata;
-                    }
-                    return null;
-                }catch (Exception ex)
-                {
-                    LogMsg("反序列化失败: " + ex.Message + " 字节长度:" + msg.Length, LogLevel.Error);
-                    return null;
-                }
-
+                return Serializer.Deserialize<T>(ms); // 使用 protobuf-net 进行反序列化
             }
         }
+
         /// <summary>
         /// 解压数据
         /// </summary>
@@ -97,9 +95,9 @@ namespace ComNet
                     using (GZipStream gZip = new GZipStream(ms, CompressionMode.Decompress))//实例化一个用于对数据进行压缩的对象，compress表示压缩，true表示使用基础流
                     {
                         gZip.CopyTo(outs);//将解压的数据复制到outs
-                        gZip.Close();
-                        return outs.ToArray();// 将压缩后的数据转化为字节返回
+                       // gZip.Close();
                     }
+                        return outs.ToArray();// 将压缩后的数据转化为字节返回
                 }
             }
         }

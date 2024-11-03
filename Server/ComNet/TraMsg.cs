@@ -6,14 +6,27 @@
 	功能：Nothing
 *****************************************************/
 
+using CommonNet;
+using ProtoBuf;
+
 namespace ComNet
 {
 
+    [ProtoContract]
+    [ProtoInclude(1, typeof(GameMsg))]
     public abstract class TraMsg
     {
-        public int seq;//序列
-        public int cmd;//协议
-        public int err;//报错
-        public string beat;
+        [ProtoMember(2)]
+        public int seq; // 序列
+
+        [ProtoMember(3)]
+        public int cmd; // 协议
+
+        [ProtoMember(4)]
+        public int err; // 报错
+
+        [ProtoMember(5)]
+        public string beat; // 心跳
     }
+
 }

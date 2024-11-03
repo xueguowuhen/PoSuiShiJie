@@ -972,17 +972,41 @@
  <Reference Include="DOTweenEditor">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/DOTWeen/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
+ <Reference Include="System.Numerics.Vectors">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/System.Numerics.Vectors.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Plastic.Antlr3.Runtime">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
  </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/System.Memory.dll</HintPath>
+ </Reference>
  <Reference Include="unityplastic">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Buffers">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="CommunNet">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Scripts/Net/Debug/netstandard2.0/CommunNet.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="ComNet">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Scripts/Net/Debug/netstandard2.0/ComNet.dll</HintPath>
  </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Library/PackageCache/com.unity.collab-proxy@1.15.12/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/System.Collections.Immutable.dll</HintPath>
+ </Reference>
+ <Reference Include="protobuf-net.Core">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/protobuf-net.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="protobuf-net">
+ <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/Plugins/protobuf-net.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
  <HintPath>E:/xiangmmu/PoSuiShiJie/Assets/DOTWeen/DOTween/DOTween.dll</HintPath>

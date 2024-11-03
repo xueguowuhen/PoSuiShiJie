@@ -6,6 +6,7 @@
 	功能：计时系统
 *****************************************************/
 using Mysqlx.Crud;
+using System.Diagnostics;
 
 public class TimerSvc
 {
@@ -55,6 +56,13 @@ public class TimerSvc
         });
         GameCommon.Log("TimerSvc Init Done");
     }
+    public void ClearQueue()
+    {
+        lock (tpQueLock)
+        {
+            queue.Clear();
+        }
+    }
     public void Update()
     {
         while (queue.Count > 0)
@@ -77,5 +85,13 @@ public class TimerSvc
     public void DeleteTimeTask(int tid)
     {
          st.DeleteTimeTask(tid);
+    }
+    public double GetUTCMilliseconds()
+    {
+       return st.GetUTCMilliseconds();
+    }
+    public long GetTimestamp()
+    {
+        return st.GetTimestamp();
     }
 }

@@ -58,9 +58,8 @@ public class CameraPlayerCtrl : MonoBehaviour
 
         //定义一条射线
         RaycastHit hit;
-        if (Physics.Linecast(startPoint, endPoint, out hit))
+        if (Physics.Linecast(startPoint, endPoint, out hit, ~1<<Constants.PlayerLayer))
         {
-            string name = hit.collider.gameObject.tag;
             if (name != "MainCamera")
             {
                 //如果射线碰撞的不是相机，那么就取得射线碰撞点到玩家的距离
@@ -70,7 +69,7 @@ public class CameraPlayerCtrl : MonoBehaviour
                 {
                     // 平滑过渡到目标位置
                      targetPosition = new Vector3(currentDistance- CamPosOffset, 0, 0);
-                    Debug.Log("碰撞点距离：" + (currentDistance- CamPosOffset));
+                  //  Debug.Log("碰撞点距离：" + (currentDistance- CamPosOffset));
                     m_CameraZoomContainer.transform.localPosition = Vector3.Lerp(m_CameraZoomContainer.transform.localPosition, targetPosition, Time.deltaTime * smoothingSpeed);
                 }
             }
