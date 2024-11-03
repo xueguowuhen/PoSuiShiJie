@@ -364,11 +364,11 @@ FodyWeavers.xsd
 *.csproj
 
 *.sln
-!Server\CommonNet\CommonNet.csproj
-!Server\ComNet\ComNet.csproj
-!Server\ComNet\ComNet - Backup.csproj
-!Server\破碎世界服务端\破碎世界服务端.sln
-!Server\破碎世界服务端\破碎世界服务端.csproj
+!Server/CommonNet/CommonNet.csproj
+!Server/ComNet/ComNet.csproj
+!Server/ComNet/ComNet - Backup.csproj
+!Server/破碎世界服务端/破碎世界服务端.sln
+!Server/破碎世界服务端/破碎世界服务端.csproj
 posui.apk
 .svn/
 bfg.jar
