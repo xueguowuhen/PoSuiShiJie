@@ -22,6 +22,9 @@ public class LoginSys : SystemRoot
     {
         base.InitSyc();
         instance = this;
+        SocketDispatcher.Instance.AddEventListener(CMD.RspRegister, RspLogin);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspLogin, RspLogin);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspCreateGame, RspCreateGame);
         GameCommon.Log("LoginSys Init....");
     }
     public void EnterDowing()

@@ -8,6 +8,7 @@
 using CommonNet;
 using ComNet;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,20 +18,33 @@ namespace 墨染服务端._01Service._01NetSvc
 {
     public class ServerSession : TraSession<GameMsg>
     {
-        public int sessionID = 0;
         public int tid;
         protected override void OnConnected()
         {
-            sessionID = ServerRoot.Instance.GetSessionID();
-            GameCommon.Log("连接成功.");
-            //建立心跳包发送
-           tid= TimerSvc.Instance.AddTimeTask((int tid) =>
+            if (sessionID == -1)
             {
-                if (BeatTime >= 0)
+                sessionID = ServerRoot.Instance.GetSessionID();
+                NetSvc.Instance.AddSession(sessionID, this);
+            }
+            //NetSvc.Instance.ClearQueue();
+            GameCommon.Log("连接成功.");
+            TimerSvc.Instance.DeleteTimeTask(tid);
+            //建立心跳包发送
+            tid = TimerSvc.Instance.AddTimeTask((int tid) =>
+             {
+                 if (BeatTime >= 0)
+                 {
+                     BeatTimer();
+                 }
+             }, 1, TimeUnit.Second, 0);
+            SendMsg(new GameMsg()
+            {
+                cmd = (int)CMD.SystemSessionID,
+                systemSessionID = new SystemSessionID()
                 {
-                    BeatTimer();
+                    SessionID = sessionID
                 }
-            }, 1, TimeUnit.Second, 0);
+            });
         }
 
         protected override void OnReciveMsg(GameMsg msg)

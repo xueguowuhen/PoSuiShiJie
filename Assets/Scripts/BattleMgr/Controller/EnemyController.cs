@@ -66,10 +66,10 @@ public class EnemyController : Controller
         IsAiMove = open;
         TargetDis = dis;
     }
-    public override void SetTrans(double time, Vector3 Pos, Vector3 Rot)
-    {
-        //transform.localEulerAngles = Rot;
-    }
+    //public override void SetTrans(double time, Vector3 Pos, Vector3 Rot)
+    //{
+    //    //transform.localEulerAngles = Rot;
+    //}
     protected override void SetDir() //方向变动 驱动ismove 驱动setmove
     {
         if (isRos)

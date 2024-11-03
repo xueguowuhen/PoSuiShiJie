@@ -124,12 +124,12 @@ public abstract class EntityBase
             controller.Dir = dir;
         }
     }
-    public virtual void SetTrans(double time, Vector3 Pos, Vector3 Rot)
+    public virtual void SetTrans(long time, Vector3 Pos, Vector3 Rot,float speed)
     {
         if (controller != null)
         {
 
-            controller.SetTrans(time, Pos, Rot);
+            controller.SetTrans(time, Pos, Rot, speed);
         }
     }
     public virtual void SetDodge()

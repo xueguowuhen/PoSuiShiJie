@@ -19,7 +19,7 @@ public class StateMove : ISate
                 break;
             case AniState.TurnBack:
                 entity.SetAction((int)AniPlayerState.Move);
-                  entity.SetAniCrossFade(AniPlayerState.Move.ToString(),0.25f);
+                entity.SetAniCrossFade(AniPlayerState.Move.ToString(), 0.25f);
                 break;
             default://从其他状态进入移动状态
                 entity.SetAction((int)AniPlayerState.WalkStart);
@@ -43,14 +43,16 @@ public class StateMove : ISate
     public void Process(EntityBase entity)
     {
         // SetMove(false);
-
-        if (entity.GetRunState())
+        if (entity.isLocal)
         {
-            entity.SetVelocity(Constants.VelocityRun);
-        }
-        else
-        {
-            entity.SetVelocity(Constants.VelocityWalk);
+            if (entity.GetRunState())
+            {
+                entity.SetVelocity(Constants.VelocityRun);
+            }
+            else
+            {
+                entity.SetVelocity(Constants.VelocityWalk);
+            }
         }
     }
 

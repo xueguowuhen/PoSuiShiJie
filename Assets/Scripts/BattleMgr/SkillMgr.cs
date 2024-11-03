@@ -51,17 +51,20 @@ public class SkillMgr : MonoBehaviour
                 }
             }
         }
-        switch ((DamageState)rspDamage.damageState)
+        else
         {
-            case DamageState.None:
-                entity.SetHurt(rspDamage.Damage);
-                break;
-            case DamageState.Critical:
-                entity.SetCritical(rspDamage.Damage);
-                break;
-            case DamageState.Dodge:
-                entity.SetDodge();
-                break;
+            switch ((DamageState)rspDamage.damageState)
+            {
+                case DamageState.None:
+                    entity.SetHurt(rspDamage.Damage);
+                    break;
+                case DamageState.Critical:
+                    entity.SetCritical(rspDamage.Damage);
+                    break;
+                case DamageState.Dodge:
+                    entity.SetDodge();
+                    break;
+            }
         }
         GameCommon.Log("编号id：" + rspDamage.id + "受到伤害:" + rspDamage.Damage);
     }
@@ -114,7 +117,7 @@ public class SkillMgr : MonoBehaviour
         EntityBase targetentity = null;
         if (PlayerList.Count <= 0)//获取场上玩家和怪物数量
         {
-          //  return;
+            //  return;
         }
         if (entity.SetType() == EntityType.Monster)
         {
@@ -281,7 +284,7 @@ public class SkillMgr : MonoBehaviour
     public bool InRange(Vector3 from, Vector3 to, float range)
     {
         // 绘制从from到to的线
-        Debug.DrawLine(from, to, Color.yellow,1f); // 使用黄色绘制线条，您可以根据需要更改颜色
+        Debug.DrawLine(from, to, Color.yellow, 1f); // 使用黄色绘制线条，您可以根据需要更改颜色
         float dis = Vector3.Distance(from, to);
         if (dis <= range)
         {
@@ -300,7 +303,7 @@ public class SkillMgr : MonoBehaviour
     {
         if (angle == 360) return true;
         // 绘制从物体位置到目标点的方向线
-        Debug.DrawLine(tranns.position, to, Color.blue,1); // 使用蓝色绘制线条，您可以根据需要更改颜色
+        Debug.DrawLine(tranns.position, to, Color.blue, 1); // 使用蓝色绘制线条，您可以根据需要更改颜色
         // 计算目标点与物体之间的方向向量
         Vector3 dirToTarget = to - tranns.position;
         float agle = Vector3.Angle(tranns.forward, dirToTarget);

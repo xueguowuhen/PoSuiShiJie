@@ -88,6 +88,7 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     private void RemotePlayer()
     {
+        if (GameRoot.Instance.PlayerDataList == null || GameRoot.Instance.PlayerDataList.Count == 0) return;
         foreach (PlayerData playerData in GameRoot.Instance.PlayerDataList)
         {
             SetRemoteEntity(playerData);
@@ -322,6 +323,7 @@ public class BattleMgr : MonoBehaviour
             if (Player.playerData.id == rspState.PlayerID)//根据id切换状态
             {
                 // Player.playerData.AniState = rspState.AniState;
+                long dalyTime = TimerSvc.Instance.GetCurrServerTime() - rspState.LocalTime;
                 AniState aniState = (AniState)rspState.AniState;
                 string AniName = Enum.GetName(typeof(AniState), aniState);
                 MethodInfo mi = Player.GetType().GetMethod(AniName);

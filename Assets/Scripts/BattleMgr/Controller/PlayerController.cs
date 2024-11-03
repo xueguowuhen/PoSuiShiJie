@@ -10,6 +10,7 @@ using CommonNet;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -17,13 +18,16 @@ using UnityEngine.UIElements;
 public class PlayerController : Controller
 {
     public float currentVelocity;
+    /// <summary>
+    /// 远程人物id
+    /// </summary>
     public int RemotePlayerId;
-    private bool IsRun;
+    //private bool IsRun;
     public bool IsEvade;
     public CharacterController characterController;
-    public int syncRate = 45;
+    //public int syncRate = 45;
     private Vector3 PlayerCurrentRot;
-    public float playerCurrentVelocity;
+    // public float playerCurrentVelocity;
     public Action TransCB = null;
     public int playerCurrentAction;
     private float rotationSpeed = 15f;
@@ -38,8 +42,8 @@ public class PlayerController : Controller
     /// 是否由寻路接管旋转
     /// </summary>
     private bool IsNavMeshRos = false;
-    private float sendInterval = 0.2f; // 间隔0.2秒发送一次
-    private float lastSendTime;
+    float smoothingFactor = 5f; // 插值因子，可以根据需求调整
+
     #region 测试数据
     private float elapsedTime;
     private float totalDistance;
@@ -105,6 +109,7 @@ public class PlayerController : Controller
         if (!isLocal)//引入延迟补偿机制
         {
             SetDelaySation();
+            RemoteUpdatePlayer();
         }
         SetDir();
     }
@@ -114,9 +119,7 @@ public class PlayerController : Controller
     }
     public void SendPlayerTransform()
     {
-        if (Time.time - lastSendTime < sendInterval) return; // 限制发送频率
-
-        if (PlayerCurrentRot != eulerAngles)
+        if (PlayerCurrentRot != eulerAngles || currentVelocity != targetVelocity)
         {
             PlayerCurrentRot = eulerAngles;
             GameMsg msg = new GameMsg
@@ -125,17 +128,17 @@ public class PlayerController : Controller
                 reqTransform = new ReqTransform
                 {
                     isShoolr = isShoolr,
-                    time = TimerSvc.Instance.GetNwTime(),
+                    time = TimerSvc.Instance.GetCurrServerTime(),
                     Pos_X = transform.position.x,
                     Pos_Y = transform.position.y,
                     Pos_Z = transform.position.z,
                     Rot_X = eulerAngles.x,
                     Rot_Y = eulerAngles.y,
                     Rot_Z = eulerAngles.z,
+                    speed = targetVelocity
                 }
             };
-            NetSvc.instance.SendMsg(msg);
-            lastSendTime = Time.time; // 记录上次发送时间
+            NetSvc.instance.SendMsgAsync(msg);
         }
 
     }
@@ -150,10 +153,10 @@ public class PlayerController : Controller
             float angle = Vector2.SignedAngle(Dir, new Vector2(0, 1)) + camTran.eulerAngles.y;
             // 检查角度是否是0度，45度,90
             // 检查角度是否是45的倍数
-            if (angle % 45 != 0)
+            if (angle % 20 != 0)
             {
                 // 找到最近的45的倍数
-                angle = Mathf.Round(angle / 45) * 45;
+                angle = Mathf.Round(angle / 20) * 20;
             }
             eulerAngles = new Vector3(0, angle, 0);
         }
@@ -170,36 +173,43 @@ public class PlayerController : Controller
     public void SetDelaySation()
     {
         if (PosQue.Count <= 0) return;
-        dataTrans = PosQue.Dequeue();//取出值
-        //double delaytime = TimerSvc.Instance.GetNwTime() - dataTrans.time;//获取延迟毫秒数
-        //delayfps = (int)(delaytime / 20);//计算延迟帧数
+
+        dataTrans = PosQue.Dequeue(); // 取出值
+        long delayTime = TimerSvc.Instance.GetCurrServerTime() - dataTrans.time; // 获取延迟毫秒数
+        float delaySeconds = delayTime / 1000f; // 转换为秒
+
+        targetVelocity = dataTrans.speed;
+      //  Debug.Log("当前速度"+currentVelocity+"速度：" + targetVelocity);
         eulerAngles = dataTrans.Rot;
-        Vector3 targetPostion = dataTrans.pos;
+        float speed = targetVelocity == Constants.VelocityRun ? Constants.PlayerRunSpeed : Constants.PlayerWalkSpeed;
+        // 预测位置
+        Vector3 targetPosition = dataTrans.pos + (animator.deltaPosition * speed * delaySeconds);
+
         characterController.enabled = false;
-        transform.position = targetPostion;
+
+        // 平滑插值
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothingFactor);
         characterController.enabled = true;
     }
-    public override void SetTrans(double time, Vector3 Pos, Vector3 Rot)
+    public void RemoteUpdatePlayer()
+    {
+
+    }
+    public override void SetTrans(long time, Vector3 Pos, Vector3 Rot, float speed)
     {
         DataTrans dataTrans = new DataTrans
         {
             time = time,
             pos = Pos,
-            Rot = Rot
+            Rot = Rot,
+            speed = speed
         };
         PosQue.Enqueue(dataTrans);
     }
     public override void SetMove()
     {
-        float speed;
-        if (IsRun)
-        {
-            speed = Constants.PlayerRunSpeed;
-        }
-        else
-        {
-            speed = Constants.PlayerWalkSpeed;
-        }
+        float speed = currentVelocity == Constants.VelocityRun ? Constants.PlayerRunSpeed : Constants.PlayerWalkSpeed;
+
         moveDistance = speed * animator.deltaPosition /** Time.deltaTime*/;
 
         // 角色移动
@@ -217,22 +227,6 @@ public class PlayerController : Controller
             moveDistance *= EvadeRange;
             characterController.Move(moveDistance);
         }
-
-        ////   更新经过的时间
-        //  elapsedTime += Time.fixedDeltaTime;
-
-        //   // 每秒打印一次这一秒的移动距离
-        //   if (elapsedTime >= 1f)
-        //   {
-        //       if (tartgetPos != null)
-        //       {
-        //           Debug.Log("这一秒实际移动距离" + Vector3.Distance(tartgetPos, transform.position));
-        //       }
-        //       tartgetPos = transform.position;
-        //       Debug.Log("这一秒移动的距离: " + totalDistance);
-        //       totalDistance = 0;
-        //       elapsedTime = 0f; // 重置计时器
-        //   }
     }
 
 

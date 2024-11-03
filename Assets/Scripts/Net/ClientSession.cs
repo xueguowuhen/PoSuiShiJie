@@ -8,6 +8,7 @@
 using CommonNet;
 using ComNet;
 using System;
+using UnityEngine;
 public class ClientSession : TraSession<GameMsg>
 {
     private int BeatTimes = 15;
@@ -15,7 +16,8 @@ public class ClientSession : TraSession<GameMsg>
     protected override void OnConnected()
     {
         GameCommon.Log("连接成功");
-
+        NetSvc.instance.SocketConnected(() => GameRoot.SetSocketFail(false));
+        //     GameRoot.SetSocketFail(false);
         tid = TimerSvc.Instance.AddTimeTask((int tid) =>
          {
              //心跳机制
@@ -33,7 +35,9 @@ public class ClientSession : TraSession<GameMsg>
     protected override void OnDisConnected()
     {
         GameCommon.Log("服务器断开连接");
+
         TimerSvc.Instance.DeleteTimeTask(tid);
+       NetSvc.instance.SocketConnected(() => GameRoot.SetSocketFail(true));
     }
 }
 
