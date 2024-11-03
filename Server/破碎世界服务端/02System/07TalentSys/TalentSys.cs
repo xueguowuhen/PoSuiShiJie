@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static CfgSvc;
-using static Mysqlx.Notice.Warning.Types;
 
 
 public class TalentSys

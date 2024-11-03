@@ -66,6 +66,7 @@ public class StateMgr : MonoBehaviour
                     {
                         PlayerID = entityPlayer.playerData.id,
                         AniState = (int)targerState,
+                        LocalTime = TimerSvc.Instance.GetCurrServerTime(),
                     }
                 };
                 if (argas != null)

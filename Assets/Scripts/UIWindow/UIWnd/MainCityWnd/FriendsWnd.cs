@@ -115,7 +115,11 @@ public class FriendsWnd : WindowRoot
         }
         FriendsItem item = CreateFriends(friendItem, AddContent);
         PlayerData playerData = GameRoot.Instance.PlayerData;
-        bool isFriend = playerData.FriendList.Any(f => f.id == friendItem.id);
+        bool isFriend = false;
+        if (playerData.FriendList != null)
+        {
+            isFriend = playerData.FriendList.Any(f => f.id == friendItem.id);
+        }
         item.SetSearch(ClearItem, isFriend);
 
     }

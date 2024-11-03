@@ -23,6 +23,15 @@ public class BattleSys : SystemRoot
     {
         base.InitSyc();
         instance = this;
+        SocketDispatcher.Instance.AddEventListener(CMD.RspCreatePlayer, RspCreatePlayer);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspDeletePlayer, RspDeletePlayer);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspTransform, RspTransform);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspDamage, RspDamage);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspState, RspState);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspRevive, RspRevive);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspEnterPVP, RspEnterPVP);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspExitPVP, RspExitPVP);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspRecover, RspRecover);
         GameCommon.Log("Init BattleSys");
     }
     /// <summary>
@@ -30,13 +39,24 @@ public class BattleSys : SystemRoot
     /// </summary>
     public void EnterBattleMap(MapCfg mapData)
     {
-        GameObject go = new GameObject
+        GameObject go = GameObject.Find("BattleRoot");
+
+        if (go == null) // 如果不存在
         {
-            name = "BattleRoot"
-        };
-        go.transform.SetParent(GameRoot.Instance.transform);
-        battleMgr = go.AddComponent<BattleMgr>();
-        battleMgr.Init(mapData);
+            go = new GameObject
+            {
+                name = "BattleRoot"
+            };
+            go.transform.SetParent(GameRoot.Instance.transform);
+            battleMgr = go.AddComponent<BattleMgr>();
+            battleMgr.Init(mapData);
+        }
+        else // 如果已经存在
+        {
+            battleMgr = go.GetComponent<BattleMgr>();
+            // 可能需要做其他处理，比如重置或更新 battleMgr
+        }
+
 
     }
     /// <summary>
@@ -174,7 +194,7 @@ public class BattleSys : SystemRoot
                     playerData.Hp = rspDamage.hp;
                 }
             }
-           // return;
+            return;
         }
         if (GameRoot.Instance.PlayerData.id == rspDamage.id)//是否是自己受伤
         {
@@ -225,17 +245,45 @@ public class BattleSys : SystemRoot
         {
             // 退出PVP
             GameCommon.Log("退出PVP成功");
-            SetBattleWnd(false);
-            GameRoot.Instance.SetScreenSpaceCamera();//设置界面
-            MainCitySys.instance.EnterMainCity();
+            EnterMainCity();
         }
     }
     public void RspRecover(GameMsg msg)
     {
         RspRecover rspRecover = msg.rspRecover;
-        if (rspRecover.isRevive)
-        {
+        int playerId = rspRecover.id;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
 
+        //是自己时返回
+        if (playerData.id == playerId)
+        {
+            playerData.Hp = msg.rspRecover.Hp; // 重新配置血量
+            Debug.Log("刷新血量" + playerData.Hp);
+            if (rspRecover.isRevive)//是否复活
+            {
+                battleWnd.ShowFailTipWnd(false);
+                battleWnd.RefreshUI();
+                GetEntity(playerData.id).canControl = true;
+                GetEntity(playerData.id).Idle();
+            }
+            else//返回主页
+            {
+                // 刷新UI
+                EnterMainCity();
+            }
+            return;
+        }
+
+        // 遍历玩家数据列表
+        foreach (PlayerData RemoteplayerData in GameRoot.Instance.PlayerDataList)
+        {
+            if (RemoteplayerData.id == playerId)
+            {
+                // Debug.Log("刷新血量" + playerData.Hp);
+                RemoteplayerData.Hp = rspRecover.Hp; // 重新配置血量
+                                                     //   RefreshUI(); 
+                break;
+            }
         }
     }
     /// <summary>
@@ -245,13 +293,17 @@ public class BattleSys : SystemRoot
     public void RspCreatePlayer(GameMsg msg)
     {
         PlayerData playerData = msg.rspCreatePlayer.playerData;
-        foreach (PlayerData data in GameRoot.Instance.PlayerDataList)
+        if (GameRoot.Instance.PlayerDataList != null)
         {
-            if (data.id == playerData.id)
+            foreach (PlayerData data in GameRoot.Instance.PlayerDataList)
             {
-                GameCommon.Log("创建人物失败，ID重复");
-                return;
+                if (data.id == playerData.id)
+                {
+                    GameCommon.Log("创建人物失败，ID重复");
+                    return;
+                }
             }
+
         }
         //Debug.Log(playerData.id);
         GameRoot.Instance.PlayerDataList.Add(playerData);
@@ -288,7 +340,7 @@ public class BattleSys : SystemRoot
         if (battleMgr.RemoteEntityDic.TryGetValue(playerID, out EntityBase player))
         {
             battleMgr.RemoteEntityDic.Remove(playerID);
-          //  GameRoot.Instance.dynamicWnd.RemoveHptemInfo(playerID);
+            //  GameRoot.Instance.dynamicWnd.RemoveHptemInfo(playerID);
             player.Destroy();
         }
     }
@@ -309,9 +361,9 @@ public class BattleSys : SystemRoot
                 Vector3 pos = new Vector3(rspTransform.Pos_X, rspTransform.Pos_Y, rspTransform.Pos_Z);
                 Vector3 Rot = new Vector3(rspTransform.Rot_X, rspTransform.Rot_Y, rspTransform.Rot_Z);
                 //GameCommon.Log("收到旋转" + rspTransform.Rot_Y);
-                if (rspTransform.isShoolr)
+                if (rspTransform.isShoolr)//是否平滑
                 {
-                    player.SetTrans(rspTransform.time, pos, Rot);
+                    player.SetTrans(rspTransform.time, pos, Rot, rspTransform.speed);
                 }
                 else
                 {
@@ -334,6 +386,21 @@ public class BattleSys : SystemRoot
                 break;
             }
         }
+    }
+    /// <summary>
+    /// 进入主城
+    /// </summary>
+    public void EnterMainCity()
+    {
+        Destroy(battleMgr.cameraPlayerCtrl.gameObject);
+        GameObject go = GameObject.Find("BattleRoot");
+        if (go != null)
+        {
+            Destroy(go);
+        }
+        SetBattleWnd(false);
+        GameRoot.Instance.SetScreenSpaceCamera();//设置界面
+        MainCitySys.instance.EnterMainCity();
     }
     public void RefreshUI()
     {

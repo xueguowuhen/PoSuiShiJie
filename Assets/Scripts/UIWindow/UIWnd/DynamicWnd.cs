@@ -16,12 +16,14 @@ public class DynamicWnd : WindowRoot
     public Animation tipsAni;
     public Transform hpItemRoot;
     public Text tipsText;
+    public SocketFailTipWnd socketFailTipWnd;
     private bool tipsShow = false;
     private Queue<string> tipsqueue = new Queue<string>();
     private Dictionary<int, ItemEntityHP> itemDic = new Dictionary<int, ItemEntityHP>();
     protected override void InitWnd()
     {
         base.InitWnd();
+        SetSocketFail(false);
         SetGameObject();
     }
     protected override void SetGameObject()
@@ -93,13 +95,13 @@ public class DynamicWnd : WindowRoot
     }
     public void SetDodge(int playerid)
     {
-        ItemEntityHP itemEntityHP=null;
-        if(itemDic.TryGetValue(playerid, out itemEntityHP))
+        ItemEntityHP itemEntityHP = null;
+        if (itemDic.TryGetValue(playerid, out itemEntityHP))
         {
             itemEntityHP.SetDodge();
         }
     }
-    public void SetCritical(int playerid,int hurt)
+    public void SetCritical(int playerid, int hurt)
     {
         ItemEntityHP itemEntityHP = null;
         if (itemDic.TryGetValue(playerid, out itemEntityHP))
@@ -114,5 +116,9 @@ public class DynamicWnd : WindowRoot
         {
             itemEntityHP.SetHurt(hurt);
         }
+    }
+    public void SetSocketFail(bool isShow = true)
+    {
+        socketFailTipWnd.SetWndState(isShow);
     }
 }

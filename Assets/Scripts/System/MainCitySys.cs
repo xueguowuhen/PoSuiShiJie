@@ -51,6 +51,17 @@ public class MainCitySys : SystemRoot
     {
         base.InitSyc();
         instance = this;
+        SocketDispatcher.Instance.AddEventListener(CMD.RspShop, RspShop);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspTask, RspTask);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspSearchFriend, RspSearchFriend);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspAddFriend, RspAddFriend);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspFriendGift, RspFriendGift);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspFriendAddConfirm, RspFriendAddConfirm);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspDelFriend, RspDelFriend);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspRewardTask, RspRewardTask);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspDailyTask, RspDailyTask);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspTalentUp, RspTalentUpHandler);
+        SocketDispatcher.Instance.AddEventListener(CMD.RspChangeTalent, RspTalentChangeHandler);
         GameCommon.Log("Init MainCitySys...");
     }
     /// <summary>

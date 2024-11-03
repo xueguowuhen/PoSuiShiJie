@@ -17,6 +17,7 @@ public class GameRoot : MonoBehaviour
     public DynamicWnd dynamicWnd;
     private Transform canvas;
     public Camera uiCamera;
+
     private void Start()
     {
         Instance = this;
@@ -49,8 +50,9 @@ public class GameRoot : MonoBehaviour
         MainCitySys mainCity = gameObject.GetComponent<MainCitySys>();
         mainCity.InitSyc();
         BattleSys battleSys = gameObject.GetComponent<BattleSys>();
-        battleSys.InitSyc(); 
-        dynamicWnd.SetWndState();
+        battleSys.InitSyc();
+        dynamicWnd.SetWndState();//设置动态界面状态
+        timerSvc.SendLocalTime();//发送本地时间
         //进入登录界面
         login.EnterDowing();
     }
@@ -78,6 +80,10 @@ public class GameRoot : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.worldCamera = uiCamera;
         Camera.main.fieldOfView = Constants.CamerafieldOfView;
+    }
+    public static void SetSocketFail(bool IsShow)
+    {
+        Instance.dynamicWnd.SetSocketFail(IsShow);
     }
 
     private PlayerData playerData = null;

@@ -8,6 +8,7 @@
 
 using CommonNet;
 using ComNet;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
@@ -20,9 +21,27 @@ public class NetSvc : MonoBehaviour
     private readonly static string Lock = "lock";
     private Queue<GameMsg> Msgqueue = new Queue<GameMsg>();
     public TraSocket<ClientSession, GameMsg> client = null;
+    private Queue<Action> extcutionActions = new Queue<Action>();
+    private int sessionID=-1;
     public void InitSyc()
     {
         instance = this;
+        StartAsClient();
+        SocketDispatcher.Instance.AddEventListener(CMD.SystemSessionID, onSystemSessionID);
+        GameCommon.Log("NetSvc Init....");
+    }
+
+    private void onSystemSessionID(GameMsg msg)
+    {
+        sessionID = msg.systemSessionID.SessionID;
+        GameCommon.Log("sessionID:" + sessionID);
+    }
+
+    /// <summary>
+    /// 启动客户端
+    /// </summary>
+    public void StartAsClient()
+    {
         client = new TraSocket<ClientSession, GameMsg>();
         client.SetLog(true, (string msg, int lv) =>
         {
@@ -46,14 +65,28 @@ public class NetSvc : MonoBehaviour
                     break;
             }
         });
-        client.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
-        GameCommon.Log("NetSvc Init....");
+        client.StartAsClient(IPCfg.srvIP, IPCfg.srvPort, sessionID);
+    }
+    public void SocketConnected(Action action)
+    {
+        extcutionActions.Enqueue(action);
     }
     public void SendMsg(GameMsg msg)
     {
         if (client.session != null)
         {
             client.session.SendMsg(msg);
+        }
+        else
+        {
+            GameCommon.Log("发送错误");
+        }
+    }
+    public void SendMsgAsync(GameMsg msg)
+    {
+        if (client.session != null)
+        {
+            client.session.SendMsgAsync(msg);
         }
         else
         {
@@ -67,6 +100,7 @@ public class NetSvc : MonoBehaviour
             Msgqueue.Enqueue(msg);
         }
     }
+
     public void Update()
     {
         if (Msgqueue.Count > 0)
@@ -75,6 +109,14 @@ public class NetSvc : MonoBehaviour
             {
                 GameMsg msg = Msgqueue.Dequeue();
                 ProcessMsg(msg);
+            }
+        }
+        if (extcutionActions.Count > 0)
+        {
+            lock (Lock)
+            {
+                Action action = extcutionActions.Dequeue();
+                action();
             }
         }
     }
@@ -186,82 +228,13 @@ public class NetSvc : MonoBehaviour
             }
             return;
         }
-        switch ((CMD)msg.cmd)
-        {
-            case CMD.RspRegister:
-                LoginSys.instance.RspRegister(msg);
-                break;
-            case CMD.RspLogin:
-                LoginSys.instance.RspLogin(msg);
-                break;
-            case CMD.RspCreateGame:
-                LoginSys.instance.RspCreateGame(msg);
-                break;
-            case CMD.RspShop:
-                MainCitySys.instance.RspShop(msg);
-                break;
-            case CMD.RspTask:
-                MainCitySys.instance.RspTask(msg);
-                break;
-            case CMD.RspSearchFriend:
-                MainCitySys.instance.RspSearchFriend(msg);
-                break;
-            case CMD.RspAddFriend:
-                MainCitySys.instance.RspAddFriend(msg);
-                break;
-            case CMD.RspFriendGift:
-                MainCitySys.instance.RspFriendGift(msg);
-                break;
-            case CMD.RspFriendAddConfirm:
-                MainCitySys.instance.RspFriendAddConfirm(msg);
-                break;
-            case CMD.RspDelFriend:
-                MainCitySys.instance.RspDelFriend(msg);
-                break;
-            case CMD.RspRewardTask:
-                MainCitySys.instance.RspRewardTask(msg);
-                break;
-            case CMD.RspDailyTask:
-                MainCitySys.instance.RspDailyTask(msg);
-                break;
-            case CMD.RspCreatePlayer:
-                BattleSys.instance.RspCreatePlayer(msg);
-                break;
-            case CMD.RspDeletePlayer:
-                BattleSys.instance.RspDeletePlayer(msg);
-                break;
-            case CMD.RspTransform:
-                BattleSys.instance.RspTransform(msg);
-                break;
-            case CMD.RspDamage:
-                BattleSys.instance.RspDamage(msg);
-                break;
-            case CMD.RspState:
-                BattleSys.instance.RspState(msg);
-                break;
-            case CMD.RspRevive:
-                BattleSys.instance.RspRevive(msg);
-                break;
-            case CMD.RspTalentUp:
-                MainCitySys.instance.RspTalentUpHandler(msg);
-                break;
-            case CMD.RspChangeTalent:
-                MainCitySys.instance.RspTalentChangeHandler(msg);
-                break;
-            case CMD.RspEnterPVP:
-                BattleSys.instance.RspEnterPVP(msg);
-                break;
-            case CMD.RspExitPVP:
-                BattleSys.instance.RspExitPVP(msg);
-                break;
-            case CMD.RspRecover:
-                BattleSys.instance.RspRecover(msg);
-                break;
-        }
+        SocketDispatcher.Instance.Dispatch((CMD)msg.cmd, msg);
+
     }
     private void OnDestroy()
     {
         //释放连接
         client.session.Shutdown();
+
     }
 }

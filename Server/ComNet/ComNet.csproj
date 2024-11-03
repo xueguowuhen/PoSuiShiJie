@@ -5,4 +5,20 @@
     <BaseOutputPath>..\..\Assets\Scripts\Net\</BaseOutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="proto\**" />
+    <EmbeddedResource Remove="proto\**" />
+    <None Remove="proto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="protobuf-net" Version="3.2.45" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommonNet">
+      <HintPath>..\CommonNet\bin\Debug\net8.0\CommonNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

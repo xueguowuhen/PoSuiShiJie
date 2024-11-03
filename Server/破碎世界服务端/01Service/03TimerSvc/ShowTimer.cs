@@ -641,10 +641,18 @@ public class ShowTimer
     /// 获取世界时间的毫秒数
     /// </summary>
     /// <returns></returns>
-    private double GetUTCMilliseconds()
+    public double GetUTCMilliseconds()
     {//当前时间减去计算机元年
         TimeSpan ts = DateTime.UtcNow - startDateTime;
         return ts.TotalMilliseconds;
+    }
+    /// <summary>
+    /// 获取时间戳 定义为从格林尼治时间1970年01月01日00时00分00秒起至现在的总毫秒数
+    /// </summary>
+    /// <returns></returns>
+    public long GetTimestamp()
+    {
+        return (DateTime.UtcNow.Ticks - 621355968000000000) / 10000;
     }
     public void SetHandle(Action<Action<int>, int> handle)
     {

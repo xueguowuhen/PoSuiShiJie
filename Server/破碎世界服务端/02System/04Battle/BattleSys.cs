@@ -95,7 +95,7 @@ public class BattleSys
             playerData = playerData,
         };
         //向其他在线玩家广播创建玩家数据
-        cacheSvc.GetSession(pack.session, msg);
+        cacheSvc.GetBattleSession(pack.session, msg);
     }
     /// <summary>
     /// 广播删除角色通知
@@ -145,6 +145,7 @@ public class BattleSys
                 Rot_X = reqTransform.Rot_X,
                 Rot_Y = reqTransform.Rot_Y,
                 Rot_Z = reqTransform.Rot_Z,
+                speed = reqTransform.speed,
             }
         };
         GameCommon.Log("位置是：" + reqTransform.Pos_X + "," + reqTransform.Pos_Y + "," + reqTransform.Pos_Z);
@@ -171,7 +172,7 @@ public class BattleSys
         {
             cmd = (int)CMD.RspRecover,
         };
-        playerData.Hp = reqRecover.isRevive ? 1 : playerData.Hpmax;
+        playerData.Hp = reqRecover.isRevive ? playerData.Hpmax : 1;
 
         if (!cacheSvc.UpdatePlayerData(playerData))
         {
@@ -186,6 +187,8 @@ public class BattleSys
                 Hp = playerData.Hp,
                 Hpmax = playerData.Hpmax,
             };
+            //向其他玩家广播血量
+            cacheSvc.GetBattleSession(pack.session, gameMsg);
             pack.session.SendMsg(gameMsg);
         }
     }
@@ -199,6 +202,7 @@ public class BattleSys
             rspPlayerState = new RspPlayerState
             {
                 PlayerID = reqPlayerState.PlayerID,
+                LocalTime = reqPlayerState.LocalTime,
                 AniState = reqPlayerState.AniState,
                 SkillID = reqPlayerState.SkillID,
             }

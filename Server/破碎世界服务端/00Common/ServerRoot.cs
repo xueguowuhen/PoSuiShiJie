@@ -40,6 +40,7 @@ public class ServerRoot
         FriendSys.Instance.Init();
         DailyTaskSys.Instance.Init();
         TalentSys.Instance.Init();
+        TimeSys.Instance.Init();
     }
     public void Update()
     {

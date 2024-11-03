@@ -7,7 +7,11 @@
 *****************************************************/
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace ComNet
@@ -17,7 +21,12 @@ namespace ComNet
         private Socket socket;
         private Action closeAC;
         private int DownSeconds = 20;
+        private bool isConnected = false;
         public int BeatTime = -1;
+        public int sessionID = -1;
+        private const int HoldTimeInSeconds = 180; // 持有连接的时间（3分钟）
+        private CancellationTokenSource cancellationTokenSource;
+
         private readonly string Lock = "lock";
         #region 接收消息
         public void StartRcvData(Socket socket, Action action)
@@ -27,6 +36,7 @@ namespace ComNet
                 this.socket = socket;
                 this.closeAC = action;
                 BeatTime = DownSeconds;
+                isConnected=true;
                 OnConnected();
                 TraPkg traPkg = new TraPkg();
                 socket.BeginReceive//异步接收处理消息
@@ -45,24 +55,38 @@ namespace ComNet
                 TraTool.LogMsg("开始接收消息:" + ex.Message, LogLevel.Error);
             }
         }
+        // 更新现有会话的 Socket
+        public void UpdateSocket(Socket newSocket)
+        {
+            // 关闭当前 Socket 的连接
+            socket?.Close();
+            // 取消持有连接的任务
+            cancellationTokenSource?.Cancel();
+            // 更新为新 Socket
+            this.socket = newSocket;
+
+            // 重新开始接收数据
+            StartRcvData(newSocket, closeAC);
+        }
         private void RcvHeadData(IAsyncResult async)
         {
             try
             {
                 if (async.AsyncState == null)
                 {
-                    OnDisConnected();
+                    //  OnDisConnected();
                     Clear();
                     return;
                 }
                 TraPkg traPkg = (TraPkg)async.AsyncState;
-                if (socket == null || socket.Available == 0)//获取缓冲区中的可用字节数
+                if (socket == null || socket.Connected == false)//获取缓冲区中的可用字节数
                 {
-                    OnDisConnected();
+                    //  OnDisConnected();
                     Clear();
                     return;
                 }
                 int len = socket.EndReceive(async);//结束接受获取接收的字节长度
+               
                 if (len > 0)//长度大于0,才进行数据处理
                 {
                     traPkg.headIndex += len;
@@ -92,7 +116,7 @@ namespace ComNet
                 }
                 else
                 {
-                    OnDisConnected();
+                    // OnDisConnected();
                     Clear();
                 }
             }
@@ -100,10 +124,12 @@ namespace ComNet
             {
                 if (ex is ObjectDisposedException)
                 {
-                    OnDisConnected();
+                    //  OnDisConnected();
+                    Clear();
                 }
                 else
                 {
+                    Clear();
                     TraTool.LogMsg("数据接收报错:" + ex.Message, LogLevel.Error);
                 }
             }
@@ -152,7 +178,7 @@ namespace ComNet
                 }
                 else
                 {
-                    OnDisConnected();
+                    //  OnDisConnected();
                     Clear();
                 }
             }
@@ -160,7 +186,8 @@ namespace ComNet
             {
                 if (e is ObjectDisposedException)
                 {
-                    OnDisConnected();
+                    // OnDisConnected();
+                    Clear();
                 }
                 else
                 {
@@ -175,14 +202,15 @@ namespace ComNet
         /// </summary>
         public void BeatTimer()
         {
-            
+
             lock (Lock)
             {
                 if (closeAC == null) return;
+                if (isConnected==false) return;
                 BeatTime--;
                 if (BeatTime <= 0)
                 {
-                    OnDisConnected();
+
                     Clear();
                     return;
 
@@ -194,9 +222,12 @@ namespace ComNet
         //释放连接
         public void Shutdown()
         {
-            socket.Shutdown(SocketShutdown.Both);
-
-
+            //socket.Shutdown(SocketShutdown.Both);
+            if (socket != null && socket.Connected)
+            {
+                socket.Shutdown(SocketShutdown.Both);
+                socket.Close();
+            }
             Clear();
         }
         public void SendMsg(T msg)
@@ -204,6 +235,14 @@ namespace ComNet
             byte[] data = TraTool.PackLenInfo(TraTool.Serialize(msg));//获取数据二进制后设置包头的数据
             SendMsg(data);
         }
+        public async void SendMsgAsync(T msg)
+        {
+            byte[] data = TraTool.PackLenInfo(TraTool.Serialize(msg));
+
+            // 调用异步发送方法
+            await Task.Run(() => SendMsg(data));
+        }
+
         public void SendMsg(byte[] data)
         {
             NetworkStream ns = null;
@@ -249,13 +288,74 @@ namespace ComNet
         #endregion
         private void Clear()
         {
+            isConnected = false;
+            // 如果已经连接的客户端
+            if (closeAC != null)
+            {
+                TraTool.LogMsg("客户端已断开连接,等待重连中...");
+                cancellationTokenSource?.Cancel(); // 取消现有的持有连接任务
+                cancellationTokenSource = new CancellationTokenSource();
+                Task.Run(() => HoldConnection(cancellationTokenSource.Token)); // 启动持有连接的任务
+            }
+            else
+            {
+                OnDisConnected(); // 超时关闭连接
+            }
+            socket?.Close(); // 确保 Socket 被关闭
+
+        }
+        private async Task HoldConnection(CancellationToken cancellationToken)
+        {
+            // 等待持有时间
+            try
+            {
+                await Task.Delay(HoldTimeInSeconds * 1000, cancellationToken);
+            }
+            catch (TaskCanceledException)
+            {
+                // 任务被取消，不执行后续逻辑
+                return;
+            }
+
+            if (!IsConnectionValid())
+            {
+                Close(); // 关闭无效连接
+            }
+        }
+
+        private bool IsConnectionValid()
+        {
+            try
+            {
+                // 使用 Poll 方法检查连接状态
+                if (socket == null || !socket.Connected)
+                {
+                    return false; // Socket 未连接
+                }
+
+                // 使用 Send 方法发送 0 字节的数据，检查连接状态
+                // Poll 方法检查连接是否可读并且没有可用数据
+                return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+            }
+            catch (SocketException)
+            {
+                return false; // 发生异常，连接无效
+            }
+            catch (ObjectDisposedException)
+            {
+                return false; // Socket 被释放，连接无效
+            }
+        }
+        public void Close()
+        {
+            // 取消持有连接的任务
+            cancellationTokenSource?.Cancel();
+            OnDisConnected();//超时关闭连接
             if (closeAC != null)
             {
                 closeAC();
                 closeAC = null;
             }
-            if (socket != null)
-                socket.Close();
         }
         /// <summary>
         /// 建立连接
