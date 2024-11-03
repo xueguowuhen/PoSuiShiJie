@@ -7486,7 +7486,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9201043443240559001}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 74baa9772a8207248bf64a091f882738, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 11baeb76f8d1c874ca04f64030f93f8b, type: 2}
   m_Controller: {fileID: 9100000, guid: 1646acbb89fda32469220dedbea7dbbb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -7521,8 +7521,6 @@ MonoBehaviour:
   RemotePlayerId: 0
   IsEvade: 0
   characterController: {fileID: 0}
-  syncRate: 30
-  playerCurrentVelocity: 0
   playerCurrentAction: 0
   EvadeRange: 0
 --- !u!143 &6777910445998182893

@@ -361,11 +361,15 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+*.csproj
+*..sln
 posui.apk
 .svn/
 bfg.jar
 Temp/
 Library/
+Logs/
+obj/
 Assembly-CSharp-Editor.csproj
 Assembly-CSharp-Editor-firstpass.csproj
 Assembly-CSharp.csproj
