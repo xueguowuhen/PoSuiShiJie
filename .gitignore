@@ -362,7 +362,13 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.csproj
-*..sln
+
+*.sln
+!Server\CommonNet\CommonNet.csproj
+!Server\ComNet\ComNet.csproj
+!Server\ComNet\ComNet - Backup.csproj
+!Server\破碎世界服务端\破碎世界服务端.sln
+!Server\破碎世界服务端\破碎世界服务端.csproj
 posui.apk
 .svn/
 bfg.jar
@@ -370,8 +376,5 @@ Temp/
 Library/
 Logs/
 obj/
-Assembly-CSharp-Editor.csproj
-Assembly-CSharp-Editor-firstpass.csproj
-Assembly-CSharp.csproj
 Assets/RoleModel/shayumei/Avatar_Female_Size02_Ellen.fbx
 Assets\RoleModel\shayumei\Avatar_Female_Size02_Ellen.fbx.meta
