@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="1011">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1021">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1031">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1221">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1222">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1223">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1224">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="1225">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2011">
+		<delayTime>140</delayTime>
+		<moveTime>150</moveTime>
+		<moveDis>2.45</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2012">
+		<delayTime>50</delayTime>
+		<moveTime>200</moveTime>
+		<moveDis>2</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2013">
+		<delayTime>40</delayTime>
+		<moveTime>500</moveTime>
+		<moveDis>1.2</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2021">
+		<delayTime>0</delayTime>
+		<moveTime>200</moveTime>
+		<moveDis>2</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2022">
+		<delayTime>100</delayTime>
+		<moveTime>220</moveTime>
+		<moveDis>4</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2023">
+		<delayTime>200</delayTime>
+		<moveTime>220</moveTime>
+		<moveDis>4</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2024">
+		<delayTime>400</delayTime>
+		<moveTime>330</moveTime>
+		<moveDis>5</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2031">
+		<delayTime>250</delayTime>
+		<moveTime>200</moveTime>
+		<moveDis>5</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2032">
+		<delayTime>100</delayTime>
+		<moveTime>300</moveTime>
+		<moveDis>2</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2033">
+		<delayTime>130</delayTime>
+		<moveTime>320</moveTime>
+		<moveDis>6</moveDis>
+		<moveDir>2</moveDir>
+	</item>
+	<item ID="2034">
+		<delayTime>250</delayTime>
+		<moveTime>330</moveTime>
+		<moveDis>5</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2221">
+		<delayTime>200</delayTime>
+		<moveTime>200</moveTime>
+		<moveDis>2.8</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2222">
+		<delayTime>100</delayTime>
+		<moveTime>500</moveTime>
+		<moveDis>1</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2223">
+		<delayTime>170</delayTime>
+		<moveTime>600</moveTime>
+		<moveDis>3</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2224">
+		<delayTime>240</delayTime>
+		<moveTime>200</moveTime>
+		<moveDis>-1</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="2225">
+		<delayTime>400</delayTime>
+		<moveTime>600</moveTime>
+		<moveDis>2</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3011">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3021">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3031">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3221">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3222">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3223">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3224">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="3225">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+	<item ID="10000">
+		<delayTime>0</delayTime>
+		<moveTime>0</moveTime>
+		<moveDis>0</moveDis>
+		<moveDir>0</moveDir>
+	</item>
+</root>
