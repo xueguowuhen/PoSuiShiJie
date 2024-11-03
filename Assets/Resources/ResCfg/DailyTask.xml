@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="30001">
+		<mTitle>小花一笔</mTitle>
+		<mTask>消耗100星晶，获得活跃度奖励</mTask>
+		<Active>15</Active>
+		<Count>100</Count>
+		<Type>aura</Type>
+	</item>
+	<item ID="30002">
+		<mTitle>大花一笔</mTitle>
+		<mTask>消耗70云晶，获得活跃度奖励</mTask>
+		<Active>20</Active>
+		<Count>70</Count>
+		<Type>ruvia</Type>
+	</item>
+	<item ID="30003">
+		<mTitle>不差钱</mTitle>
+		<mTask>消耗158彩晶，获得活跃度奖励</mTask>
+		<Active>25</Active>
+		<Count>158</Count>
+		<Type>crystal</Type>
+	</item>
+	<item ID="30004">
+		<mTitle>材料充足</mTitle>
+		<mTask>前往商店购买5件材料，获得活跃度奖励</mTask>
+		<Active>25</Active>
+		<Count>5</Count>
+		<Type>material</Type>
+	</item>
+	<item ID="30005">
+		<mTitle>装备充足</mTitle>
+		<mTask>前往商店购买2件装备，获得活跃度奖励</mTask>
+		<Active>20</Active>
+		<Count>2</Count>
+		<Type>euqip</Type>
+	</item>
+	<item ID="30006">
+		<mTitle>道具充足</mTitle>
+		<mTask>前往商店购买3件道具，获得活跃度奖励</mTask>
+		<Active>20</Active>
+		<Count>3</Count>
+		<Type>consume</Type>
+	</item>
+</root>

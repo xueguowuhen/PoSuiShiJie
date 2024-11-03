@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="10000">
+		<mapName>圣光主城</mapName>
+		<sceneName>SceneMainCity</sceneName>
+		<power>0</power>
+		<mainCamPos>-0.34,7,-7.06</mainCamPos>
+		<mainCamRote>37,0,0</mainCamRote>
+		<playerBornPos>0,0,0</playerBornPos>
+		<playerBornRote>0,0,0</playerBornRote>
+		<exp>0</exp>
+		<aura>0</aura>
+		<crystal>0</crystal>
+	</item>
+	<item ID="10001">
+		<mapName>决斗之地</mapName>
+		<sceneName>SceneBattle</sceneName>
+		<power>5</power>
+		<mainCamPos>-0.34,7,-7.06</mainCamPos>
+		<mainCamRote>37,0,0</mainCamRote>
+		<playerBornPos>0,0,0</playerBornPos>
+		<playerBornRote>0,0,0</playerBornRote>
+		<exp>1250</exp>
+		<aura>980</aura>
+		<crystal>48</crystal>
+	</item>
+</root>
