@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 919088819
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d29f759258f55501a1d0eb4c3a38a575
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Hard/HardRoud.png
+Dependencies: []

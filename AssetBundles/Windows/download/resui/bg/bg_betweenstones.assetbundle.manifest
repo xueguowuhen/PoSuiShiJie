@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1795289823
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 04b1ff60eb8671e1acdb9fc8c1ecaa8a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_betweenstones.png
+Dependencies: []

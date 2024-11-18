@@ -98,14 +98,14 @@ public class EnemyController : Controller
         }
         else
         {
-            go = ResSvc.instance.ABLoadPrefab(names, name);
-            go.transform.SetParent(transform, false);
-            fxDic.Add(name, go);
-            go.SetActive(true);
-            TimerSvc.Instance.AddTimeTask((int tid) =>
-            {
-                go.SetActive(false);
-            }, destroy);
+            //go = AssetLoaderSvc.instance.ABLoadPrefab(names, name);
+            //go.transform.SetParent(transform, false);
+            //fxDic.Add(name, go);
+            //go.SetActive(true);
+            //TimerSvc.Instance.AddTimeTask((int tid) =>
+            //{
+            //    go.SetActive(false);
+            //}, destroy);
         }
     }
 }

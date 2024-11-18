@@ -15,7 +15,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class NetSvc : MonoBehaviour
+public class NetSvc : SvcBase
 {
     public static NetSvc instance;
     private readonly static string Lock = "lock";
@@ -23,8 +23,9 @@ public class NetSvc : MonoBehaviour
     public TraSocket<ClientSession, GameMsg> client = null;
     private Queue<Action> extcutionActions = new Queue<Action>();
     private int sessionID=-1;
-    public void InitSyc()
+    public override void InitSvc()
     {
+        base.InitSvc();
         instance = this;
         StartAsClient();
         SocketDispatcher.Instance.AddEventListener(CMD.SystemSessionID, onSystemSessionID);
@@ -101,8 +102,9 @@ public class NetSvc : MonoBehaviour
         }
     }
 
-    public void Update()
+    public override void OnUpdate()
     {
+        base.OnUpdate();
         if (Msgqueue.Count > 0)
         {
             lock (Lock)

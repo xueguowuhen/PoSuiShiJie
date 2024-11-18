@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 178554320
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2dd1cec469bbec8d893f9c0589a16a3f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/props/xingchenkuizeng.png
+Dependencies: []

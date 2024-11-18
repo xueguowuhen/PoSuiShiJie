@@ -8,11 +8,12 @@
 
 using UnityEngine;
 
-public class AudioSvc : MonoBehaviour 
+public class AudioSvc : SvcBase
 {
     public static AudioSvc instance;
-    public void InitSvc()
+    public override void InitSvc()
     {
+        base.InitSvc();
         instance = this;
     }
 }

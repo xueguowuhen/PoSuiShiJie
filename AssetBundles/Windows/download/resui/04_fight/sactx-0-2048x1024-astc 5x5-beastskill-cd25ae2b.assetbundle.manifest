@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 444564952
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 60231ec9fb759b7ffb89b40e013d2a50
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/04_Fight/sactx-0-2048x1024-ASTC 5x5-Beastskill-cd25ae2b.png
+Dependencies: []

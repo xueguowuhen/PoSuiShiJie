@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 747033004
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ad4af13f02f6f2b9d1551095d21b1114
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/icon/crystal.png
+Dependencies: []

@@ -938,7 +938,7 @@ namespace CommonNet
         FriendAddConfirmError = 1024,//好友拒绝失败
         FriendDelError = 1025,//删除好友失败
         FriendGiftError = 1026,//赠送失败
-        GoldNotEnoughError = 1027,//货币不足
+        GoldNotEnoughError = 1027,//货币不足 
         NameExistError = 1028,//名字已存在
         RewardTaskRefreshError = 1029, //本日任务已刷新
         RewardActiveNotTaskError = 1030, //活跃度不足领取错误
@@ -961,7 +961,7 @@ namespace CommonNet
     {
 
         [ProtoMember(1)]
-        public const string srvIP = "10.201.17.142";
+        public const string srvIP = "10.201.29.62";
 
 
         [ProtoMember(2)]

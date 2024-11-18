@@ -10,7 +10,7 @@ using ProtoBuf.WellKnownTypes;
 using System;
 using UnityEngine;
 
-public class TimerSvc:MonoBehaviour
+public class TimerSvc: SvcBase
 {
     public static TimerSvc Instance=null;
     private ShowTimer showTimer;
@@ -30,8 +30,9 @@ public class TimerSvc:MonoBehaviour
         return elapsedMilliseconds + ServerTime;
     }
     #endregion
-    public void InitSvc()
+    public override void InitSvc()
     {
+        base.InitSvc();
         Instance = this;
         showTimer = new ShowTimer();
         showTimer.SetLog((string info) =>
@@ -73,8 +74,9 @@ public class TimerSvc:MonoBehaviour
         GameCommon.Log("服务器时间:" + formattedDate + ", 延迟时间:" +(PingValue));
     }
 
-    public void Update()
+    public override void OnUpdate()
     {
+        base.OnUpdate();
         showTimer.Update();
     }
     public int AddTimeTask(Action<int> callback, double delay, TimeUnit timeUnit = TimeUnit.Millisecond, int count = 1)

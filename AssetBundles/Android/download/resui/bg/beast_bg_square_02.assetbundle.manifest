@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2302712955
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ea8e49f57e5825ecaa5c40ce1f9af15d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/beast_bg_square_02.png
+Dependencies: []

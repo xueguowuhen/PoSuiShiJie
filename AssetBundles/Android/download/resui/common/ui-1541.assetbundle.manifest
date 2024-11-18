@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 628632253
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8b469a1235a90ba4df103405125a2c66
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-1541.png
+Dependencies: []

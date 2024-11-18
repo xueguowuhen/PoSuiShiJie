@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3606332786
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d9622eba6432f14fa923f6baa49ae711
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_backmountain.png
+Dependencies: []

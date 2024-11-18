@@ -30,7 +30,10 @@ public class FriendsItem : WindowItem
     public void SetUI(FriendItem info)
     {
         friendId = info.id;
-        headImage.sprite = ResSvc.instance.GetPersonCfgHard(int.Parse(info.type));
+         ResSvc.instance.GetPersonCfgHard(int.Parse(info.type), (Texture2D texture) =>
+        {
+            headImage.overrideSprite = texture.CreateSprite();
+        });
         nameText.text = info.name;
         levelText.text = info.level.ToString();
     }

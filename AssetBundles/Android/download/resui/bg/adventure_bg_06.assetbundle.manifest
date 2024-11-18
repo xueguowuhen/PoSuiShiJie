@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2048788760
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fee96d45d45f4eaac9ba8e4a0a8d6c3f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/adventure_bg_06.png
+Dependencies: []

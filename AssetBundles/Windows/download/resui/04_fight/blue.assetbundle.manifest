@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 116151379
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6b33e909afbe744d1c45a92a2b6d001b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/04_Fight/Blue.png
+Dependencies: []

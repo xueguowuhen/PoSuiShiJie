@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 181947461
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ddd748c42b521dd8d4ff7d9af9aa1a69
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/03_MainTalent/ui-1107.png
+Dependencies: []

@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1919725842
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: db151fc17d3ec97834416af3948a8212
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_caveoutside.png
+Dependencies: []

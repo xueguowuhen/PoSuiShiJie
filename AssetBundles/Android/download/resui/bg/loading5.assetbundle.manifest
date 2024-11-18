@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3713670306
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 69e8ba754db80036a25bd452ff8349bb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/loading5.png
+Dependencies: []

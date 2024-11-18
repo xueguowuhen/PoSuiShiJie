@@ -12,11 +12,11 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class BattleMgr : MonoBehaviour
 {
     private ResSvc resSvc;
+    private AssetLoaderSvc loaderSvc;
     private AudioSvc audioSvc;
     private StateMgr stateMgr;
     private SkillMgr skillMgr;
@@ -36,13 +36,14 @@ public class BattleMgr : MonoBehaviour
     {
         resSvc = ResSvc.instance;
         audioSvc = AudioSvc.instance;
+        loaderSvc= AssetLoaderSvc.instance;
         stateMgr = gameObject.AddComponent<StateMgr>();
         stateMgr.Init();
         skillMgr = gameObject.AddComponent<SkillMgr>();
         skillMgr.BattleMgr = this;
         skillMgr.Init();
         LoadPlayer(mapData);
-        entitySelfPlayer.Idle();//创建完成后进入idle状态
+ 
         RemotePlayer();
     }
     #region 玩家与远程玩家初始化操作
@@ -50,38 +51,43 @@ public class BattleMgr : MonoBehaviour
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
-        player = resSvc.LoadPrefab(PathDefine.ResPerson + personCfg.Prefab);
-        // player = resSvc.ABLoadPrefab(personCfg.Prefab, personCfg.Prefab); ;
-        // 在移动之前禁用角色控制器
-        characterController = player.GetComponent<CharacterController>();
-        //相机初始化
-        cameraPlayerCtrl = GameObject.Find("CameraFollowAndRotate").GetOrAddComponent<CameraPlayerCtrl>();
-        cameraPlayerCtrl.Init(mapData, player.transform);
-        //人物初始化
-        playerController = player.GetComponent<PlayerController>();
-        characterController.enabled = false;
-        player.transform.position = mapData.playerBornPos;
-        // 在移动之后启用角色控制器
-        characterController.enabled = true;
-        playerController.transform.localEulerAngles = mapData.playerBornRote;
-        playerController.isLocal = true;
-        playerController.Init();
-        playerController.RemotePlayerId = playerData.id;
-        //初始化自动寻路
-        navMesh = player.GetComponent<NavMeshAgent>();
-        navMesh.enabled = false;
-        //初始化生物UI
-        //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
-        entitySelfPlayer = new EntityPlayer
+        loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
         {
-            stateMgr = stateMgr,
-            skillMgr = skillMgr,
-            playerData = GameRoot.Instance.PlayerData,
-            isLocal = true,
-            CurrentEntityType = EntityType.Player,
-            battleMgr = this,
-        };
-        entitySelfPlayer.SetCtrl(playerController);
+            player = Instantiate( go);
+            // player = resSvc.ABLoadPrefab(personCfg.Prefab, personCfg.Prefab); ;
+            // 在移动之前禁用角色控制器
+            characterController = player.GetComponent<CharacterController>();
+            //相机初始化
+            cameraPlayerCtrl = GameObject.Find("CameraFollowAndRotate").GetOrAddComponent<CameraPlayerCtrl>();
+            cameraPlayerCtrl.Init(mapData, player.transform);
+            //人物初始化
+            playerController = player.GetComponent<PlayerController>();
+            characterController.enabled = false;
+            player.transform.position = mapData.playerBornPos;
+            // 在移动之后启用角色控制器
+            characterController.enabled = true;
+            playerController.transform.localEulerAngles = mapData.playerBornRote;
+            playerController.isLocal = true;
+            playerController.Init();
+            playerController.RemotePlayerId = playerData.id;
+            //初始化自动寻路
+            navMesh = player.GetComponent<NavMeshAgent>();
+            navMesh.enabled = false;
+            //初始化生物UI
+            //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
+            entitySelfPlayer = new EntityPlayer
+            {
+                stateMgr = stateMgr,
+                skillMgr = skillMgr,
+                playerData = GameRoot.Instance.PlayerData,
+                isLocal = true,
+                CurrentEntityType = EntityType.Player,
+                battleMgr = this,
+            };
+            entitySelfPlayer.SetCtrl(playerController);
+            entitySelfPlayer.Idle();//创建完成后进入idle状态
+            loaderSvc.CloseLoadingWnd();
+        });
     }
     /// <summary>
     /// 加载远程人物
@@ -97,53 +103,56 @@ public class BattleMgr : MonoBehaviour
     public void SetRemoteEntity(PlayerData playerData)
     {
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
-        GameObject player = resSvc.LoadPrefab(PathDefine.ResPerson + personCfg.Prefab);
-        PlayerController controller = player.GetComponent<PlayerController>();
-        controller.RemotePlayerId = playerData.id;
+        loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
+        {
+            GameObject player = Instantiate( go);
+            PlayerController controller = player.GetComponent<PlayerController>();
+            controller.RemotePlayerId = playerData.id;
 
-        // 在移动之前禁用角色控制器
-        CharacterController charTroller = player.GetComponent<CharacterController>();
-        charTroller.enabled = false;
-        player.transform.position = GetPlayerPos(playerData);
-        // 在移动之后启用角色控制器
-        charTroller.enabled = true;
-        controller.transform.rotation = GetPlayerRot(playerData);
-        controller.Init();
-        navMesh = player.GetComponent<NavMeshAgent>();
-        navMesh.enabled = false;
-        BattleMgr battleMgr = BattleSys.instance.GetBattleMgr();
-        //初始化生物UI
-        //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
-        EntityPlayer entityPlayer = new EntityPlayer
-        {
-            stateMgr = battleMgr.GetStateMgr(),
-            skillMgr = battleMgr.GetSkillMgr(),
-            CurrentEntityType = EntityType.Player,
-            battleMgr = battleMgr,
-            playerData = playerData,
-        };
-        entityPlayer.SetCtrl(controller);
-        if (!RemoteEntityDic.ContainsKey(playerData.id))
-        {
-            RemoteEntityDic.Add(playerData.id, entityPlayer);
-        }
-        //远程人物初始化状态
-        AniState aniState = (AniState)playerData.AniState;
-        string AniName = Enum.GetName(typeof(AniState), aniState);
-        //Debug.Log(AniName);
-        MethodInfo mi = entityPlayer.GetType().GetMethod(AniName);
-        if (mi != null)
-        {
-            if (AniName == "Attack")
+            // 在移动之前禁用角色控制器
+            CharacterController charTroller = player.GetComponent<CharacterController>();
+            charTroller.enabled = false;
+            player.transform.position = GetPlayerPos(playerData);
+            // 在移动之后启用角色控制器
+            charTroller.enabled = true;
+            controller.transform.rotation = GetPlayerRot(playerData);
+            controller.Init();
+            navMesh = player.GetComponent<NavMeshAgent>();
+            navMesh.enabled = false;
+            BattleMgr battleMgr = BattleSys.instance.GetBattleMgr();
+            //初始化生物UI
+            //GameRoot.Instance.dynamicWnd.AddHptemInfo(playerData.id, player.transform);
+            EntityPlayer entityPlayer = new EntityPlayer
             {
-                object[] objects = new object[] { playerData.SkillID };
-                mi.Invoke(entityPlayer, objects);
-            }
-            else
+                stateMgr = battleMgr.GetStateMgr(),
+                skillMgr = battleMgr.GetSkillMgr(),
+                CurrentEntityType = EntityType.Player,
+                battleMgr = battleMgr,
+                playerData = playerData,
+            };
+            entityPlayer.SetCtrl(controller);
+            if (!RemoteEntityDic.ContainsKey(playerData.id))
             {
-                mi.Invoke(entityPlayer, null);
+                RemoteEntityDic.Add(playerData.id, entityPlayer);
             }
-        }
+            //远程人物初始化状态
+            AniState aniState = (AniState)playerData.AniState;
+            string AniName = Enum.GetName(typeof(AniState), aniState);
+            //Debug.Log(AniName);
+            MethodInfo mi = entityPlayer.GetType().GetMethod(AniName);
+            if (mi != null)
+            {
+                if (AniName == "Attack")
+                {
+                    object[] objects = new object[] { playerData.SkillID };
+                    mi.Invoke(entityPlayer, objects);
+                }
+                else
+                {
+                    mi.Invoke(entityPlayer, null);
+                }
+            }
+        });
     }
     #endregion
     #region 玩家操作控制
@@ -213,7 +222,7 @@ public class BattleMgr : MonoBehaviour
         {
             comboIndex = 0;
             lastAtkTime = TimerSvc.Instance.GetNwTime();
-            Debug.Log("普通攻击"+NormalAtkList[comboIndex]);
+            Debug.Log("普通攻击" + NormalAtkList[comboIndex]);
             entitySelfPlayer.Attack(NormalAtkList[comboIndex]);
         }
 

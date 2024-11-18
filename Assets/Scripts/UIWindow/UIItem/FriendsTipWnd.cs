@@ -55,7 +55,10 @@ public class FriendsTipWnd : WindowRoot
         quantity = 1;
         UpdateQuantityText();
 
-        Goods2Image.sprite = GoodsImage.sprite = ComTools.GetIconSprite(buyType);
+        ComTools.GetIconSprite(buyType, (Texture2D texture) =>
+       {
+           Goods2Image.sprite = GoodsImage.sprite = texture.CreateSprite();
+       });
         //BuyImag.sprite = Buy2Imag.sprite = ComTools.GetIconSprite(shopItemCfg.type);
         Goods2Price.text = (quantity).ToString();
         //m_BuyType = (BuyType)shopItemCfg.type;

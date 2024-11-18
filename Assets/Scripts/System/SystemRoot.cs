@@ -12,15 +12,21 @@ using UnityEngine;
 public class SystemRoot : MonoBehaviour
 {
     protected NetSvc netSvc;    //
-    protected ResSvc resSvc;    //
+    protected ResSvc resSvc
+    {
+        get { return ResSvc.instance; }
+        set { }
+    }
     protected AudioSvc audioSvc;//
     protected TimerSvc timerSvc;
+    protected AssetLoaderSvc loaderSvc;
     public virtual void InitSyc()
     {
         netSvc = NetSvc.instance;
         resSvc = ResSvc.instance;
         audioSvc = AudioSvc.instance;
         timerSvc= TimerSvc.Instance;
+        loaderSvc = AssetLoaderSvc.instance;
     }
     public GameObject GameFind(string Path)
     {

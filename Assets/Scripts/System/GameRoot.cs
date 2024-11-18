@@ -7,6 +7,7 @@
 *****************************************************/
 
 using CommonNet;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,10 +42,12 @@ public class GameRoot : MonoBehaviour
         TimerSvc timerSvc = gameObject.GetComponent<TimerSvc>();
         timerSvc.InitSvc();
         NetSvc net = gameObject.GetComponent<NetSvc>();
-        net.InitSyc();
-        ResSvc resSvc = gameObject.GetComponent<ResSvc>();
-        resSvc.InitSyc();
+        net.InitSvc();
+        AssetLoaderSvc assetLoader = gameObject.GetOrAddComponent<AssetLoaderSvc>();
+        assetLoader.InitSvc();
         //业务模块初始化
+        DowningSys downing = gameObject.GetComponent<DowningSys>();
+        downing.InitSyc();
         LoginSys login = gameObject.GetComponent<LoginSys>();
         login.InitSyc();
         MainCitySys mainCity = gameObject.GetComponent<MainCitySys>();
@@ -53,8 +56,12 @@ public class GameRoot : MonoBehaviour
         battleSys.InitSyc();
         dynamicWnd.SetWndState();//设置动态界面状态
         timerSvc.SendLocalTime();//发送本地时间
-        //进入登录界面
-        login.EnterDowing();
+        downing.EnterDowning();
+    }
+    public  void ResSvcInit()
+    {
+        ResSvc resSvc = gameObject.GetComponent<ResSvc>();
+        resSvc.InitSvc();
     }
     public static void AddTips(string tips)
     {
@@ -69,7 +76,7 @@ public class GameRoot : MonoBehaviour
         Canvas canvas = this.canvas.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.worldCamera = uiCamera;
-       // uiCamera.fieldOfView = Constants.CreatefieldOfView;
+        // uiCamera.fieldOfView = Constants.CreatefieldOfView;
     }
     /// <summary>
     /// 设置canvas覆盖模式

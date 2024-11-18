@@ -1,0 +1,96 @@
+ManifestFileVersion: 0
+CRC: 2502941009
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ba4ecba6aacf6cdfc15ae3b916f5d3ec
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 16121193a361e1cfedb77303b8f8d3a8
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 83bcdf7b0e801f24faab6c534605b167, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fab81c187cab7d24daebfb9995140e6d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f6ea3db9be3789a47b27c8aa4f00e298, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dad98544420d2dc4aabaa8b41d535fae, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 719155d68ea447547b875edb2f0467f7, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.RectOffset
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Button/ButtonClickedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.FontData
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/OnChangeEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/SubmitEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ScrollRect/ScrollRectEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
+Assets:
+- Assets/Download/ResPerfer/Wnd/DailyTaskWnd.prefab
+Dependencies:
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/dailytaskitem.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/rewardtaskitem.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/shoptipinfo.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/adventure_bg_03.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/carddraw_bg_08.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg2.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0021.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0064.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0158.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0413.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0414.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1348.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1363.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/icon/aura.assetbundle

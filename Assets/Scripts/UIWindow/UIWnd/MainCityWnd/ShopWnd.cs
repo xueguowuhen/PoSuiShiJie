@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ public class ShopWnd : WindowRoot
     #region two
     public GameObject ItemContent;
     public Button Close;
-    public GameObject pointer ;
+    public GameObject pointer;
     private Button All;
     private Button Consume;
     private Button Equip;
@@ -22,10 +23,19 @@ public class ShopWnd : WindowRoot
     public BuyTipWnd BuyTipWnd;
     private List<ItemCfg> allItems = new List<ItemCfg>();
     private GameObjectPool pool;
+    private Action onLoadItems;
     protected override void InitWnd()
     {
         base.InitWnd();//
-        LoadItems();
+        if (pool == null)
+        {
+            onLoadItems = LoadItems;
+        }
+        else
+        {
+            LoadItems();
+
+        }
         CloseBuy();
     }
     public void Start()
@@ -62,27 +72,22 @@ public class ShopWnd : WindowRoot
     /// </summary>
     private void InitShopPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResShopItem, cache: true, instan: false);
-        pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        pool.MaxCount = 15;
-        pool.cullMaxPerPass = 5;
-        pool.cullAbove = 15;
-        pool.cullDespawned = true;
-        pool.cullDelay = 2;
-        pool.Init();
-    }
-    /// <summary>
-    /// 加载提示信息面板
-    /// </summary>
-    private void InitTipInfoWnd()
-    {
-        //暂未处理提示面板
-        //BuyTipWnd = resSvc.LoadPrefab(PathDefine.ResBuyTipWnd).GetComponent<BuyTipWnd>();
-        //TipInfoWnd = resSvc.LoadPrefab(PathDefine.ResTipInfoWnd);
-        //BuyTipWnd.gameObject.transform.SetParent(Slots.transform, false);
-        //TipInfoWnd.transform.SetParent(Slots.transform,false);
-        //SetActive(BuyTipWnd.gameObject, false);
-        //SetActive(TipInfoWnd, false);
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResShopItem, (GameObject obj) =>
+        {
+            GameObject gameObject = Instantiate(obj);
+            pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+            pool.MaxCount = 15;
+            pool.cullMaxPerPass = 5;
+            pool.cullAbove = 15;
+            pool.cullDespawned = true;
+            pool.cullDelay = 2;
+            pool.Init();
+            if (onLoadItems != null)
+            {
+                onLoadItems();
+            }
+
+        }, cache: true, instan: false);
     }
 
     /// <summary>
@@ -92,7 +97,7 @@ public class ShopWnd : WindowRoot
     {
         ClearShop();
         ItemCfg[] ItemsData = GetItemData();//获取所有的物品资源
-        allItems=ItemsData.ToList();
+        allItems = ItemsData.ToList();
         for (int i = 0; i < allItems.Count; i++)
         {
             CreateItem(allItems, i);
@@ -106,23 +111,24 @@ public class ShopWnd : WindowRoot
     private void RefreshItems(ItemType itemType)
     {
         ClearShop();
-        List<ItemCfg> NewItems= allItems.Where(item => item.type == itemType).ToList();
+        List<ItemCfg> NewItems = allItems.Where(item => item.type == itemType).ToList();
         NewItems = NewItems.Count > 0 ? NewItems : allItems;
         for (int i = 0; i < NewItems.Count; i++)
         {
-            CreateItem(NewItems,i);
+            CreateItem(NewItems, i);
         }
     }
     /// <summary>
     /// 创建物品
     /// </summary>
-    private void CreateItem(List<ItemCfg> shopItems ,int i)
+    private void CreateItem(List<ItemCfg> shopItems, int i)
     {
         GameObject gameObject = pool.GetObject();
         //设置物品
         ShopItem shopItem = gameObject.GetOrAddComponent<ShopItem>();
         shopItem.SetUI(shopItems[i]);
         gameObject.transform.SetParent(ItemContent.transform, false);
+        gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
         Button button = gameObject.GetComponent<Button>();
         int currentIndex = i;
@@ -130,6 +136,7 @@ public class ShopWnd : WindowRoot
     }
     private void ClearShop()
     {
+        if (pool == null) return;
         if (ItemContent != null)  //清空当前的商店物品
         {
             for (int i = ItemContent.transform.childCount - 1; i >= 0; i--)
@@ -208,5 +215,10 @@ public class ShopWnd : WindowRoot
     public void CloseBuy()
     {
         BuyTipWnd.SetWndState(false);
+    }
+    protected override void ClearWnd()
+    {
+        base.ClearWnd();
+        onLoadItems = null;
     }
 }

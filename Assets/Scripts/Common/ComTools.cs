@@ -8,6 +8,7 @@
 using CommonNet;
 using DG.Tweening;
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -20,45 +21,72 @@ public class ComTools
         int val = rd.Next(min, max);
         return val;
     }
-    public static Sprite GetItemSprite(ItemType itemType, string PathName)
+    public static void GetItemSprite(ItemType itemType, string pathName, Action<Texture2D> callback)
     {
+        string path = PathDefine.ResUI;
+
         switch (itemType)
         {
             case ItemType.consume:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.props + PathName);
-            case ItemType.equip:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.Equip + PathName);
             case ItemType.material:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.props + PathName);
+                path += PathDefine.props;
+                break;
+            case ItemType.equip:
+                path += PathDefine.Equip;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null);
         }
-        return null;
+
+        LoadSprite(path, pathName, callback);
     }
-    public static Sprite GetIconSprite(ItemType itemType)
+
+    public static void GetIconSprite(ItemType itemType, Action<Texture2D> callback)
     {
+        string path = PathDefine.ResUI + PathDefine.icon;
+
         switch (itemType)
         {
             case ItemType.consume:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "aura");
+                LoadSprite(path, "aura", callback);
+                break;
             case ItemType.equip:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "ruvia");
+                LoadSprite(path, "ruvia", callback);
+                break;
             case ItemType.material:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "crystal");
+                LoadSprite(path, "crystal", callback);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null);
         }
-        return null;
     }
-    public static Sprite GetIconSprite(BuyType itemType)
+    public static void GetImg(string path, Action<Texture2D> callback)
     {
-        switch (itemType)
-        {
-            case BuyType.aura:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "aura");
-            case BuyType.ruvia:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "ruvia");
-            case BuyType.crystal:
-                return Resources.Load<Sprite>(PathDefine.ResUI + PathDefine.icon + "crystal");
-        }
-        return null;
+
+        LoadSprite(PathDefine.ResHard, path, callback);
+
     }
+    public static void GetIconSprite(BuyType buyType, Action<Texture2D> callback)
+    {
+        string path = PathDefine.ResUI + PathDefine.icon;
+        LoadSprite(path, buyType.ToString(), callback);
+    }
+    public static void LoadSprite(string path, string name, Action<Texture2D> callback)
+    {
+#if DEBUG_ASSETBUNDLE
+        AssetLoaderSvc.instance.LoadOrDownload<Texture2D>(path, name, (Texture2D sprite) =>
+       {
+           callback(sprite);
+       });
+#elif UNITY_EDITOR
+        string path1 = Path.Combine(PathDefine.Download, path , name+ PathDefine.Png);
+        Debug.Log(path1);
+        callback( UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>(path1));
+#endif
+
+    }
+
+
     /// <summary>
     /// 根据等级和经验计算本级经验值
     /// </summary>

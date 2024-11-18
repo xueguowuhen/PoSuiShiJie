@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3376966980
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ba30955454dd14f85ff38ff575adc6d8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_caveInside.png
+Dependencies: []

@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2894356348
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c6b5700ce1969cd5cb1df75020b6cf64
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_inArena.png
+Dependencies: []

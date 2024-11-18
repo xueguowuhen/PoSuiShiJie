@@ -22,12 +22,15 @@ public class DailyTaskWnd : WindowRoot
     public Button CloseBtn;
     private GameObjectPool RewardPool;
     private GameObjectPool DailyPool;
+    private Action onRewardBack;
+    private Action onDailyBack;
     // Start is called before the first frame update
     private float TaskActive;
 
     protected override void InitWnd()
     {
         base.InitWnd();
+
         RefreshTask();
     }
 
@@ -45,28 +48,42 @@ public class DailyTaskWnd : WindowRoot
     /// </summary>
     private void InitRewardPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResRewardTaskItem, cache: true, instan: false);
-        RewardPool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        RewardPool.MaxCount = 15;//设置最大缓存数量
-        RewardPool.cullMaxPerPass = 5;
-        RewardPool.cullAbove = 15;
-        RewardPool.cullDespawned = true;
-        RewardPool.cullDelay = 2;
-        RewardPool.Init();
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResRewardTaskItem, (GameObject obj) =>
+       {
+           GameObject gameObject = Instantiate(obj);
+           RewardPool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+           RewardPool.MaxCount = 15;//设置最大缓存数量
+           RewardPool.cullMaxPerPass = 5;
+           RewardPool.cullAbove = 15;
+           RewardPool.cullDespawned = true;
+           RewardPool.cullDelay = 2;
+           RewardPool.Init();
+           if (onRewardBack!= null)
+           {
+               onRewardBack();
+           }
+       }, cache: true, instan: false);
     }
     /// <summary>
     /// 初始化人物池
     /// </summary>
     private void InitDailyPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResDailyTaskItem, cache: true, instan: false);
-        DailyPool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        DailyPool.MaxCount = 15;//设置最大缓存数量
-        DailyPool.cullMaxPerPass = 5;
-        DailyPool.cullAbove = 15;
-        DailyPool.cullDespawned = true;
-        DailyPool.cullDelay = 2;
-        DailyPool.Init();
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResDailyTaskItem, (GameObject obj) =>
+       {
+           GameObject objInst = Instantiate(obj);
+           DailyPool = GameObjectPoolManager.Instance.CreatePrefabPool(objInst);
+           DailyPool.MaxCount = 15;//设置最大缓存数量
+           DailyPool.cullMaxPerPass = 5;
+           DailyPool.cullAbove = 15;
+           DailyPool.cullDespawned = true;
+           DailyPool.cullDelay = 2;
+           DailyPool.Init();
+           if (onDailyBack!= null)
+           {
+               onDailyBack();
+           }
+       }, cache: true, instan: false);
     }
     #endregion
 
@@ -122,8 +139,23 @@ public class DailyTaskWnd : WindowRoot
     public void RefreshTask()
     {
         RefreshDailyTask();
-        LoadRewardTask();
-        LoadDailyTask();
+        if (RewardPool == null)
+        {
+            onRewardBack = LoadRewardTask;
+        }
+        else
+        {
+
+            LoadRewardTask();
+        }
+        if (DailyPool == null)
+        {
+            onDailyBack = LoadDailyTask;
+        }
+        else
+        {
+            LoadDailyTask();
+        }
     }
     #endregion
     #region 对象回收
@@ -132,6 +164,7 @@ public class DailyTaskWnd : WindowRoot
     /// </summary>
     private void ClearDailyTask(GameObject Content, GameObjectPool pool)
     {
+        if (pool == null) return;
         if (Content != null)  //清空当前的商店物品
         {
             for (int i = Content.transform.childCount - 1; i >= 0; i--)
@@ -144,6 +177,12 @@ public class DailyTaskWnd : WindowRoot
     private void ClickClose()
     {
         SetWndState(false);
+    }
+    protected override void ClearWnd()
+    {
+        base.ClearWnd();
+        onRewardBack=null;
+        onDailyBack=null;
     }
     // Update is called once per frame
     void Update()

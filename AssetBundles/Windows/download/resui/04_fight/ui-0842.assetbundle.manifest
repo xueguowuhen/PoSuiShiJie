@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2534011936
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 83a9e0b1db744c53d2c2b5616b1d0460
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/04_Fight/ui-0842.png
+Dependencies: []

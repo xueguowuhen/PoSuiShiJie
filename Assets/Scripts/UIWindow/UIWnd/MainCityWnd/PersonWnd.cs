@@ -28,13 +28,21 @@ public class PersonWnd : WindowRoot
 
     #region 私有字段
     private GameObjectPool pool;
+    private Action OnSetPersonInfo;
     #endregion
     protected override void InitWnd()
     {
         base.InitWnd();
         //SetPersonBtn();
         ClearFriend(AttributeContent);
-        SetPersonInfo();
+        if (pool == null)
+        {
+            OnSetPersonInfo = SetPersonInfo;
+        }
+        else
+        {
+            SetPersonInfo();
+        }
     }
     protected override void SetGameObject()
     {
@@ -48,21 +56,31 @@ public class PersonWnd : WindowRoot
     /// </summary>
     private void InitPersonPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResAttributeText, cache: true, instan: false);
-        pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        pool.MaxCount = 15;//设置最大缓存数量
-        pool.cullMaxPerPass = 5;
-        pool.cullAbove = 15;
-        pool.cullDespawned = true;
-        pool.cullDelay = 2;
-        pool.Init();
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResAttributeText, (GameObject go) =>
+        {
+            GameObject gameObject = Instantiate(go);
+            pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+            pool.MaxCount = 15;//设置最大缓存数量
+            pool.cullMaxPerPass = 5;
+            pool.cullAbove = 15;
+            pool.cullDespawned = true;
+            pool.cullDelay = 2;
+            pool.Init();
+            if (OnSetPersonInfo != null)
+            {
+                OnSetPersonInfo();
+            }
+        }, cache: true, instan: false);
     }
 
     private void SetPersonInfo()
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
         int headid = playerData.type;
-        headImg.sprite = resSvc.GetPersonCfgHard(headid);
+        resSvc.GetPersonCfgHard(headid, (Texture2D texture) =>
+       {
+           headImg.overrideSprite = texture.CreateSprite();
+       });
         personCfg personCfg = resSvc.GetPersonCfgData(headid);
         TypeName.SetText(personCfg.type, true);
         Level.SetText(string.Format("等级:Lv{0}", playerData.level), true, scrambleMode: DG.Tweening.ScrambleMode.Numerals);
@@ -124,10 +142,12 @@ public class PersonWnd : WindowRoot
     /// </summary>
     private void ClearFriend(GameObject Content)
     {
+        if (pool == null) return;
         if (Content != null)  //清空当前的商店物品
         {
             for (int i = Content.transform.childCount - 1; i >= 0; i--)
             {
+
                 pool.ReturnObject(Content.transform.GetChild(i).gameObject);
             }
         }
@@ -140,5 +160,9 @@ public class PersonWnd : WindowRoot
     {
         SetWndState(false);
     }
-
+    protected override void ClearWnd()
+    {
+        base.ClearWnd();
+        OnSetPersonInfo=null;
+    }
 }

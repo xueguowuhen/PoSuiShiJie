@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 286750857
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c6cc983a968b9ab01a98f3650ffaeb70
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/bg_UndergroundChurch.png
+Dependencies: []

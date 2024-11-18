@@ -66,16 +66,17 @@ public class BattleSys : SystemRoot
     {
         MapCfg mapData = resSvc.GetMapCfgData(Constants.BattlePVPMapID);
         GameCommon.Log("异步地图中");
-        StartCoroutine(resSvc.AsyncLoadScene(mapData.sceneName, () =>
+        StartCoroutine(loaderSvc.AsyncLoadScene(mapData.sceneName, () =>
         {
             GameCommon.Log("Enter BattlePVP...");
             //isCreate = true;
             GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
             SetBattleWnd();
             EnterBattleMap(mapData);
+            
             // GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
             //GameObject map = GameObject.Find(PathDefine.MapRoot);
-        }, false));
+        },true));
     }
 
     /// <summary>

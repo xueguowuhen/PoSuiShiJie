@@ -53,14 +53,17 @@ public class FriendsWnd : WindowRoot
     /// </summary>
     private void InitFriendsPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResFriendsItem, cache: true, instan: false);
-        pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        pool.MaxCount = 15;//设置最大缓存数量
-        pool.cullMaxPerPass = 5;
-        pool.cullAbove = 15;
-        pool.cullDespawned = true;
-        pool.cullDelay = 2;
-        pool.Init();
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResFriendsItem, (GameObject obj) =>
+        {
+            GameObject gameObject = Instantiate(obj);
+            pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+            pool.MaxCount = 15;//设置最大缓存数量
+            pool.cullMaxPerPass = 5;
+            pool.cullAbove = 15;
+            pool.cullDespawned = true;
+            pool.cullDelay = 2;
+            pool.Init();
+        }, cache: true, instan: false);
     }
     /// <summary>
     /// 点击好友按钮
@@ -171,6 +174,7 @@ public class FriendsWnd : WindowRoot
     /// </summary>
     private void ClearFriend(GameObject Content)
     {
+        if (pool == null) return;
         if (Content != null)  //清空当前的商店物品
         {
             for (int i = Content.transform.childCount - 1; i >= 0; i--)

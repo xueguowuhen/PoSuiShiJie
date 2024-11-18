@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1900597146
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3d73fb82d411682ef48953a7f20610b7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-1615.png
+Dependencies: []

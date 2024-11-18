@@ -43,10 +43,16 @@ public class RewardTaskItem : WindowItem
         if (taskRewardCfg != null && taskRewardCfg.rewardItems.Count > 1)
         {
             ItemCfg itemCfg = ResSvc.instance.GetShopItemCfg(taskRewardCfg.rewardItems[0].ItemID);
-            RewardIcon.sprite = ComTools.GetItemSprite(itemCfg.type, itemCfg.mImg);
+            ComTools.GetItemSprite(itemCfg.type, itemCfg.mImg, (Texture2D texture) =>
+           {
+               RewardIcon.overrideSprite = texture.CreateSprite();
+           });
             rewardText.SetText(taskRewardCfg.rewardItems[0].Count.ToString(), true);
             ItemCfg item2Cfg = ResSvc.instance.GetShopItemCfg(taskRewardCfg.rewardItems[1].ItemID);
-            rewardIcon2.sprite = ComTools.GetItemSprite(item2Cfg.type, item2Cfg.mImg);
+            ComTools.GetItemSprite(item2Cfg.type, item2Cfg.mImg, (Texture2D texture) =>
+           {
+               rewardIcon2.overrideSprite = texture.CreateSprite();
+           });
             rewardText2.SetText(taskRewardCfg.rewardItems[1].Count.ToString(), true);
             AddListener(rewardBtn, OnBtnClick);
         }

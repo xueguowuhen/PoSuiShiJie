@@ -70,6 +70,14 @@ public class CacheSvc
     /// <param name="playerData"></param>
     public void AcctOnline(ServerSession session, PlayerData playerData)
     {
+        foreach (var sessiondic in onLineSessionDic)
+        {
+            if (sessiondic.Value.id == playerData.id)
+            {
+                LoginSys.Instance.ClearOfflineData(sessiondic.Key);//账号下线
+                break;
+            }
+        }
         if (!onLineSessionDic.ContainsKey(session))
         {
 

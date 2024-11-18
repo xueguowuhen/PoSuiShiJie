@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2337501282
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e9b6ec665b23c39c4d358b4e0323844d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/lobby_bg_07.png
+Dependencies: []

@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2167041375
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4dce191a28c0ce04a7c44c589b3c4f07
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Equip/weapon_1.png
+Dependencies: []

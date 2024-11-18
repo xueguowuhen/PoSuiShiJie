@@ -33,7 +33,10 @@ public class BagItem : MonoBehaviour
         Name.text = ShopItemCfg.mName;
         Count.text = count.ToString();
         //Price.text = ShopItemCfg.Price.ToString();
-        ShopImage.sprite = ComTools.GetItemSprite(ShopItemCfg.type, ShopItemCfg.mImg);//物品图标
+         ComTools.GetItemSprite(ShopItemCfg.type, ShopItemCfg.mImg, (Texture2D texture) =>
+        {
+            ShopImage.overrideSprite =texture.CreateSprite();
+        });//物品图标
         //PriceImg.sprite = ComTools.GetIconSprite(ShopItemCfg.type);//购买的图标
     }
     // Update is called once per frame

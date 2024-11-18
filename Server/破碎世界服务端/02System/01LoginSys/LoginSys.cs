@@ -51,7 +51,9 @@ public class LoginSys
         bool isAcct = cacheSvc!.Isacct(reqLogin.acct);
         if (isAcct)//存在账号
         {
+            //获取玩家信息
             PlayerData? playerData = cacheSvc.GetPlayerData(reqLogin.acct, reqLogin.pass);
+
             if (playerData == null)
             {
                 msg.err = (int)Error.LoginInvalidError;
@@ -71,6 +73,7 @@ public class LoginSys
                     playerData = playerData,
                     playerList = playerDataList,
                 };
+
                 cacheSvc.AcctOnline(pack.session, playerData);
                 //ReqCreatePlayer(pack, playerData);
             }

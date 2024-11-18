@@ -16,7 +16,7 @@ public class LoginSys : SystemRoot
     public LoginWnd loginWnd;
     public RegisterWnd registerWnd;
     public CreateWnd createWnd;
-    public DowningWnd downingWnd;
+
     public StartWnd startWnd;
     public override void InitSyc()
     {
@@ -27,18 +27,13 @@ public class LoginSys : SystemRoot
         SocketDispatcher.Instance.AddEventListener(CMD.RspCreateGame, RspCreateGame);
         GameCommon.Log("LoginSys Init....");
     }
-    public void EnterDowing()
-    {
-        //暂时不进入资源下载
-        //downingWnd.SetWndState(true);
-        //临时进入Start登录界面
-        startWnd.SetWndState(true);
-    }
+
     public void GameLogin()
     {
-        StartCoroutine(resSvc.AsyncLoadScene(Constants.SceneLogin, () =>
+        StartCoroutine(loaderSvc.AsyncLoadScene(Constants.SceneLogin, () =>
         {
             EnterLogin();
+            loaderSvc.CloseLoadingWnd();
         }));
     }
 
@@ -95,10 +90,10 @@ public class LoginSys : SystemRoot
     {
         startWnd.SetWndState();
     }
-    public Dictionary<string, ABInfo> GettmpABInfo()
-    {
-        return downingWnd.tmpABInfo;
-    }
+    //public Dictionary<string, ABInfo> GettmpABInfo()
+    //{
+    //    return downingWnd.tmpABInfo;
+    //}
 
 
 }

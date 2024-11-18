@@ -425,44 +425,44 @@ public class SkillMgr : MonoBehaviour
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="skillCfg"></param>
-    private void CalcSkillMove(EntityBase entity, SkillCfg skillCfg)
-    {
-        List<int> skillMoveList = skillCfg.skillMoveList;
-        int sum = 0;
-        //遍历移动集合
-        for (int i = 0; i < skillMoveList.Count; i++)
-        {
-            SkillMoveCfg skillMoveCfg = resSvc.GetSkillMoveCfgData(skillMoveList[i]);
-            if (skillMoveCfg.moveDis == 0)
-            {
-                continue;
-            }
+    //private void CalcSkillMove(EntityBase entity, SkillCfg skillCfg)
+    //{
+    //    List<int> skillMoveList = skillCfg.skillMoveList;
+    //    int sum = 0;
+    //    //遍历移动集合
+    //    for (int i = 0; i < skillMoveList.Count; i++)
+    //    {
+    //        SkillMoveCfg skillMoveCfg = resSvc.GetSkillMoveCfgData(skillMoveList[i]);
+    //        if (skillMoveCfg.moveDis == 0)
+    //        {
+    //            continue;
+    //        }
 
-            float speed = skillMoveCfg.moveDis / (skillMoveCfg.moveTime / 1000f);
-            //float upspeed=(skillMoveCfg.moveDir/2)/(skillMoveCfg.moveTime/1000f);
-            sum += skillMoveCfg.delayTime;
-            if (sum > 0)//判断本段位移是否有延迟
-            {
-                int moveid = timerSvc.AddTimeTask((int tid) =>
-                {
-                    entity.SetSkillMoveState(true, speed);
-                    entity.DeleMoveCB(tid);//执行结束后需删除该延时任务
+    //        float speed = skillMoveCfg.moveDis / (skillMoveCfg.moveTime / 1000f);
+    //        //float upspeed=(skillMoveCfg.moveDir/2)/(skillMoveCfg.moveTime/1000f);
+    //        sum += skillMoveCfg.delayTime;
+    //        if (sum > 0)//判断本段位移是否有延迟
+    //        {
+    //            int moveid = timerSvc.AddTimeTask((int tid) =>
+    //            {
+    //                entity.SetSkillMoveState(true, speed);
+    //                entity.DeleMoveCB(tid);//执行结束后需删除该延时任务
 
-                }, sum);
-                entity.SkillMoveCB.Add(moveid);
-            }
-            else
-            {
-                entity.SetSkillMoveState(true, speed);
-            }
-            sum += skillMoveCfg.moveTime;
-            int stopid = timerSvc.AddTimeTask((int tid) =>
-            {
-                entity.SetSkillMoveState(false);
-                entity.DeleMoveCB(tid);
-            }, sum);
-            entity.SkillMoveCB.Add(stopid);
-        }
-    }
+    //            }, sum);
+    //            entity.SkillMoveCB.Add(moveid);
+    //        }
+    //        else
+    //        {
+    //            entity.SetSkillMoveState(true, speed);
+    //        }
+    //        sum += skillMoveCfg.moveTime;
+    //        int stopid = timerSvc.AddTimeTask((int tid) =>
+    //        {
+    //            entity.SetSkillMoveState(false);
+    //            entity.DeleMoveCB(tid);
+    //        }, sum);
+    //        entity.SkillMoveCB.Add(stopid);
+    //    }
+    //}
 
 }
