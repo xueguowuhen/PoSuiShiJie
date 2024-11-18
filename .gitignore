@@ -371,6 +371,7 @@ FodyWeavers.xsd
 !Server/破碎世界服务端/破碎世界服务端.csproj
 posui.apk
 AssetBundles.rar
+AssetBundles/Android.rar
 .svn/
 bfg.jar
 Temp/
