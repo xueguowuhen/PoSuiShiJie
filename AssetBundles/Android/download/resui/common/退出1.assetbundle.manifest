@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2238141862
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7edbe9a125888d56094bbf27f15d5084
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- "Assets/Download/ResUI/Common/\u9000\u51FA1.png"
+Dependencies: []

@@ -24,6 +24,7 @@ public class WindowRoot : MonoBehaviour
     protected AudioSvc audioSvc;
     protected NetSvc netSvc;
     protected TimerSvc timerSvc;
+    protected AssetLoaderSvc loaderSvc;
     protected bool IsSetGameObject = false;
 
     /// <summary>
@@ -35,6 +36,7 @@ public class WindowRoot : MonoBehaviour
         audioSvc = AudioSvc.instance;
         netSvc = NetSvc.instance;
         timerSvc = TimerSvc.Instance;
+        loaderSvc= AssetLoaderSvc.instance;
         if (!IsSetGameObject)
         {
             SetGameObject();

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="1011">
+		<delayTime>800</delayTime>
+		<radius>18</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1021">
+		<delayTime>1500</delayTime>
+		<radius>19</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1031">
+		<delayTime>1500</delayTime>
+		<radius>20</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1221">
+		<delayTime>1000</delayTime>
+		<radius>15</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1222">
+		<delayTime>1001</delayTime>
+		<radius>16</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1223">
+		<delayTime>1002</delayTime>
+		<radius>17</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1224">
+		<delayTime>1003</delayTime>
+		<radius>18</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="1225">
+		<delayTime>1004</delayTime>
+		<radius>19</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2011">
+		<delayTime>150</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2012">
+		<delayTime>600</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2013">
+		<delayTime>600</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2021">
+		<delayTime>200</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2022">
+		<delayTime>500</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2023">
+		<delayTime>500</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2024">
+		<delayTime>600</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2031">
+		<delayTime>150</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2032">
+		<delayTime>600</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2033">
+		<delayTime>600</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2034">
+		<delayTime>700</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2035">
+		<delayTime>700</delayTime>
+		<radius>5</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2221">
+		<delayTime>130</delayTime>
+		<radius>7</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2222">
+		<delayTime>200</delayTime>
+		<radius>7</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2223">
+		<delayTime>170</delayTime>
+		<radius>7</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2224">
+		<delayTime>200</delayTime>
+		<radius>7</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="2225">
+		<delayTime>250</delayTime>
+		<radius>7</radius>
+		<angle>360</angle>
+	</item>
+	<item ID="3011">
+		<delayTime>297</delayTime>
+		<radius>18</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3021">
+		<delayTime>298</delayTime>
+		<radius>19</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3031">
+		<delayTime>299</delayTime>
+		<radius>20</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3221">
+		<delayTime>300</delayTime>
+		<radius>15</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3222">
+		<delayTime>301</delayTime>
+		<radius>16</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3223">
+		<delayTime>302</delayTime>
+		<radius>17</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3224">
+		<delayTime>303</delayTime>
+		<radius>18</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="3225">
+		<delayTime>304</delayTime>
+		<radius>19</radius>
+		<angle>270</angle>
+	</item>
+	<item ID="4001">
+		<delayTime>560</delayTime>
+		<radius>6</radius>
+		<angle>180</angle>
+	</item>
+	<item ID="4002">
+		<delayTime>666</delayTime>
+		<radius>6</radius>
+		<angle>90</angle>
+	</item>
+</root>

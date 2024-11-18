@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1960795034
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9d1742095f20e435db2e781493d3e659
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/props/010_ui-000716-09568EEC-00000F2A.png
+Dependencies: []

@@ -14,18 +14,15 @@ using System.Linq;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class ResSvc : MonoBehaviour
+public class ResSvc : SvcBase
 {
     public static ResSvc instance = null;
-    private int Playerprogress;
-    private AssetBundle assetBundle;
-    private AssetBundleManifest manifest;
-    private Dictionary<string, AssetBundle> loadedAssetBundles = new Dictionary<string, AssetBundle>();
+   
     //后期可改成模板生成工具
-    public void InitSyc()
+    public override void InitSvc()
     {
+        base.InitSvc();
         instance = this;
         InitCharaterCfg(PathDefine.personCfg);
         InitTalentCfg(PathDefine.TalentCfg);
@@ -37,187 +34,16 @@ public class ResSvc : MonoBehaviour
         InitTaskRewardCfg(PathDefine.TaskRewardCfg);
 
         InitSkillCfg(PathDefine.SkillCfg);
-        InitSkillMoveCfg(PathDefine.SkillMoveCfg);
+        //    InitSkillMoveCfg(PathDefine.SkillMoveCfg);
         InitSkillActionCfg(PathDefine.SkillActionCfg);
         InitSkillFxCfg(PathDefine.SkillFxCfg);
         InitEnemyCfg(PathDefine.EnemyCfg);
         GameCommon.Log("ResSvc Init....");
     }
-    private void Update()
+    public override void OnUpdate()
     {
-    }
-    private Dictionary<string, GameObject> GameObjectDic = new Dictionary<string, GameObject>();
+        base.OnUpdate();
 
-    /// <summary>
-    /// 异步加载
-    /// </summary>
-    public IEnumerator AsyncLoadScene(string sceneName, Action loaded, bool isAB = false)
-    {
-        GameRoot.Instance.loadingWnd.SetWndState();
-        if (isAB)
-        {
-            string platform = LoginSys.instance.downingWnd.GetPlatform();
-            string assset = Path.Combine(Application.persistentDataPath, platform);
-            //加载主包
-            if (assetBundle == null)
-            {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(assset, platform));
-                manifest = assetBundle.LoadAsset<AssetBundleManifest>(PathDefine.AssetBundleManifest);
-            }
-            //根据包名加载依赖
-            string[] strings = manifest.GetAllDependencies(sceneName.ToLower());
-            for (int i = 0; i < strings.Length; i++)
-            {
-                AssetBundle bundle;
-                string path;
-                if (LoginSys.instance.GettmpABInfo().ContainsKey(strings[i]))
-                {
-                    path = Path.Combine(Application.streamingAssetsPath, strings[i]);
-                }
-                else
-                {
-                    path = Path.Combine(assset, strings[i]);
-                }
-                AssetBundleCreateRequest Request = AssetBundle.LoadFromFileAsync(path);
-                yield return Request;
-                bundle = Request.assetBundle;
-                loadedAssetBundles.Add(path, bundle);
-            }
-            // 异步加载场景包
-            string bundlePath = Path.Combine(assset, sceneName.ToLower());
-            AssetBundleCreateRequest bundleRequest = AssetBundle.LoadFromFileAsync(bundlePath);
-            yield return bundleRequest;
-            AssetBundle sceneBundle = bundleRequest.assetBundle;
-            if (sceneBundle == null)
-            {
-                Debug.LogError($"Failed to load AssetBundle: {bundlePath}");
-                yield break;
-            }
-        }
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-        asyncOperation.allowSceneActivation = false;
-        Playerprogress = 0;
-        float val = 0;
-        int progress;
-        while (asyncOperation.progress < 0.9f)
-        {
-            val = asyncOperation.progress;
-            progress = (int)(val * 100);
-            //Text.text = progress.ToString();
-            while (Playerprogress < progress)
-            {
-                ++Playerprogress;
-                GameRoot.Instance.loadingWnd.SetProgress(Playerprogress);
-                yield return new WaitForEndOfFrame();
-            }
-            yield return null;
-        }
-        progress = 100;
-        while (Playerprogress < progress)
-        {
-            ++Playerprogress;
-            GameRoot.Instance.loadingWnd.SetProgress(Playerprogress);
-            yield return new WaitForEndOfFrame();
-        }
-        //AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncOperation.allowSceneActivation = true;
-
-        /// 等待场景加载完成
-        while (!asyncOperation.isDone)
-        {
-            yield return null;
-        }
-
-        if (loaded != null)
-        {
-            loaded();
-        }
-        GameRoot.Instance.loadingWnd.SetWndState(false);
-    }
-
-    /// <summary>
-    /// 加载该预制体
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="cache"></param>
-    /// <returns></returns>
-    public GameObject LoadPrefab(string path, bool cache = false, bool instan = true)
-    {
-        GameObject prefab = null;
-        if (!GameObjectDic.TryGetValue(path, out prefab))
-        {
-            prefab = Resources.Load<GameObject>(path);
-            if (cache)
-            {
-                GameObjectDic.Add(path, prefab);
-            }
-        }
-        GameObject gameObject = null;
-        if (prefab != null)
-        {
-            if (instan)
-            {
-                gameObject = Instantiate(prefab);
-            }
-            else
-            {
-                return prefab;
-            }
-        }
-        return gameObject;
-    }
-    /// <summary>
-    /// 从ab包中加载资源
-    /// </summary>
-    /// <param name="path">包名</param>
-    /// <param name="name">资源名</param>
-    /// <param name="cache"></param>
-    /// <returns></returns>
-    public GameObject ABLoadPrefab(string path, string name, bool cache = false)
-    {
-        GameObject prefab = null;
-        string platform = LoginSys.instance.downingWnd.GetPlatform();
-        string assset = Path.Combine(Application.persistentDataPath, platform);
-        AssetBundle bundle = null;
-        //加载主包
-        if (assetBundle == null)
-        {
-            assetBundle = AssetBundle.LoadFromFile(Path.Combine(assset, platform));
-            manifest = assetBundle.LoadAsset<AssetBundleManifest>(PathDefine.AssetBundleManifest);
-        }
-        //根据报名加载依赖
-        string[] strings = manifest.GetAllDependencies(path);
-        for (int i = 0; i < strings.Length; i++)
-        {
-            string paths = Path.Combine(assset, strings[i]);
-            AssetBundle asset = AssetBundle.LoadFromFile(paths);
-            loadedAssetBundles.Add(paths, asset);
-        }
-        path = Path.Combine(assset, path);
-        if (!GameObjectDic.TryGetValue(path, out prefab))
-        {
-            // 检查AssetBundle是否已经加载
-            if (!loadedAssetBundles.TryGetValue(path, out bundle))
-            {
-                AssetBundle asset = AssetBundle.LoadFromFile(path);
-                prefab = asset.LoadAsset(name, typeof(GameObject)) as GameObject;//指定加载类型
-                loadedAssetBundles.Add(path, asset);
-            }
-            else
-            {
-                prefab = bundle.LoadAsset(name, typeof(GameObject)) as GameObject;
-            }
-            if (cache)
-            {
-                GameObjectDic.Add(path, prefab);
-            }
-        }
-        GameObject gameObject = null;
-        if (prefab != null)
-        {
-            gameObject = Instantiate(prefab);
-        }
-        return gameObject;
     }
 
 
@@ -225,7 +51,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, personCfg> personDic = new Dictionary<int, personCfg>();
     private void InitCharaterCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -346,16 +172,15 @@ public class ResSvc : MonoBehaviour
         }
         return null;
     }
-    public Sprite GetPersonCfgHard(int id)
+    public void GetPersonCfgHard(int id, Action<Texture2D> callback)
     {
         personCfg personCfg = null;
         if (personDic.TryGetValue(id, out personCfg))
         {
             Debug.Log(PathDefine.ResHard + personCfg.Hard);
-            Sprite sprite = Resources.Load<Sprite>(PathDefine.ResHard + personCfg.Hard);
-            return sprite;
+            ComTools.GetImg(personCfg.Hard, callback);
+            
         }
-        return null;
     }
     #endregion
 
@@ -487,7 +312,7 @@ public class ResSvc : MonoBehaviour
     private void InitShopItemCfg(string path)
     {
         //GameCommon.Log("开始加载商店物品配置");
-        TextAsset xml = Resources.Load<TextAsset>(path);
+        TextAsset xml = GetTextAsset(path);
         if (!xml)
         {
             //GameCommon.Log("xml文件不存在");
@@ -581,7 +406,7 @@ public class ResSvc : MonoBehaviour
     private void InitRDNameCfg(string path)
     {
         //获取文本数据
-        TextAsset xml = Resources.Load<TextAsset>(path);
+        TextAsset xml = GetTextAsset(path);
 
         if (!xml)
         {
@@ -644,7 +469,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, MapCfg> MapDic = new Dictionary<int, MapCfg>();
     private void InitMapCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -733,7 +558,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, TaskCfg> TaskDic = new Dictionary<int, TaskCfg>();
     private void InitTaskCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -792,7 +617,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, TaskRewardCfg> TaskRewardDic = new Dictionary<int, TaskRewardCfg>();
     private void InitTaskRewardCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -870,7 +695,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, TaskDailyCfg> TaskDailyDic = new Dictionary<int, TaskDailyCfg>();
     private void InitTaskDailyCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -947,7 +772,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, SkillCfg> SkillDic = new Dictionary<int, SkillCfg>();
     private void InitSkillCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -1061,71 +886,71 @@ public class ResSvc : MonoBehaviour
     }
     #endregion
 
-    #region 加载技能位移配置
-    private Dictionary<int, SkillMoveCfg> SkillMoveDic = new Dictionary<int, SkillMoveCfg>();
-    private void InitSkillMoveCfg(string Path)
-    {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
-        if (!xml)
-        {
-            GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
-        }
-        else
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml.text);//读取文本数据
-            XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
-            for (int i = 0; i < nodeList.Count; i++)
-            {
-                XmlElement ele = nodeList[i] as XmlElement;
-                if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
-                {
-                    continue;
-                }
-                int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
-                SkillMoveCfg skillMoveCfg = new SkillMoveCfg()
-                {
-                    ID = ID,
-                };
-                foreach (XmlElement node in nodeList[i].ChildNodes)
-                {
-                    switch (node.Name)
-                    {
-                        case "delayTime":
-                            skillMoveCfg.delayTime = int.Parse(node.InnerText);
-                            break;
-                        case "moveTime":
-                            skillMoveCfg.moveTime = int.Parse(node.InnerText);
-                            break;
-                        case "moveDis":
-                            skillMoveCfg.moveDis = float.Parse(node.InnerText);
-                            break;
-                        case "moveDir":
-                            skillMoveCfg.moveDir = float.Parse(node.InnerText);
-                            break;
-                    }
-                }
-                SkillMoveDic.Add(ID, skillMoveCfg);
-            }
-        }
-        GameCommon.Log("skillmoveCfg Init Done.");
-    }
-    public SkillMoveCfg GetSkillMoveCfgData(int id)
-    {
-        SkillMoveCfg skillmoveCfg = null;
-        if (SkillMoveDic.TryGetValue(id, out skillmoveCfg))
-        {
-            return skillmoveCfg;
-        }
-        return null;
-    }
-    #endregion
+    //#region 加载技能位移配置
+    //private Dictionary<int, SkillMoveCfg> SkillMoveDic = new Dictionary<int, SkillMoveCfg>();
+    //private void InitSkillMoveCfg(string Path)
+    //{
+    //    TextAsset xml = GetTextAsset(Path);
+    //    if (!xml)
+    //    {
+    //        GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
+    //    }
+    //    else
+    //    {
+    //        XmlDocument doc = new XmlDocument();
+    //        doc.LoadXml(xml.text);//读取文本数据
+    //        XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+    //        for (int i = 0; i < nodeList.Count; i++)
+    //        {
+    //            XmlElement ele = nodeList[i] as XmlElement;
+    //            if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
+    //            {
+    //                continue;
+    //            }
+    //            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+    //            SkillMoveCfg skillMoveCfg = new SkillMoveCfg()
+    //            {
+    //                ID = ID,
+    //            };
+    //            foreach (XmlElement node in nodeList[i].ChildNodes)
+    //            {
+    //                switch (node.Name)
+    //                {
+    //                    case "delayTime":
+    //                        skillMoveCfg.delayTime = int.Parse(node.InnerText);
+    //                        break;
+    //                    case "moveTime":
+    //                        skillMoveCfg.moveTime = int.Parse(node.InnerText);
+    //                        break;
+    //                    case "moveDis":
+    //                        skillMoveCfg.moveDis = float.Parse(node.InnerText);
+    //                        break;
+    //                    case "moveDir":
+    //                        skillMoveCfg.moveDir = float.Parse(node.InnerText);
+    //                        break;
+    //                }
+    //            }
+    //            SkillMoveDic.Add(ID, skillMoveCfg);
+    //        }
+    //    }
+    //    GameCommon.Log("skillmoveCfg Init Done.");
+    //}
+    //public SkillMoveCfg GetSkillMoveCfgData(int id)
+    //{
+    //    SkillMoveCfg skillmoveCfg = null;
+    //    if (SkillMoveDic.TryGetValue(id, out skillmoveCfg))
+    //    {
+    //        return skillmoveCfg;
+    //    }
+    //    return null;
+    //}
+    //#endregion
 
     #region 加载技能伤害配置
     private Dictionary<int, SkillActionCfg> SkillActionDic = new Dictionary<int, SkillActionCfg>();
     private void InitSkillActionCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -1182,7 +1007,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, SkillFxCfg> SkillFxDic = new Dictionary<int, SkillFxCfg>();
     private void InitSkillFxCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -1239,7 +1064,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, EnemyCfg> EnemyDic = new Dictionary<int, EnemyCfg>();
     private void InitEnemyCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -1341,7 +1166,7 @@ public class ResSvc : MonoBehaviour
     private Dictionary<int, TalentCfg> TalentDic = new Dictionary<int, TalentCfg>();
     private void InitTalentCfg(string Path)
     {
-        TextAsset xml = Resources.Load<TextAsset>(Path);
+        TextAsset xml = GetTextAsset(Path);
         if (!xml)
         {
             GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
@@ -1416,6 +1241,24 @@ public class ResSvc : MonoBehaviour
     {
         string[] valArr = InnerText.Split(',');
         return new Vector3(float.Parse(valArr[0]), float.Parse(valArr[1]), float.Parse(valArr[2]));
+    }
+    /// <summary>
+    /// 获取TextAsset
+    /// </summary>
+    /// <param name="Path"></param>
+    /// <returns></returns>
+    public TextAsset GetTextAsset(string path)
+    {
+#if DEBUG_ASSETBUNDLE
+        path = Path.Combine(Application.persistentDataPath, PathDefine.ABDownload, path) + PathDefine.Xml;
+        string xmlContent = File.ReadAllText(path);
+        TextAsset textAsset = new TextAsset(xmlContent);
+
+        return textAsset;
+#elif UNITY_EDITOR
+        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(Path.Combine(PathDefine.Download , path) + PathDefine.Xml);
+        return textAsset;
+#endif
     }
     //任务 //每日任务完成
     //副本（2-3个）（副本实现时间冻结效果）

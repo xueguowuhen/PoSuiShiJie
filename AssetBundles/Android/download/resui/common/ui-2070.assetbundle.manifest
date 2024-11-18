@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3469481382
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8c8d50d95e336c606caa5bb1df50b484
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-2070.png
+Dependencies: []

@@ -71,12 +71,13 @@ public class MainCitySys : SystemRoot
     {
         MapCfg mapData = resSvc.GetMapCfgData(Constants.MainCityMapID);
         GameCommon.Log("异步地图中");
-        StartCoroutine(resSvc.AsyncLoadScene(mapData.sceneName, () =>
+        StartCoroutine(loaderSvc.AsyncLoadScene(mapData.sceneName, () =>
         {
             GameCommon.Log("Enter MainCity...");
             //isCreate = true;
             EnterMainCityWnd();
             GameObject map = GameObject.Find(PathDefine.MapRoot);
+            loaderSvc.CloseLoadingWnd();
             //NpcPosTrans = map.GetComponent<MainCityMap>().NpcPosTrans;
             //BattleSys.instance.EnterBattleMap(mapData);
             //characterController = BattleSys.instance.GetCharacterController();
@@ -96,7 +97,7 @@ public class MainCitySys : SystemRoot
             //entityEnemy = CityEnemy;
             //entityEnemy.Init(resSvc.GetEnemyData(1001));
             //#endregion
-        }, false));
+        }, true));
     }
 
     #region 服务器消息处理
@@ -422,7 +423,7 @@ public class MainCitySys : SystemRoot
 
     public void OpenGuideWnd()
     {
-       // guideWnd.SetWndState();
+        // guideWnd.SetWndState();
     }
     public void RefreshUI()
     {
@@ -510,7 +511,7 @@ public class MainCitySys : SystemRoot
     }
     public void ClickStartGamePVP()
     {
-       // mainCityWnd.SetWndState(false);
+        // mainCityWnd.SetWndState(false);
         BattleSys.instance.SendEnterBattlePVP();
     }
     #endregion

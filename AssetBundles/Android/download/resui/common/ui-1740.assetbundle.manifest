@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3230095692
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ab0d0d100f18510e1586de9c120274cc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-1740.png
+Dependencies: []

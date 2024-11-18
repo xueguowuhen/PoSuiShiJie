@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2639942133
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 617fae0c9a12e9fa6af02ff07cc03a6c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/03_MainTalent/sactx-0-1024x512-ASTC 5x5-Paluma-6f26793f.png
+Dependencies: []

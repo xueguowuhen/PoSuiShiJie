@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3807368897
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bec18445abf0464de4d95be11ca4a081
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/Bg4.png
+Dependencies: []

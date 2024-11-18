@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 1056363184
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f4c8cd25877cf00e0c386a2bf93534a9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Skill/010_ui-003396-011F11FC-000022A1.png
+Dependencies: []

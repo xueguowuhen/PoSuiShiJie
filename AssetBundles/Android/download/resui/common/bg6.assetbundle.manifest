@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 761580520
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 48c2206e99c9f41e74678e9588541152
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/Bg6.png
+Dependencies: []

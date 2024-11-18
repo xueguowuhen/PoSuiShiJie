@@ -51,8 +51,14 @@ public class BuyTipWnd : WindowRoot
         Name.text = shopItemCfg.mName;
         GoodsmInfo.text = shopItemCfg.mInfo.ToString();
         GoodsPrice.text = shopItemCfg.Price.ToString();
-        Goods2Image.sprite = GoodsImage.sprite = ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg);
-        BuyImag.sprite = Buy2Imag.sprite = ComTools.GetIconSprite(shopItemCfg.type);
+        ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg, (Texture2D texture) =>
+        {
+            Goods2Image.overrideSprite = GoodsImage.overrideSprite = texture.CreateSprite();
+        });
+        ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
+        {
+            BuyImag.overrideSprite = Buy2Imag.overrideSprite = texture.CreateSprite();
+        });
         m_ItemId = shopItemCfg.ID;
         Price = shopItemCfg.Price;
         Goods2Price.text = (quantity * Price).ToString();

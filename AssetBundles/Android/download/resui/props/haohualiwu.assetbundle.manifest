@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2808898642
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 14edd52ccf801661c6f187781d34346d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/props/haohualiwu.png
+Dependencies: []

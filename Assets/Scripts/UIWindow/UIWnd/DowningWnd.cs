@@ -1,5 +1,5 @@
 /****************************************************
-    文件：DowingWnd.cs
+    文件：DowningWnd.cs
 	作者：无痕
     邮箱: 1450411269@qq.com
     日期：2024/5/27 13:53:29
@@ -11,47 +11,68 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+
 public class DowningWnd : WindowRoot
 {
+    #region UI控件
     public Text txtTips;
     public Text txtSpeed;//下载速度
     public Text txtProgress;//下载进度
     public Image imageFG;
     public Text txtPrg;
+    #endregion
+    public string LocalFilePath; //本地资源路径
+
     private DataProcess dataProcess;
-    private Dictionary<string, ABInfo> remoteABInfo = new Dictionary<string, ABInfo>();
+    // private Dictionary<string, ABInfo> remoteABInfo = new Dictionary<string, ABInfo>();
     public Dictionary<string, ABInfo> tmpABInfo = new Dictionary<string, ABInfo>();
-    private Dictionary<string, ABInfo> localABInfo = new Dictionary<string, ABInfo>();
-    private Dictionary<string, long> localInfo = new Dictionary<string, long>();
-    private List<string> downloadList = new List<string>();
     private bool IsDown = false;
-    private bool ReDown = true;//判断是否需要重新下载ab包
-    private string abCompareInfo_Cache;
-    private string DownPath;
+    #region 下载相关
+    /// <summary>
+    /// 本地版本文件路径
+    /// </summary>
+    private string m_LoaclVersionPath;
+    /// <summary>
+    /// 平台名
+    /// </summary>
     private string platform;
-    public Text text;
-    //进入页面自动对比加载资源文件
+    /// <summary>
+    /// StreamingAssets路径
+    /// </summary>
+    private string m_StreamingAssetsPath;
+    /// <summary>
+    /// 版本文件名
+    /// </summary>
+    private string m_VersionFileName = "VersionFile.txt";
+    /// <summary>
+    /// 下载地址
+    /// </summary>
+    public static string DownloadBaseUrl = "http://121.40.86.210/morangABLoad/AssetBundles/";
+    private List<DownloadDataEntity> m_LocalDataList;
+    private List<DownloadDataEntity> m_NeedDownloadDataList = new List<DownloadDataEntity>();
+    #endregion
     protected override void InitWnd()
     {
         base.InitWnd();
-        SetGameObject();
         SetText(txtSpeed, "");
         SetText(txtProgress, "");
         imageFG.fillAmount = 0;
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-        platform = PathDefine.PC;
+        LocalFilePath = Application.persistentDataPath + "/";
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        platform = PathDefine.Windows;
 #elif UNITY_ANDROID
         platform = PathDefine.Android;
 #endif
-        DownLoadAB();
+        InitStreamingAssets();
     }
     public void Update()
     {
-        if (IsDown)
+        if (IsDown)//开始下载时
         {
             float speed = dataProcess.GetTotalSpeed();
             string speedUnit = "KB/s";
@@ -61,7 +82,7 @@ public class DowningWnd : WindowRoot
                 speedUnit = "MB/s";
             }
             SetText(txtSpeed, "速度" + speed.ToString("F2") + speedUnit);
-            SetText(txtProgress, "文件进度" + dataProcess.GetFinishCount() + "/" + downloadList.Count);
+            SetText(txtProgress, "文件进度" + dataProcess.GetFinishCount() + "/" + m_NeedDownloadDataList.Count);
             long DownByte = dataProcess.TotalDownByte();
             long TotalByte = dataProcess.TotalByte();
             if (TotalByte != 0)
@@ -79,239 +100,411 @@ public class DowningWnd : WindowRoot
         //imageFG = GetImg(PathDefine.Downing_imageFG);
         //txtPrg = GetText(PathDefine.Downing_txtPrg);
         //txtTips = GetText(PathDefine.Downing_txtTips);
-        dataProcess = gameObject.GetOrAddComponent<DataProcess>();
+        dataProcess = GameRoot.Instance.gameObject.GetOrAddComponent<DataProcess>();
+    }
+    /// <summary>
+    /// 第一步：初始化资源
+    /// </summary>
+    public void InitStreamingAssets()
+    {
+        m_LoaclVersionPath = Path.Combine(LocalFilePath, m_VersionFileName).Replace("\\", "/");
+        //判断本地persistentData是否已经有资源
+        if (File.Exists(m_LoaclVersionPath))
+        {
+            //如果有资源 则检查更新
+            InitCheckVersion();
+        }
+        else
+        {
+            //如果没有资源 先读取本地文件初始化 然后再检查更新
+
+            m_StreamingAssetsPath = Application.streamingAssetsPath + "/AssetBundles/";
+#if UNITY_ANDROID && !UNITY_EDITOR
+            m_StreamingAssetsPath = "file:///" + Application.streamingAssetsPath + "/AssetBundles/";
+#endif
+            string versionFileUrl = m_StreamingAssetsPath + m_VersionFileName;
+
+            StartCoroutine(ReadStreamingAssetVersionFile(versionFileUrl, OnReadStreamingAssetOver));
+
+        }
+    }
+    /// <summary>
+    /// Streaming读取初始资源目录的版本文件
+    /// </summary>
+    /// <param name="fileUrl"></param>
+    /// <param name="onReadStreamingAssetOver"></param>
+    /// <returns></returns>
+    private IEnumerator ReadStreamingAssetVersionFile(string fileUrl, Action<string> onReadStreamingAssetOver)
+    {
+        //UISceneInitCtrl.Instance.SetProgress("正在准备进行资源初始化", 0);
+
+        using (UnityWebRequest request = UnityWebRequest.Get(fileUrl))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                onReadStreamingAssetOver(Encoding.UTF8.GetString(request.downloadHandler.data));
+            }
+            else
+            {
+                onReadStreamingAssetOver("");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 读取版本文件完毕
+    /// </summary>
+    /// <param name="obj"></param>
+    private void OnReadStreamingAssetOver(string content)
+    {
+        StartCoroutine(InitStreamingAssetList(content));
+    }
+    /// <summary>
+    /// 初始化资源清单
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    private IEnumerator InitStreamingAssetList(string content)
+    {
+        if (string.IsNullOrEmpty(content))//如果本地文件为空，直接检测版本
+        {
+            InitCheckVersion();
+            yield break;
+        }
+
+        string[] arr = content.Split('\n');
+
+        //循环解压
+        for (int i = 0; i < arr.Length; i++)
+        {
+            string[] arrInfo = arr[i].Split(' ');
+
+            string fileUrl = arrInfo[0]; //短路径
+
+            yield return StartCoroutine(AssetLoadToLocal(m_StreamingAssetsPath + fileUrl, LocalFilePath + fileUrl));
+
+            float value = (i + 1) / (float)arr.Length;
+            SetText(txtTips, (string.Format("初始化资源不消耗流量 {0}/{1}", i + 1, arr.Length)));
+        }
+
+        //解压版本文件
+        yield return StartCoroutine(AssetLoadToLocal(m_StreamingAssetsPath + m_VersionFileName, LocalFilePath + m_VersionFileName));
+
+        //最后再次更新文件
+        InitCheckVersion();
+    }
+    /// <summary>
+    /// 解压m_StreamingAssetsPath文件到本地persistentDataPath
+    /// </summary>
+    /// <param name="fileUrl"></param>
+    /// <param name="toPath"></param>
+    /// <returns></returns>
+    private IEnumerator AssetLoadToLocal(string fileUrl, string toPath)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(fileUrl))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                int lastIndexOf = toPath.LastIndexOf('\\');
+                if (lastIndexOf != -1)
+                {
+                    string localPath = toPath.Substring(0, lastIndexOf); // 除去文件名以外的路径
+
+                    if (!Directory.Exists(localPath))
+                    {
+                        Directory.CreateDirectory(localPath);
+                    }
+                }
+
+                byte[] fileData = www.downloadHandler.data;
+
+                using (FileStream fs = new FileStream(toPath, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(fileData, 0, fileData.Length);
+                }
+
+                Debug.Log("文件下载并保存成功：" + toPath);
+            }
+            else
+            {
+                Debug.LogError("文件下载失败：" + www.error);
+            }
+        }
+
     }
     /// <summary>
     /// 下载AB包对比文件
     /// </summary>
-    private void DownLoadAB()
+    private void InitCheckVersion()
     {
-        //SetText(txtTips, "正在检查资源更新中...");
-        SetText(txtTips, platform);
-        DownPath = Path.Combine(Application.persistentDataPath , platform);
-        dataProcess.AddDownloadRes(Path.Combine("http://120.46.164.125/morangABLoad/",platform,"abCompareInfo.txt"), DownPath, () =>
+        SetText(txtTips, "正在检查资源更新中...");
+        //   SetText(txtTips, platform);
+        dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform,platform), LocalFilePath, () =>
         {
-            ABCompare();
-            //text.text = "下载成功";
-        }, true, PathDefine.abCompareInfo_TMP);
+            dataProcess.AddVersion(Path.Combine(DownloadBaseUrl, platform, m_VersionFileName), OnInitVersionCallBack);
+        });
+
     }
     /// <summary>
-    /// 进行AB包资源对比
+    /// 初始化版本文件回调
     /// </summary>
-    private void ABCompare()
+    /// <param name="obj"></param>
+    private void OnInitVersionCallBack(string conText)
     {
         SetText(txtTips, "正在更新资源中...");
+        List<DownloadDataEntity> serverDownloadData = PackDownloadData(conText);
+        DowningSys.instance.SetServerDataList(serverDownloadData);
+        if (File.Exists(m_LoaclVersionPath))
+        {
+            //如果本地存在版本文件 则和服务器端的进行对比
+            //服务器端数据
+            Dictionary<string, string> serverDic = PackDownloadDataDic(serverDownloadData);
+            //本地数据
+            string content = IOUtil.GetFileText(m_LoaclVersionPath);
+            Dictionary<string, string> clientDic = PackDownloadDataDic(content);
+            m_LocalDataList = PackDownloadData(content);
 
-        string abCompareInfo_TMP = Path.Combine( DownPath , PathDefine.abCompareInfo_TMP);
-        abCompareInfo_Cache = Path.Combine(DownPath,  PathDefine.abCompareInfo_Cache);
-        string abCompareInfo = Path.Combine(DownPath,  PathDefine.abCompareInfo);
-        // 校验缓存MD5
-        CheckCacheMd5(abCompareInfo_Cache, abCompareInfo_TMP);
-        // 加载对比文件
-        LoadCompareFiles(abCompareInfo, abCompareInfo_TMP);
-        //校验本地ab包资源是否下载完整
-        DirectoryInfo directoryInfo = Directory.CreateDirectory(DownPath);
-        //获取该目录下的所有文件信息
-        FileInfo[] fileInfos = directoryInfo.GetFiles();
-        //用于存储信息
-        foreach (FileInfo fileInfo in fileInfos)
-        {
-            if (fileInfo.Extension == "")//判断是否有后缀
+            //1.新加的初始资源
+            for (int i = 0; i < serverDownloadData.Count; i++)
             {
-                //拼接一个AB包的信息
-                localInfo.Add(fileInfo.Name, fileInfo.Length);
-            }
-        }
-        foreach (string abName in remoteABInfo.Keys)
-        {
-            if (!localABInfo.ContainsKey(abName))//只添加本地客户端没有的AB包资源
-            {
-                downloadList.Add(abName);
-            }
-            else
-            {//判断相同的AB包资源的md5码是否相等,检验该资源是否需要下载更新
-                if (localABInfo[abName].md5 != remoteABInfo[abName].md5)
+                //如果文件是初始资源且不在本地客户端资源中
+                if (serverDownloadData[i].IsFirstData && !clientDic.ContainsKey(serverDownloadData[i].FullName))
                 {
-
-                    downloadList.Add(abName);
+                    m_NeedDownloadDataList.Add(serverDownloadData[i]); //加入下载列表
                 }
-                else if (localInfo.ContainsKey(abName))
+            }
+            //2.对比已经下载过的，但是有更新的资源
+            foreach (var item in clientDic)
+            {
+                //如果MD5不一致
+                if (serverDic.ContainsKey(item.Key) && serverDic[item.Key] != item.Value)
                 {
-                    if (localInfo[abName] != remoteABInfo[abName].size)
+                    //
+                    DownloadDataEntity entity = GetDownloadData(item.Key, serverDownloadData);
+                    if (entity != null)
                     {
-                        downloadList.Add(abName);
+                        m_NeedDownloadDataList.Add(entity);
                     }
                 }
-                localABInfo.Remove(abName);//将共有的AB包删除，留下本地独有的AB包
             }
-            if (tmpABInfo.ContainsKey(abName))//在缓存列表中，且md5不等则默认以云端为主
-            {
-                if (tmpABInfo[abName].md5 != remoteABInfo[abName].md5)
-                {
-                    tmpABInfo.Remove(abName);
-                }
-            }
-        }
-        foreach (var abName in localABInfo.Keys)
-        {//检测缓存中是否额外存在一份相同的AB包资源，存在则删除，避免出现资源重复
-            if (File.Exists(Path.Combine( DownPath + abName)))
-            {
-                File.Delete(Path.Combine(DownPath + abName));
-            }
-        }
-        dataProcess.Clear();
-        if (downloadList.Count <= 0)
-        {
-            EnterLogin();
-            return;
-        }
-        foreach (var item in downloadList)
-        {
-
-            dataProcess.AddDownloadRes(Path.Combine("http://120.46.164.125/morangABLoad/", platform , item), DownPath, () =>
-            {
-                if (item.Equals(downloadList[downloadList.Count - 1]))
-                {
-                    File.WriteAllText(abCompareInfo, File.ReadAllText(abCompareInfo_TMP));
-                    File.Delete(abCompareInfo_TMP);
-                    File.Delete(abCompareInfo_Cache);
-                    IsDown = false;
-                    EnterLogin();
-                }
-            }, ReDown);
-        }
-        IsDown = true;
-    }
-    private void CheckCacheMd5(string cachePath, string tmpPath)
-    {
-        if (File.Exists(cachePath) && File.Exists(tmpPath))
-        {
-            string cacheMd5 = ComputeMD5(cachePath);
-            string tmpMd5 = ComputeMD5(tmpPath);
-            if (cacheMd5 == tmpMd5)
-            {
-                ReDown = false;
-            }
-        }
-    }
-    private void LoadCompareFiles(string abCompareInfo, string abCompareInfo_TMP)
-    {
-        if (File.Exists(abCompareInfo_TMP))
-        {
-            GetCompareList(abCompareInfo_TMP, remoteABInfo);
-            CopyCompare(abCompareInfo_TMP, abCompareInfo_Cache);
-        }
-        if (File.Exists(abCompareInfo))
-        {
-            GetCompareList(abCompareInfo, localABInfo);
-            LoadTmpABInfo();
         }
         else
         {
-            LoadLocalABInfo();
-        }
-       // text.text=tmpABInfo.Count.ToString();
-    }
-    private void LoadTmpABInfo()
-    {
-        string abCompareInfos = Path.Combine(Application.streamingAssetsPath, PathDefine.abCompareInfo);
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-        GetCompareList(abCompareInfos, tmpABInfo);
-#elif UNITY_ANDROID
-       LoadABCompareInfoForAndroid(abCompareInfos, tmpABInfo);
-#endif
-    }
+            //如果本地没有版本文件 则初始资源就是需要下载的文件
+            for (int i = 0; i < serverDownloadData.Count; i++)
+            {
+                if (serverDownloadData[i].IsFirstData)
+                {
+                    m_NeedDownloadDataList.Add(serverDownloadData[i]);
+                }
+            }
 
-    private void LoadLocalABInfo()
+        }
+
+        //拿到下载列表 m_NeedDownloadDataList 进行下载
+
+        if (m_NeedDownloadDataList.Count == 0)
+        {
+            SetText(txtTips, "资源更新完毕");
+            IsDown = false;
+            EnterLogin();
+            return;
+        }
+        foreach (var item in m_NeedDownloadDataList)
+        { //下载资源
+            string localFilePath = CreateFile(item);
+           
+            dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform, item.FullName.Replace("\\", "/")), localFilePath, () =>
+            {
+                ModifyLocalData(item);
+                if (item.Equals(m_NeedDownloadDataList[m_NeedDownloadDataList.Count - 1]))
+                {
+                    IsDown = false;
+                    EnterLogin();
+                }
+            });
+        }
+        IsDown = true;
+    }
+    public void DownloadData(DownloadDataEntity entity, Action callback)
     {
-        string abCompareInfos = Path.Combine(Application.streamingAssetsPath, PathDefine.abCompareInfo);
-#if UNITY_EDITOR||UNITY_STANDALONE_WIN
-        GetCompareList(abCompareInfos, localABInfo);
-#elif UNITY_ANDROID
-        LoadABCompareInfoForAndroid(abCompareInfos, localABInfo);
-#endif
-        tmpABInfo = localABInfo;
+        string localFilePath = CreateFile(entity);
+        dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform, entity.FullName.Replace("\\", "/")), localFilePath, () =>
+        {
+            ModifyLocalData(entity);
+            callback();
+        });
+    }
+    /// <summary>
+    /// 若没有该文件夹则创建
+    /// </summary>
+    public string CreateFile(DownloadDataEntity item)
+    {
+        int lastIndex = item.FullName.LastIndexOf('\\');
+        string localFilePath = LocalFilePath;
+        if (lastIndex > -1)
+        {
+            //短路径 用于创建文件夹
+            string path = item.FullName.Substring(0, lastIndex);
+
+            //得到本地路径
+            localFilePath = (LocalFilePath + path).Replace("\\", "/");
+
+            if (!Directory.Exists(localFilePath))
+            {
+                Directory.CreateDirectory(localFilePath);
+            }
+        }
+        return localFilePath;
+    }
+    /// <summary>
+    /// 根据资源名称 获取资源实体
+    /// </summary>
+    /// <param name="fullName"></param>
+    /// <param name="lst"></param>
+    /// <returns></returns>
+    private DownloadDataEntity GetDownloadData(string fullName, List<DownloadDataEntity> lst)
+    {
+        for (int i = 0; i < lst.Count; i++)
+        {
+            if (lst[i].FullName.Equals(fullName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return lst[i];
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 修改本地文件
+    /// </summary>
+    /// <param name="entity"></param>
+    public void ModifyLocalData(DownloadDataEntity entity)
+    {
+        if (m_LocalDataList == null)
+        {
+            m_LocalDataList = new List<DownloadDataEntity>();
+        }
+        bool isExists = false;
+
+        for (int i = 0; i < m_LocalDataList.Count; i++)
+        {
+            if (m_LocalDataList[i].FullName.Equals(entity.FullName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                m_LocalDataList[i].MD5 = entity.MD5;
+                m_LocalDataList[i].Size = entity.Size;
+                m_LocalDataList[i].IsFirstData = entity.IsFirstData;
+                isExists = true;
+                break;
+            }
+        }
+
+        if (!isExists)
+        {
+            m_LocalDataList.Add(entity);
+        }
+
+        SavaLoaclVersion();
+    }
+    /// <summary>
+    /// 保存本地版本文件
+    /// </summary>
+    private void SavaLoaclVersion()
+    {
+        StringBuilder sbContent = new StringBuilder();
+
+        for (int i = 0; i < m_LocalDataList.Count; i++)
+        {
+            sbContent.AppendLine(string.Format("{0} {1} {2} {3}", m_LocalDataList[i].FullName, m_LocalDataList[i].MD5, m_LocalDataList[i].Size, m_LocalDataList[i].IsFirstData ? 1 : 0));
+        }
+
+        IOUtil.CreateTextFile(m_LoaclVersionPath, sbContent.ToString());
     }
 
     public void EnterLogin()
     {
-        LoginSys.instance.GameLogin();
+        GameRoot.Instance.ResSvcInit();
+        LoginSys.instance.EnterStart();
         SetWndState(false);
     }
-    public void LoadABCompareInfoForAndroid(string abCompareInfos, Dictionary<string, ABInfo> tepInfo)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get(abCompareInfos))
-        {
-            request.SendWebRequest();
-            while (true)
-            {
-                if (request.downloadHandler.isDone)
-                {
-                    if (request.result != UnityWebRequest.Result.Success)
-                    {
-                        Debug.LogError($"Failed to load AB Compare Info: {request.error}");
-                        
-                    }
-                    else
-                    {
-                        string abCompareInfosContent = request.downloadHandler.text;
-                        GetCompareList(abCompareInfosContent, tepInfo, true);
-                    }
-                    break;
-                }
-            }
 
-        }
-    }
-
-    /// <summary>
-    /// 解析对比文件信息
-    /// </summary>
-    /// <param name="infoPath"></param>
-    /// <param name="localABinfo"></param>
-    public void GetCompareList(string infoPath, Dictionary<string, ABInfo> localABinfo, bool isRead = false)
-    {
-        string info;
-        if (isRead)
-        {
-            info = infoPath;
-        }
-        else
-        {
-            info = File.ReadAllText(infoPath);
-        }
-        string[] sts = info.Split('|');
-        string[] infos = null;
-        localABinfo.Clear();
-        for (int i = 0; i < sts.Length; i++)
-        {
-            infos = sts[i].Split('#');
-            localABinfo.Add(infos[0], new ABInfo(infos[0], long.Parse(infos[1]), infos[2]));
-        }
-
-    }
-    public void CopyCompare(string infoPath, string remotePath)
-    {
-        File.Copy(infoPath, remotePath, true);
-    }
-    /// <summary>
-    /// 获取资源的md5码
-    /// </summary>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
-    public static string ComputeMD5(string filePath)
-    {
-        using (var md5 = MD5.Create())
-        {
-            using (var stream = File.OpenRead(filePath))
-            {
-                byte[] hash = md5.ComputeHash(stream);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
-        }
-    }
     public string GetPlatform()
     {
         return platform;
     }
+
+
+    public string GetLocalFilePath()
+    {
+        return LocalFilePath;
+    }
+    /// <summary>
+    /// 封装字典
+    /// </summary>
+    /// <param name="lst"></param>
+    /// <returns></returns>
+    public Dictionary<string, string> PackDownloadDataDic(List<DownloadDataEntity> lst)
+    {
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < lst.Count; i++)
+        {
+            dic[lst[i].FullName] = lst[i].MD5;
+        }
+
+        return dic;
+    }
+
+    /// <summary>
+    /// 封装字典
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public Dictionary<string, string> PackDownloadDataDic(string content)
+    {
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        string[] arrLines = content.Split('\n');
+        for (int i = 0; i < arrLines.Length; i++)
+        {
+            string[] arrData = arrLines[i].Split(' ');
+            if (arrData.Length == 4)
+            {
+                dic[arrData[0]] = arrData[1];
+            }
+        }
+        return dic;
+    }
+
+    /// <summary>
+    /// 根据文本内容 封装下载数据列表
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public List<DownloadDataEntity> PackDownloadData(string content)
+    {
+        List<DownloadDataEntity> lst = new List<DownloadDataEntity>();
+
+        string[] arrLines = content.Split('\n');
+        for (int i = 0; i < arrLines.Length; i++)
+        {
+            string[] arrData = arrLines[i].Split(' ');
+            if (arrData.Length == 4)
+            {
+                DownloadDataEntity entity = new DownloadDataEntity();
+                entity.FullName = arrData[0];
+                entity.MD5 = arrData[1];
+                entity.Size = int.Parse(arrData[2]);
+                entity.IsFirstData = int.Parse(arrData[3]) == 1;
+                lst.Add(entity);
+            }
+        }
+
+        return lst;
+    }
+
+
 }

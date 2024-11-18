@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 4167477778
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f28c2af8d9377a425fe62f847a7dac14
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/BG/buildin_loading2.png
+Dependencies: []

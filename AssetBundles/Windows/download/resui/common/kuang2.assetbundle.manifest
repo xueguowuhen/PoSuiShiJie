@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3132464646
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 97072af734347a0835b1b274936ac5e9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/Kuang2.png
+Dependencies: []

@@ -51,14 +51,18 @@ public class DynamicWnd : WindowRoot
         }
         else
         {
-            GameObject go = resSvc.LoadPrefab(PathDefine.HPItemPrefab, true);
-            go.transform.SetParent(hpItemRoot);
-            go.transform.localPosition = new Vector3(0, 0, 0);
-            ItemEntityHP itemEntity = go.AddComponent<ItemEntityHP>();
-            Transform tran = trans.Find(PathDefine.HpRoot);
+             loaderSvc.LoadPrefab(PathDefine.Prefab, PathDefine.EntityHp, (GameObject go) =>
+            {
+                go = Instantiate(go);
+                go.transform.SetParent(hpItemRoot);
+                go.transform.localPosition = new Vector3(0, 0, 0);
+                ItemEntityHP itemEntity = go.AddComponent<ItemEntityHP>();
+                Transform tran = trans.Find(PathDefine.HpRoot);
 
-            itemEntity.SetItemInfo(tran);
-            itemDic.Add(playerid, itemEntity);
+                itemEntity.SetItemInfo(tran);
+                itemDic.Add(playerid, itemEntity);
+
+            }, true);
         }
     }
     public void RemoveHptemInfo(int playerid)

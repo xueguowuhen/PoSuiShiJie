@@ -40,10 +40,16 @@ public class BagTipWnd : WindowRoot
         base.SetWndState();
         ItemCfg shopItemCfg = resSvc.GetShopItemCfg(id);
         Name.text = shopItemCfg.mName;
-        ItemImage.sprite = ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg);
+        ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg, (Texture2D texture) =>
+        {
+            ItemImage.overrideSprite = texture.CreateSprite();
+        });
         mInfo.text = shopItemCfg.mInfo;
 
-        itemPriceImage.sprite  = ComTools.GetIconSprite(shopItemCfg.type);
+        ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
+        {
+            itemPriceImage.overrideSprite = texture.CreateSprite();
+        });
         itemPrice.text = shopItemCfg.Price.ToString();
         m_BuyType = (BuyType)shopItemCfg.type;
     }

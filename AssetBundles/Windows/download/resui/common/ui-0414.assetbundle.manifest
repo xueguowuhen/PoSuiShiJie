@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 623339870
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f8a003227bde0cc0732106ce26fb5304
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-0414.png
+Dependencies: []

@@ -11,6 +11,7 @@ using UnityEngine;
 public class PathDefine
 {
     #region Configs
+    public const string ABDownload = "download";
     public const string personCfg = "ResCfg/person";
     public const string TalentCfg = "ResCfg/Talent";
     public const string RdnameCfg = "ResCfg/rdname";
@@ -24,10 +25,12 @@ public class PathDefine
     public const string SkillActionCfg = "ResCfg/skillaction";
     public const string SkillFxCfg = "ResCfg/skillfx";
     public const string EnemyCfg = "ResCfg/MonsterData";
+    public const string Xml = ".xml";
+    public const string AssetBundle = ".assetbundle";
     //public const string 
     #endregion
     #region ResPrefab
-    public const string PC = "PC";
+    public const string Windows = "Windows";
     public const string Android = "Android";
     public const string AssetBundles = "AssetBundles";
     public const string ResProns = "ResProns/";
@@ -36,13 +39,15 @@ public class PathDefine
     //public const string kaixiya
 
     public const string ResPerson = "ResPerfer/Person/";
-    public const string ResShopItem = "ResPerfer/Item/ShopItem";
-    public const string ResBagItem = "ResPerfer/Item/BagItem";
-    public const string ResFriendsItem = "ResPerfer/Item/FriendsItem";
-    public const string ResAttributeText = "ResPerfer/Item/attributeText";
-    public const string ResRewardTaskItem = "ResPerfer/Item/RewardTaskItem";
-    public const string ResDailyTaskItem = "ResPerfer/Item/DailyTaskItem";
-    public const string HPItemPrefab = "ResPerfer/ItemEntityHp";
+    public const string ResItem = "ResPerfer/Item/";
+    public const string ResShopItem = "ShopItem";
+    public const string ResBagItem = "BagItem";
+    public const string ResFriendsItem = "FriendsItem";
+    public const string ResAttributeText = "attributeText";
+    public const string ResRewardTaskItem = "RewardTaskItem";
+    public const string ResDailyTaskItem = "DailyTaskItem";
+    public const string Prefab = "ResPerfer/";
+    public const string EntityHp="ItemEntityHp";
     public const string ResHard = "ResUI/Hard/";
     public const string ResUI = "ResUI/";
     public const string Equip = "Equip/";
@@ -50,12 +55,10 @@ public class PathDefine
     public const string icon = "icon/";
     public const string HpRoot = "HpRoot";
     public const string btnEvade = "btnEvade";
+    public const string Png = ".png";
     #endregion
     #region GameObjectPath
-    public const string LoginWndPath = "Canvas/LoginWnd";
-    public const string RegisterWndPath = "Canvas/RegisterWnd";
-    public const string loadingWndPath = "Canvas/LoadingWnd";
-    public const string CharaterCamera = "CharaterCamera";
+
     #region LoginWnd
 
     #endregion

@@ -1,0 +1,72 @@
+ManifestFileVersion: 0
+CRC: 1642695914
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 27b3d4de4d4c26d23cb4d7ccbd8707ba
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e8804645c101d0efd69185cb751412ca
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: eb4e92016c3a0a049b32932523a25d99, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1addc63fabe06b747997fb97772a088e, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Button/ButtonClickedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.FontData
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/OnChangeEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.InputField/SubmitEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
+Assets:
+- Assets/Download/ResPerfer/Wnd/RegisterWnd.prefab
+Dependencies:
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/adventure_bg_03.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg6.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/btn1.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/inputbox.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/password.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/username.assetbundle

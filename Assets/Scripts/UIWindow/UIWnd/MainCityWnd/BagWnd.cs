@@ -31,10 +31,18 @@ public class BagWnd : WindowRoot
     private GameObjectPool pool;
     public GameObject pointer;
     private Dictionary<ItemCfg, int> allDic = new Dictionary<ItemCfg, int>();
+    private Action onLoadItem;
     protected override void InitWnd()
     {
         base.InitWnd();
-        LoadItems();
+        if (pool == null)
+        {
+            onLoadItem=LoadItems;
+        }
+        else
+        {
+            LoadItems();
+        }
         CloseBag();
     }
     public void Start()
@@ -69,17 +77,26 @@ public class BagWnd : WindowRoot
     }
     private void InitBagPool()
     {
-        GameObject gameObject = resSvc.LoadPrefab(PathDefine.ResBagItem, cache: true, instan: false);
-        pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
-        pool.MaxCount = 15;
-        pool.cullMaxPerPass = 5;
-        pool.cullAbove = 15;
-        pool.cullDespawned = true;
-        pool.cullDelay = 2;
-        pool.Init();
+        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResBagItem, (GameObject go) =>
+       {
+           GameObject gameObject = go;
+           pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
+           pool.MaxCount = 15;
+           pool.cullMaxPerPass = 5;
+           pool.cullAbove = 15;
+           pool.cullDespawned = true;
+           pool.cullDelay = 2;
+           pool.Init();
+           if (onLoadItem!= null)
+           {
+               onLoadItem();
+           }
+
+       }, cache: true, instan: false);
     }
     private void ClearBag()
     {
+        if (pool == null) return;
         if (BagContent != null)  //清空当前的商店物品
         {
             for (int i = BagContent.transform.childCount - 1; i >= 0; i--)
@@ -187,6 +204,7 @@ public class BagWnd : WindowRoot
         BagItem bagItem = gameObject.GetOrAddComponent<BagItem>();
         bagItem.SetUI(bagItemCfgs, count);
         gameObject.transform.SetParent(BagContent.transform, false);
+        gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
         Button button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(delegate { ClickBag(bagItemCfgs.ID); });
@@ -279,6 +297,10 @@ public class BagWnd : WindowRoot
         UseTipWnd.GetComponent<UseTipWnd>().SetWndState();
         //UseTipWnd.transform.SetParent();
     }
-
+    protected override void ClearWnd()
+    {
+        base.ClearWnd();
+        onLoadItem=null;
+    }
 
 }

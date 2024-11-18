@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 853651487
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7231d4e05e03bac8d27222f457316a58
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/ui-0861.png
+Dependencies: []

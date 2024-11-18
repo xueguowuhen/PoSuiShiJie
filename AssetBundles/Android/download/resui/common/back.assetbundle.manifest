@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 372649141
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 940627035aa72f2a141e8b7dcc1494e6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12da798fbf3a6c0c342cc56cb1a6efdf
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Download/ResUI/Common/Back.png
+Dependencies: []

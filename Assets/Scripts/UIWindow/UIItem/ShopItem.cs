@@ -27,8 +27,14 @@ public class ShopItem : MonoBehaviour
         Name.text = shopItemCfg.mName;
         Count.text = "∞";
         Price.text = shopItemCfg.Price.ToString();
-        ShopImage.sprite = ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg);//物品图标
-        PriceImg.sprite = ComTools.GetIconSprite(shopItemCfg.type);//购买的图标
+        ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg, (Texture2D texture) =>
+        {
+            ShopImage.overrideSprite = texture.CreateSprite();
+        });//物品图标
+         ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
+        {
+            PriceImg.overrideSprite = texture.CreateSprite();
+        });//购买的图标
     }
     // Update is called once per frame
     void Update()

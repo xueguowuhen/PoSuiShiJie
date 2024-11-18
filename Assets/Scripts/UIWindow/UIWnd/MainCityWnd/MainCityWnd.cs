@@ -121,7 +121,10 @@ public class MainCityWnd : WindowRoot
         ruviaText.text = playerData.ruvia.ToString();
         crystalText.text = playerData.crystal.ToString();
         int headid = playerData.type;
-        Headimg.sprite = resSvc.GetPersonCfgHard(headid);
+        resSvc.GetPersonCfgHard(headid, (Texture2D texture) =>
+        {
+            Headimg.overrideSprite = texture.CreateSprite();
+        });
 
         //defaultPos=imgDirBg.transform.position;
         //pointDis = Screen.height * 1.0f / Constants.ScreenStandardHeight * Constants.ScreenOPDis;

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <AssetBundle>
+    <Item Name="Player预设" Tag="Role" IsFolder="true" IsFirstData="false">
+      <Path Value="Download/ResPerfer/Person" />
+    </Item>
+    <Item Name="NPC预设" Tag="Role" IsFolder="true" IsFirstData="false" />
+    <Item Name="Monster预设" Tag="Role" IsFolder="true" IsFirstData="false" />
+    <Item Name="初始场景" Tag="Scene" IsFolder="false" IsFirstData="false">
+      <Path Value="Download/ResScenes/SceneMainCity.unity" />
+    </Item>
+    <Item Name="其他场景" Tag="Scene" IsFolder="false" IsFirstData="false">
+      <Path Value="Download/ResScenes/SceneGamePVP.unity" />
+    </Item>
+    <Item Name="UI资源" Tag="UI" IsFolder="true" IsFirstData="false">
+      <Path Value="Download/ResUI" />
+      <Path Value="Download/ResPerfer/Item" />
+      <Path Value="Download/ResPerfer/Wnd" />
+    </Item>
+  </AssetBundle>
+</Root>
