@@ -138,7 +138,7 @@ public class PlayerController : Controller
                     speed = targetVelocity
                 }
             };
-            NetSvc.instance.SendMsgAsync(msg);
+            NetSvc.Instance.SendMsgAsync(msg);
         }
 
     }

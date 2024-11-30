@@ -34,9 +34,9 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     public void Init(MapCfg mapData, Action cb = null)
     {
-        resSvc = ResSvc.instance;
-        audioSvc = AudioSvc.instance;
-        loaderSvc= AssetLoaderSvc.instance;
+        resSvc = ResSvc.Instance;
+        audioSvc = AudioSvc.Instance;
+        loaderSvc= AssetLoaderSvc.Instance;
         stateMgr = gameObject.AddComponent<StateMgr>();
         stateMgr.Init();
         skillMgr = gameObject.AddComponent<SkillMgr>();

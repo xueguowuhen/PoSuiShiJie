@@ -1,0 +1,60 @@
+ManifestFileVersion: 0
+CRC: 246116187
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 53c30381dda713362cc9d7e9a5e56c60
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 52125f84adfcb8a33eb5e2f423bcecf0
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4a3ab0ea63bca7d43a6315f6b1284e37, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.AnimationTriggers
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Button/ButtonClickedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.ColorBlock
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.FontData
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Navigation
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.SpriteState
+Assets:
+- Assets/Download/ResPerfer/Item/RaffleItem.prefab
+Dependencies:
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg7.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0415.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/icon/crystal.assetbundle

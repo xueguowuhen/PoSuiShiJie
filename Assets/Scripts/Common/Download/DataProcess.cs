@@ -223,7 +223,7 @@ public partial class DataProcess : MonoBehaviour
         float prevSize = 0;
         while (!webRequest.isDone)
         {
-            float progress = (float)GetSavedDownloadedBytes(fileName, savePath) / count;
+            float progress = dataDownload.progress = (float)GetSavedDownloadedBytes(fileName, savePath) / count;
             float currentTime = Time.time;
             float deltaTime = currentTime - prevTime; //当前时间减去上次时间
             dataDownload.currentCount = prevDownloadedBytes + (long)webRequest.downloadedBytes;
@@ -246,7 +246,7 @@ public partial class DataProcess : MonoBehaviour
         }
         if (webRequest.isDone)
         {
-            float progress = (float)GetSavedDownloadedBytes(fileName, savePath) / count;
+            float progress = dataDownload.progress = (float)GetSavedDownloadedBytes(fileName, savePath) / count;
             float currentTime = Time.time;
             float deltaTime = currentTime - prevTime; //当前时间减去上次时间
             dataDownload.currentCount = prevDownloadedBytes + (long)webRequest.downloadedBytes;
@@ -259,6 +259,7 @@ public partial class DataProcess : MonoBehaviour
                 speedUnit = "MB/s";
             }
             DownSpeed = speed + speedUnit;
+           // Debug.Log("总字节数：" + count + "已下载字节数：" + downloadedBytes);
             //Debug.LogFormat("Downloading {0}: {1:P1} ({2:0.00} {3})", fileName, progress, speed, speedUnit);
             dataDownloads.Remove(dataDownload);
             FinishDownloads.Add(dataDownload);
@@ -358,6 +359,26 @@ public partial class DataProcess : MonoBehaviour
         }
         dataDownloads.Clear(); // 清空下载列表
     }
+    public float GetDownUrlProgress(string url)
+    {
+
+        foreach (var dataDownload in dataDownloads)
+        {
+            if (dataDownload.uri.ToLower().Contains(url.ToLower()))
+            {
+                return dataDownload.progress;
+            }
+        }
+        foreach (var dataDownload in FinishDownloads)
+        {
+            if (dataDownload.uri.ToLower().Contains(url.ToLower()))
+            {
+                return 1;
+            }
+        }
+        return 0;
+
+    }
     /// <summary>
     /// 获取总下载字节数
     /// </summary>
@@ -428,6 +449,7 @@ public class DataDownload
     public bool isRe;//是否重新下载
     public long countByteStr;//总字节数
     public int downloadCount;//下载次数
+    public float progress;
     public float speed;//下载速度
     public float currentCount;//当前字节数
     public DownloadState state;

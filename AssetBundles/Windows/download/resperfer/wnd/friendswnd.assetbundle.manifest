@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3621769222
+CRC: 2436360766
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ea481fa29316593a3185bffc377f2cfb
+    Hash: d1987e89ff861c0fe62bebf6228ac1ba
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 3d30f99987fd015d51d43c4d6704ea12
+    Hash: f83c536b36a19b54a1e66f67d7023e17
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -24,17 +24,15 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fa9de3b648bc0e3419f9c30d783690f3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: ac98aee1d29de12489b5b4c25759b03d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 1fd5dc0b850772c44920928e394351d2, type: 3}
 - Class: 114
@@ -77,7 +75,6 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Download/ResPerfer/Wnd/FriendsWnd.prefab
 Dependencies:
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/friendsitem.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/03_main/lefttopkuang.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/carddraw_bg_08.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg1.assetbundle

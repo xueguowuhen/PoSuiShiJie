@@ -12,8 +12,25 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SvcBase:MonoBehaviour
+public class SvcBase<T> : MonoBehaviour where T : SvcBase<T>
 {
+    private static T _instance;
+    public static T Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<T>();
+                if (_instance == null)
+                {
+                    GameObject obj = GameObject.Find("GameRoot");
+                    _instance = obj.GetOrAddComponent<T>();
+                }
+            }
+            return _instance;
+        }
+    }
     public void Update()
     {
         OnUpdate();

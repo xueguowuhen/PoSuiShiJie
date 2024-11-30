@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2753495885
+CRC: 1749126244
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 422be9836a14800bb7c0b7fa5b843e30
+    Hash: 047b3fa526eabb7b465a679bcec42f0c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 6fcec4f2a1fff7359d51fe647485c261
+    Hash: b4d8f3d2f53c0ff00f0710338d19e981
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -75,5 +75,6 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg1.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/exitbtn3.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0240.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0843.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-1348.assetbundle

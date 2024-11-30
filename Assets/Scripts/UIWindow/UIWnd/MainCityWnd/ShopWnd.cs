@@ -11,24 +11,36 @@ public class ShopWnd : WindowRoot
     public GameObject Buttons;
     #endregion
     #region two
+    public GameObject ShopSlots;
+    public GameObject RaffleSlots;
     public GameObject ItemContent;
+    public GameObject RaffleContent;
+    public GameObject DownLoad;
+    public string DownLoadUrl;
+    public Image DownLoadImg;
     public Button Close;
     public GameObject pointer;
     private Button All;
     private Button Consume;
     private Button Equip;
     private Button Material;
-    private Button Search;
+    private Button Raffle;
     #endregion
     public BuyTipWnd BuyTipWnd;
+    public GameObject RaffleTipInfo;
     private List<ItemCfg> allItems = new List<ItemCfg>();
     private GameObjectPool pool;
     private Action onLoadItems;
     protected override void InitWnd()
     {
         base.InitWnd();//
+        if (RaffleSlots.activeSelf)
+        {
+            ClickRaffle();
+        }
         if (pool == null)
         {
+            SetActive(DownLoad, true);
             onLoadItems = LoadItems;
         }
         else
@@ -54,7 +66,8 @@ public class ShopWnd : WindowRoot
     {
         #region two
         AddListener(Close, CloseShop);
-        Search = Buttons.transform.Find("Search").GetComponent<Button>();
+        Raffle = Buttons.transform.Find("Raffle").GetComponent<Button>();
+        AddListener(Raffle, ClickRaffle);
         All = Buttons.transform.Find("All").GetComponent<Button>();
         AddListener(All, ClickAll);
         Equip = Buttons.transform.Find("Euqip").GetComponent<Button>();
@@ -66,15 +79,26 @@ public class ShopWnd : WindowRoot
         #endregion
         //InitTipInfoWnd();
         InitShopPool();
+        SetActive(RaffleSlots, false);
+        SetActive(RaffleTipInfo, false);
     }
+
+    private void ClickRaffle()
+    {
+        SetActive(ItemContent,false);
+        SetPointerPosition(Raffle.transform);
+        MainCitySys.instance.EndRaffleLua();
+    }
+
     /// <summary>
     /// 初始化商品池
     /// </summary>
     private void InitShopPool()
     {
-        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResShopItem, (GameObject obj) =>
+        DownLoadUrl = PathDefine.ResShopItem;
+        loaderSvc.LoadPrefab(PathDefine.ResItem, DownLoadUrl, (GameObject obj) =>
         {
-            GameObject gameObject = Instantiate(obj);
+            GameObject gameObject = obj;
             pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
             pool.MaxCount = 15;
             pool.cullMaxPerPass = 5;
@@ -82,6 +106,7 @@ public class ShopWnd : WindowRoot
             pool.cullDespawned = true;
             pool.cullDelay = 2;
             pool.Init();
+            DownLoadUrl = null;
             if (onLoadItems != null)
             {
                 onLoadItems();
@@ -89,12 +114,22 @@ public class ShopWnd : WindowRoot
 
         }, cache: true, instan: false);
     }
+    private void Update()
+    {
+        if (DownLoadUrl != null)
+        {
+            
+            float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
+            DownLoadImg.fillAmount = progress;
+        }
+    }
 
     /// <summary>
     /// 加载商店所有物品
     /// </summary>
     private void LoadItems()
     {
+        SetActive(DownLoad, false);
         ClearShop();
         ItemCfg[] ItemsData = GetItemData();//获取所有的物品资源
         allItems = ItemsData.ToList();
@@ -150,6 +185,7 @@ public class ShopWnd : WindowRoot
     /// </summary>
     private void ClickEquip()
     {
+
         ClickItem(ItemType.equip, Equip.transform);
     }
     /// <summary>
@@ -181,7 +217,13 @@ public class ShopWnd : WindowRoot
     /// <param name="targetTransform"></param>
     private void ClickItem(ItemType itemType, Transform targetTransform)
     {
+        SetActive(ItemContent, true);
+        SetActive(RaffleSlots, false);
         RefreshItems(itemType);
+        SetPointerPosition(targetTransform);
+    }
+    public void SetPointerPosition(Transform targetTransform)
+    {
         Vector3 newPosition = pointer.transform.position;
         newPosition.y = targetTransform.position.y;
         pointer.transform.position = newPosition;
@@ -214,6 +256,7 @@ public class ShopWnd : WindowRoot
     /// </summary>
     public void CloseBuy()
     {
+        
         BuyTipWnd.SetWndState(false);
     }
     protected override void ClearWnd()

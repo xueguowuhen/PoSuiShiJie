@@ -21,6 +21,14 @@ public class RewardTaskItem : WindowItem
     private Button rewardBtn;//领取奖励按钮
     private bool isTask = false;
     private int taskRewardID;
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+    }
+    protected override void OnStart()
+    {
+        base.OnStart();
+    }
     /// <summary>
     /// 设置UI
     /// </summary>
@@ -42,13 +50,13 @@ public class RewardTaskItem : WindowItem
         }
         if (taskRewardCfg != null && taskRewardCfg.rewardItems.Count > 1)
         {
-            ItemCfg itemCfg = ResSvc.instance.GetShopItemCfg(taskRewardCfg.rewardItems[0].ItemID);
+            ItemCfg itemCfg = resSvc.GetShopItemCfg(taskRewardCfg.rewardItems[0].ItemID);
             ComTools.GetItemSprite(itemCfg.type, itemCfg.mImg, (Texture2D texture) =>
            {
                RewardIcon.overrideSprite = texture.CreateSprite();
            });
             rewardText.SetText(taskRewardCfg.rewardItems[0].Count.ToString(), true);
-            ItemCfg item2Cfg = ResSvc.instance.GetShopItemCfg(taskRewardCfg.rewardItems[1].ItemID);
+            ItemCfg item2Cfg = resSvc.GetShopItemCfg(taskRewardCfg.rewardItems[1].ItemID);
             ComTools.GetItemSprite(item2Cfg.type, item2Cfg.mImg, (Texture2D texture) =>
            {
                rewardIcon2.overrideSprite = texture.CreateSprite();
@@ -72,23 +80,21 @@ public class RewardTaskItem : WindowItem
                 RewardTaskID = taskRewardID
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
         isTask = true;
-        TimerSvc.Instance.AddTimeTask((tid) =>
+        timerSvc.AddTimeTask((tid) =>
         {
             isTask = false;
         }, 2f);
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void OnUpdate()
     {
-
+        base.OnUpdate();
     }
-
-    // Update is called once per frame
-    void Update()
+    protected override void BeforeOnDestroy()
     {
-
+        base.BeforeOnDestroy();
     }
 }

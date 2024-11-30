@@ -32,12 +32,16 @@ public class BagWnd : WindowRoot
     public GameObject pointer;
     private Dictionary<ItemCfg, int> allDic = new Dictionary<ItemCfg, int>();
     private Action onLoadItem;
+    public GameObject DownLoad;
+    public string DownLoadUrl;
+    public Image DownLoadImg;
     protected override void InitWnd()
     {
         base.InitWnd();
         if (pool == null)
         {
-            onLoadItem=LoadItems;
+            SetActive(DownLoad, true);
+            onLoadItem =LoadItems;
         }
         else
         {
@@ -77,7 +81,8 @@ public class BagWnd : WindowRoot
     }
     private void InitBagPool()
     {
-        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResBagItem, (GameObject go) =>
+        DownLoadUrl = PathDefine.ResBagItem;
+        loaderSvc.LoadPrefab(PathDefine.ResItem, DownLoadUrl, (GameObject go) =>
        {
            GameObject gameObject = go;
            pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
@@ -86,6 +91,7 @@ public class BagWnd : WindowRoot
            pool.cullAbove = 15;
            pool.cullDespawned = true;
            pool.cullDelay = 2;
+           DownLoadUrl=null;
            pool.Init();
            if (onLoadItem!= null)
            {
@@ -93,6 +99,15 @@ public class BagWnd : WindowRoot
            }
 
        }, cache: true, instan: false);
+    }
+    private void Update()
+    {
+        if (DownLoadUrl != null)
+        {
+
+            float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
+            DownLoadImg.fillAmount = progress;
+        }
     }
     private void ClearBag()
     {
@@ -111,6 +126,7 @@ public class BagWnd : WindowRoot
     /// </summary>
     private void LoadItems()
     {
+        SetActive(DownLoad, false);
         ClearBag();
         allDic.Clear();
         List<BagList> bagList = GameRoot.Instance.PlayerData.Bag;//获取所有的背包资源
@@ -149,7 +165,7 @@ public class BagWnd : WindowRoot
         Vector3 newPosition = pointer.transform.position;
         newPosition.y = targetTransform.position.y;
         pointer.transform.position = newPosition;
-        Debug.Log(pointer.transform.position);
+       // Debug.Log(pointer.transform.position);
     }
 
     /// <summary>
@@ -192,6 +208,7 @@ public class BagWnd : WindowRoot
         BagItem bagItem = gameObject.GetOrAddComponent<BagItem>();
         bagItem.SetNone();
         gameObject.transform.SetParent(BagContent.transform, false);
+        gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
     }
     /// <summary>

@@ -108,13 +108,13 @@ internal class DBMgr
                                     practice = reader.GetInt32("practice"),
                                     critical = reader.GetInt32("critical"),
                                     rewardTask = new RewardTask(),
-                                    TalentID = new List<int>(),
-                                    TalentsData = new List<Talent>(),
-                                    Bag = new List<BagList>(),
+                                    //TalentID = new List<int>(),
+                                    //TalentsData = new List<Talent>(),
+                                    //Bag = new List<BagList>(),
                                     Taskid = reader.GetInt32("Taskid"),
-                                    dailyTasks = new List<DailyTask>(),
-                                    FriendList = new List<FriendItem>(),
-                                    AddFriendList = new List<FriendItem>(),
+                                    //dailyTasks = new List<DailyTask>(),
+                                    //FriendList = new List<FriendItem>(),
+                                    //AddFriendList = new List<FriendItem>(),
                                 };
                                 string[] powers = reader.GetString("power").Split("|");
                                 playerData.power = int.Parse(powers[0]);

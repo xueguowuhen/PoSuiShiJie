@@ -38,8 +38,11 @@ public class GameObjectPoolManager : MonoBehaviour
         }
 
         GameObject poolObject = new GameObject(prefab.name+"_Pool");
-        poolObject.transform.parent = this.transform; // 将新对象设置为 GameObjectPoolManager 的子物体
+        poolObject.transform.SetParent(this.transform,false); // 将新对象设置为 GameObjectPoolManager 的子物体
         pool = poolObject.AddComponent<GameObjectPool>(); // 将 GameObjectPool 组件挂载到新对象上
+        poolObject.transform.localScale = Vector3.one;
+        poolObject.transform.localRotation = Quaternion.identity;
+      //  poolObject.transform.localPosition = Vector3.zero;
         pool.prefab = prefab;
         pools[poolName] = pool; // 将新池添加到字典中
 
@@ -74,7 +77,17 @@ public class GameObjectPoolManager : MonoBehaviour
 
         pools.Clear();
     }
+    // 可选：清理指定 prefab 的对象池
+    public void ClearPool(GameObject prefab)
+    {
+        string poolName = prefab.name;
 
+        if (pools.TryGetValue(poolName, out GameObjectPool pool))
+        {
+            pool.ClearPool();
+            pools.Remove(poolName);
+        }
+    }
     // 可选：Unity的Start方法，可以用于初始化逻辑
     private void Start()
     {

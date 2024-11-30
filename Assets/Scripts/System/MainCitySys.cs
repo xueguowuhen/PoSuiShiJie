@@ -19,7 +19,7 @@ public class MainCitySys : SystemRoot
     public CharacterController characterController;
     public PlayerController playerController;
     public PersonWnd personWnd;
-    public ShopWnd shop;
+    public ShopWnd shopWnd;
     public BagWnd bagWnd;
     //public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
@@ -420,6 +420,13 @@ public class MainCitySys : SystemRoot
     //    }
     //    return list;
     //}
+    /// <summary>
+    /// 打开抽奖界面
+    /// </summary>
+    public void EndRaffleLua()
+    {
+        LuaMgr.Instance.LoadView(PathDefine.RaffleCtrl);
+    }
 
     public void OpenGuideWnd()
     {
@@ -447,7 +454,7 @@ public class MainCitySys : SystemRoot
     /// </summary>
     public void EnterShop()
     {
-        shop.SetWndState();
+        shopWnd.SetWndState();
     }
     /// <summary>
     /// 背包界面

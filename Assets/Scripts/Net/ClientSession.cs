@@ -16,7 +16,7 @@ public class ClientSession : TraSession<GameMsg>
     protected override void OnConnected()
     {
         GameCommon.Log("连接成功");
-        NetSvc.instance.SocketConnected(() => GameRoot.SetSocketFail(false));
+        NetSvc.Instance.SocketConnected(() => GameRoot.SetSocketFail(false));
         //     GameRoot.SetSocketFail(false);
         tid = TimerSvc.Instance.AddTimeTask((int tid) =>
          {
@@ -30,14 +30,14 @@ public class ClientSession : TraSession<GameMsg>
     protected override void OnReciveMsg(GameMsg msg)
     {
         //GameCommon.Log("RcvPack CMD:" + ((CMD)msg.cmd).ToString());
-        NetSvc.instance.AddMsgQue(msg);
+        NetSvc.Instance.AddMsgQue(msg);
     }
     protected override void OnDisConnected()
     {
         GameCommon.Log("服务器断开连接");
 
         TimerSvc.Instance.DeleteTimeTask(tid);
-       NetSvc.instance.SocketConnected(() => GameRoot.SetSocketFail(true));
+       NetSvc.Instance.SocketConnected(() => GameRoot.SetSocketFail(true));
     }
 }
 

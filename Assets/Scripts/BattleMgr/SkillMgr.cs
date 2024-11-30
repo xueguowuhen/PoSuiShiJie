@@ -17,7 +17,7 @@ public class SkillMgr : MonoBehaviour
     public BattleMgr BattleMgr;
     public void Init()
     {
-        resSvc = ResSvc.instance;
+        resSvc = ResSvc.Instance;
         timerSvc = TimerSvc.Instance;
         GameCommon.Log("SkillMgr Init Done...");
     }
@@ -266,7 +266,7 @@ public class SkillMgr : MonoBehaviour
             if (msg != null)
             {
                 msg.reqDamage.Damage = dmgSum;
-                NetSvc.instance.SendMsg(msg);
+                NetSvc.Instance.SendMsg(msg);
             }
             else
             {

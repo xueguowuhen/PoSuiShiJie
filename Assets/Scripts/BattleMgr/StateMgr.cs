@@ -79,7 +79,7 @@ public class StateMgr : MonoBehaviour
                     }
                 }
                 GameCommon.Log(Enum.GetName(typeof(AniState), targerState));
-                NetSvc.instance.SendMsg(msg);
+                NetSvc.Instance.SendMsg(msg);
             }
        //     Debug.Log("上次状态" + entity.currentAniState.ToString());
             if (entity.currentAniState != AniState.None)

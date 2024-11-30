@@ -14,7 +14,7 @@ public class SystemRoot : MonoBehaviour
     protected NetSvc netSvc;    //
     protected ResSvc resSvc
     {
-        get { return ResSvc.instance; }
+        get { return ResSvc.Instance; }
         set { }
     }
     protected AudioSvc audioSvc;//
@@ -22,11 +22,11 @@ public class SystemRoot : MonoBehaviour
     protected AssetLoaderSvc loaderSvc;
     public virtual void InitSyc()
     {
-        netSvc = NetSvc.instance;
-        resSvc = ResSvc.instance;
-        audioSvc = AudioSvc.instance;
+        netSvc = NetSvc.Instance;
+        resSvc = ResSvc.Instance;
+        audioSvc = AudioSvc.Instance;
         timerSvc= TimerSvc.Instance;
-        loaderSvc = AssetLoaderSvc.instance;
+        loaderSvc = AssetLoaderSvc.Instance;
     }
     public GameObject GameFind(string Path)
     {

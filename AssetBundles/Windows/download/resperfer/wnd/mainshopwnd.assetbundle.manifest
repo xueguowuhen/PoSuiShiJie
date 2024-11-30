@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2573813432
+CRC: 4132114452
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eb10414b7c89779f82f4feb42fbc0ea0
+    Hash: 0ca3639aa24adb15bc4d78ffc6107c44
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ce62c8687b13dd323e6e1640e26b5ec2
+    Hash: 91496a1674c5fe3a7e1934f3fefc6299
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -24,9 +24,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f6ea3db9be3789a47b27c8aa4f00e298, type: 3}
 - Class: 114
@@ -35,8 +35,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fde0c365b23e14d4d9d72d29f93c8fc4, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 11d99d63984922d458219339980a770a, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 719155d68ea447547b875edb2f0467f7, type: 3}
 - Class: 115
@@ -77,13 +75,17 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Download/ResPerfer/Wnd/MainShopWnd.prefab
 Dependencies:
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/shopitem.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/shoptipinfo.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/03_main/lefttopkuang.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/carddraw_bg_08.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg1.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg2.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg6.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn3.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/inputbox.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0240.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0299.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0843.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1348.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/icon/aura.assetbundle

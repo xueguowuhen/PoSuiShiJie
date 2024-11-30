@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4068354164
+CRC: 1523325523
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 410774559f6f401bb59dc40bc6aa43ed
+    Hash: 460b1ae41edba47561e38608cf29cf35
   TypeTreeHash:
     serializedVersion: 2
     Hash: fd7be436c1244b5b34df53cbc9d388e5
@@ -69,6 +69,7 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/03_main/yellowbar.assetbundle
 - "E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/03_main/\u7ECF\u9A8C\u6761.assetbundle"
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/bg/adventure_bg_03.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/raffle.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/settigbtn.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-1762.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-1766.assetbundle

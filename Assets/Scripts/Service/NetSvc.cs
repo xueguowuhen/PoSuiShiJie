@@ -15,9 +15,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class NetSvc : SvcBase
+public class NetSvc : SvcBase<NetSvc>
 {
-    public static NetSvc instance;
+
     private readonly static string Lock = "lock";
     private Queue<GameMsg> Msgqueue = new Queue<GameMsg>();
     public TraSocket<ClientSession, GameMsg> client = null;
@@ -26,7 +26,6 @@ public class NetSvc : SvcBase
     public override void InitSvc()
     {
         base.InitSvc();
-        instance = this;
         StartAsClient();
         SocketDispatcher.Instance.AddEventListener(CMD.SystemSessionID, onSystemSessionID);
         GameCommon.Log("NetSvc Init....");

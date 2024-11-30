@@ -62,7 +62,7 @@ public class AssetBundleLoader : IDisposable
     }
     public void Dispose()
     {
-        Debug.Log("AssetBundleLoader Dispose");
+        //Debug.Log("AssetBundleLoader Dispose");
         if (bundle != null) bundle.Unload(false);
     }
 }

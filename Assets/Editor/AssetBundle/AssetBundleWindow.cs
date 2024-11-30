@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
+using DG.Tweening.Plugins.Core.PathCore;
 /// <summary>
 /// AssetBundle管理窗口
 /// </summary>
@@ -113,23 +114,25 @@ public class AssetBundleWindow : EditorWindow
             buildTargetIndex = selectBuildTargetIndex;
             EditorApplication.delayCall = OnSelectTargetCallBack;
         }
+        if (GUILayout.Button("清空AB包标签", GUILayout.Width(100)))
+        {
+            EditorApplication.delayCall = OnClearAssetBundleName;
+        }
         if (GUILayout.Button("保存设置", GUILayout.Width(100)))
         {
             EditorApplication.delayCall = OnSaveAssetBundleCallBack;
+        }
+
+        if (GUILayout.Button("清空AssetBundle包", GUILayout.Width(130)))
+        {
+            EditorApplication.delayCall = OnClearAssetBundleCallBack;
         }
         if (GUILayout.Button("打AssetBundle包", GUILayout.Width(130)))
         {
             EditorApplication.delayCall = OnAssetBundleCallBack;
         }
-        if (GUILayout.Button("清空AssetBundle包", GUILayout.Width(130)))
-        {
-            EditorApplication.delayCall = OnClearAssetBundleCallBack;
-        }
-        if (GUILayout.Button("清空AB包标签", GUILayout.Width(100)))
-        {
-            EditorApplication.delayCall = OnClearAssetBundleName;
-        }
-        if (GUILayout.Button("拷贝数据表", GUILayout.Width(100)))
+
+        if (GUILayout.Button("拷贝数据", GUILayout.Width(100)))
         {
             EditorApplication.delayCall = OnCopyDataTableBundleName;
         }
@@ -340,9 +343,21 @@ public class AssetBundleWindow : EditorWindow
     }
     public void OnCopyDataTableBundleName()
     {
+
         string fromPath = Application.dataPath + "/Download/ResCfg";
         string toPath = Application.dataPath + "/../AssetBundles/" + arrBuildTarget[buildTargetIndex] + "/Download/ResCfg";
+        if (Directory.Exists(toPath))
+        {
+            Directory.Delete(toPath, true);
+        }
         IOUtil.CopyDirectory(fromPath, toPath);
+        string fromPath2 = Application.dataPath + "/Download/xLuaLogic";
+        string toPath2 = Application.dataPath + "/../AssetBundles/" + arrBuildTarget[buildTargetIndex] + "/Download/xLuaLogic";
+        if (Directory.Exists(toPath2))
+        {
+            Directory.Delete(toPath2, true);
+        }
+        IOUtil.CopyDirectory(fromPath2, toPath2);
         Debug.Log("拷贝完毕");
     }
     /// <summary>
@@ -410,7 +425,7 @@ public class AssetBundleWindow : EditorWindow
                 if (isBreak) break;
             }
 
-            if (name.IndexOf("ResCfg") != -1)
+            if (name.IndexOf("ResCfg") != -1 || name.IndexOf("xLuaLogic") != -1)
             {
                 isFirstData = true;
             }

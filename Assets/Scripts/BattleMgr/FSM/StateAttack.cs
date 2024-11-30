@@ -12,7 +12,7 @@ public class StateAttack : ISate
     {
 
         entity.currentAniState = AniState.Attack;
-        entity.curtSkillCfg = ResSvc.instance.GetSkillCfgData((int)objects[0]);
+        entity.curtSkillCfg = ResSvc.Instance.GetSkillCfgData((int)objects[0]);
         Debug.Log("进入攻击状态"+(int)objects[0]);
         entity.SetVelocity(Constants.VelocityDefault);
         entity.canRlskill = false;

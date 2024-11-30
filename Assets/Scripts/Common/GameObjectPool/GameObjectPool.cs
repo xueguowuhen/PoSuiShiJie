@@ -75,6 +75,9 @@ public class GameObjectPool : MonoBehaviour // 继承 MonoBehaviour
         {
             obj.transform.SetParent(transform);
         }
+obj.transform.localPosition = Vector3.zero;
+obj.transform.localRotation = Quaternion.identity;
+obj.transform.localScale = Vector3.one;
 
         obj.SetActive(false);
         poolStack.Push(obj);

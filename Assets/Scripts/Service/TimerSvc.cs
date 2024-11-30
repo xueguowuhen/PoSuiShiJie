@@ -6,13 +6,11 @@
 	功能：计时服务
 *****************************************************/
 using CommonNet;
-using ProtoBuf.WellKnownTypes;
 using System;
 using UnityEngine;
 
-public class TimerSvc: SvcBase
+public class TimerSvc: SvcBase<TimerSvc>
 {
-    public static TimerSvc Instance=null;
     private ShowTimer showTimer;
 
     #region 系统时间函数
@@ -33,7 +31,6 @@ public class TimerSvc: SvcBase
     public override void InitSvc()
     {
         base.InitSvc();
-        Instance = this;
         showTimer = new ShowTimer();
         showTimer.SetLog((string info) =>
         {
@@ -58,7 +55,7 @@ public class TimerSvc: SvcBase
             }
         }
         );
-        NetSvc.instance.SendMsg(msg);
+        NetSvc.Instance.SendMsg(msg);
     }
     private void OnRspSystemTimeMessage(GameMsg msg)
     {

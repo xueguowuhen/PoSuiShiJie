@@ -56,6 +56,11 @@ public class DowningSys : SystemRoot
     {
          downingWnd.DownloadData(Entity, callback);
     }
+    public float GetDownUrlProgress(string url)
+    {
+        return downingWnd.GetDownUrlProgress(url);
+    }
+
     public string GetPlatform()
     {
         return downingWnd.GetPlatform();
@@ -74,7 +79,7 @@ public class DowningSys : SystemRoot
             
             if (path.Replace("/", "\\").Equals(m_ServerDataList[i].FullName, StringComparison.CurrentCultureIgnoreCase))
             {
-                GameCommon.Log("GetServerData:" + m_ServerDataList[i].FullName);
+                //GameCommon.Log("GetServerData:" + m_ServerDataList[i].FullName);
                 return m_ServerDataList[i];
             }
         }

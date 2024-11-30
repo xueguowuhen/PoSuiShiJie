@@ -24,6 +24,9 @@ public class PersonWnd : WindowRoot
     public Image HpSlider;
     public GameObject AttributeContent;
     public Button BtnClose;
+    public GameObject DownLoad;
+    public Image DownLoadImg;
+    private string DownLoadUrl;
     #endregion
 
     #region 私有字段
@@ -37,6 +40,7 @@ public class PersonWnd : WindowRoot
         ClearFriend(AttributeContent);
         if (pool == null)
         {
+            SetActive(DownLoad, true);
             OnSetPersonInfo = SetPersonInfo;
         }
         else
@@ -56,7 +60,8 @@ public class PersonWnd : WindowRoot
     /// </summary>
     private void InitPersonPool()
     {
-        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResAttributeText, (GameObject go) =>
+        DownLoadUrl = PathDefine.ResAttributeText;
+        loaderSvc.LoadPrefab(PathDefine.ResItem, DownLoadUrl, (GameObject go) =>
         {
             GameObject gameObject = Instantiate(go);
             pool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
@@ -66,15 +71,24 @@ public class PersonWnd : WindowRoot
             pool.cullDespawned = true;
             pool.cullDelay = 2;
             pool.Init();
+            DownLoadUrl=null;
             if (OnSetPersonInfo != null)
             {
                 OnSetPersonInfo();
             }
         }, cache: true, instan: false);
     }
-
+    private void Update()
+    {
+        if (DownLoadUrl!= null)
+        {
+           float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
+           DownLoadImg.fillAmount = progress;
+        }
+    }
     private void SetPersonInfo()
     {
+        SetActive(DownLoad, false);
         PlayerData playerData = GameRoot.Instance.PlayerData;
         int headid = playerData.type;
         resSvc.GetPersonCfgHard(headid, (Texture2D texture) =>

@@ -13,7 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-
+using XLua;
+[LuaCallCSharp]
 public static class GameObjectExt
 {
     /// <summary>
@@ -28,6 +29,17 @@ public static class GameObjectExt
         if (t == null)
         {
             t = str.AddComponent<T>();
+        }
+
+        return t;
+    }
+
+    public static LuaViewBehaviour GetOrAddLuaComponent(GameObject str)
+    {
+        LuaViewBehaviour t = str.GetComponent<LuaViewBehaviour>();
+        if (t == null)
+        {
+            t = str.AddComponent<LuaViewBehaviour>();
         }
 
         return t;

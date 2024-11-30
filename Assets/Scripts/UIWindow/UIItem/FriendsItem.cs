@@ -27,10 +27,18 @@ public class FriendsItem : WindowItem
     private bool IsDel = false;
     private bool IsAdd = false;
     private FriendsTipWnd friendsTipWnd;
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+    }
+    protected override void OnStart()
+    {
+        base.OnStart();
+    }
     public void SetUI(FriendItem info)
     {
         friendId = info.id;
-         ResSvc.instance.GetPersonCfgHard(int.Parse(info.type), (Texture2D texture) =>
+        resSvc.GetPersonCfgHard(int.Parse(info.type), (Texture2D texture) =>
         {
             headImage.overrideSprite = texture.CreateSprite();
         });
@@ -68,9 +76,9 @@ public class FriendsItem : WindowItem
                 name = nameText.text,
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
         IsDel = true;
-        TimerSvc.Instance.AddTimeTask((tid) =>
+        timerSvc.AddTimeTask((tid) =>
         {
             IsDel = false;
         }, 2f);
@@ -138,7 +146,7 @@ public class FriendsItem : WindowItem
                 isAgree = false,
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
 
     }
 
@@ -161,7 +169,7 @@ public class FriendsItem : WindowItem
                 isAgree = true,
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
 
     }
     /// <summary>
@@ -191,24 +199,17 @@ public class FriendsItem : WindowItem
                 name = nameText.text,
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
         IsAdd = true;
-        TimerSvc.Instance.AddTimeTask((tid) =>
+        timerSvc.AddTimeTask((tid) =>
         {
             IsAdd = false;
         }, 2f);
     }
 
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void BeforeOnDestroy()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        base.BeforeOnDestroy();
     }
 }

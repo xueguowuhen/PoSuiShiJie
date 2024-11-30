@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2289970995
+CRC: 3481279281
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 417d4bfd77d77cab3e7a7f30b7677237
+    Hash: 7b791e5e2017ac8eb739adc994831891
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d19ffc226032e90991a240e07d98ea66
+    Hash: 3ca417183d9dddbf305dbb5d211441d6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -80,7 +80,12 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/bg/carddraw_bg_08.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg1.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg2.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/bg6.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/exitbtn2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/exitbtn3.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/inputbox.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0240.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0299.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0843.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-1348.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/icon/aura.assetbundle

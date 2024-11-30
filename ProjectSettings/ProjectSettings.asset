@@ -706,7 +706,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    1: DEBUG_MODEL;DEBUG_LOG;DEBUG_ASSETBUNDLE;UNITY_POST_PROCESSING_STACK_V2;AMPLIFY_SHADER_EDITOR
+    1: DEBUG_MODEL;DEBUG_LOG;DEBUG_ASSETBUNDLE;UNITY_POST_PROCESSING_STACK_V2
     4: DEBUG_MODEL;DEBUG_LOG;DEBUG_ASSETBUNDLE
     7: DEBUG_MODEL;DEBUG_LOG;DEBUG_ASSETBUNDLE;UNITY_POST_PROCESSING_STACK_V2;AMPLIFY_SHADER_EDITOR
     13: UNITY_POST_PROCESSING_STACK_V2
@@ -723,6 +723,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
+    Android: 0
     Standalone: 0
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
@@ -738,6 +739,7 @@ PlayerSettings:
   assemblyVersionValidation: 1
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform:
+    Android: 6
     Standalone: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1

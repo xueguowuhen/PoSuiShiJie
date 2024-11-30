@@ -25,98 +25,106 @@ namespace CommonNet
         [ProtoMember(13)]
         public RspShop? rspShop;
         [ProtoMember(14)]
-        public ReqBag? reqBag;//背包请求
+        public ReqRaffleSingle? reqRaffleSingle;
         [ProtoMember(15)]
+        public RspRaffleSingle? rspRaffleSingle;
+        [ProtoMember(16)]
+        public ReqRaffleTan? reqRaffleTan;
+        [ProtoMember(17)]
+        public RspRaffleTan? rspRaffleTan;
+        [ProtoMember(18)]
+        public ReqBag? reqBag;//背包请求
+        [ProtoMember(19)]
         public RspBag? rspBag;
         #endregion
-        [ProtoMember(16)]
+        [ProtoMember(20)]
         public ReqTask? reqTask;//任务请求
-        [ProtoMember(17)]
+        [ProtoMember(21)]
         public RspTask? rspTask;
 
-        [ProtoMember(18)]
-        public RspCreatePlayer? rspCreatePlayer;
-        [ProtoMember(19)]
-        public RspDeletePlayer? rspDeletePlayer;
-        [ProtoMember(20)]
-        public ReqEnterPVP? reqEnterPVP;
-        [ProtoMember(21)]
-        public RspEnterPVP? rspEnterPVP;
         [ProtoMember(22)]
-        public ReqExitPVP? reqExitPVP;
+        public RspCreatePlayer? rspCreatePlayer;
         [ProtoMember(23)]
-        public RspExitPVP? rspExitPVP;
+        public RspDeletePlayer? rspDeletePlayer;
         [ProtoMember(24)]
-        public ReqTransform? reqTransform;
+        public ReqEnterPVP? reqEnterPVP;
         [ProtoMember(25)]
-        public RspTransform? rspTransform;
+        public RspEnterPVP? rspEnterPVP;
         [ProtoMember(26)]
-        public ReqPlayerState? reqPlayerState;//玩家状态请求
+        public ReqExitPVP? reqExitPVP;
         [ProtoMember(27)]
-        public RspPlayerState? rspPlayerState;
+        public RspExitPVP? rspExitPVP;
         [ProtoMember(28)]
-        public ReqDamage? reqDamage;
+        public ReqTransform? reqTransform;
         [ProtoMember(29)]
-        public RspDamage? rspDamage;
+        public RspTransform? rspTransform;
         [ProtoMember(30)]
-        public ReqRevive? reqRevive;
+        public ReqPlayerState? reqPlayerState;//玩家状态请求
         [ProtoMember(31)]
-        public RspRevive? rspRevive;
+        public RspPlayerState? rspPlayerState;
         [ProtoMember(32)]
-        public ReqRecover? reqRecover;
+        public ReqDamage? reqDamage;
         [ProtoMember(33)]
+        public RspDamage? rspDamage;
+        [ProtoMember(34)]
+        public ReqRevive? reqRevive;
+        [ProtoMember(35)]
+        public RspRevive? rspRevive;
+        [ProtoMember(36)]
+        public ReqRecover? reqRecover;
+        [ProtoMember(37)]
         public RspRecover? rspRecover;
         #region 好友请求与响应
         // 新增的好友请求与响应
-        [ProtoMember(34)]
-        public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
-        [ProtoMember(35)]
-        public RspSearchFriend? rspSearchFriend; // 好友搜索响应
-        [ProtoMember(36)]
-        public ReqAddFriend? reqAddFriend; // 好友申请请求
-        [ProtoMember(37)]
-        public RspAddFriend? rspAddFriend; // 好友申请响应
         [ProtoMember(38)]
-        public ReqDelFriend? reqDelFriend; // 好友删除请求
+        public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
         [ProtoMember(39)]
-        public RspDelFriend? rspDelFriend; // 好友删除响应
+        public RspSearchFriend? rspSearchFriend; // 好友搜索响应
         [ProtoMember(40)]
-        public ReqFriendGift? reqFriendGift; // 好友赠送请求
+        public ReqAddFriend? reqAddFriend; // 好友申请请求
         [ProtoMember(41)]
-        public RspFriendGift? rspFriendGift; // 好友赠送响应
+        public RspAddFriend? rspAddFriend; // 好友申请响应
         [ProtoMember(42)]
-        public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
+        public ReqDelFriend? reqDelFriend; // 好友删除请求
         [ProtoMember(43)]
+        public RspDelFriend? rspDelFriend; // 好友删除响应
+        [ProtoMember(44)]
+        public ReqFriendGift? reqFriendGift; // 好友赠送请求
+        [ProtoMember(45)]
+        public RspFriendGift? rspFriendGift; // 好友赠送响应
+        [ProtoMember(46)]
+        public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
+        [ProtoMember(47)]
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
         #endregion
         #region 每日任务的请求与响应
-        [ProtoMember(44)]
+        [ProtoMember(48)]
         public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
-        [ProtoMember(45)]
+        [ProtoMember(49)]
         public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
-        [ProtoMember(46)]
+        [ProtoMember(50)]
         public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
-        [ProtoMember(47)]
+        [ProtoMember(51)]
         public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         #endregion
         #region 系统相关
-        [ProtoMember(48)]
+        [ProtoMember(52)]
         public HeartbeatMessage? heartbeatMessage;
-        [ProtoMember(49)]
+        [ProtoMember(53)]
         public ReqSystemTimeMessage? reqSystemTimeMessage;
-        [ProtoMember(50)]
+        [ProtoMember(54)]
         public RspSystemTimeMessage? rspSystemTimeMessage;
-        [ProtoMember(51)]
+        [ProtoMember(55)]
         public SystemSessionID? systemSessionID;
         #endregion
         #region 天赋相关请求与响应
-        [ProtoMember(52)]
+        [ProtoMember(56)]
         public ReqTalentUp? reqTalentUp;
-        [ProtoMember(53)]
+        [ProtoMember(57)]
         public RspTalentUp? rspTalentUp;
-        [ProtoMember(54)]
+        [ProtoMember(58)]
         public ReqChangeTalent? reqChangeTalent;
-        [ProtoMember(55)]
+        [ProtoMember(59)]
         public RspChangeTalent? rspChangeTalent;
         #endregion
     }
@@ -236,7 +244,59 @@ namespace CommonNet
         [ProtoMember(1)]
         public PlayerData playerData;
     }
+[ProtoContract]
+    public class ReqBag//使用资源
+    {
+        [ProtoMember(1)]
+        public int id;
+        [ProtoMember(2)]
+        public int count;
+    }
+[ProtoContract]
+    public class ReqRaffleSingle
+    {
+        [ProtoMember(1)]
+        public int id;
+    }
+[ProtoContract]
+    public class RspRaffleSingle
+    {
+        [ProtoMember(1)]
+        public int RaffleId;
 
+        [ProtoMember(2)]
+        public float aura;//角色星晶
+
+        [ProtoMember(3)]
+        public float ruvia;//角色云晶
+
+        [ProtoMember(4)]
+        public float crystal; //角色彩晶
+        [ProtoMember(5)]
+        public List<BagList>? Bag;
+    }
+[ProtoContract]
+    public class ReqRaffleTan
+    {
+        [ProtoMember(1)]
+        public int Id;
+    }
+[ProtoContract]
+    public class RspRaffleTan
+    {
+        [ProtoMember(1)]
+        public List<int>? RaffleList;
+        [ProtoMember(2)]
+        public float aura;//角色星晶
+
+        [ProtoMember(3)]
+        public float ruvia;//角色云晶
+
+        [ProtoMember(4)]
+        public float crystal; //角色彩晶
+        [ProtoMember(5)]
+        public List<BagList>? Bag;
+    }
     #endregion
 
 
@@ -637,14 +697,8 @@ namespace CommonNet
     #endregion
 
     #region 自定义数据/枚举
-[ProtoContract]
-    public class ReqBag//使用资源
-    {
-        [ProtoMember(1)]
-        public int id;
-        [ProtoMember(2)]
-        public int count;
-    }
+
+
 [ProtoContract]
     public class PlayerData
     {
@@ -693,17 +747,17 @@ namespace CommonNet
         [ProtoMember(22)]
         public RewardTask? rewardTask;//每日任务进度
         [ProtoMember(23)]
-        public List<DailyTask>? dailyTasks;//每日任务数据
+        public List<DailyTask>? dailyTasks = new List<DailyTask>();//每日任务数据
         [ProtoMember(24)]
-        public List<int>? TalentID;//当前选中的天赋ID
+        public List<int>? TalentID = new List<int>();//当前选中的天赋ID
         [ProtoMember(25)]
-        public List<Talent>? TalentsData; //所有天赋数据
+        public List<Talent>? TalentsData = new List<Talent>(); //所有天赋数据
         [ProtoMember(26)]
-        public List<BagList>? Bag;//背包数据
+        public List<BagList>? Bag = new List<BagList>();//背包数据
         [ProtoMember(27)]
-        public List<FriendItem>? FriendList;//好友列表
+        public List<FriendItem>? FriendList = new List<FriendItem>();//好友列表
         [ProtoMember(28)]
-        public List<FriendItem>? AddFriendList;//好友申请列表
+        public List<FriendItem>? AddFriendList = new List<FriendItem>();//好友申请列表
         [ProtoMember(29)]
         public int Taskid;
         [ProtoMember(30)]
@@ -859,7 +913,7 @@ namespace CommonNet
         heartbeatMessage = 1,
         ReqSystemTimeMessage = 2,
         RspSystemTimeMessage = 3,
-        SystemSessionID=4,
+        SystemSessionID = 4,
         ReqLogin = 101,//登录相关请求
         RspLogin = 102,//
         ReqRegister = 103,//注册相关请求
@@ -890,6 +944,10 @@ namespace CommonNet
         RspDailyTask = 134,//领取每日任务奖励响应
         ReqRewardTask = 135,//领取活跃奖励任务请求
         RspRewardTask = 136,//领取活跃奖励任务响应
+        ReqRaffleSingle = 137,//单抽抽奖请求
+        RspRaffleSingle = 138,//单抽抽奖响应
+        ReqRaffleTan = 139,//十连抽奖请求
+        RspRaffleTan = 140,//十连抽奖响应
                             //天赋相关
         ReqTalentUp = 200, //天赋升级请求
         RspTalentUp = 201, //天赋升级响应
@@ -947,6 +1005,7 @@ namespace CommonNet
         DailyTaskFinishError = 1033, //该每日任务未完成
         DailyTaskRewardError = 1034,  //该每日任务奖励领取失败
         RewardActiveError = 1035, //活跃度奖励领取失败
+        RaffleError = 1036, //抽奖失败
         MissRuviaTalentUp = 1050, //天赋升级失败 余额不足
         EnterPVPError = 1100, //进入PVP失败
         ExitPVPError = 1101, //退出PVP失败
@@ -961,7 +1020,7 @@ namespace CommonNet
     {
 
         [ProtoMember(1)]
-        public const string srvIP = "10.201.29.62";
+        public const string srvIP = "10.201.30.102";
 
 
         [ProtoMember(2)]

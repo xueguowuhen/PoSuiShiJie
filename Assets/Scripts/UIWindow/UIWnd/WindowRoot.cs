@@ -32,11 +32,11 @@ public class WindowRoot : MonoBehaviour
     /// </summary>
     protected virtual void InitWnd()
     {
-        resSvc = ResSvc.instance;
-        audioSvc = AudioSvc.instance;
-        netSvc = NetSvc.instance;
+        resSvc = ResSvc.Instance;
+        audioSvc = AudioSvc.Instance;
+        netSvc = NetSvc.Instance;
         timerSvc = TimerSvc.Instance;
-        loaderSvc= AssetLoaderSvc.instance;
+        loaderSvc= AssetLoaderSvc.Instance;
         if (!IsSetGameObject)
         {
             SetGameObject();

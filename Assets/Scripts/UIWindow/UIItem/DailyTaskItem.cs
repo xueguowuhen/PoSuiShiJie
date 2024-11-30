@@ -3,7 +3,7 @@
     作者：无痕
     邮箱: 1450411269@qq.com
     日期：2024/10/13 18:51:24
-    功能：Nothing
+    功能：每日任务子项
 *****************************************************/
 using CommonNet;
 using System.Collections;
@@ -97,9 +97,9 @@ public class DailyTaskItem : WindowItem
                 TaskID = IsDailyTaskID
             }
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        netSvc.SendMsg(gameMsg);
         IsDailyTask = true;
-        TimerSvc.Instance.AddTimeTask((tid) =>
+        timerSvc.AddTimeTask((tid) =>
         {
             IsDailyTask = false;
         }, 2f);

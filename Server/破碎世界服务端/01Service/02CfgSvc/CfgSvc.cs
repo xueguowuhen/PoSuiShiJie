@@ -32,6 +32,7 @@ public class CfgSvc
         InitCharaterCfg();
         InitTalentCfg();
         InitShopItemCfg();
+        InitRaffleItemCfg();
         InitTaskCfg();
         InitTaskRewardCfg();
         InitTaskDailyCfg();
@@ -230,7 +231,82 @@ public class CfgSvc
         return null;
     }
     #endregion
+    #region 加载抽奖物品配置
+    private Dictionary<int, RaffleItemCfg> RaffleItemDic = new Dictionary<int, RaffleItemCfg>();
+    private void InitRaffleItemCfg()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load(Path + "RaffleItem.xml");//读取文本数据
+        //doc.Load(@"ResCfg/ShopItem.xml");//读取文本数据
+        XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            XmlElement ele = nodeList[i] as XmlElement;
+            if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
+            {
+                //GameCommon.Log("ID读取失败");
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+                                                                           //GameCommon.Log(ID);
+            RaffleItemCfg raffleItemCfg = new RaffleItemCfg()
+            {
+                ID = ID,
+            };
+            foreach (XmlElement node in nodeList[i].ChildNodes)
+            {
+                switch (node.Name)
+                {
+                    case "mShopID":
+                        {
+                            raffleItemCfg.mShopID = int.Parse(node.InnerText);
+                            break;
+                        }
+                    case "Count":
+                        {
+                            raffleItemCfg.Count = int.Parse(node.InnerText);
+                            break;
 
+                        }
+                    case "probability":
+                        {
+                            raffleItemCfg.probability = float.Parse(node.InnerText);
+                            break;
+                        }
+
+                }
+
+            }
+            RaffleItemDic.Add(ID, raffleItemCfg);
+        }
+    }
+    public ShopItemCfg GetRaffleItemCfgData(int id)
+    {
+        ShopItemCfg shopItemCfg = null;
+        if (ShopItemDic.TryGetValue(id, out shopItemCfg))
+        {
+            return shopItemCfg;
+        }
+        return null;
+    }
+    public List<RaffleItemCfg> GetRaffleItemCfgList()
+    {
+        List<RaffleItemCfg> taskDailyCfgs = new List<RaffleItemCfg>();
+
+        foreach (var item in RaffleItemDic)
+        {
+            taskDailyCfgs.Add(new RaffleItemCfg()
+            {
+                ID = item.Value.ID,
+                mShopID = item.Value.mShopID,
+                Count = item.Value.Count,
+                probability = item.Value.probability
+            });
+        }
+        return taskDailyCfgs;
+    }
+
+    #endregion
     #region 加载任务配置
     private Dictionary<int, TaskCfg> TaskDic = new Dictionary<int, TaskCfg>();
     private void InitTaskCfg()
@@ -486,6 +562,12 @@ public class CfgSvc
     {
         public float Price;  //物价价格
         public BagType bagType;  //物品类型
+    }
+    public class RaffleItemCfg : BaseData<RaffleItemCfg>
+    {
+        public int mShopID;  //物价价格
+        public int Count;  //物品数量
+        public float probability;  //抽奖几率
     }
     public class BaseData<T>
     {

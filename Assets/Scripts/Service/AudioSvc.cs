@@ -8,12 +8,12 @@
 
 using UnityEngine;
 
-public class AudioSvc : SvcBase
+public class AudioSvc : SvcBase<AudioSvc>
 {
-    public static AudioSvc instance;
+
     public override void InitSvc()
     {
         base.InitSvc();
-        instance = this;
+
     }
 }

@@ -89,6 +89,12 @@ public class NetSvc
             case CMD.ReqShop:
                 ShopSys.Instance.ReqShop(pack);
                 break;
+            case CMD.ReqRaffleSingle:
+                ShopSys.Instance.ReqRaffleSingle(pack);
+                break;
+            case CMD.ReqRaffleTan:
+                ShopSys.Instance.ReqRaffleTan(pack);
+                break;
             case CMD.ReqSearchFriend:
                 FriendSys.Instance.ReqSearchFriend(pack);
                 break;
@@ -140,6 +146,7 @@ public class NetSvc
             case CMD.ReqRecover:
                 BattleSys.Instance.ReqRecover(pack);
                 break;
+
         }
     }
 

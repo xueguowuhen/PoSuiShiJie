@@ -93,7 +93,7 @@ public class TalentInfoWnd : MonoBehaviour
             reqTalentUp = new ReqTalentUp()
             { NextLevel = CurrLevel, TalentId = SelectId },
         };
-        NetSvc.instance.SendMsg(gameMsg);
+        NetSvc.Instance.SendMsg(gameMsg);
     }
     #endregion
 }
