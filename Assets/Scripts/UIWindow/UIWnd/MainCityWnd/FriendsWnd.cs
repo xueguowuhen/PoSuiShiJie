@@ -222,6 +222,7 @@ public class FriendsWnd : WindowRoot
 
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
 }

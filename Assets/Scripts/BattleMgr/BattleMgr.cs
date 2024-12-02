@@ -7,8 +7,9 @@
 *****************************************************/
 using CommonNet;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
+
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +21,7 @@ public class BattleMgr : MonoBehaviour
     private AudioSvc audioSvc;
     private StateMgr stateMgr;
     private SkillMgr skillMgr;
+    private LoadingWnd loadingWnd;
     private MapCfg mapCfg;
     public EntityPlayer entitySelfPlayer;
     public CharacterController characterController;
@@ -28,6 +30,7 @@ public class BattleMgr : MonoBehaviour
     public Dictionary<int, EntityBase> RemoteEntityDic = new Dictionary<int, EntityBase>();
     public GameObject player;
     public NavMeshAgent navMesh;
+    private string DownLoadUrl;
     private Vector2 dir;
     /// <summary>
     /// 初始化地图
@@ -37,6 +40,7 @@ public class BattleMgr : MonoBehaviour
         resSvc = ResSvc.Instance;
         audioSvc = AudioSvc.Instance;
         loaderSvc= AssetLoaderSvc.Instance;
+        loadingWnd=GameRoot.Instance.loadingWnd;
         stateMgr = gameObject.AddComponent<StateMgr>();
         stateMgr.Init();
         skillMgr = gameObject.AddComponent<SkillMgr>();
@@ -51,6 +55,8 @@ public class BattleMgr : MonoBehaviour
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
+        DownLoadUrl = personCfg.Prefab;
+        loadingWnd.SetDownLoadUrl(DownLoadUrl);
         loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
         {
             player = Instantiate( go);
@@ -86,8 +92,14 @@ public class BattleMgr : MonoBehaviour
             };
             entitySelfPlayer.SetCtrl(playerController);
             entitySelfPlayer.Idle();//创建完成后进入idle状态
-            loaderSvc.CloseLoadingWnd();
+            StartCoroutine( CloseLoadingWnd());
         });
+    }
+    private IEnumerator CloseLoadingWnd()
+    {
+        yield return null;
+        loaderSvc.CloseLoadingWnd();
+        loadingWnd.SetDownLoadUrl(null);
     }
     /// <summary>
     /// 加载远程人物

@@ -250,6 +250,7 @@ public class BagWnd : WindowRoot
     }
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     private void ClickAll()

@@ -574,7 +574,10 @@ internal class DBMgr
                         RewardTask = RewardTask.Substring(0, RewardTask.Length - 1);
                     }
                 }
-                cmd.Parameters.AddWithValue("RewardTask", $"{RewardTask}|{playerData.rewardTask.LastTime}");
+
+                   
+                    cmd.Parameters.AddWithValue("RewardTask", $"{RewardTask}|{playerData.rewardTask.LastTime}");
+                
 
                 string DailyTask = "";
                 if (playerData.dailyTasks != null)

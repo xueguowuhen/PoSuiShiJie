@@ -172,6 +172,7 @@ public class PersonWnd : WindowRoot
     /// </summary>
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     protected override void ClearWnd()

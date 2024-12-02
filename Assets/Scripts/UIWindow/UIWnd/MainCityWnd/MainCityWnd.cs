@@ -50,6 +50,7 @@ public class MainCityWnd : WindowRoot
     //public Button TaskBtn;
     //public Button SkillBtn;
     public Button SettingsBtn;//设置
+    public GameObject PersonPoint;
     //public Animation menuAni;
     #endregion
     #region PlayerController
@@ -57,16 +58,21 @@ public class MainCityWnd : WindowRoot
     //public Image imgDirBg;
     //public Image imgDirPoint;
     #endregion
+    public GameObject DownLoad;
+    private string DownLoadUrl;
+    public Image DownLoadImg;
     private float pointDis;
     private TaskCfg taskCfg;
+    private GameObject PersonObj;
     protected override void InitWnd()
     {
         base.InitWnd();
         RefreshUI();
+        SetActive(PersonPoint, true);
+        SetActive(DownLoad, false);
     }
     protected override void SetGameObject()
     {
-        
         #region Head
         //HpProImg = GetImg(PathDefine.HpProImg);
         //HpText = GetText(PathDefine.HpText);
@@ -107,13 +113,40 @@ public class MainCityWnd : WindowRoot
         //SettingsBtn = GetButton(PathDefine.SettingsBtn);
         //menuAni = GetAnimation(PathDefine.menuAni);
         #endregion
-        #region PlayerController
-        //imgTouch =GetImg(PathDefine.imgTouch);
-        //imgDirBg =GetImg(PathDefine.imgDirBg);
-        //imgDirPoint =GetImg(PathDefine.imgDirPoint);
-        #endregion
+        if (PersonObj == null)
+        {
+            LoadPrefab();
+        }
     }
 
+    private void LoadPrefab()
+    {
+        PlayerData playerData = GameRoot.Instance.PlayerData;
+        personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
+        DownLoadUrl = personCfg.Prefab;
+        loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
+        {
+            //加载人物预制体
+            PersonObj = Instantiate(go, PersonPoint.transform);
+            PersonObj.GetComponent<PlayerController>().enabled=false;
+            PersonObj.transform.localPosition = Vector3.zero;
+            PersonObj.transform.localScale = Vector3.one;
+            PersonObj.transform.localRotation = Quaternion.identity;
+            DownLoadUrl = null;
+            SetActive(DownLoad, false);
+        }
+        );
+    }
+    private void Update()
+    {
+        if (DownLoadUrl != null)
+        {
+            SetActive(DownLoad, true);
+            float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
+            DownLoadImg.fillAmount = progress;
+        }
+        
+    }
     public void RefreshUI()
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
@@ -147,6 +180,7 @@ public class MainCityWnd : WindowRoot
     {
         //加载面板
         //resSvc.LoadPrefab(PathDefine.PersonWnd);
+        SetActive(PersonPoint, false);
         MainCitySys.instance.ClickPerson();
 
     }
@@ -169,6 +203,7 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     public void ClickShop()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterShop();
     }
     /// <summary>
@@ -176,6 +211,7 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     public void ClickBag()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterBagWnd();
     }
     /// <summary>
@@ -183,6 +219,7 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     private void ClickFriendsBtn()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterFriendWnd();
     }
 
@@ -191,18 +228,20 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     public void ClickChat()
     {
-
+        SetActive(PersonPoint, false);
     }
     /// <summary>
     /// 天赋设置
     /// </summary>
     private void ClickTalent()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterTalentWnd();
     }
 
     private void ClickDailyTask()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterDailyTaskWnd();
     }
 
@@ -211,6 +250,7 @@ public class MainCityWnd : WindowRoot
     /// </summary>
     private void ClickStartGamePVP()
     {
+        SetActive(PersonPoint, false);
         MainCitySys.instance.EnterStartGamePVPWnd();
     }
     //public void ClickArena()

@@ -76,12 +76,13 @@ public class AssetLoaderSvc : SvcBase<AssetLoaderSvc>
         StartCoroutine(LoadScene(sceneName, loaded));
         yield break;
     }
+    private AssetBundle sceneBundle;
     private IEnumerator LoadAbScene(string full, string sceneName, Action loaded)
     {
         AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(full);
         yield return request;
-        AssetBundle sceneBundle = request.assetBundle;
-
+         sceneBundle = request.assetBundle;
+        
         StartCoroutine(LoadScene(sceneName, loaded));
     }
     private IEnumerator LoadScene(string SceneName, Action loaded)
@@ -129,6 +130,11 @@ public class AssetLoaderSvc : SvcBase<AssetLoaderSvc>
     }
     public void CloseLoadingWnd()
     {
+        if(sceneBundle!= null)
+        {
+
+        sceneBundle.Unload(false);
+        }
         GameRoot.Instance.loadingWnd.SetWndState(false);
     }
     /// <summary>
@@ -250,70 +256,49 @@ public class AssetLoaderSvc : SvcBase<AssetLoaderSvc>
     public void LoadCallBack<T>(string fullpath, string Name, string[] arr, Action<T> onCompleted = null, XLuaCustomExport.OnCreate onXLuaCompleted = null)
         where T : UnityEngine.Object
     {
-        if (m_AssetDic.ContainsKey(fullpath))
+        if (m_AssetDic.ContainsKey(fullpath))//该文件已经下载过添加到字典中
         {
             if (onCompleted != null)
             {
                 onCompleted(m_AssetDic[fullpath] as T);
             }
-            if (onXLuaCompleted != null && m_AssetDic[fullpath] is GameObject gameObj)
+            if (onXLuaCompleted != null)
             {
-                onXLuaCompleted(gameObj);
+                onXLuaCompleted(m_AssetDic[fullpath] as GameObject);
             }
             return;
         }
-
-        // 加载依赖项
-        foreach (string dep in arr)
+        //先加载依赖项
+        for (int i = 0; i < arr.Length; i++)
         {
-            string depPath = m_LocalFilePath + dep;
+            string depPath = m_LocalFilePath + arr[i];
             if (!m_AssetDic.ContainsKey(depPath))
             {
-                AssetBundleLoader depLoader = new AssetBundleLoader(dep); // 不用 using，保持引用
-                string assetName = Path.GetFileNameWithoutExtension(dep);
-                Object depObj = depLoader.LoadAsset(assetName);
-                if (depObj != null)
-                {
-                    m_DspAssetBundleLoaderDic[depPath] = depLoader;
-                    m_AssetDic[depPath] = depObj;
-                }
-                else
-                {
-                    Debug.LogError($"Failed to load dependency: {assetName} from {depPath}");
-                }
+                AssetBundleLoader loader = new AssetBundleLoader(arr[i]);
+                string assetName = Path.GetFileNameWithoutExtension(arr[i]);
+                Object obj = loader.LoadAsset(assetName);
+                //把依赖项的Loader加入字典
+                m_DspAssetBundleLoaderDic[depPath] = loader;
+                m_AssetDic[depPath] = obj;
             }
         }
-
-        // 加载主资源
-        AssetBundleLoader loader = new AssetBundleLoader(fullpath, isFullPath: true); // 不用 using，保持引用
-        Object obj = loader.LoadAsset<T>(Name);
-
-        if (obj != null)
+        using (AssetBundleLoader loader = new AssetBundleLoader(fullpath, isFullPath: true))
         {
-            m_AssetDic[fullpath] = obj;
+
             if (onCompleted != null)
             {
+                Object obj = loader.LoadAsset<T>(Name);
+                m_AssetDic[fullpath] = obj;
                 onCompleted(obj as T);
             }
-            if (onXLuaCompleted != null && obj is GameObject gameObj)
+            if (onXLuaCompleted != null)
             {
-                onXLuaCompleted(gameObj);
+                Object obj = loader.LoadAsset<GameObject>(Name);
+                m_AssetDic[fullpath] = obj;
+                onXLuaCompleted(obj as GameObject);
             }
-
-            // 添加到加载器字典，便于后续释放
-            if (!m_DspAssetBundleLoaderDic.ContainsKey(fullpath))
-            {
-                m_DspAssetBundleLoaderDic[fullpath] = loader;
-            }
-        }
-        else
-        {
-            Debug.LogError($"Failed to load asset: {Name} from {fullpath}");
-            loader.Dispose(); // 如果加载失败，手动释放
         }
     }
-
-
     /// <summary>
     /// 递归加载依赖项
     /// </summary>

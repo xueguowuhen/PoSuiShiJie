@@ -134,7 +134,7 @@ public class Controller : MonoBehaviour
     }
     public virtual void SetAniCrossFade(string name, float time)
     {
-        animator.CrossFade(name, time);
+        animator.CrossFade(name, time,0);
     }
     public virtual void SetAniPlay(string name)
     {

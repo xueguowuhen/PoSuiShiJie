@@ -492,6 +492,10 @@ public class MainCitySys : SystemRoot
     {
         friendsWnd.RefreshFriends(item);
     }
+    public void OpenPerson()
+    {
+        mainCityWnd.PersonPoint.gameObject.SetActive(true);
+    }
 
     public void EnterTalentWnd()
     {

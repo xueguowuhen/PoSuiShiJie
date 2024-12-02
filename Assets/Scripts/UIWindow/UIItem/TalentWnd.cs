@@ -258,6 +258,7 @@ public class TalentWnd : WindowRoot
             };
             netSvc.SendMsg(gameMsg);
         }
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     #endregion

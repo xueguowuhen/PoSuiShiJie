@@ -241,6 +241,7 @@ public class ShopWnd : WindowRoot
     /// </summary>
     private void CloseShop()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     /// <summary>

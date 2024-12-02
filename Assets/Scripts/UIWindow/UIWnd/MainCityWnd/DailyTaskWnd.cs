@@ -203,6 +203,7 @@ public class DailyTaskWnd : WindowRoot
     #endregion
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     protected override void ClearWnd()
