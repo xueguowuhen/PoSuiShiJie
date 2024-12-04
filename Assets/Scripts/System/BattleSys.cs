@@ -65,6 +65,12 @@ public class BattleSys : SystemRoot
     public void EnterBattlePVP()
     {
         MapCfg mapData = resSvc.GetMapCfgData(Constants.BattlePVPMapID);
+        //if (MainCitySys.instance.mainCityWnd.DownLoadUrl != null)
+        //{
+
+        //    DowningSys.instance.StopDownload(MainCitySys.instance.mainCityWnd.DownLoadUrl);
+        //    MainCitySys.instance.mainCityWnd.DownLoadUrl = null;
+        //}
         GameCommon.Log("异步地图中");
         StartCoroutine(loaderSvc.AsyncLoadScene(mapData.sceneName, () =>
         {
@@ -73,10 +79,10 @@ public class BattleSys : SystemRoot
             GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
             SetBattleWnd();
             EnterBattleMap(mapData);
-            
+
             // GameRoot.Instance.SetScreenSpaceOverlay();//设置界面
             //GameObject map = GameObject.Find(PathDefine.MapRoot);
-        },true));
+        }, true));
     }
 
     /// <summary>

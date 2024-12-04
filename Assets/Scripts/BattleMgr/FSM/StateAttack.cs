@@ -13,7 +13,7 @@ public class StateAttack : ISate
 
         entity.currentAniState = AniState.Attack;
         entity.curtSkillCfg = ResSvc.Instance.GetSkillCfgData((int)objects[0]);
-        Debug.Log("进入攻击状态"+(int)objects[0]);
+        Debug.Log("进入攻击状态" + (int)objects[0]);
         entity.SetVelocity(Constants.VelocityDefault);
         entity.canRlskill = false;
         entity.SkillAttack((int)objects[0]);
@@ -29,7 +29,7 @@ public class StateAttack : ISate
     private void OnAttack_Normal_End(EntityBase entity)
     {
 
-        entity.Idle(); 
+        entity.Idle();
         Debug.Log("OnAttack_Normal_End");
     }
 
@@ -47,12 +47,12 @@ public class StateAttack : ISate
 
     public void OnAnimatorEndEvent(EntityBase entity)
     {
-        
+
     }
 
     public void Process(EntityBase entity)
     {
-        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f&&entity.AnimationAtTag("Attack"))
+        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f && entity.AnimationAtTag("Attack"))
         {
             AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.Attack_Normal_01, OnAttack_Normal_End);
             AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.Attack_Normal_02, OnAttack_Normal_End);

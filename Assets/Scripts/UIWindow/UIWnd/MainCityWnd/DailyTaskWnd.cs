@@ -68,7 +68,7 @@ public class DailyTaskWnd : WindowRoot
            RewardPool.cullDelay = 2;
            RewardDownLoadUrl = null;
            RewardPool.Init();
-           if (onRewardBack!= null)
+           if (onRewardBack != null)
            {
                onRewardBack();
            }
@@ -90,9 +90,9 @@ public class DailyTaskWnd : WindowRoot
            DailyPool.cullAbove = 15;
            DailyPool.cullDespawned = true;
            DailyPool.cullDelay = 2;
-           TaskDownLoadUrl =null;
+           TaskDownLoadUrl = null;
            DailyPool.Init();
-           if (onDailyBack!= null)
+           if (onDailyBack != null)
            {
                onDailyBack();
            }
@@ -209,8 +209,8 @@ public class DailyTaskWnd : WindowRoot
     protected override void ClearWnd()
     {
         base.ClearWnd();
-        onRewardBack=null;
-        onDailyBack=null;
+        onRewardBack = null;
+        onDailyBack = null;
     }
     // Update is called once per frame
     void Update()

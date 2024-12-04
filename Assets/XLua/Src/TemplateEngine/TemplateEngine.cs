@@ -20,9 +20,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Collections;
 using System.Text;
-using XLua;
 
 namespace XLua.TemplateEngine
 {
@@ -33,7 +31,7 @@ namespace XLua.TemplateEngine
 
     public class Chunk
     {
-        public TokenType Type {get; private set;}
+        public TokenType Type { get; private set; }
         public string Text { get; private set; }
         public Chunk(TokenType type, string text)
         {
@@ -198,8 +196,8 @@ namespace XLua.TemplateEngine
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         public static int Compile(RealStatePtr L)
         {
-			string snippet = LuaAPI.lua_tostring(L, 1);
-            
+            string snippet = LuaAPI.lua_tostring(L, 1);
+
             string code;
             try
             {
@@ -207,7 +205,7 @@ namespace XLua.TemplateEngine
             }
             catch (Exception e)
             {
-				return LuaAPI.luaL_error(L, String.Format("template compile error:{0}\r\n", e.Message));
+                return LuaAPI.luaL_error(L, String.Format("template compile error:{0}\r\n", e.Message));
             }
             //UnityEngine.Debug.Log("code=" + code);
             if (LuaAPI.luaL_loadbuffer(L, code, "luatemplate") != 0)

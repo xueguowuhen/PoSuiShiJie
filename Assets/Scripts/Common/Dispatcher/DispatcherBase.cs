@@ -7,12 +7,9 @@
 *****************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
-public class DispatcherBase<T,P,X>: IDisposable
+public class DispatcherBase<T, P, X> : IDisposable
     where T : new()
 {
     #region 单例
@@ -36,7 +33,7 @@ public class DispatcherBase<T,P,X>: IDisposable
     #endregion
     public delegate void OnActionHandler(P param);
 
-    public Dictionary<X,List< OnActionHandler>> dic = new Dictionary<X, List<OnActionHandler>>();
+    public Dictionary<X, List<OnActionHandler>> dic = new Dictionary<X, List<OnActionHandler>>();
 
     #region AddEventListener 添加监听
     /// <summary>

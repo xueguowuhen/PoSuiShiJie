@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TipInfoWnd : WindowRoot, IPointerEnterHandler, IPointerExitHandler
 {
-    private string m_content= "";
+    private string m_content = "";
     public GameObject m_TipItem;
     public Text m_Tip = null;
 

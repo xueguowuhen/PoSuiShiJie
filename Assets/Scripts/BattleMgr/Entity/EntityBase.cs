@@ -5,9 +5,9 @@
     日期：2024-05-10 9:27:12
 	功能：逻辑实体基类
 *****************************************************/
-using UnityEngine;
-using System.Collections.Generic;
 using CommonNet;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class EntityBase
 {
@@ -124,7 +124,7 @@ public abstract class EntityBase
             controller.Dir = dir;
         }
     }
-    public virtual void SetTrans(long time, Vector3 Pos, Vector3 Rot,float speed)
+    public virtual void SetTrans(long time, Vector3 Pos, Vector3 Rot, float speed)
     {
         if (controller != null)
         {

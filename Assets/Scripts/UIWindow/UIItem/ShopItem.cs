@@ -5,8 +5,6 @@
     日期：2024/9/15 18:58:12
     功能：商店界面物品显示
 *****************************************************/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,10 +29,10 @@ public class ShopItem : MonoBehaviour
         {
             ShopImage.overrideSprite = texture.CreateSprite();
         });//物品图标
-         ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
-        {
-            PriceImg.overrideSprite = texture.CreateSprite();
-        });//购买的图标
+        ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
+       {
+           PriceImg.overrideSprite = texture.CreateSprite();
+       });//购买的图标
     }
     // Update is called once per frame
     void Update()

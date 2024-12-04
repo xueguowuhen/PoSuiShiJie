@@ -25,12 +25,12 @@ public class SystemRoot : MonoBehaviour
         netSvc = NetSvc.Instance;
         resSvc = ResSvc.Instance;
         audioSvc = AudioSvc.Instance;
-        timerSvc= TimerSvc.Instance;
+        timerSvc = TimerSvc.Instance;
         loaderSvc = AssetLoaderSvc.Instance;
     }
     public GameObject GameFind(string Path)
     {
-         return transform.Find(Path).gameObject;
+        return transform.Find(Path).gameObject;
     }
 
     public void PlayerPosAndRot(PlayerData playerData, RspTransform rspTransform)

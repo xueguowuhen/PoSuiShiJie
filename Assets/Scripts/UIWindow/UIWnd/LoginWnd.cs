@@ -7,8 +7,6 @@
 *****************************************************/
 
 using CommonNet;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,8 +43,8 @@ public class LoginWnd : WindowRoot
     protected override void SetGameObject()
     {
         AddListener(btnClose, ClickClose);
-        AddListener(btnLogin,ClickLogin);
-        AddListener(btnRegis,ClickRegis);
+        AddListener(btnLogin, ClickLogin);
+        AddListener(btnRegis, ClickRegis);
         //SetActive(imgbg);
     }
     protected override void ClearWnd()

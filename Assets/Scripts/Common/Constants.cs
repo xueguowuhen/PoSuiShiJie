@@ -67,7 +67,7 @@ public enum AniPlayerState
     Attack_Skill_01 = 11,
     Attack_Skill_02 = 12,
     Attack_Skill_03 = 13,
-    Move =99,
+    Move = 99,
     Death = 100,
     Hit = 101,
     WalkStop = 102,
@@ -76,7 +76,7 @@ public enum AniPlayerState
     WalkStart = 105,
     Evade_Back = 106,
     Evade_Front = 107,
-    
+
 }
 public class Constants
 {

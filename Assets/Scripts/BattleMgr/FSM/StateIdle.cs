@@ -5,8 +5,6 @@
     日期：2024-05-10 10:48:21
 	功能：待机状态
 *****************************************************/
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 public class StateIdle : ISate
 {
@@ -17,7 +15,7 @@ public class StateIdle : ISate
             case AniState.Move:
                 entity.SetAniCrossFade(entity.GetWalkOrRunState().ToString(), Constants.AniSpeed);
                 entity.SetAction((int)entity.GetWalkOrRunState());
-                Debug.Log("进入待机状态"+ entity.GetWalkOrRunState().ToString());
+                Debug.Log("进入待机状态" + entity.GetWalkOrRunState().ToString());
                 break;
             default:
 

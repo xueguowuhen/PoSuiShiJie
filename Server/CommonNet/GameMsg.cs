@@ -2,7 +2,7 @@ using ComNet;
 using ProtoBuf;
 namespace CommonNet
 {
-[ProtoContract]
+    [ProtoContract]
     public class GameMsg : TraMsg
     {
         #region 登录注册相关
@@ -37,100 +37,110 @@ namespace CommonNet
         [ProtoMember(19)]
         public RspBag? rspBag;
         #endregion
+        #region 装备相关
         [ProtoMember(20)]
-        public ReqTask? reqTask;//任务请求
+        public ReqEquip? reqEquip;
         [ProtoMember(21)]
+        public RspEquip? rspEquip;
+        [ProtoMember(22)]
+        public ReqEquipUnequip? reqEquipUnequip;
+        [ProtoMember(23)]
+        public RspEquipUnequip? rspEquipUnequip;
+        #endregion
+        [ProtoMember(24)]
+        public ReqTask? reqTask;//任务请求
+        [ProtoMember(25)]
         public RspTask? rspTask;
 
-        [ProtoMember(22)]
-        public RspCreatePlayer? rspCreatePlayer;
-        [ProtoMember(23)]
-        public RspDeletePlayer? rspDeletePlayer;
-        [ProtoMember(24)]
-        public ReqEnterPVP? reqEnterPVP;
-        [ProtoMember(25)]
-        public RspEnterPVP? rspEnterPVP;
         [ProtoMember(26)]
-        public ReqExitPVP? reqExitPVP;
+        public RspCreatePlayer? rspCreatePlayer;
         [ProtoMember(27)]
-        public RspExitPVP? rspExitPVP;
+        public RspDeletePlayer? rspDeletePlayer;
         [ProtoMember(28)]
-        public ReqTransform? reqTransform;
+        public ReqEnterPVP? reqEnterPVP;
         [ProtoMember(29)]
-        public RspTransform? rspTransform;
+        public RspEnterPVP? rspEnterPVP;
         [ProtoMember(30)]
-        public ReqPlayerState? reqPlayerState;//玩家状态请求
+        public ReqExitPVP? reqExitPVP;
         [ProtoMember(31)]
-        public RspPlayerState? rspPlayerState;
+        public RspExitPVP? rspExitPVP;
         [ProtoMember(32)]
-        public ReqDamage? reqDamage;
+        public ReqTransform? reqTransform;
         [ProtoMember(33)]
-        public RspDamage? rspDamage;
+        public RspTransform? rspTransform;
         [ProtoMember(34)]
-        public ReqRevive? reqRevive;
+        public ReqPlayerState? reqPlayerState;//玩家状态请求
         [ProtoMember(35)]
-        public RspRevive? rspRevive;
+        public RspPlayerState? rspPlayerState;
         [ProtoMember(36)]
-        public ReqRecover? reqRecover;
+        public ReqDamage? reqDamage;
         [ProtoMember(37)]
+        public RspDamage? rspDamage;
+        [ProtoMember(38)]
+        public ReqRevive? reqRevive;
+        [ProtoMember(39)]
+        public RspRevive? rspRevive;
+        [ProtoMember(40)]
+        public ReqRecover? reqRecover;
+        [ProtoMember(41)]
         public RspRecover? rspRecover;
         #region 好友请求与响应
         // 新增的好友请求与响应
-        [ProtoMember(38)]
-        public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
-        [ProtoMember(39)]
-        public RspSearchFriend? rspSearchFriend; // 好友搜索响应
-        [ProtoMember(40)]
-        public ReqAddFriend? reqAddFriend; // 好友申请请求
-        [ProtoMember(41)]
-        public RspAddFriend? rspAddFriend; // 好友申请响应
         [ProtoMember(42)]
-        public ReqDelFriend? reqDelFriend; // 好友删除请求
+        public ReqSearchFriend? reqSearchFriend; // 好友搜索请求
         [ProtoMember(43)]
-        public RspDelFriend? rspDelFriend; // 好友删除响应
+        public RspSearchFriend? rspSearchFriend; // 好友搜索响应
         [ProtoMember(44)]
-        public ReqFriendGift? reqFriendGift; // 好友赠送请求
+        public ReqAddFriend? reqAddFriend; // 好友申请请求
         [ProtoMember(45)]
-        public RspFriendGift? rspFriendGift; // 好友赠送响应
+        public RspAddFriend? rspAddFriend; // 好友申请响应
         [ProtoMember(46)]
-        public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
+        public ReqDelFriend? reqDelFriend; // 好友删除请求
         [ProtoMember(47)]
+        public RspDelFriend? rspDelFriend; // 好友删除响应
+        [ProtoMember(48)]
+        public ReqFriendGift? reqFriendGift; // 好友赠送请求
+        [ProtoMember(49)]
+        public RspFriendGift? rspFriendGift; // 好友赠送响应
+        [ProtoMember(50)]
+        public ReqFriendAddConfirm? reqFriendAddConfirm; // 好友添加确认请求
+        [ProtoMember(51)]
         public RspFriendAddConfirm? rspFriendAddConfirm; // 好友添加确认响应
         #endregion
         #region 每日任务的请求与响应
-        [ProtoMember(48)]
+        [ProtoMember(52)]
         public ReqDailyTask? reqDailyTask; // 领取每日任务奖励请求
-        [ProtoMember(49)]
+        [ProtoMember(53)]
         public RspDailyTask? rspDailyTask; // 领取每日任务奖励响应
-        [ProtoMember(50)]
+        [ProtoMember(54)]
         public ReqRewardTask? reqRewardTask; // 领取活跃奖励任务请求
-        [ProtoMember(51)]
+        [ProtoMember(55)]
         public RspRewardTask? rspRewardTask; // 领取活跃奖励任务响应
         #endregion
         #region 系统相关
-        [ProtoMember(52)]
+        [ProtoMember(56)]
         public HeartbeatMessage? heartbeatMessage;
-        [ProtoMember(53)]
+        [ProtoMember(57)]
         public ReqSystemTimeMessage? reqSystemTimeMessage;
-        [ProtoMember(54)]
+        [ProtoMember(58)]
         public RspSystemTimeMessage? rspSystemTimeMessage;
-        [ProtoMember(55)]
+        [ProtoMember(59)]
         public SystemSessionID? systemSessionID;
         #endregion
         #region 天赋相关请求与响应
-        [ProtoMember(56)]
+        [ProtoMember(60)]
         public ReqTalentUp? reqTalentUp;
-        [ProtoMember(57)]
+        [ProtoMember(61)]
         public RspTalentUp? rspTalentUp;
-        [ProtoMember(58)]
+        [ProtoMember(62)]
         public ReqChangeTalent? reqChangeTalent;
-        [ProtoMember(59)]
+        [ProtoMember(63)]
         public RspChangeTalent? rspChangeTalent;
         #endregion
     }
     #region 系统相关
     #region 心跳机制请求
-[ProtoContract]
+    [ProtoContract]
     public class HeartbeatMessage
     {
         [ProtoMember(1)]
@@ -138,13 +148,13 @@ namespace CommonNet
     }
     #endregion
     #region 系统时间请求
-[ProtoContract]
+    [ProtoContract]
     public class ReqSystemTimeMessage
     {
         [ProtoMember(1)]
         public float LocalTime;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspSystemTimeMessage
     {
         [ProtoMember(1)]
@@ -152,7 +162,7 @@ namespace CommonNet
         [ProtoMember(2)]
         public long ServerTime;
     }
-[ProtoContract]
+    [ProtoContract]
     public class SystemSessionID
     {
         [ProtoMember(1)]
@@ -161,7 +171,7 @@ namespace CommonNet
     #endregion
     #endregion
     #region 登录注册相关
-[ProtoContract]
+    [ProtoContract]
     public class ReqLogin
     {
         [ProtoMember(1)]
@@ -169,7 +179,7 @@ namespace CommonNet
         [ProtoMember(2)]
         public string? pass;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspLogin//玩家个人数据
     {
         [ProtoMember(1)]
@@ -178,7 +188,7 @@ namespace CommonNet
         public List<PlayerData>? playerList;//其他玩家id数据
     }
 
-[ProtoContract]
+    [ProtoContract]
     public class ReqRegister
     {
         [ProtoMember(1)]
@@ -186,13 +196,13 @@ namespace CommonNet
         [ProtoMember(2)]
         public string? pass;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspRegister
     {
         [ProtoMember(1)]
         public bool isSucc;
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqCreateGame
     {
         [ProtoMember(1)]
@@ -201,7 +211,7 @@ namespace CommonNet
         public string? name;
 
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspCreateGame
     {
         [ProtoMember(1)]
@@ -214,7 +224,7 @@ namespace CommonNet
     #region 城镇系统请求
 
     #region 商店相关请求与响应
-[ProtoContract]
+    [ProtoContract]
     public class ReqShop
     {
         [ProtoMember(1)]
@@ -224,7 +234,7 @@ namespace CommonNet
         [ProtoMember(3)]
         public int count;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspShop
     {
         [ProtoMember(1)]
@@ -238,13 +248,13 @@ namespace CommonNet
         [ProtoMember(5)]
         public List<DailyTask> dailyTasks;//每日任务数据
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspBag
     {
         [ProtoMember(1)]
         public PlayerData playerData;
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqBag//使用资源
     {
         [ProtoMember(1)]
@@ -252,13 +262,48 @@ namespace CommonNet
         [ProtoMember(2)]
         public int count;
     }
-[ProtoContract]
+    [ProtoContract]
+    public class ReqEquip//穿戴装备
+    {
+        [ProtoMember(1)]
+        public int id;
+    }
+    [ProtoContract]
+    public class RspEquip//穿戴装备
+    {
+        [ProtoMember(1)]
+        public bool isSucc;
+        [ProtoMember(2)]
+        public List<EquipItem>? equipList;
+        [ProtoMember(3)]
+        public List<BagList>? bagList;
+    }
+    [ProtoContract]
+    public class ReqEquipUnequip//卸下装备
+    {
+        [ProtoMember(1)]
+        public int PosId;//位置id
+        [ProtoMember(2)]
+        public int EquipId;//装备id
+    }
+    [ProtoContract]
+    public class RspEquipUnequip
+    {
+        [ProtoMember(1)]
+        public bool IsSucc;
+        [ProtoMember(2)]
+        public List<EquipItem>? equipList;
+        [ProtoMember(3)]
+        public List<BagList>? bagList;
+    }
+
+    [ProtoContract]
     public class ReqRaffleSingle
     {
         [ProtoMember(1)]
         public int id;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspRaffleSingle
     {
         [ProtoMember(1)]
@@ -275,13 +320,13 @@ namespace CommonNet
         [ProtoMember(5)]
         public List<BagList>? Bag;
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqRaffleTan
     {
         [ProtoMember(1)]
         public int Id;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspRaffleTan
     {
         [ProtoMember(1)]
@@ -302,19 +347,19 @@ namespace CommonNet
 
     #region 好友请求与响应
 
-[ProtoContract]
+    [ProtoContract]
     public class ReqSearchFriend//好友搜索
     {
         [ProtoMember(1)]
         public string name;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspSearchFriend
     {
         [ProtoMember(1)]
         public FriendItem Friend;//好友数据
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqAddFriend//好友申请
     {
         [ProtoMember(1)]
@@ -322,7 +367,7 @@ namespace CommonNet
         [ProtoMember(2)]
         public string name;//对方名字
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspAddFriend
     {
         [ProtoMember(1)]
@@ -338,7 +383,7 @@ namespace CommonNet
         [ProtoMember(6)]
         public bool isSucc;//是否申请成功
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqDelFriend//好友删除
     {
         [ProtoMember(1)]
@@ -346,13 +391,13 @@ namespace CommonNet
         [ProtoMember(2)]
         public string name;//对方名字
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspDelFriend
     {
         [ProtoMember(1)]
         public List<FriendItem> FriendList;//好友列表
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqFriendGift//好友赠送
     {
         [ProtoMember(1)]
@@ -364,7 +409,7 @@ namespace CommonNet
         [ProtoMember(4)]
         public int count;//数量
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspFriendGift
     {
         [ProtoMember(1)]
@@ -376,7 +421,7 @@ namespace CommonNet
         [ProtoMember(4)]
         public float crystal; //角色彩晶
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqFriendAddConfirm//好友添加确认
     {
         [ProtoMember(1)]
@@ -389,7 +434,7 @@ namespace CommonNet
     /// <summary>
     /// 好友添加确认响应
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class RspFriendAddConfirm
     {
         [ProtoMember(1)]
@@ -402,13 +447,13 @@ namespace CommonNet
     #endregion
 
     #region 每日任务相关请求与响应
-[ProtoContract]
+    [ProtoContract]
     public class ReqTask
     {
         [ProtoMember(1)]
         public int Taskid;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspTask
     {
         [ProtoMember(1)]
@@ -420,26 +465,26 @@ namespace CommonNet
         [ProtoMember(4)]
         public int exp;
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqDailyTask//根据ID领取奖励
     {
         [ProtoMember(1)]
         public int TaskID;
 
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspDailyTask
     {
         [ProtoMember(1)]
         public List<DailyTask> dailyTasks;//每日任务数据
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqRewardTask//根据ID领取活跃奖励任务
     {
         [ProtoMember(1)]
         public int RewardTaskID;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspRewardTask
     {
         [ProtoMember(1)]
@@ -447,7 +492,7 @@ namespace CommonNet
         [ProtoMember(2)]
         public List<BagList>? Bag;//背包数据
     }
-[ProtoContract]
+    [ProtoContract]
     public class RewardTask
     {
         [ProtoMember(1)]
@@ -462,7 +507,7 @@ namespace CommonNet
     /// <summary>
     /// 天赋升级请求
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class ReqTalentUp
     {
         [ProtoMember(1)]
@@ -473,7 +518,7 @@ namespace CommonNet
     /// <summary>
     /// 天赋升级响应
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class RspTalentUp
     {
         [ProtoMember(1)]
@@ -489,7 +534,7 @@ namespace CommonNet
     /// <summary>
     /// 天赋切换请求
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class ReqChangeTalent
     {
         [ProtoMember(1)]
@@ -500,7 +545,7 @@ namespace CommonNet
     /// <summary>
     /// 天赋切换响应
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class RspChangeTalent
     {
         [ProtoMember(1)]
@@ -513,13 +558,13 @@ namespace CommonNet
 
     #region PVP战斗请求
 
-[ProtoContract]
+    [ProtoContract]
     public class ReqEnterPVP
     {
         [ProtoMember(1)]
         public int id;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspEnterPVP
     {
         [ProtoMember(1)]
@@ -527,13 +572,13 @@ namespace CommonNet
         [ProtoMember(2)]
         public List<PlayerData> PlayerDataList;
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqExitPVP
     {
         [ProtoMember(1)]
         public int id;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspExitPVP
     {
         [ProtoMember(1)]
@@ -544,7 +589,7 @@ namespace CommonNet
 
     #region 战斗同步请求
 
-[ProtoContract]
+    [ProtoContract]
     public class ReqTransform
     {
         [ProtoMember(1)]
@@ -568,7 +613,7 @@ namespace CommonNet
         [ProtoMember(10)]
         public float speed;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspTransform
     {
         [ProtoMember(1)]
@@ -593,7 +638,7 @@ namespace CommonNet
         public float speed;
     }
 
-[ProtoContract]
+    [ProtoContract]
     public class ReqPlayerState
     {
         [ProtoMember(1)]
@@ -605,7 +650,7 @@ namespace CommonNet
         [ProtoMember(4)]
         public long LocalTime;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspPlayerState
     {
         [ProtoMember(1)]
@@ -617,20 +662,20 @@ namespace CommonNet
         [ProtoMember(4)]
         public long LocalTime;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspCreatePlayer
     {
         [ProtoMember(1)]
         public PlayerData playerData;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspDeletePlayer
     {
         [ProtoMember(1)]
         public int PlayerID;
 
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqDamage
     {
         [ProtoMember(1)]
@@ -640,7 +685,7 @@ namespace CommonNet
         [ProtoMember(3)]
         public int Damage;
     }
-[ProtoContract]
+    [ProtoContract]
     public class RspDamage
     {
         [ProtoMember(1)]
@@ -655,7 +700,7 @@ namespace CommonNet
     /// <summary>
     /// 玩家复活请求并返回主页
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class ReqRecover
     {
         [ProtoMember(1)]
@@ -666,7 +711,7 @@ namespace CommonNet
     /// <summary>
     /// 玩家复活响应并返回主页
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class RspRecover
     {
         [ProtoMember(1)]
@@ -678,14 +723,14 @@ namespace CommonNet
         [ProtoMember(4)]
         public int Hpmax;//生命上限
     }
-[ProtoContract]
+    [ProtoContract]
     public class ReqRevive
     {
         [ProtoMember(1)]
         public int id;
     }
 
-[ProtoContract]
+    [ProtoContract]
     public class RspRevive
     {
         [ProtoMember(1)]
@@ -699,7 +744,7 @@ namespace CommonNet
     #region 自定义数据/枚举
 
 
-[ProtoContract]
+    [ProtoContract]
     public class PlayerData
     {
         [ProtoMember(1)]
@@ -759,25 +804,27 @@ namespace CommonNet
         [ProtoMember(28)]
         public List<FriendItem>? AddFriendList = new List<FriendItem>();//好友申请列表
         [ProtoMember(29)]
-        public int Taskid;
+        public List<EquipItem>? EquipList = new List<EquipItem>();//装备列表
         [ProtoMember(30)]
-        public int SkillID;
+        public int Taskid;
         [ProtoMember(31)]
-        public int AniState;
+        public int SkillID;
         [ProtoMember(32)]
-        public float Pos_X;
+        public int AniState;
         [ProtoMember(33)]
-        public float Pos_Y;
+        public float Pos_X;
         [ProtoMember(34)]
-        public float Pos_Z;
+        public float Pos_Y;
         [ProtoMember(35)]
-        public float Rot_X;
+        public float Pos_Z;
         [ProtoMember(36)]
-        public float Rot_Y;
+        public float Rot_X;
         [ProtoMember(37)]
+        public float Rot_Y;
+        [ProtoMember(38)]
         public float Rot_Z;
     }
-[ProtoContract]
+    [ProtoContract]
     public class BagList
     {
         [ProtoMember(1)]
@@ -789,7 +836,7 @@ namespace CommonNet
     /// <summary>
     /// 战斗相关数据
     /// </summary>
-[ProtoContract]
+    [ProtoContract]
     public class BattleData
     {
         [ProtoMember(1)]
@@ -814,7 +861,7 @@ namespace CommonNet
         public int critical;//暴击概率
     }
 
-[ProtoContract]
+    [ProtoContract]
     public class Talent
     {
         [ProtoMember(1)]
@@ -822,7 +869,7 @@ namespace CommonNet
         [ProtoMember(2)]
         public int Level;
     }
-[ProtoContract]
+    [ProtoContract]
     public class FriendItem
     {
         [ProtoMember(1)]
@@ -844,8 +891,17 @@ namespace CommonNet
         [ProtoMember(9)]
         public List<int>? AddFriendList;//好友id申请列表
     }
+    [ProtoContract]
+    public class EquipItem
+    {
+        [ProtoMember(1)]
+        public int EquipID;
+        [ProtoMember(2)]
+        public int EquipName;
+    }
 
-[ProtoContract]
+
+    [ProtoContract]
     public class DailyTask
     {
         [ProtoMember(1)]
@@ -856,7 +912,7 @@ namespace CommonNet
         public bool TaskFinish;//任务完成状态
     }
 
-[ProtoContract]
+    [ProtoContract]
     public enum BuyType
     {
         /// <summary>
@@ -872,21 +928,21 @@ namespace CommonNet
         /// </summary>
         crystal, //角色彩晶
     }
-[ProtoContract]
+    [ProtoContract]
     public enum DamageState
     {
         None = 0,
         Critical = 1,//暴击
         Dodge = 2//闪避
     }
-[ProtoContract]
+    [ProtoContract]
     public enum BagType
     {
         consume,//消耗品
         equip,//装备
         material,//材料
     }
-[ProtoContract]
+    [ProtoContract]
     public enum DailyTaskType
     {
         /// <summary>
@@ -906,7 +962,7 @@ namespace CommonNet
         material,//材料
     }
     #endregion
-[ProtoContract]
+    [ProtoContract]
     public enum CMD
     {
         None = 0,
@@ -948,7 +1004,11 @@ namespace CommonNet
         RspRaffleSingle = 138,//单抽抽奖响应
         ReqRaffleTan = 139,//十连抽奖请求
         RspRaffleTan = 140,//十连抽奖响应
-                            //天赋相关
+        ReqEquip = 141,//装备请求
+        RspEquip = 142,//装备响应
+        ReqEquipUnequip = 143,//装备切换请求
+        RspEquipUnequip = 144,//装备切换响应
+                              //天赋相关
         ReqTalentUp = 200, //天赋升级请求
         RspTalentUp = 201, //天赋升级响应
         ReqChangeTalent = 202, //天赋切换的请求
@@ -970,7 +1030,7 @@ namespace CommonNet
         RspRecover = 313,
         #endregion
     }
-[ProtoContract]
+    [ProtoContract]
     public enum Error
     {
         None = 0,
@@ -1015,7 +1075,7 @@ namespace CommonNet
 
 
     #region 配置信息
-[ProtoContract]
+    [ProtoContract]
     public class IPCfg
     {
 

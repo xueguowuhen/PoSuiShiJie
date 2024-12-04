@@ -6,11 +6,11 @@
     日期：2024/6/18 9:50:5
 	功能：辅助画圆表现
 *****************************************************/
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 public class DrawCircle : MonoBehaviour  //直接挂在物体本身 只显示在Scene画面中 Game窗口不显示
 {
-    public List<float> m_Circles = new List<float> {1};  //要画的圆的半径
+    public List<float> m_Circles = new List<float> { 1 };  //要画的圆的半径
     // 控制圆环显示与隐藏的开关
     public bool showCircle = false;
     // 圆环的分辨率（边的数量）
@@ -30,7 +30,7 @@ public class DrawCircle : MonoBehaviour  //直接挂在物体本身 只显示在
             for (int i = 0; i < resolution; i++)
             {
                 float angle = i * angleIncrement;
-                for (int j = 0;j < m_Circles.Count; j++)
+                for (int j = 0; j < m_Circles.Count; j++)
                 {
                     float x = center.x + m_Circles[j] * Mathf.Cos(angle);
                     float z = center.z + m_Circles[j] * Mathf.Sin(angle);

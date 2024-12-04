@@ -7,9 +7,7 @@
 *****************************************************/
 
 using CommonNet;
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MainCityWnd : WindowRoot
@@ -59,7 +57,7 @@ public class MainCityWnd : WindowRoot
     //public Image imgDirPoint;
     #endregion
     public GameObject DownLoad;
-    private string DownLoadUrl;
+    public string DownLoadUrl;
     public Image DownLoadImg;
     private float pointDis;
     private TaskCfg taskCfg;
@@ -128,7 +126,7 @@ public class MainCityWnd : WindowRoot
         {
             //加载人物预制体
             PersonObj = Instantiate(go, PersonPoint.transform);
-            PersonObj.GetComponent<PlayerController>().enabled=false;
+            PersonObj.GetComponent<PlayerController>().enabled = false;
             PersonObj.transform.localPosition = Vector3.zero;
             PersonObj.transform.localScale = Vector3.one;
             PersonObj.transform.localRotation = Quaternion.identity;
@@ -145,7 +143,7 @@ public class MainCityWnd : WindowRoot
             float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
             DownLoadImg.fillAmount = progress;
         }
-        
+
     }
     public void RefreshUI()
     {

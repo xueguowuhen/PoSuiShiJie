@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 765886860
+CRC: 397922250
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -1318,28 +1318,29 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: "download/resui/03_main/\u7ECF\u9A8C\u6761.assetbundle"
         Dependency_1: download/resui/03_main/juxing3.assetbundle
-        Dependency_2: download/resui/hard/hardroud.assetbundle
-        Dependency_3: download/resui/03_main/lihui.assetbundle
-        Dependency_4: download/resui/bg/adventure_bg_03.assetbundle
-        Dependency_5: download/resui/03_main/bar1.assetbundle
-        Dependency_6: download/resui/icon/aura.assetbundle
-        Dependency_7: download/resui/common/ui-1901.assetbundle
-        Dependency_8: download/resui/03_main/yellowbar.assetbundle
-        Dependency_9: download/resui/03_main/juxing2.assetbundle
-        Dependency_10: download/resui/03_main/lefttopkuang.assetbundle
-        Dependency_11: download/resui/03_main/bagbg.assetbundle
-        Dependency_12: download/resui/03_main/yellow.assetbundle
-        Dependency_13: download/resui/common/ui-1766.assetbundle
-        Dependency_14: download/resui/03_main/juxing1.assetbundle
-        Dependency_15: download/resui/icon/ruvia.assetbundle
-        Dependency_16: download/resui/common/settigbtn.assetbundle
-        Dependency_17: download/resui/03_main/jytbai.assetbundle
-        Dependency_18: download/resui/03_main/shopbtn.assetbundle
-        Dependency_19: download/resui/common/ui-1762.assetbundle
-        Dependency_20: download/resui/03_main/icon_line_common_76.assetbundle
-        Dependency_21: download/resui/icon/crystal.assetbundle
-        Dependency_22: download/resui/hard/010_ui-000112-09396850-000014cf.assetbundle
-        Dependency_23: download/resui/common/raffle.assetbundle
+        Dependency_2: download/resui/common/ui-0240.assetbundle
+        Dependency_3: download/resui/hard/hardroud.assetbundle
+        Dependency_4: download/resui/03_main/lihui.assetbundle
+        Dependency_5: download/resui/bg/adventure_bg_03.assetbundle
+        Dependency_6: download/resui/03_main/bar1.assetbundle
+        Dependency_7: download/resui/icon/aura.assetbundle
+        Dependency_8: download/resui/common/ui-1901.assetbundle
+        Dependency_9: download/resui/03_main/yellowbar.assetbundle
+        Dependency_10: download/resui/03_main/juxing2.assetbundle
+        Dependency_11: download/resui/03_main/lefttopkuang.assetbundle
+        Dependency_12: download/resui/03_main/bagbg.assetbundle
+        Dependency_13: download/resui/03_main/yellow.assetbundle
+        Dependency_14: download/resui/common/ui-1766.assetbundle
+        Dependency_15: download/resui/03_main/juxing1.assetbundle
+        Dependency_16: download/resui/icon/ruvia.assetbundle
+        Dependency_17: download/resui/common/settigbtn.assetbundle
+        Dependency_18: download/resui/03_main/jytbai.assetbundle
+        Dependency_19: download/resui/03_main/shopbtn.assetbundle
+        Dependency_20: download/resui/common/ui-1762.assetbundle
+        Dependency_21: download/resui/03_main/icon_line_common_76.assetbundle
+        Dependency_22: download/resui/icon/crystal.assetbundle
+        Dependency_23: download/resui/hard/010_ui-000112-09396850-000014cf.assetbundle
+        Dependency_24: download/resui/common/raffle.assetbundle
     Info_415:
       Name: download/resui/common/ui-1842.assetbundle
       Dependencies: {}
@@ -2366,9 +2367,8 @@ AssetBundleManifest:
         Dependency_12: download/resui/common/ui-0413.assetbundle
         Dependency_13: download/resui/common/ui-0909.assetbundle
         Dependency_14: download/resui/common/ui-1041.assetbundle
-        Dependency_15: download/resui/common/ui-0299.assetbundle
-        Dependency_16: download/resui/common/bg2.assetbundle
-        Dependency_17: download/resui/hard/010_ui-000112-09396850-000014cf.assetbundle
+        Dependency_15: download/resui/common/bg2.assetbundle
+        Dependency_16: download/resui/hard/010_ui-000112-09396850-000014cf.assetbundle
     Info_725:
       Name: download/resui/common/ui-1856.assetbundle
       Dependencies: {}

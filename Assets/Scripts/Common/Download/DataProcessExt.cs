@@ -7,13 +7,9 @@
 *****************************************************/
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static UnityEngine.Networking.UnityWebRequest;
-using UnityEngine.Networking;
 using UnityEngine;
+using UnityEngine.Networking;
+using static UnityEngine.Networking.UnityWebRequest;
 
 public partial class DataProcess
 {

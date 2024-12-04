@@ -5,10 +5,10 @@
     日期：2024-05-10 10:51:24
 	功能：状态管理器
 *****************************************************/
-using System.Collections.Generic;
-using UnityEngine;
 using CommonNet;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 public class StateMgr : MonoBehaviour
 {
 
@@ -58,7 +58,7 @@ public class StateMgr : MonoBehaviour
         {
             if (entity.isLocal)
             {
-                EntityPlayer entityPlayer=entity as EntityPlayer;
+                EntityPlayer entityPlayer = entity as EntityPlayer;
                 GameMsg msg = new GameMsg
                 {
                     cmd = (int)CMD.ReqState,
@@ -81,13 +81,13 @@ public class StateMgr : MonoBehaviour
                 GameCommon.Log(Enum.GetName(typeof(AniState), targerState));
                 NetSvc.Instance.SendMsg(msg);
             }
-       //     Debug.Log("上次状态" + entity.currentAniState.ToString());
+            //     Debug.Log("上次状态" + entity.currentAniState.ToString());
             if (entity.currentAniState != AniState.None)
             {
                 FSM[entity.currentAniState].Exit(entity, argas);
             }
             FSM[targerState].Enter(entity, argas);
-       //   Debug.Log("当前状态" + targerState.ToString());
+            //   Debug.Log("当前状态" + targerState.ToString());
         }
     }
 }

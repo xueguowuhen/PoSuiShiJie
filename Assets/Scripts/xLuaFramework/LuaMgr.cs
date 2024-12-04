@@ -6,10 +6,6 @@
 	功能：Nothing
 *****************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using XLua;
 
@@ -28,7 +24,7 @@ public class LuaMgr : MonoBehaviour
 #if DEBUG_ASSETBUNDLE
         luaEnv.DoString(string.Format("package.path = '{0}/?.lua'", Application.persistentDataPath));
 #elif UNITY_EDITOR
-       luaEnv.DoString(string.Format("package.path = '{0}/?.lua'", Application.dataPath));
+        luaEnv.DoString(string.Format("package.path = '{0}/?.lua'", Application.dataPath));
 #endif
         //luaEnv.DoString(string.Format("package.path = '{0}/?.lua'", Application.dataPath));
     }

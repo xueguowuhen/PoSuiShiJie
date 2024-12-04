@@ -5,9 +5,7 @@
     日期：2024-05-10 9:17:55
 	功能：表现实体控制器基类
 *****************************************************/
-using System;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 public class Controller : MonoBehaviour
 {
@@ -32,7 +30,7 @@ public class Controller : MonoBehaviour
     }
 
 
-   // public bool isMove = false;//判断移动
+    // public bool isMove = false;//判断移动
     protected bool skillMove = false;//判断技能移动
     public Vector3 eulerAngles;
     //protected float skillUpMoveSpeed;
@@ -114,7 +112,7 @@ public class Controller : MonoBehaviour
     public virtual void SetHasInput(bool isInput)
     {
         this.isInput = isInput;
-    //    animator.SetBool("HasInput", isInput);
+        //    animator.SetBool("HasInput", isInput);
     }
     public virtual bool GetHasInput()
     {
@@ -134,7 +132,7 @@ public class Controller : MonoBehaviour
     }
     public virtual void SetAniCrossFade(string name, float time)
     {
-        animator.CrossFade(name, time,0);
+        animator.CrossFade(name, time, 0);
     }
     public virtual void SetAniPlay(string name)
     {

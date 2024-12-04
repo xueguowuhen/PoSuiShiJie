@@ -22,7 +22,8 @@ namespace XLua
     public class LuaCallCSharpAttribute : Attribute
     {
         GenFlag flag;
-        public GenFlag Flag {
+        public GenFlag Flag
+        {
             get
             {
                 return flag;
@@ -81,7 +82,7 @@ namespace XLua
     //只能标注Dictionary<Type, List<string>>的field或者property
     public class DoNotGenAttribute : Attribute
     {
-        
+
     }
 
     public class AdditionalPropertiesAttribute : Attribute

@@ -6,14 +6,9 @@
 	功能：Nothing
 *****************************************************/
 using CommonNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XLua;
 [LuaCallCSharp]
-public class LuaHelper:Singleton<LuaHelper>
+public class LuaHelper : Singleton<LuaHelper>
 {
     public MainCitySys MainCitySys
     {

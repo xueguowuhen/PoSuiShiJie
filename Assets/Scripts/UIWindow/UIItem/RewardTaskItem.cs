@@ -6,8 +6,6 @@
     功能：Nothing
 *****************************************************/
 using CommonNet;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

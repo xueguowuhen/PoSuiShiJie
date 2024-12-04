@@ -5,11 +5,6 @@
     日期：2024-10-26 12:55:28
 	功能：闪避状态
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class StateEvade : ISate
@@ -20,7 +15,7 @@ public class StateEvade : ISate
         entity.currentAniState = AniState.Evade;
         //entity.SetMove(true);
         entity.SetEvade(true);
-        entity.EvadeEnd=false;
+        entity.EvadeEnd = false;
         entity.SetAction((int)AniPlayerState.Evade_Front);
         entity.canRlskill = false;
         Debug.Log("进入闪避状态");
@@ -46,7 +41,7 @@ public class StateEvade : ISate
         //{
         //    entity.SetHasInput(false);
         //}
-        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f&& entity.AnimationAtTag("Evade"))
+        if (entity.GetCurrentAniStateInfo().normalizedTime >= 1f && entity.AnimationAtTag("Evade"))
         {
             AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.TurnBack, OnEvadeFrontEvent);
             OnEvadeFrontEvent(entity);
@@ -76,7 +71,7 @@ public class StateEvade : ISate
         //entity.SetMove(false);
         entity.SetEvade(false);
         entity.canRlskill = true;
-     //   entity.SetAction(Constants.ActionDefault);
+        //   entity.SetAction(Constants.ActionDefault);
 
         AnimatorDispatcher.Instance.RemoveEventListener(AniPlayerState.Evade_Front, OnEvadeFrontEvent);
         UIBtnDispatcher.Instance.RemoveEventListener(PathDefine.btnEvade, OnEvadeBtnEvent);

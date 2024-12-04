@@ -39,15 +39,15 @@ public class BattleMgr : MonoBehaviour
     {
         resSvc = ResSvc.Instance;
         audioSvc = AudioSvc.Instance;
-        loaderSvc= AssetLoaderSvc.Instance;
-        loadingWnd=GameRoot.Instance.loadingWnd;
+        loaderSvc = AssetLoaderSvc.Instance;
+        loadingWnd = GameRoot.Instance.loadingWnd;
         stateMgr = gameObject.AddComponent<StateMgr>();
         stateMgr.Init();
         skillMgr = gameObject.AddComponent<SkillMgr>();
         skillMgr.BattleMgr = this;
         skillMgr.Init();
         LoadPlayer(mapData);
- 
+
         RemotePlayer();
     }
     #region 玩家与远程玩家初始化操作
@@ -59,7 +59,7 @@ public class BattleMgr : MonoBehaviour
         loadingWnd.SetDownLoadUrl(DownLoadUrl);
         loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
         {
-            player = Instantiate( go);
+            player = Instantiate(go);
             // player = resSvc.ABLoadPrefab(personCfg.Prefab, personCfg.Prefab); ;
             // 在移动之前禁用角色控制器
             characterController = player.GetComponent<CharacterController>();
@@ -92,7 +92,7 @@ public class BattleMgr : MonoBehaviour
             };
             entitySelfPlayer.SetCtrl(playerController);
             entitySelfPlayer.Idle();//创建完成后进入idle状态
-            StartCoroutine( CloseLoadingWnd());
+            StartCoroutine(CloseLoadingWnd());
         });
     }
     private IEnumerator CloseLoadingWnd()
@@ -117,7 +117,7 @@ public class BattleMgr : MonoBehaviour
         personCfg personCfg = resSvc.GetPersonCfgData(playerData.type);
         loaderSvc.LoadPrefab(PathDefine.ResPerson, personCfg.Prefab, (GameObject go) =>
         {
-            GameObject player = Instantiate( go);
+            GameObject player = Instantiate(go);
             PlayerController controller = player.GetComponent<PlayerController>();
             controller.RemotePlayerId = playerData.id;
 

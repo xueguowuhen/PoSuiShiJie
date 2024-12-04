@@ -5,14 +5,8 @@
     日期：2024-10-25 12:44:01
 	功能：Nothing
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-public class AnimatorDispatcher:DispatcherBase<AnimatorDispatcher, EntityBase, AniPlayerState>
+public class AnimatorDispatcher : DispatcherBase<AnimatorDispatcher, EntityBase, AniPlayerState>
 {
 }
 

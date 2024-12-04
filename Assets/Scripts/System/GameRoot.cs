@@ -7,7 +7,6 @@
 *****************************************************/
 
 using CommonNet;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using XLua;
@@ -116,7 +115,7 @@ public class GameRoot : MonoBehaviour
 
     public void SetPlayerData(PlayerData playerData)
     {
-        
+
         this.playerData = playerData;
     }
     public void SetPlayerData(CommonNet.BattleData battleData)

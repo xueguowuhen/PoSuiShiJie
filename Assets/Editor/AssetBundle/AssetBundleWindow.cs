@@ -6,14 +6,13 @@
 	功能：Nothing
 *****************************************************/
 
-using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Security.Cryptography;
-using DG.Tweening.Plugins.Core.PathCore;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
 /// <summary>
 /// AssetBundle管理窗口
 /// </summary>
@@ -402,7 +401,7 @@ public class AssetBundleWindow : EditorWindow
             bool isFirstData = false; //是否初始数据
             bool isBreak = false;
 
-            for (int j = 0; j <  m_lst.Count; j++)//遍历配置列表
+            for (int j = 0; j < m_lst.Count; j++)//遍历配置列表
             {
                 foreach (string xmlPath in m_lst[j].PathList)//遍历配置列表中的路径
                 {

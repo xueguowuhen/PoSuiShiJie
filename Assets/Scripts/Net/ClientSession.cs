@@ -7,8 +7,6 @@
 *****************************************************/
 using CommonNet;
 using ComNet;
-using System;
-using UnityEngine;
 public class ClientSession : TraSession<GameMsg>
 {
     private int BeatTimes = 15;
@@ -37,7 +35,7 @@ public class ClientSession : TraSession<GameMsg>
         GameCommon.Log("服务器断开连接");
 
         TimerSvc.Instance.DeleteTimeTask(tid);
-       NetSvc.Instance.SocketConnected(() => GameRoot.SetSocketFail(true));
+        NetSvc.Instance.SocketConnected(() => GameRoot.SetSocketFail(true));
     }
 }
 

@@ -6,14 +6,13 @@
 	功能：背包管理系统
 *****************************************************/
 
+using CommonNet;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using CommonNet;
-using System.Linq;
-using System;
-using System.Reflection;
-using System.Collections;
 
 public class BagWnd : WindowRoot
 {
@@ -41,7 +40,7 @@ public class BagWnd : WindowRoot
         if (pool == null)
         {
             SetActive(DownLoad, true);
-            onLoadItem =LoadItems;
+            onLoadItem = LoadItems;
         }
         else
         {
@@ -91,9 +90,9 @@ public class BagWnd : WindowRoot
            pool.cullAbove = 15;
            pool.cullDespawned = true;
            pool.cullDelay = 2;
-           DownLoadUrl=null;
+           DownLoadUrl = null;
            pool.Init();
-           if (onLoadItem!= null)
+           if (onLoadItem != null)
            {
                onLoadItem();
            }
@@ -165,7 +164,7 @@ public class BagWnd : WindowRoot
         Vector3 newPosition = pointer.transform.position;
         newPosition.y = targetTransform.position.y;
         pointer.transform.position = newPosition;
-       // Debug.Log(pointer.transform.position);
+        // Debug.Log(pointer.transform.position);
     }
 
     /// <summary>
@@ -224,7 +223,7 @@ public class BagWnd : WindowRoot
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
         Button button = gameObject.GetComponent<Button>();
-        button.onClick.AddListener(delegate { ClickBag(bagItemCfgs.ID); });
+        AddListener(button, delegate { ClickBag(bagItemCfgs.ID); });
         //List<BagList> LoadItems;
         //if (Items.TryGetValue(CurrentType, out LoadItems))//根据背包当前状态获取内容
         //{
@@ -318,7 +317,7 @@ public class BagWnd : WindowRoot
     protected override void ClearWnd()
     {
         base.ClearWnd();
-        onLoadItem=null;
+        onLoadItem = null;
     }
 
 }

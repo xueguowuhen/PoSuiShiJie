@@ -7,7 +7,6 @@
 	功能：敌人逻辑实体
 *****************************************************/
 
-using CommonNet;
 using UnityEngine;
 
 public class EntityEnemy : EntityBase
@@ -89,7 +88,7 @@ public class EntityEnemy : EntityBase
         }
         if (CanBack)//检查返回时间
         {
-            if (CalcDisFromBorn() > BackDis ||(CheckIdleCount >= CheckIdleTime && CalcDisFromBorn() > 3))
+            if (CalcDisFromBorn() > BackDis || (CheckIdleCount >= CheckIdleTime && CalcDisFromBorn() > 3))
             {
                 GotoBorn();
             }

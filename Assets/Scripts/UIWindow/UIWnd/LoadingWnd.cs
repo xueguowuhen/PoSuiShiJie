@@ -6,11 +6,9 @@
 	功能：过程加载窗体
 *****************************************************/
 
-using CommonNet;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadingWnd : WindowRoot 
+public class LoadingWnd : WindowRoot
 {
     public Text txtTips;
     public Image imageFG;
@@ -38,11 +36,12 @@ public class LoadingWnd : WindowRoot
     public void SetProgress(float prg)
     {
         SetText(txtPrg, (int)(prg) + "%");
-        imageFG.fillAmount = prg/100;
+        imageFG.fillAmount = prg / 100;
         if (prg >= 100)
         {
-            isDownLoading=true;
-        }else
+            isDownLoading = true;
+        }
+        else
         {
             isDownLoading = false;
         }
@@ -55,7 +54,7 @@ public class LoadingWnd : WindowRoot
             {
                 SetText(txtTips, "正在下载场景所需资源...");
                 float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
-                SetText(txtPrg, (int)(progress*100) + "%");
+                SetText(txtPrg, (int)(progress * 100) + "%");
                 imageFG.fillAmount = progress;
             }
         }

@@ -6,8 +6,6 @@
 	功能：声音加载服务
 *****************************************************/
 
-using UnityEngine;
-
 public class AudioSvc : SvcBase<AudioSvc>
 {
 

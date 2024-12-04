@@ -5,11 +5,6 @@
     日期：2024-11-10 15:33:21
 	功能：Nothing
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class SvcBase<T> : MonoBehaviour where T : SvcBase<T>
@@ -40,7 +35,7 @@ public class SvcBase<T> : MonoBehaviour where T : SvcBase<T>
         BeforeOnDestroy();
     }
     public virtual void InitSvc() { }
-    
+
     public virtual void OnUpdate() { }
     public virtual void BeforeOnDestroy() { }
 }

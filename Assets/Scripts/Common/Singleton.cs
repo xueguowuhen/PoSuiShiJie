@@ -6,9 +6,8 @@
 	功能：单例基类
 *****************************************************/
 
-using UnityEngine;
 using System;
-public class Singleton<T>: IDisposable where T :new() 
+public class Singleton<T> : IDisposable where T : new()
 {
     private static T instance;
     public static T Instance
@@ -25,6 +24,6 @@ public class Singleton<T>: IDisposable where T :new()
 
     public virtual void Dispose()
     {
-        
+
     }
 }

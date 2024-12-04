@@ -7,8 +7,6 @@
 *****************************************************/
 
 using CommonNet;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class LoginSys : SystemRoot
 {

@@ -6,7 +6,6 @@
 	功能：技能管理器
 *****************************************************/
 using CommonNet;
-using ComNet;
 using System.Collections.Generic;
 using UnityEngine;
 

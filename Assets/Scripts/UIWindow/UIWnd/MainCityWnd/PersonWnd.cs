@@ -1,11 +1,5 @@
 using CommonNet;
-using JetBrains.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,7 +65,7 @@ public class PersonWnd : WindowRoot
             pool.cullDespawned = true;
             pool.cullDelay = 2;
             pool.Init();
-            DownLoadUrl=null;
+            DownLoadUrl = null;
             if (OnSetPersonInfo != null)
             {
                 OnSetPersonInfo();
@@ -80,10 +74,10 @@ public class PersonWnd : WindowRoot
     }
     private void Update()
     {
-        if (DownLoadUrl!= null)
+        if (DownLoadUrl != null)
         {
-           float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
-           DownLoadImg.fillAmount = progress;
+            float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
+            DownLoadImg.fillAmount = progress;
         }
     }
     private void SetPersonInfo()
@@ -178,6 +172,6 @@ public class PersonWnd : WindowRoot
     protected override void ClearWnd()
     {
         base.ClearWnd();
-        OnSetPersonInfo=null;
+        OnSetPersonInfo = null;
     }
 }

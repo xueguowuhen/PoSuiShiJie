@@ -290,15 +290,15 @@ public class DowningWnd : WindowRoot
                 {
                     continue;
                 }
-                if(!File.Exists(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/")))
+                if (!File.Exists(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/")))
                 {
                     m_NeedDownloadDataList.Add(entity);
                     continue;
                 }
                 //如果MD5不一致
-                if ((serverDic.ContainsKey(item.Key) && serverDic[item.Key] != item.Value)|| GetMD5(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/"))!= entity.MD5)
+                if ((serverDic.ContainsKey(item.Key) && serverDic[item.Key] != item.Value) || GetMD5(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/")) != entity.MD5)
                 {
-                    
+
                     if (entity != null)
                     {
                         Debug.Log("发现资源更新：" + entity.FullName);
@@ -342,7 +342,7 @@ public class DowningWnd : WindowRoot
                     IsDown = false;
                     EnterLogin();
                 }
-            }, isRe:true);
+            }, isRe: true);
         }
         IsDown = true;
     }
@@ -358,6 +358,10 @@ public class DowningWnd : WindowRoot
     public float GetDownUrlProgress(string url)
     {
         return dataProcess.GetDownUrlProgress(url);
+    }
+    public void StopDownload(string url)
+    {
+        dataProcess.StopDownload(url);
     }
     /// <summary>
     /// 若没有该文件夹则创建

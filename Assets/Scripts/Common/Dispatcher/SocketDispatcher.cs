@@ -8,12 +8,9 @@
 using CommonNet;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XLua;
 
-public class SocketDispatcher: IDisposable
+public class SocketDispatcher : IDisposable
 {
     #region 单例
     private static SocketDispatcher instance;

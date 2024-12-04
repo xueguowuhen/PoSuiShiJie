@@ -18,7 +18,7 @@ public class SpriteAnimation : MonoBehaviour
     public int PlayStartIndex;
     public int PlayEndIndex;
     public bool Loop;
-    private Dictionary<string, Sprite> m_Sprites=new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_Sprites = new Dictionary<string, Sprite>();
     private int m_PlayCurrIndex;
     private float timer = 0f; // 计时器
     private Image SpriteImage;

@@ -10,9 +10,7 @@ using CommonNet;
 using ComNet;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class NetSvc : SvcBase<NetSvc>
@@ -22,7 +20,7 @@ public class NetSvc : SvcBase<NetSvc>
     private Queue<GameMsg> Msgqueue = new Queue<GameMsg>();
     public TraSocket<ClientSession, GameMsg> client = null;
     private Queue<Action> extcutionActions = new Queue<Action>();
-    private int sessionID=-1;
+    private int sessionID = -1;
     public override void InitSvc()
     {
         base.InitSvc();

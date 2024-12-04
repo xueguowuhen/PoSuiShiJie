@@ -5,13 +5,8 @@
     日期：2024-04-14 9:39:42
 	功能：窗体基类服务
 *****************************************************/
-using CommonNet;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -36,7 +31,7 @@ public class WindowRoot : MonoBehaviour
         audioSvc = AudioSvc.Instance;
         netSvc = NetSvc.Instance;
         timerSvc = TimerSvc.Instance;
-        loaderSvc= AssetLoaderSvc.Instance;
+        loaderSvc = AssetLoaderSvc.Instance;
         if (!IsSetGameObject)
         {
             SetGameObject();

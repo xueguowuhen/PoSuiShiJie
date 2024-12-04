@@ -5,9 +5,6 @@
     日期：2024-04-14 10:03:35
 	功能：路径配置文件
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using XLua;
 [LuaCallCSharp]
 public static class PathDefine
@@ -52,7 +49,7 @@ public static class PathDefine
     public const string ResRewardTaskItem = "RewardTaskItem";
     public const string ResDailyTaskItem = "DailyTaskItem";
     public const string Prefab = "ResPerfer/";
-    public const string EntityHp="ItemEntityHp";
+    public const string EntityHp = "ItemEntityHp";
     public const string ResHard = "ResUI/Hard/";
     public const string ResUI = "ResUI/";
     public const string Equip = "Equip/";
@@ -65,7 +62,7 @@ public static class PathDefine
     #region GameObjectPath
 
     #region Lua窗体加载 
-    public const string RaffleCtrl="RaffleCtrl";
+    public const string RaffleCtrl = "RaffleCtrl";
     #endregion
     #region DynamicWnd
     public const string TextTips = "CenterPin/TxtTips";

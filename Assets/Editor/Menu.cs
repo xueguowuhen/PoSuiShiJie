@@ -6,7 +6,6 @@
 	功能：Nothing
 *****************************************************/
 
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;

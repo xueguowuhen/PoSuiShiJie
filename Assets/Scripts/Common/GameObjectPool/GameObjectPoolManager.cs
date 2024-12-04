@@ -37,12 +37,12 @@ public class GameObjectPoolManager : MonoBehaviour
             return pool; // 如果已存在，直接返回
         }
 
-        GameObject poolObject = new GameObject(prefab.name+"_Pool");
-        poolObject.transform.SetParent(this.transform,false); // 将新对象设置为 GameObjectPoolManager 的子物体
+        GameObject poolObject = new GameObject(prefab.name + "_Pool");
+        poolObject.transform.SetParent(this.transform, false); // 将新对象设置为 GameObjectPoolManager 的子物体
         pool = poolObject.AddComponent<GameObjectPool>(); // 将 GameObjectPool 组件挂载到新对象上
         poolObject.transform.localScale = Vector3.one;
         poolObject.transform.localRotation = Quaternion.identity;
-      //  poolObject.transform.localPosition = Vector3.zero;
+        //  poolObject.transform.localPosition = Vector3.zero;
         pool.prefab = prefab;
         pools[poolName] = pool; // 将新池添加到字典中
 

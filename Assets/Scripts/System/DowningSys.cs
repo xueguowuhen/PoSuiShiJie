@@ -5,13 +5,8 @@
     日期：2024-11-07 21:29:47
 	功能：下载系统
 *****************************************************/
-using CommonNet;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 public class DowningSys : SystemRoot
@@ -52,15 +47,18 @@ public class DowningSys : SystemRoot
     {
         return downingWnd.GetLocalFilePath();
     }
-    public void DownloadData(DownloadDataEntity Entity,Action callback)
+    public void DownloadData(DownloadDataEntity Entity, Action callback)
     {
-         downingWnd.DownloadData(Entity, callback);
+        downingWnd.DownloadData(Entity, callback);
     }
     public float GetDownUrlProgress(string url)
     {
         return downingWnd.GetDownUrlProgress(url);
     }
-
+    public void StopDownload(string url)
+    {
+        downingWnd.StopDownload(url);
+    }
     public string GetPlatform()
     {
         return downingWnd.GetPlatform();
@@ -76,7 +74,7 @@ public class DowningSys : SystemRoot
 
         for (int i = 0; i < m_ServerDataList.Count; i++)
         {
-            
+
             if (path.Replace("/", "\\").Equals(m_ServerDataList[i].FullName, StringComparison.CurrentCultureIgnoreCase))
             {
                 //GameCommon.Log("GetServerData:" + m_ServerDataList[i].FullName);

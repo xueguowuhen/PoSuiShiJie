@@ -6,9 +6,6 @@
     功能：失败提示界面
 *****************************************************/
 using CommonNet;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class FailTipWnd : WindowRoot
@@ -26,14 +23,14 @@ public class FailTipWnd : WindowRoot
         base.SetGameObject();
         btnBackHome.onClick.AddListener(OnBtnBackHomeClick);
         btnRevice.onClick.AddListener(OnBtnReviceClick);
-    
+
     }
     /// <summary>
     /// 返回首页按钮点击事件
     /// </summary>
     private void OnBtnBackHomeClick()
     {
-       PlayerData playerData=  GameRoot.Instance.PlayerData;
+        PlayerData playerData = GameRoot.Instance.PlayerData;
         GameMsg gameMsg = new GameMsg()
         {
             cmd = (int)CMD.ReqRecover,

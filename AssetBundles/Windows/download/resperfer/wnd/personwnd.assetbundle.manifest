@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1950104710
+CRC: 2577963844
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 94af0f2cd108e26b1f405c529c69e2e9
+    Hash: b096bf6db5817cbae1d35353780923ea
   TypeTreeHash:
     serializedVersion: 2
     Hash: 65c832476d4ba1f6fcf585a66e2313fd
@@ -74,7 +74,6 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn3.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0064.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0240.assetbundle
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0299.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0411.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0413.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0415.assetbundle

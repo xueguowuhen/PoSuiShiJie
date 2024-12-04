@@ -85,7 +85,7 @@ public class ShopWnd : WindowRoot
 
     private void ClickRaffle()
     {
-        SetActive(ItemContent,false);
+        SetActive(ItemContent, false);
         SetPointerPosition(Raffle.transform);
         MainCitySys.instance.EndRaffleLua();
     }
@@ -118,7 +118,7 @@ public class ShopWnd : WindowRoot
     {
         if (DownLoadUrl != null)
         {
-            
+
             float progress = DowningSys.instance.GetDownUrlProgress(DownLoadUrl);
             DownLoadImg.fillAmount = progress;
         }
@@ -257,7 +257,7 @@ public class ShopWnd : WindowRoot
     /// </summary>
     public void CloseBuy()
     {
-        
+
         BuyTipWnd.SetWndState(false);
     }
     protected override void ClearWnd()

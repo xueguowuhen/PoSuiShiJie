@@ -49,20 +49,20 @@ public class CreateWnd : WindowRoot
         ManageImg = GetImg(ManageBtn.gameObject);
         AddListener(FighterBtn, ClickFighter);
         FighterImg = GetImg(FighterBtn.gameObject);
-        resSvc.GetPersonCfgHard(Constants.ManageID,(Texture2D texture) =>
+        resSvc.GetPersonCfgHard(Constants.ManageID, (Texture2D texture) =>
         {
             ManageImg.overrideSprite = texture.CreateSprite();
         });
-         resSvc.GetPersonCfgHard(Constants.VirtualID, (Texture2D texture) =>
-        {
-            FighterImg.overrideSprite = texture.CreateSprite();
-        });
+        resSvc.GetPersonCfgHard(Constants.VirtualID, (Texture2D texture) =>
+       {
+           FighterImg.overrideSprite = texture.CreateSprite();
+       });
 
         #endregion
         #region TwoWnd
         AddListener(CreateBtn, ClickGamePlay);
 
-        AddListener(NameRandBtn, SetRDNameData); 
+        AddListener(NameRandBtn, SetRDNameData);
 
         #endregion
     }
@@ -145,10 +145,10 @@ public class CreateWnd : WindowRoot
             GameMsg msg = new GameMsg()
             {
                 cmd = (int)CMD.ReqCreateGame,
-                reqCreateGame =new ReqCreateGame
+                reqCreateGame = new ReqCreateGame
                 {
                     id = PersonID,
-                    name= GameName.text,
+                    name = GameName.text,
                 }
             };
             netSvc.SendMsg(msg);

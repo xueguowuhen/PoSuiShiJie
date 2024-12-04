@@ -6,7 +6,6 @@
 	功能：动态显示窗体
 *****************************************************/
 
-using CommonNet;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,18 +50,18 @@ public class DynamicWnd : WindowRoot
         }
         else
         {
-             loaderSvc.LoadPrefab(PathDefine.Prefab, PathDefine.EntityHp, (GameObject go) =>
-            {
-                go = Instantiate(go);
-                go.transform.SetParent(hpItemRoot);
-                go.transform.localPosition = new Vector3(0, 0, 0);
-                ItemEntityHP itemEntity = go.AddComponent<ItemEntityHP>();
-                Transform tran = trans.Find(PathDefine.HpRoot);
+            loaderSvc.LoadPrefab(PathDefine.Prefab, PathDefine.EntityHp, (GameObject go) =>
+           {
+               go = Instantiate(go);
+               go.transform.SetParent(hpItemRoot);
+               go.transform.localPosition = new Vector3(0, 0, 0);
+               ItemEntityHP itemEntity = go.AddComponent<ItemEntityHP>();
+               Transform tran = trans.Find(PathDefine.HpRoot);
 
-                itemEntity.SetItemInfo(tran);
-                itemDic.Add(playerid, itemEntity);
+               itemEntity.SetItemInfo(tran);
+               itemDic.Add(playerid, itemEntity);
 
-            }, true);
+           }, true);
         }
     }
     public void RemoveHptemInfo(int playerid)

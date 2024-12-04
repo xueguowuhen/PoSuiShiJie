@@ -6,11 +6,8 @@
 	功能：主城窗体
 *****************************************************/
 using CommonNet;
-using System.Collections.Generic;
-using System.Xml.Xsl;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 public class MainCitySys : SystemRoot
 {
     #region 公开字段/属性

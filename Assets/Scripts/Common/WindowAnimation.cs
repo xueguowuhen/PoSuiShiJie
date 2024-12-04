@@ -6,14 +6,10 @@
 	功能：Nothing
 *****************************************************/
 using DG.Tweening;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-public class WindowAnimation: Singleton<WindowAnimation>
+public class WindowAnimation : Singleton<WindowAnimation>
 {
     private Dictionary<WindowType, WindowRoot> m_dicWindow = new Dictionary<WindowType, WindowRoot>();
     #region StartShowWindow 开始打开窗口
@@ -47,7 +43,7 @@ public class WindowAnimation: Singleton<WindowAnimation>
 
         }
     }
-#endregion
+    #endregion
     #region ShowCenterToBig 中间变大
     /// <summary>
     /// 中间变大

@@ -6,11 +6,11 @@
 	功能：天赋窗口
 *****************************************************/
 
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.UI;
 using CommonNet;
 using DG.Tweening;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class TalentWnd : WindowRoot
 {
@@ -206,7 +206,7 @@ public class TalentWnd : WindowRoot
             TalentRect.DOAnchorMax(new Vector2(0.4f, 0.5f), time);
             TalentCfg currcfg = resSvc.GetTalentCfgData(SelectTalentID);
             talentInfoWnd.SetUi(currcfg.BackGround, currcfg.Info, currcfg.Name);
-            talentInfoWnd.RefreshLevel(CurrTalentData.Level,CurrTalentData.TalentID,currcfg);
+            talentInfoWnd.RefreshLevel(CurrTalentData.Level, CurrTalentData.TalentID, currcfg);
             talentInfoWnd.TweenShow(time);
             IsShowInfo = true;
         }
@@ -237,7 +237,7 @@ public class TalentWnd : WindowRoot
             TalentCfg currcfg = resSvc.GetTalentCfgData(TalentID);
             talentInfoWnd.TweenQuit(0.15f);
             talentInfoWnd.SetUi(currcfg.BackGround, currcfg.Info, currcfg.Name);
-            talentInfoWnd.RefreshLevel(CurrTalentData.Level,CurrTalentData.TalentID,currcfg);
+            talentInfoWnd.RefreshLevel(CurrTalentData.Level, CurrTalentData.TalentID, currcfg);
             talentInfoWnd.TweenShow(0.15f);
         }
 
@@ -246,7 +246,7 @@ public class TalentWnd : WindowRoot
     {
         bool temp = (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]));
 
-        if (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]) )
+        if (!(CurrTalentId[0] == RecodeTalentId[0] && CurrTalentId[1] == RecodeTalentId[1]))
         {
             GameMsg gameMsg = new GameMsg()
             {

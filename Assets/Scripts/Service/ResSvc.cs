@@ -5,19 +5,16 @@
     日期：2024-04-14 14:53:41
 	功能：资源加载服务
 *****************************************************/
-using CommonNet;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ResSvc : SvcBase<ResSvc>
 {
-   
+
     //后期可改成模板生成工具
     public override void InitSvc()
     {
@@ -187,7 +184,7 @@ public class ResSvc : SvcBase<ResSvc>
         {
             Debug.Log(PathDefine.ResHard + personCfg.Hard);
             ComTools.GetImg(personCfg.Hard, callback);
-            
+
         }
     }
     #endregion
@@ -1349,8 +1346,8 @@ public class ResSvc : SvcBase<ResSvc>
 
         return textAsset;
 #elif UNITY_EDITOR
-       
-        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(PathDefine.Download+ path + PathDefine.Xml);
+
+        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(PathDefine.Download + path + PathDefine.Xml);
         return textAsset;
 #endif
     }

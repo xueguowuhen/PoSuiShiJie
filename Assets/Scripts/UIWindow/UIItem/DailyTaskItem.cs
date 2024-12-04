@@ -6,8 +6,6 @@
     功能：每日任务子项
 *****************************************************/
 using CommonNet;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +29,7 @@ public class DailyTaskItem : WindowItem
     /// <param name="taskDailyCfg"></param>
     /// <param name="TaskActive"></param>
     /// <param name="playerData"></param>
-    public void SetUI(TaskDailyCfg taskDailyCfg,float TaskActive, PlayerData playerData)
+    public void SetUI(TaskDailyCfg taskDailyCfg, float TaskActive, PlayerData playerData)
     {
         Title.SetText(taskDailyCfg.mTitle);
         mtask.SetText(taskDailyCfg.mTask);
@@ -61,7 +59,7 @@ public class DailyTaskItem : WindowItem
                 AddListener(ToBtn, ClickTo);
             }
         }
-        if(TaskActive >= 100)
+        if (TaskActive >= 100)
         {
             ToBtnObj.SetActive(false);
             Claimed.SetActive(false);

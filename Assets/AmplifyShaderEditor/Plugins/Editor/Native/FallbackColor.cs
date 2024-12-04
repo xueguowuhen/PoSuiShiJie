@@ -32,7 +32,7 @@ namespace AmplifyShaderEditor
             m_current = m_previous;
             m_previous = aux;
         }
-        
+
         public Color Current
         {
             get

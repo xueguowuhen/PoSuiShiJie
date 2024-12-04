@@ -6,10 +6,10 @@
 	功能：天赋系统下的信息面板
 *****************************************************/
 
+using CommonNet;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using CommonNet;
 
 
 public class TalentInfoWnd : MonoBehaviour

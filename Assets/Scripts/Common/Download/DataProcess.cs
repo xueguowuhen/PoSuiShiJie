@@ -10,11 +10,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Web;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using static UnityEngine.Networking.UnityWebRequest;
@@ -259,7 +256,7 @@ public partial class DataProcess : MonoBehaviour
                 speedUnit = "MB/s";
             }
             DownSpeed = speed + speedUnit;
-           // Debug.Log("总字节数：" + count + "已下载字节数：" + downloadedBytes);
+            // Debug.Log("总字节数：" + count + "已下载字节数：" + downloadedBytes);
             //Debug.LogFormat("Downloading {0}: {1:P1} ({2:0.00} {3})", fileName, progress, speed, speedUnit);
             dataDownloads.Remove(dataDownload);
             FinishDownloads.Add(dataDownload);
@@ -358,6 +355,21 @@ public partial class DataProcess : MonoBehaviour
             dataDownload.request.Abort(); // 终止下载请求
         }
         dataDownloads.Clear(); // 清空下载列表
+    }
+    /// <summary>
+    /// 停止下载该链接
+    /// </summary>
+    public void StopDownload(string url)
+    {
+        foreach (var dataDownload in dataDownloads)
+        {
+            if (dataDownload.uri.ToLower().Contains(url.ToLower()))
+            {
+                dataDownload.request.Abort(); // 终止下载请求
+                dataDownloads.Remove(dataDownload); // 从下载列表中移除
+                break;
+            }
+        }
     }
     public float GetDownUrlProgress(string url)
     {

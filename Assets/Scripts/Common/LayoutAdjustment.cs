@@ -5,8 +5,6 @@
     日期：2024/10/7 21:3:16
     功能：画布大小调整
 *****************************************************/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,7 +41,7 @@ public class LayoutAdjustment : MonoBehaviour
         float spacingX = gridLayoutGroup.spacing.x;
         // 根据子物体数量计算行数
         int columns = gridLayoutGroup.constraintCount; // 列数
-        if(itemCount < columns)
+        if (itemCount < columns)
         {
             columns = itemCount;
         }
@@ -55,7 +53,7 @@ public class LayoutAdjustment : MonoBehaviour
         // 计算总高度（考虑间距）
         float height = rows * itemSizeY + (rows - 1) * spacingY - paddingTop - paddingBottom; // 考虑间距
                                                                                               // 计算总宽度（考虑间距和边距）
-        float width = columns * itemSizeX + (columns - 1) * spacingX - paddingLeft - paddingRight+ itemSizeX/2;
+        float width = columns * itemSizeX + (columns - 1) * spacingX - paddingLeft - paddingRight + itemSizeX / 2;
         // 设置 RectTransform 的高度
         rectTransform.sizeDelta = new Vector2(width, height);
 
