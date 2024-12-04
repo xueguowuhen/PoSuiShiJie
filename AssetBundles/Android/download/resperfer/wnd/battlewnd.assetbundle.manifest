@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4227079796
+CRC: 1678586922
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a9060448dddb6d7934df19cee660e17e
+    Hash: 71ca23a3e28469070bcedb321ff674f6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 75f884300a0089821f3998820c784cb1
@@ -62,7 +62,6 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/04_fight/tiao3.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/04_fight/ui-0458.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/04_fight/ui-0842.assetbundle
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/back.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/btn2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/exitbtn.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/settigbtn.assetbundle

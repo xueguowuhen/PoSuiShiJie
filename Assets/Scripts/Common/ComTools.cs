@@ -6,11 +6,8 @@
 	功能：工具类
 *****************************************************/
 using CommonNet;
-using DG.Tweening;
 using System;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = System.Random;
 
 public class ComTools
@@ -74,14 +71,14 @@ public class ComTools
     public static void LoadSprite(string path, string name, Action<Texture2D> callback)
     {
 #if DEBUG_ASSETBUNDLE
-        AssetLoaderSvc.instance.LoadOrDownload<Texture2D>(path, name, (Texture2D sprite) =>
+        AssetLoaderSvc.Instance.LoadOrDownload<Texture2D>(path, name, (Texture2D sprite) =>
        {
            callback(sprite);
        });
 #elif UNITY_EDITOR
-        string path1 = Path.Combine(PathDefine.Download, path , name+ PathDefine.Png);
-        Debug.Log(path1);
-        callback( UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>(path1));
+        string path1 = PathDefine.Download + path + name + PathDefine.Png;
+        //Debug.Log(path1);
+        callback(UnityEditor.AssetDatabase.LoadAssetAtPath<Texture2D>(path1));
 #endif
 
     }

@@ -5,8 +5,6 @@
     日期：2024/9/10 13:33:37
     功能：Nothing
 *****************************************************/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +25,7 @@ public class StartWnd : WindowRoot
         AddListener(LoginBtn, LoginBtnClick);
         AddListener(ExitBtn, ExitBtnClick);
         AddListener(SettingBtn, SettingBtnClick);
-        LoginAni=LoginBtn.GetComponent<UIAnimation>();
+        LoginAni = LoginBtn.GetComponent<UIAnimation>();
     }
     protected override void ClearWnd()
     {

@@ -24,6 +24,12 @@ public class DailyTaskWnd : WindowRoot
     private GameObjectPool DailyPool;
     private Action onRewardBack;
     private Action onDailyBack;
+    public GameObject RewardDownLoad;
+    public string RewardDownLoadUrl;
+    public Image RewardDownLoadImg;
+    public GameObject TaskDownLoad;
+    public string TaskDownLoadUrl;
+    public Image TaskDownLoadImg;
     // Start is called before the first frame update
     private float TaskActive;
 
@@ -38,6 +44,7 @@ public class DailyTaskWnd : WindowRoot
     protected override void SetGameObject()
     {
         base.SetGameObject();
+
         InitRewardPool();
         InitDailyPool();
         AddListener(CloseBtn, ClickClose);
@@ -48,17 +55,20 @@ public class DailyTaskWnd : WindowRoot
     /// </summary>
     private void InitRewardPool()
     {
-        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResRewardTaskItem, (GameObject obj) =>
+        RewardDownLoadUrl = PathDefine.ResRewardTaskItem;
+        loaderSvc.LoadPrefab(PathDefine.ResItem, RewardDownLoadUrl, (GameObject obj) =>
        {
-           GameObject gameObject = Instantiate(obj);
+           GameObject gameObject = obj;
+           Instantiate(obj);
            RewardPool = GameObjectPoolManager.Instance.CreatePrefabPool(gameObject);
            RewardPool.MaxCount = 15;//设置最大缓存数量
            RewardPool.cullMaxPerPass = 5;
            RewardPool.cullAbove = 15;
            RewardPool.cullDespawned = true;
            RewardPool.cullDelay = 2;
+           RewardDownLoadUrl = null;
            RewardPool.Init();
-           if (onRewardBack!= null)
+           if (onRewardBack != null)
            {
                onRewardBack();
            }
@@ -69,17 +79,20 @@ public class DailyTaskWnd : WindowRoot
     /// </summary>
     private void InitDailyPool()
     {
-        loaderSvc.LoadPrefab(PathDefine.ResItem, PathDefine.ResDailyTaskItem, (GameObject obj) =>
+        TaskDownLoadUrl = PathDefine.ResDailyTaskItem;
+        loaderSvc.LoadPrefab(PathDefine.ResItem, TaskDownLoadUrl, (GameObject obj) =>
        {
-           GameObject objInst = Instantiate(obj);
+           GameObject objInst = obj;
+           Instantiate(obj);
            DailyPool = GameObjectPoolManager.Instance.CreatePrefabPool(objInst);
            DailyPool.MaxCount = 15;//设置最大缓存数量
            DailyPool.cullMaxPerPass = 5;
            DailyPool.cullAbove = 15;
            DailyPool.cullDespawned = true;
            DailyPool.cullDelay = 2;
+           TaskDownLoadUrl = null;
            DailyPool.Init();
-           if (onDailyBack!= null)
+           if (onDailyBack != null)
            {
                onDailyBack();
            }
@@ -90,6 +103,7 @@ public class DailyTaskWnd : WindowRoot
     #region 加载活跃界面
     private void LoadRewardTask()
     {
+        SetActive(RewardDownLoad, false);
         ClearDailyTask(RewardSlotsContent, RewardPool);
         PlayerData playerData = GameRoot.Instance.PlayerData;
         //TODO:加载活跃界面
@@ -97,16 +111,25 @@ public class DailyTaskWnd : WindowRoot
         for (int i = 0; i < count; i++)
         {
             GameObject obj = RewardPool.GetObject();
+            // 延迟一帧设置对象的 Transform
             obj.transform.SetParent(RewardSlotsContent.transform, false);
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localScale = Vector3.one;
+            //StartCoroutine(SetTransformNextFrame(obj));
+            //obj.transform.localPosition = Vector3.zero;
+            //obj.transform.localScale = Vector3.one;
             obj.GetComponent<RewardTaskItem>().SetUI(resSvc.GetTaskRewardCfgListData(i), TaskActive, playerData.rewardTask.TaskProgress[i]);
         }
     }
     #endregion
+    IEnumerator SetTransformNextFrame(GameObject obj)
+    {
+        yield return null;  // 延迟一帧
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
+    }
     #region 加载任务界面
     private void LoadDailyTask()
     {
+        SetActive(TaskDownLoad, false);
         ClearDailyTask(TaskSlotsContent, DailyPool);
         PlayerData playerData = GameRoot.Instance.PlayerData;
         int count = resSvc.GetTaskDailyCount();
@@ -114,8 +137,9 @@ public class DailyTaskWnd : WindowRoot
         {
             GameObject obj = DailyPool.GetObject();
             obj.transform.SetParent(TaskSlotsContent.transform, false);
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localScale = Vector3.one;
+            //StartCoroutine(SetTransformNextFrame(obj));
+            //obj.transform.localPosition = Vector3.zero;
+            //obj.transform.localScale = Vector3.one;
             obj.GetComponent<DailyTaskItem>().SetUI(resSvc.GetTaskDailyCfgListData(i), TaskActive, playerData);
         }
     }
@@ -141,6 +165,8 @@ public class DailyTaskWnd : WindowRoot
         RefreshDailyTask();
         if (RewardPool == null)
         {
+
+            SetActive(RewardDownLoad, true);
             onRewardBack = LoadRewardTask;
         }
         else
@@ -150,6 +176,7 @@ public class DailyTaskWnd : WindowRoot
         }
         if (DailyPool == null)
         {
+            SetActive(TaskDownLoad, true);
             onDailyBack = LoadDailyTask;
         }
         else
@@ -176,17 +203,29 @@ public class DailyTaskWnd : WindowRoot
     #endregion
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
     protected override void ClearWnd()
     {
         base.ClearWnd();
-        onRewardBack=null;
-        onDailyBack=null;
+        onRewardBack = null;
+        onDailyBack = null;
     }
     // Update is called once per frame
     void Update()
     {
+        if (RewardDownLoadUrl != null)
+        {
 
+            float progress = DowningSys.instance.GetDownUrlProgress(RewardDownLoadUrl);
+            RewardDownLoadImg.fillAmount = progress;
+        }
+        if (TaskDownLoadUrl != null)
+        {
+
+            float progress = DowningSys.instance.GetDownUrlProgress(TaskDownLoadUrl);
+            TaskDownLoadImg.fillAmount = progress;
+        }
     }
 }

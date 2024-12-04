@@ -5,14 +5,9 @@
     日期：2024-09-30 20:53:54
 	功能：Nothing
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-public class UIAnimation:MonoBehaviour
+public class UIAnimation : MonoBehaviour
 {
     public WindowType windowType;
     public float duration;

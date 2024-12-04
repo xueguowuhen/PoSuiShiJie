@@ -6,19 +6,15 @@
 	功能：Nothing
 *****************************************************/
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class AssetBundleLoader : IDisposable
 {
     private AssetBundle bundle;
-    public AssetBundleLoader(string assetBundlePath,bool isFullPath=false)//根据地址获取对应文件，并进行加载
+    public AssetBundleLoader(string assetBundlePath, bool isFullPath = false)//根据地址获取对应文件，并进行加载
     {
-        string fullPath =isFullPath?assetBundlePath: DowningSys.instance.GetLocalFilePath()  + assetBundlePath;
+        string fullPath = isFullPath ? assetBundlePath : DowningSys.instance.GetLocalFilePath() + assetBundlePath;
 
         bundle = AssetBundle.LoadFromFile(fullPath);//从内存区域同步加载AB包
 
@@ -62,7 +58,7 @@ public class AssetBundleLoader : IDisposable
     }
     public void Dispose()
     {
-        Debug.Log("AssetBundleLoader Dispose");
+        //Debug.Log("AssetBundleLoader Dispose");
         if (bundle != null) bundle.Unload(false);
     }
 }

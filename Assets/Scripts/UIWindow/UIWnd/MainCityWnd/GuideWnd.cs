@@ -39,7 +39,7 @@ public class GuideWnd : WindowRoot
         TextTalk = GetText(PathDefine.TextTalk);
         TextName = GetText(PathDefine.TextName);
         imgIcon = GetRawImg(PathDefine.imgIcon);
-       // ChraterGO = GameObject.Find(PathDefine.CharaterCamera);
+        // ChraterGO = GameObject.Find(PathDefine.CharaterCamera);
         ChraterGO.transform.localPosition = new Vector3(Constants.GuideCamera_x, Constants.GuideCamera_y, Constants.GuideCamera_Z);
         ChraterGO.transform.localRotation = Quaternion.Euler(Constants.GuideCameraRos_x, Constants.GuideCameraRos_y, Constants.GuideCameraRos_z);
         ChraterGO.transform.localScale = Vector3.zero;

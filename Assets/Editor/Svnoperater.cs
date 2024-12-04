@@ -2,7 +2,7 @@ using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
 
-public class SvnOperater :Editor
+public class SvnOperater : Editor
 {
     [MenuItem("SVN/Update")]
     public static void Update()

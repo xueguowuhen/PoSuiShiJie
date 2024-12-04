@@ -6,17 +6,16 @@
 	功能：AB包工具
 *****************************************************/
 
-using UnityEditor;
-using UnityEngine;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using System.Net;
-using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
-using UnityEditor.PackageManager.Requests;
+using System.Threading.Tasks;
+using UnityEditor;
+using UnityEngine;
 
 
 
@@ -134,7 +133,7 @@ public class ABTools : EditorWindow
     {
 
         // 先创建所有目录，然后再上传文件
-        foreach(var file in failFiles)
+        foreach (var file in failFiles)
         {
             UploadFile(file.filePath, file.fileName, ServerIp);
         }
@@ -168,7 +167,7 @@ public class ABTools : EditorWindow
             {
                 // 上传文件
                 UploadFile(fileInfo.FullName, Path.Combine(initialPath, fileInfo.Name), ServerIp);
-    
+
             }
         }
     }
@@ -215,7 +214,7 @@ public class ABTools : EditorWindow
 
     private static HashSet<string> uploadedFiles = new HashSet<string>();
     private static List<DownFailAB> failFiles = new List<DownFailAB>();
-    private async static void UploadFile(string filePath, string fileName, string ServerIp,int count=0)
+    private async static void UploadFile(string filePath, string fileName, string ServerIp, int count = 0)
     {
         if (count >= 2)
         {
@@ -252,7 +251,7 @@ public class ABTools : EditorWindow
                 {
                     //上传内容
                     byte[] bytes = new byte[2048];
-                  //  Debug.Log(filePath + "开始上传中");
+                    //  Debug.Log(filePath + "开始上传中");
                     int contentLength = file.Read(bytes, 0, bytes.Length);
                     while (contentLength != 0)
                     {
@@ -274,12 +273,14 @@ public class ABTools : EditorWindow
                 Debug.LogError(filePath + "上传失败");
 
                 UploadFile(filePath, fileName, ServerIp, count + 1);
-                
+
                 //ListDic.Add(filePath, fileName);
             }
-            finally { 
+            finally
+            {
 
-                _semaphore.Release(); }
+                _semaphore.Release();
+            }
         });
 
     }

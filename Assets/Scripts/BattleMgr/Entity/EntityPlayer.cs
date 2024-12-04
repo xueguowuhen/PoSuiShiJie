@@ -5,8 +5,8 @@
     日期：2024-05-10 9:27:25
 	功能：玩家逻辑实体
 *****************************************************/
-using UnityEngine;
 using CommonNet;
+using UnityEngine;
 public class EntityPlayer : EntityBase
 {
     public PlayerData playerData;
@@ -18,7 +18,7 @@ public class EntityPlayer : EntityBase
     {
         playerData.Hp -= hurt;
         Hit();
-        GameRoot.Instance.dynamicWnd.SetHurt(playerData.id,hurt);
+        GameRoot.Instance.dynamicWnd.SetHurt(playerData.id, hurt);
     }
     public override void SetCritical(int hurt)
     {
@@ -47,7 +47,7 @@ public class EntityPlayer : EntityBase
         {
             ID = playerData.id,
             hp = playerData.Hp,
-            ap= playerData.ap,
+            ap = playerData.ap,
             ad = playerData.ad,
             addef = playerData.addef,
             dodge = playerData.dodge,

@@ -5,27 +5,27 @@ using System;
 
 namespace AmplifyShaderEditor
 {
-	[Serializable]
-	public class VersionInfo
-	{
-		public const byte Major = 1;
-		public const byte Minor = 8;
-		public const byte Release = 9;
-		public static byte Revision = 35;
-		
-		//private static string StageSuffix = "_dev0"+Revision;
-		
-		//public static string StaticToString()
-		//{
-		//	return string.Format( "{0}.{1}.{2}", Major, Minor, Release ) + StageSuffix;
-		//}
-		
-		public static string StaticToString()
-		{
-			return string.Format( "{0}.{1}.{2}", Major, Minor, Release ) + ( Revision > 0 ? "r" + Revision.ToString() : "" );
-		}
+    [Serializable]
+    public class VersionInfo
+    {
+        public const byte Major = 1;
+        public const byte Minor = 8;
+        public const byte Release = 9;
+        public static byte Revision = 35;
 
-		public static int FullNumber { get { return Major * 10000 + Minor * 1000 + Release * 100 + Revision; } }
-		public static string FullLabel { get { return "Version=" + FullNumber; } }
-	}
+        //private static string StageSuffix = "_dev0"+Revision;
+
+        //public static string StaticToString()
+        //{
+        //	return string.Format( "{0}.{1}.{2}", Major, Minor, Release ) + StageSuffix;
+        //}
+
+        public static string StaticToString()
+        {
+            return string.Format("{0}.{1}.{2}", Major, Minor, Release) + (Revision > 0 ? "r" + Revision.ToString() : "");
+        }
+
+        public static int FullNumber { get { return Major * 10000 + Minor * 1000 + Release * 100 + Revision; } }
+        public static string FullLabel { get { return "Version=" + FullNumber; } }
+    }
 }

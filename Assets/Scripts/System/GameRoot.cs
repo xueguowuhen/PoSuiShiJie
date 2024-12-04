@@ -7,10 +7,10 @@
 *****************************************************/
 
 using CommonNet;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using XLua;
+[LuaCallCSharp]
 public class GameRoot : MonoBehaviour
 {
     public static GameRoot Instance = null;
@@ -39,29 +39,39 @@ public class GameRoot : MonoBehaviour
     }
     private void Init()
     {
-        TimerSvc timerSvc = gameObject.GetComponent<TimerSvc>();
+        TimerSvc timerSvc = gameObject.GetOrAddComponent<TimerSvc>();
         timerSvc.InitSvc();
-        NetSvc net = gameObject.GetComponent<NetSvc>();
+        NetSvc net = gameObject.GetOrAddComponent<NetSvc>();
         net.InitSvc();
         AssetLoaderSvc assetLoader = gameObject.GetOrAddComponent<AssetLoaderSvc>();
         assetLoader.InitSvc();
         //业务模块初始化
-        DowningSys downing = gameObject.GetComponent<DowningSys>();
+        DowningSys downing = gameObject.GetOrAddComponent<DowningSys>();
         downing.InitSyc();
-        LoginSys login = gameObject.GetComponent<LoginSys>();
+        LoginSys login = gameObject.GetOrAddComponent<LoginSys>();
         login.InitSyc();
-        MainCitySys mainCity = gameObject.GetComponent<MainCitySys>();
+        MainCitySys mainCity = gameObject.GetOrAddComponent<MainCitySys>();
         mainCity.InitSyc();
-        BattleSys battleSys = gameObject.GetComponent<BattleSys>();
+        BattleSys battleSys = gameObject.GetOrAddComponent<BattleSys>();
         battleSys.InitSyc();
         dynamicWnd.SetWndState();//设置动态界面状态
         timerSvc.SendLocalTime();//发送本地时间
         downing.EnterDowning();
     }
-    public  void ResSvcInit()
+    public void ResSvcInit()
     {
         ResSvc resSvc = gameObject.GetComponent<ResSvc>();
         resSvc.InitSvc();
+    }
+    /// <summary>
+    /// XLua初始化
+    /// </summary>
+    public void XLuaRootInit()
+    {
+        GameObject XLuaRoot = new GameObject("XLuaRoot");
+        XLuaRoot.transform.SetParent(transform);
+        xLuaRoot xLuaRoot = XLuaRoot.GetOrAddComponent<xLuaRoot>();
+        xLuaRoot.Init();
     }
     public static void AddTips(string tips)
     {
@@ -105,6 +115,7 @@ public class GameRoot : MonoBehaviour
 
     public void SetPlayerData(PlayerData playerData)
     {
+
         this.playerData = playerData;
     }
     public void SetPlayerData(CommonNet.BattleData battleData)

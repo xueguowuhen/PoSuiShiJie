@@ -5,12 +5,10 @@
     日期：2024-04-22 15:52:09
 	功能：数据解析
 *****************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using XLua;
+
 public class personCfg : BaseData<personCfg>
 {
     public string type;
@@ -73,6 +71,14 @@ public class ItemCfg : BaseData<ItemCfg>
 
     public int quantity; //数量
 
+}
+[LuaCallCSharp]
+public class RaffleItemCfg
+{
+    public int ID;
+    public int mShopID;//物品Id
+    public int Count;  //物品数量
+    public int probability;  //物品爆率
 }
 public class TaskCfg : BaseData<TalentCfg>
 {

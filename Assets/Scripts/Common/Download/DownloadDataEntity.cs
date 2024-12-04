@@ -1,18 +1,15 @@
-
-using UnityEngine;
-using System.Collections;
 using System;
 
 /// <summary>
 /// 下载数据的实体
 /// </summary>
 [Serializable]
-public class DownloadDataEntity 
+public class DownloadDataEntity
 {
     /// <summary>
     /// 资源的名称
     /// </summary>
-    
+
     public string FullName;
 
     /// <summary>

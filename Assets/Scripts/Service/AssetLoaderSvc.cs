@@ -8,19 +8,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
-using UnityEngine;
 using System.IO;
-
+using System.Security.Cryptography;
+using System.Text;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 
-public class AssetLoaderSvc : SvcBase
+public class AssetLoaderSvc : SvcBase<AssetLoaderSvc>
 {
-    public static AssetLoaderSvc instance = null;
+
     private int Playerprogress;
     private AssetBundleManifest manifest;
 
@@ -34,7 +32,6 @@ public class AssetLoaderSvc : SvcBase
     public override void InitSvc()
     {
         base.InitSvc();
-        instance = this;
 
         GameCommon.Log("AssetLoaderSvc Init....");
     }
@@ -76,11 +73,12 @@ public class AssetLoaderSvc : SvcBase
         StartCoroutine(LoadScene(sceneName, loaded));
         yield break;
     }
+    private AssetBundle sceneBundle;
     private IEnumerator LoadAbScene(string full, string sceneName, Action loaded)
     {
         AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(full);
         yield return request;
-        AssetBundle sceneBundle = request.assetBundle;
+        sceneBundle = request.assetBundle;
 
         StartCoroutine(LoadScene(sceneName, loaded));
     }
@@ -129,6 +127,11 @@ public class AssetLoaderSvc : SvcBase
     }
     public void CloseLoadingWnd()
     {
+        if (sceneBundle != null)
+        {
+
+            sceneBundle.Unload(false);
+        }
         GameRoot.Instance.loadingWnd.SetWndState(false);
     }
     /// <summary>
@@ -141,9 +144,17 @@ public class AssetLoaderSvc : SvcBase
     {
 
         LoadOrDownload(path, name, onCompleted);
+    }
+    /// <summary>
+    /// 加载该预制体
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="cache"></param>
+    /// <returns></returns>
+    public void XLuaLoadPrefab(string path, string name, XLuaCustomExport.OnCreate onCompleted, bool cache = false, bool instan = true)
+    {
 
-
-
+        LoadOrDownload<GameObject>(path, name, null, onCompleted);
     }
     /// <summary>
     /// 镜像的字典
@@ -153,6 +164,9 @@ public class AssetLoaderSvc : SvcBase
     /// 依赖项的字典
     /// </summary>
     private Dictionary<string, AssetBundleLoader> m_DspAssetBundleLoaderDic = new Dictionary<string, AssetBundleLoader>();
+    // 一个字典，用于存储正在下载的资源的下载队列
+    private Dictionary<string, List<System.Action<UnityEngine.Object>>> downloadingAssets = new Dictionary<string, List<System.Action<UnityEngine.Object>>>();
+    private Dictionary<string, List<XLuaCustomExport.OnCreate>> downloadingXLuaAssets = new Dictionary<string, List<XLuaCustomExport.OnCreate>>();
     /// <summary>
     /// 加载或下载资源
     /// </summary>
@@ -160,24 +174,47 @@ public class AssetLoaderSvc : SvcBase
     /// <param name="Name"></param>
     /// <param name="onCompleted"></param>
     /// <param name="type">0=Prefab,1=PNG</param>
-    public void LoadOrDownload<T>(string path, string Name, System.Action<T> onCompleted, byte type = 0)
+    public void LoadOrDownload<T>(string path, string Name, System.Action<T> onCompleted = null, XLuaCustomExport.OnCreate onXLuaCompleted = null, byte type = 0)
         where T : UnityEngine.Object
     {
         string NewPath = (Path.Combine(PathDefine.ABDownload, path, Name) + PathDefine.AssetBundle).Replace("\\", "/");
         string NewName = (Path.Combine(PathDefine.ABDownload, path, Name) + PathDefine.Png).Replace("\\", "/");
+        //依赖项加载完毕后，加载本地资源
+        string fullpath = m_LocalFilePath + NewPath.ToLower();
+        // 检查资源是否正在下载
+        if (downloadingAssets.ContainsKey(fullpath) || downloadingXLuaAssets.ContainsKey(fullpath))
+        {
+          //  Debug.Log("资源正在下载中，等待回调");
+            // 如果正在下载，将新的回调添加到队列中
+            if (onCompleted != null)
+            {
+                downloadingAssets[fullpath].Add((asset) => onCompleted?.Invoke((T)asset));
+            }
+            if (onXLuaCompleted != null)
+            {
+                downloadingXLuaAssets[fullpath].Add(onXLuaCompleted);
+            }
+            return;
+        }
+
 #if DEBUG_ASSETBUNDLE
         LoadManifestBundle();
         string[] allBundles = manifest.GetAllAssetBundles();
         //2.加载该文件的依赖项
         NewPath = NewPath.ToLower();
-        Debug.Log("加载资源：" + NewPath);
         string[] arr = manifest.GetAllDependencies(NewPath);
-        Debug.Log("依赖项：" + string.Join(",", arr));
+        if (onCompleted != null)
+        {
+            downloadingAssets[fullpath] = new List<System.Action<UnityEngine.Object>> { (asset) => onCompleted?.Invoke((T)asset) };
+        }
+        if (onXLuaCompleted != null)
+        {
+            downloadingXLuaAssets[fullpath] = new List<XLuaCustomExport.OnCreate> { onXLuaCompleted };
+        }
         CheckDeps(0, arr, () =>
         {
-            //依赖项加载完毕后，加载本地资源
-            string fullpath = m_LocalFilePath + NewPath;
-            Debug.Log("加载本地资源：" + fullpath);
+
+            //Debug.Log("加载本地资源：" + fullpath);
             if (!File.Exists(fullpath))//如果路径不存在
             {
                 //查找该文件在服务器上的路径
@@ -187,34 +224,53 @@ public class AssetLoaderSvc : SvcBase
                     Debug.LogError("路径不存在，开始下载");
                     DowningSys.instance.DownloadData(entity, () =>
                     {
-                        LoadCallBack(fullpath, Name, arr, onCompleted);
+                        LoadCallBack(fullpath, Name, arr, onCompleted, onXLuaCompleted);
                     });
                 }
             }
             else
             {
-                LoadCallBack(fullpath, Name, arr, onCompleted);
+                //查找该文件在服务器上的路径
+                DownloadDataEntity entity = DowningSys.instance.GetServerData(NewPath);
+                if (GetMD5(fullpath) != entity.MD5)
+                {
+                    Debug.LogError("MD5码不匹配，重新下载");
+                    DowningSys.instance.DownloadData(entity, () =>
+                    {
+                        LoadCallBack(fullpath, Name, arr, onCompleted, onXLuaCompleted);
+                    });
+                }
+                else
+                {
+                    LoadCallBack(fullpath, Name, arr, onCompleted, onXLuaCompleted);
+                }
             }
         });
 #elif UNITY_EDITOR
-        
+
+        string newPath = string.Empty;
+        switch (type)
+        {
+            case 0:
+                newPath = string.Format("Assets/{0}", NewPath.Replace("assetbundle", "prefab"));
+                break;
+            case 1:
+                newPath = string.Format("Assets/{0}", NewPath.Replace("assetbundle", "png"));
+                break;
+        }
         if (onCompleted != null)
         {
-            string newPath = string.Empty;
-            switch (type)
-            {
-                case 0:
-                    newPath = string.Format("Assets/{0}", NewPath.Replace("assetbundle", "prefab"));
-                    break;
-                case 1:
-                    newPath = string.Format("Assets/{0}", NewPath.Replace("assetbundle", "png"));
-                    break;
-            }
             onCompleted(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(newPath));
+
+        }
+        if (onXLuaCompleted != null)
+        {
+            onXLuaCompleted(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(newPath));
         }
 #endif
 
     }
+
     /// <summary>
     /// 加载结束回调
     /// </summary>
@@ -223,15 +279,30 @@ public class AssetLoaderSvc : SvcBase
     /// <param name="Name"></param>
     /// <param name="arr"></param>
     /// <param name="onCompleted"></param>
-    public void LoadCallBack<T>(string fullpath, string Name, string[] arr, Action<T> onCompleted)
+    public void LoadCallBack<T>(string fullpath, string Name, string[] arr, Action<T> onCompleted = null, XLuaCustomExport.OnCreate onXLuaCompleted = null)
         where T : UnityEngine.Object
     {
         if (m_AssetDic.ContainsKey(fullpath))//该文件已经下载过添加到字典中
         {
-            if (onCompleted != null)
+            if (downloadingAssets.ContainsKey(fullpath))
             {
-                onCompleted(m_AssetDic[fullpath] as T);
+                foreach (var item in downloadingAssets[fullpath])
+                {
+
+                    item(m_AssetDic[fullpath] as T);
+                }
+                downloadingAssets.Remove(fullpath);
             }
+            if (downloadingXLuaAssets.ContainsKey(fullpath))
+            {
+
+                foreach (var item in downloadingXLuaAssets[fullpath])
+                {
+                    item(m_AssetDic[fullpath] as GameObject);
+                }
+                downloadingXLuaAssets.Remove(fullpath);
+            }
+
             return;
         }
         //先加载依赖项
@@ -246,16 +317,35 @@ public class AssetLoaderSvc : SvcBase
                 //把依赖项的Loader加入字典
                 m_DspAssetBundleLoaderDic[depPath] = loader;
                 m_AssetDic[depPath] = obj;
+                //loader.Dispose();
             }
         }
-        using (AssetBundleLoader loader = new AssetBundleLoader(fullpath, isFullPath: true))
+        if (!m_AssetDic.ContainsKey(fullpath))
         {
-
-            if (onCompleted != null)
+            using (AssetBundleLoader loader = new AssetBundleLoader(fullpath, isFullPath: true))
             {
-                Object obj = loader.LoadAsset<T>(Name);
-                m_AssetDic[fullpath] = obj;
-                onCompleted(obj as T);
+                //Debug.Log("加载本地资源：" + fullpath);
+                if (downloadingAssets.ContainsKey(fullpath))
+                {
+                    Object obj = loader.LoadAsset<T>(Name);
+                    m_AssetDic[fullpath] = obj;
+                    foreach (var item in downloadingAssets[fullpath])
+                    {
+                        item(obj as T);
+                    }
+                    downloadingAssets.Remove(fullpath);
+                }
+                if (downloadingXLuaAssets.ContainsKey(fullpath))
+                {
+                    Object obj = loader.LoadAsset<GameObject>(Name);
+                    m_AssetDic[fullpath] = obj;
+                    foreach (var item in downloadingXLuaAssets[fullpath])
+                    {
+                        item(obj as GameObject);
+                    }
+
+                    downloadingXLuaAssets.Remove(fullpath);
+                }
             }
         }
     }
@@ -303,6 +393,10 @@ public class AssetLoaderSvc : SvcBase
             CheckDeps(index, deps, onCompleted);
         }
     }
+    private void DownloadLoad(string fullpath, string Name)
+    {
+
+    }
     /// <summary>
     /// 加载依赖文件配置
     /// </summary>
@@ -316,7 +410,7 @@ public class AssetLoaderSvc : SvcBase
         using (AssetBundleLoader loader = new AssetBundleLoader(assetName))
         {
             manifest = loader.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            
+
         }
     }
     /// <summary>
@@ -336,9 +430,30 @@ public class AssetLoaderSvc : SvcBase
     {
         base.BeforeOnDestroy();
         UnloadAssetBundle();
-        instance = null;
         manifest = null;
         Debug.Log("AssetLoaderSvc BeforeOnDestroy....");
     }
-
+    /// <summary>
+    /// MD5码的获取学习
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    private static string GetMD5(string filePath)
+    {
+        using (FileStream file = new FileStream(filePath, FileMode.Open))
+        {
+            //声明一个MD5对象 用于生成MD5码
+            MD5 md5 = new MD5CryptoServiceProvider();
+            //利用API 得到数据的MD5码 16个字节 数组
+            byte[] md5Info = md5.ComputeHash(file);
+            file.Close();
+            //把16个字节转换为16进制拼接成字符串 为了减少md5码的长度
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < md5Info.Length; i++)
+            {
+                sb.Append(md5Info[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+    }
 }

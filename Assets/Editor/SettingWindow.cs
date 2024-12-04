@@ -26,7 +26,7 @@ public class SettingWindow : EditorWindow
         m_list.Clear();
         m_list.Add(new MacorItem() { Name = "DEBUG_MODEL", DisplayName = "调试模式", IsDebug = true, IsRelese = false });
         m_list.Add(new MacorItem() { Name = "DEBUG_LOG", DisplayName = "打印日志", IsDebug = true, IsRelese = false });
-       // m_list.Add(new MacorItem() { Name = "STAT_TD", DisplayName = "开启统计", IsDebug = false, IsRelese = true });
+        // m_list.Add(new MacorItem() { Name = "STAT_TD", DisplayName = "开启统计", IsDebug = false, IsRelese = true });
         //m_list.Add(new MacorItem() { Name = "DEBUG_ROLESTATE", DisplayName = "调试角色状态", IsDebug = false, IsRelese = false });
         m_list.Add(new MacorItem() { Name = "DEBUG_ASSETBUNDLE", DisplayName = "启用AssetBundle加载资源", IsDebug = false, IsRelese = true });
         for (int i = 0; i < m_list.Count; i++)//遍历宏

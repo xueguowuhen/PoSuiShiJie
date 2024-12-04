@@ -38,7 +38,7 @@ public class CacheSvc
     {
         PlayerData? playerData = dBMgr.GetPlayerData(acct, pass); //玩家原始数据
 
-        if (playerData!.TalentID != null && TalentSys.Instance.CalcPlayerProp(playerData!))//叠加的天赋数据
+        if (playerData!.TalentID != null &&playerData.rewardTask!=null&& TalentSys.Instance.CalcPlayerProp(playerData!))//叠加的天赋数据
         {
 
         }

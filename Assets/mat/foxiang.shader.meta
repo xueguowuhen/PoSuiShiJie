@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4b57e197465acfc4d8110ff1c3193781
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _shitou: {fileID: 2800000, guid: a8f1e16c1364ec64d887e63cf08e2dc3, type: 3}
+  - _cao: {fileID: 2800000, guid: 07587ced52bb0fa448c86e7a859dfa44, type: 3}
+  - _shitouNormal: {fileID: 2800000, guid: 2241fc28a25cf8740805626e543dcc80, type: 3}
+  - _caoNormal: {fileID: 2800000, guid: 98ddd81e85725ec409b3c1d5609e2392, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

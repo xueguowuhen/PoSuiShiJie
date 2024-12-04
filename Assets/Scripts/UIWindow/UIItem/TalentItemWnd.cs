@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TalentItemWnd : WindowRoot, IPointerEnterHandler,IPointerExitHandler
+public class TalentItemWnd : WindowRoot, IPointerEnterHandler, IPointerExitHandler
 {
     public string TalentTips;
     public GameObject TalentItem;
@@ -23,7 +23,7 @@ public class TalentItemWnd : WindowRoot, IPointerEnterHandler,IPointerExitHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         SetText(TalentBtn, TalentTips);
-        TalentItem.transform.position =this.transform.position;
+        TalentItem.transform.position = this.transform.position;
         SetActive(TalentItem);
     }
     /// <summary>

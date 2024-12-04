@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<item ID="1">
+		<mShopID>40001</mShopID>
+		<Count>1</Count>
+		<probability>40</probability>
+	</item>
+	<item ID="2">
+		<mShopID>40002</mShopID>
+		<Count>2</Count>
+		<probability>14</probability>
+	</item>
+	<item ID="3">
+		<mShopID>40003</mShopID>
+		<Count>3</Count>
+		<probability>15</probability>
+	</item>
+	<item ID="4">
+		<mShopID>40004</mShopID>
+		<Count>4</Count>
+		<probability>7</probability>
+	</item>
+	<item ID="5">
+		<mShopID>40005</mShopID>
+		<Count>5</Count>
+		<probability>7</probability>
+	</item>
+	<item ID="6">
+		<mShopID>40006</mShopID>
+		<Count>6</Count>
+		<probability>5</probability>
+	</item>
+	<item ID="7">
+		<mShopID>40007</mShopID>
+		<Count>7</Count>
+		<probability>5</probability>
+	</item>
+	<item ID="8">
+		<mShopID>40008</mShopID>
+		<Count>8</Count>
+		<probability>3</probability>
+	</item>
+	<item ID="9">
+		<mShopID>40009</mShopID>
+		<Count>9</Count>
+		<probability>3</probability>
+	</item>
+	<item ID="10">
+		<mShopID>40010</mShopID>
+		<Count>10</Count>
+		<probability>1</probability>
+	</item>
+</root>

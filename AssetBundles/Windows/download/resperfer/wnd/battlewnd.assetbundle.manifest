@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1283573671
+CRC: 2700525057
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 652bac5cd265393ffe05175ed1f6dca8
+    Hash: 7469b99b223f7711755ea7e3e5213343
   TypeTreeHash:
     serializedVersion: 2
     Hash: 75f884300a0089821f3998820c784cb1
@@ -62,7 +62,6 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/04_fight/tiao3.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/04_fight/ui-0458.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/04_fight/ui-0842.assetbundle
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/back.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/btn2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/settigbtn.assetbundle

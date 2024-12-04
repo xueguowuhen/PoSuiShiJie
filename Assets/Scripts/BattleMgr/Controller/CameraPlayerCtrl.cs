@@ -5,13 +5,7 @@
     日期：2024/10/25 14:7:11
     功能：Nothing
 *****************************************************/
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class CameraPlayerCtrl : MonoBehaviour
 {
@@ -55,8 +49,8 @@ public class CameraPlayerCtrl : MonoBehaviour
         // 定义射线的起点和终点
         Vector3 startPoint = TargetLookAtPos; // 射线的起点
         Vector3 endPoint = m_CameraContainer.position; // 射线的终点
-       // Debug.DrawLine(startPoint, endPoint, Color.red);
-        //定义一条射线
+                                                       // Debug.DrawLine(startPoint, endPoint, Color.red);
+                                                       //定义一条射线
         RaycastHit hit;
         if (Physics.Linecast(startPoint, endPoint, out hit))
         {
@@ -68,8 +62,8 @@ public class CameraPlayerCtrl : MonoBehaviour
                 if (currentDistance < CamTargetOffset)
                 {
                     // 平滑过渡到目标位置
-                     targetPosition = new Vector3(currentDistance- CamPosOffset, 0, 0);
-                  //  Debug.Log("碰撞点距离：" + (currentDistance- CamPosOffset));
+                    targetPosition = new Vector3(currentDistance - CamPosOffset, 0, 0);
+                    //  Debug.Log("碰撞点距离：" + (currentDistance- CamPosOffset));
                     m_CameraZoomContainer.transform.localPosition = Vector3.Lerp(m_CameraZoomContainer.transform.localPosition, targetPosition, Time.deltaTime * smoothingSpeed);
                 }
             }

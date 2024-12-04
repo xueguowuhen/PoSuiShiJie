@@ -107,6 +107,7 @@ public class DowningWnd : WindowRoot
     /// </summary>
     public void InitStreamingAssets()
     {
+#if DEBUG_ASSETBUNDLE
         m_LoaclVersionPath = Path.Combine(LocalFilePath, m_VersionFileName).Replace("\\", "/");
         //判断本地persistentData是否已经有资源
         if (File.Exists(m_LoaclVersionPath))
@@ -127,6 +128,10 @@ public class DowningWnd : WindowRoot
             StartCoroutine(ReadStreamingAssetVersionFile(versionFileUrl, OnReadStreamingAssetOver));
 
         }
+#elif UNITY_EDITOR
+        EnterLogin();
+#endif
+
     }
     /// <summary>
     /// Streaming读取初始资源目录的版本文件
@@ -243,7 +248,7 @@ public class DowningWnd : WindowRoot
     {
         SetText(txtTips, "正在检查资源更新中...");
         //   SetText(txtTips, platform);
-        dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform,platform), LocalFilePath, () =>
+        dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform, platform), LocalFilePath, () =>
         {
             dataProcess.AddVersion(Path.Combine(DownloadBaseUrl, platform, m_VersionFileName), OnInitVersionCallBack);
         });
@@ -280,17 +285,28 @@ public class DowningWnd : WindowRoot
             //2.对比已经下载过的，但是有更新的资源
             foreach (var item in clientDic)
             {
-                //如果MD5不一致
-                if (serverDic.ContainsKey(item.Key) && serverDic[item.Key] != item.Value)
+                DownloadDataEntity entity = GetDownloadData(item.Key, serverDownloadData);
+                if (entity == null)
                 {
-                    //
-                    DownloadDataEntity entity = GetDownloadData(item.Key, serverDownloadData);
+                    continue;
+                }
+                if (!File.Exists(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/")))
+                {
+                    m_NeedDownloadDataList.Add(entity);
+                    continue;
+                }
+                //如果MD5不一致
+                if ((serverDic.ContainsKey(item.Key) && serverDic[item.Key] != item.Value) || GetMD5(Path.Combine(LocalFilePath, entity.FullName).Replace("\\", "/")) != entity.MD5)
+                {
+
                     if (entity != null)
                     {
+                        Debug.Log("发现资源更新：" + entity.FullName);
                         m_NeedDownloadDataList.Add(entity);
                     }
                 }
             }
+
         }
         else
         {
@@ -317,7 +333,7 @@ public class DowningWnd : WindowRoot
         foreach (var item in m_NeedDownloadDataList)
         { //下载资源
             string localFilePath = CreateFile(item);
-           
+
             dataProcess.AddDownloadRes(Path.Combine(DownloadBaseUrl, platform, item.FullName.Replace("\\", "/")), localFilePath, () =>
             {
                 ModifyLocalData(item);
@@ -326,7 +342,7 @@ public class DowningWnd : WindowRoot
                     IsDown = false;
                     EnterLogin();
                 }
-            });
+            }, isRe: true);
         }
         IsDown = true;
     }
@@ -338,6 +354,14 @@ public class DowningWnd : WindowRoot
             ModifyLocalData(entity);
             callback();
         });
+    }
+    public float GetDownUrlProgress(string url)
+    {
+        return dataProcess.GetDownUrlProgress(url);
+    }
+    public void StopDownload(string url)
+    {
+        dataProcess.StopDownload(url);
     }
     /// <summary>
     /// 若没有该文件夹则创建
@@ -423,10 +447,13 @@ public class DowningWnd : WindowRoot
 
         IOUtil.CreateTextFile(m_LoaclVersionPath, sbContent.ToString());
     }
-
+    /// <summary>
+    /// 下载完毕初始化登录界面
+    /// </summary>
     public void EnterLogin()
     {
         GameRoot.Instance.ResSvcInit();
+        GameRoot.Instance.XLuaRootInit();
         LoginSys.instance.EnterStart();
         SetWndState(false);
     }
@@ -505,6 +532,28 @@ public class DowningWnd : WindowRoot
 
         return lst;
     }
-
+    /// <summary>
+    /// MD5码的获取学习
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    private static string GetMD5(string filePath)
+    {
+        using (FileStream file = new FileStream(filePath, FileMode.Open))
+        {
+            //声明一个MD5对象 用于生成MD5码
+            MD5 md5 = new MD5CryptoServiceProvider();
+            //利用API 得到数据的MD5码 16个字节 数组
+            byte[] md5Info = md5.ComputeHash(file);
+            file.Close();
+            //把16个字节转换为16进制拼接成字符串 为了减少md5码的长度
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < md5Info.Length; i++)
+            {
+                sb.Append(md5Info[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+    }
 
 }

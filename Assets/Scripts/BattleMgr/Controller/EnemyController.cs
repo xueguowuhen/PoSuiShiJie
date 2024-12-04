@@ -38,7 +38,7 @@ public class EnemyController : Controller
     public void Init(GameObject Enemy)
     {
         characterController = Enemy.GetComponent<CharacterController>();
-      //  moveDistance = 10;
+        //  moveDistance = 10;
     }
     public void Update()
     {
@@ -61,7 +61,7 @@ public class EnemyController : Controller
         //Debug.Log("正常移动"); //受逻辑控制
         characterController.Move(transform.forward * Time.deltaTime * 1.8f);
     }
-    public void AiSetMove(float dis,bool open = true)  //ai步行设置原理:过近会后撤 过远会 环绕靠近(未实现)
+    public void AiSetMove(float dis, bool open = true)  //ai步行设置原理:过近会后撤 过远会 环绕靠近(未实现)
     {
         IsAiMove = open;
         TargetDis = dis;

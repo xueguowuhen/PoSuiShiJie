@@ -5,7 +5,6 @@
     日期：2024-05-10 10:48:40
 	功能：移动状态
 *****************************************************/
-using System;
 using UnityEngine;
 public class StateMove : ISate
 {
@@ -14,8 +13,11 @@ public class StateMove : ISate
         switch (entity.currentAniState)
         {
             case AniState.Evade://从闪避状态进入移动状态
+                                //entity.SetAction((int)AniPlayerState.Move);
+                                //entity.SetAniCrossFade(AniPlayerState.Move.ToString(), 0.25f);
+                                //break;
+            case AniState.Idle:
                 entity.SetAction((int)AniPlayerState.Move);
-                entity.SetAniCrossFade(AniPlayerState.Move.ToString(), 0.25f);
                 break;
             case AniState.TurnBack:
                 entity.SetAction((int)AniPlayerState.Move);
@@ -45,6 +47,7 @@ public class StateMove : ISate
         // SetMove(false);
         if (entity.isLocal)
         {
+            entity.SetAction((int)AniPlayerState.Move);
             if (entity.GetRunState())
             {
                 entity.SetVelocity(Constants.VelocityRun);

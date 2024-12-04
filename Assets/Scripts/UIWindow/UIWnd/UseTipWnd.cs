@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class UseTipWnd : WindowRoot
@@ -13,11 +10,11 @@ public class UseTipWnd : WindowRoot
     private string m_ItemInfo = "";
     public string ItemInfoContent
     {
-        set { m_ItemInfo = value;}
+        set { m_ItemInfo = value; }
     }
     public string ButtonContent
     {
-        set { m_ButtonContent = value;}
+        set { m_ButtonContent = value; }
     }
     protected override void InitWnd()
     {

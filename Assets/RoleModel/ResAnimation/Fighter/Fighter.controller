@@ -2013,7 +2013,7 @@ AnimatorStateMachine:
     m_Position: {x: 110, y: 290, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 265795169206348415}
-    m_Position: {x: 150, y: 200, z: 0}
+    m_Position: {x: 110, y: 200, z: 0}
   m_AnyStateTransitions:
   - {fileID: -3439615837623170092}
   - {fileID: -8636088121672365732}

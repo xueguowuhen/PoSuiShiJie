@@ -204,6 +204,12 @@ public class DailyTaskSys
         }
         pack.session.SendMsg(gameMsg);
     }
+    /// <summary>
+    /// 添加玩家每日任务奖励
+    /// </summary>
+    /// <param name="dailyTaskType"></param>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
     public ref int GetPlayerDailyTask(DailyTaskType dailyTaskType, PlayerData playerData)
     {
         switch (dailyTaskType)

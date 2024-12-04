@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using CommonNet;
 using UnityEngine;
 using UnityEngine.UI;
-using CommonNet;
-using System.Diagnostics;
 
 public class BuyTipWnd : WindowRoot
 {

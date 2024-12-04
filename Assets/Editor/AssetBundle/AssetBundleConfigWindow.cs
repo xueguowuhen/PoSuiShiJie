@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using static AssetBundleSetting;
 
 public class AssetBundleConfigWindow : EditorWindow
 {
@@ -29,7 +28,7 @@ public class AssetBundleConfigWindow : EditorWindow
         m_dic = new Dictionary<string, bool>();
         for (int i = 0; i < m_lst.Count; i++)
         {
-            m_strArr[i]= m_lst[i].Name;
+            m_strArr[i] = m_lst[i].Name;
             m_dic[m_lst[i].Name] = true;
         }
 
@@ -40,7 +39,7 @@ public class AssetBundleConfigWindow : EditorWindow
     private void OnGUI()
     {
         #region  按钮行
-            GUILayout.BeginHorizontal("box");
+        GUILayout.BeginHorizontal("box");
         tagIndex = EditorGUILayout.Popup(tagIndex, m_strArr, GUILayout.Width(100));
         if (GUILayout.Button("添加新资源", GUILayout.Width(100)))
         {
@@ -123,8 +122,8 @@ public class AssetBundleConfigWindow : EditorWindow
     /// </summary>
     private void OnSelectAddConfig()
     {
-        Object selectedObjects = Selection.activeObject ;
-        AssetBundleEntity bundleEntity= m_lst[tagIndex];
+        Object selectedObjects = Selection.activeObject;
+        AssetBundleEntity bundleEntity = m_lst[tagIndex];
         if (selectedObjects == null)
         {
             Debug.Log("未选择任何资源");

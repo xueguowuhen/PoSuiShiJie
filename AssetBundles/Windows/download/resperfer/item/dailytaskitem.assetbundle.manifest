@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1300492877
+CRC: 1760971048
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 432a07f0662730a83082b33f2deb6d45
+    Hash: a65aa11e295934a5fd4782a25ecebe6d
   TypeTreeHash:
     serializedVersion: 2
     Hash: ac5e7e5fbc202d95cce1471472b49e1e
@@ -55,7 +55,6 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Download/ResPerfer/Item/DailyTaskItem.prefab
 Dependencies:
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/back.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0243.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0258.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0299.assetbundle

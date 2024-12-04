@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1798822857
+CRC: 2673847780
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 09e3e4d6030b2e6c126de30a012d1922
+    Hash: 31de4ae1ebd94faa0c9f6bea5469ee5b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fd7be436c1244b5b34df53cbc9d388e5
+    Hash: af78fe8cb94ae8b9fa81d8138c66f261
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -69,7 +69,9 @@ Dependencies:
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/03_main/yellowbar.assetbundle
 - "E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/03_main/\u7ECF\u9A8C\u6761.assetbundle"
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/adventure_bg_03.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/raffle.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/settigbtn.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0240.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1762.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1766.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-1901.assetbundle

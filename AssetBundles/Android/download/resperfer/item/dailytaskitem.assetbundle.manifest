@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2219604243
+CRC: 2921377766
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e2140aafce1828055b2c016559077baf
+    Hash: 561ac4b2da794a45bf346bd89181c832
   TypeTreeHash:
     serializedVersion: 2
     Hash: ac5e7e5fbc202d95cce1471472b49e1e
@@ -55,7 +55,6 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Download/ResPerfer/Item/DailyTaskItem.prefab
 Dependencies:
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/back.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0243.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0258.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Android/download/resui/common/ui-0299.assetbundle

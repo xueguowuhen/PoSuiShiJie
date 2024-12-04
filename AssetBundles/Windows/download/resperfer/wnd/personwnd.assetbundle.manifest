@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3317376766
+CRC: 2577963844
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 624cb30539f52d9939375226fb3f1794
+    Hash: b096bf6db5817cbae1d35353780923ea
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e446b1019f0e726e6a796fa03c520b65
+    Hash: 65c832476d4ba1f6fcf585a66e2313fd
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -67,14 +67,13 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Download/ResPerfer/Wnd/PersonWnd.prefab
 Dependencies:
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resperfer/item/attributetext.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/bg/carddraw_bg_08.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg1.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg2.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/bg5.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/exitbtn3.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0064.assetbundle
-- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0299.assetbundle
+- E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0240.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0411.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0413.assetbundle
 - E:/xiangmmu/PoSuiShiJie/Assets/../AssetBundles/Windows/download/resui/common/ui-0415.assetbundle

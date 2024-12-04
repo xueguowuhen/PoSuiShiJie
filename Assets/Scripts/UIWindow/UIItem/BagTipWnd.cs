@@ -6,10 +6,6 @@
     功能：背包信息显示窗口
 *****************************************************/
 using CommonNet;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +19,7 @@ public class BagTipWnd : WindowRoot
     public Button BagBtn;
     public Button closeBtn;
     private BuyType m_BuyType;
-
+    private Text BagBtnText;
     // Start is called before the first frame update
     protected override void InitWnd()
     {
@@ -38,12 +34,14 @@ public class BagTipWnd : WindowRoot
     public void ShowWnd(int id)
     {
         base.SetWndState();
+        BagBtnText = BagBtn.GetComponentInChildren<Text>();
         ItemCfg shopItemCfg = resSvc.GetShopItemCfg(id);
         Name.text = shopItemCfg.mName;
         ComTools.GetItemSprite(shopItemCfg.type, shopItemCfg.mImg, (Texture2D texture) =>
         {
             ItemImage.overrideSprite = texture.CreateSprite();
         });
+
         mInfo.text = shopItemCfg.mInfo;
 
         ComTools.GetIconSprite(shopItemCfg.type, (Texture2D texture) =>
@@ -52,6 +50,18 @@ public class BagTipWnd : WindowRoot
         });
         itemPrice.text = shopItemCfg.Price.ToString();
         m_BuyType = (BuyType)shopItemCfg.type;
+        switch (shopItemCfg.type)
+        {
+            case ItemType.consume:
+                BagBtnText.text = "使用";
+                break;
+            case ItemType.equip:
+                BagBtnText.text = "装备";
+                break;
+            case ItemType.material:
+                BagBtnText.text = "合成";
+                break;
+        }
     }
     /// <summary>
     /// 点击物品按钮

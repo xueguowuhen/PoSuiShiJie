@@ -7,7 +7,6 @@
 *****************************************************/
 
 using CommonNet;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class RegisterWnd : WindowRoot
@@ -27,9 +26,9 @@ public class RegisterWnd : WindowRoot
     protected override void SetGameObject()
     {
 
-        AddListener(btnClose,ClickClose);
+        AddListener(btnClose, ClickClose);
 
-        AddListener(btnRegister,ClickRegister);
+        AddListener(btnRegister, ClickRegister);
     }
     public void ClickClose()
     {

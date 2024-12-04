@@ -5722,12 +5722,12 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8787159600746182189, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  - {fileID: 4770518748137110380, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  - {fileID: -7596056194992269801, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  - {fileID: 8635900688968314911, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  - {fileID: 705484824754085393, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  - {fileID: 2631571958484053684, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
+  - {fileID: 2100000, guid: 3e2c08fbcd4cc1c4492e14837691632f, type: 2}
+  - {fileID: 2100000, guid: e553f102590c4544a8c4bf567f7b78b6, type: 2}
+  - {fileID: 2100000, guid: 38c81560bde9b7b4aa5c8627e4db2678, type: 2}
+  - {fileID: 2100000, guid: 2725925382c2dca47a514a9c19f12124, type: 2}
+  - {fileID: 2100000, guid: ea6f211c65092964c97f3b276adc435c, type: 2}
+  - {fileID: 2100000, guid: 4302ea2741cbe9a40bcc8140d68276b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6213,8 +6213,8 @@ Animator:
   m_GameObject: {fileID: 9212894441138115664}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f5ba6c01254cb314c81073d4c725bcf5, type: 3}
-  m_Controller: {fileID: 9100000, guid: a7e0eeb2c7077a643a78ef377e5dcbb4, type: 2}
-  m_CullingMode: 1
+  m_Controller: {fileID: 9100000, guid: 3af8c78b824658643b7e46f8d703c8fb, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -6237,18 +6237,18 @@ MonoBehaviour:
   animator: {fileID: 2481829563592135824}
   targetVelocity: 0
   action: 0
+  isInput: 0
   ss: 1
-  moveDistance: 0
-  isMove: 0
+  moveDistance: {x: 0, y: 0, z: 0}
   eulerAngles: {x: 0, y: 0, z: 0}
   isLocal: 0
   isShoolr: 1
   currentVelocity: 0
   RemotePlayerId: 0
+  IsEvade: 0
   characterController: {fileID: 0}
-  syncRate: 30
-  playerCurrentVelocity: 0
   playerCurrentAction: 0
+  EvadeRange: 0
 --- !u!143 &2273747207687519732
 CharacterController:
   m_ObjectHideFlags: 0

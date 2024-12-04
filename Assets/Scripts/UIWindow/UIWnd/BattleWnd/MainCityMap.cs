@@ -8,11 +8,11 @@
 
 using UnityEngine;
 
-public class MainCityMap : MonoBehaviour 
+public class MainCityMap : MonoBehaviour
 {
     public Transform[] NpcPosTrans;
     #region 敌人测试
-    public Transform EnemyTest; 
+    public Transform EnemyTest;
     public Transform GetEnemy()
     {
         EnemyTest.GetComponent<EnemyController>().Init(EnemyTest.gameObject); //在进入地图后 获取到敌人时直接经行初始化

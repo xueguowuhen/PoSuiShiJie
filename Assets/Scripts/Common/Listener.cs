@@ -18,21 +18,21 @@ public class Listener : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
     public object args;
     public void OnDrag(PointerEventData eventData)
     {
-        if(onDrag != null) onDrag(eventData);
+        if (onDrag != null) onDrag(eventData);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(onClick!=null) onClick(eventData);
+        if (onClick != null) onClick(eventData);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(onClickDown != null) onClickDown(eventData);
+        if (onClickDown != null) onClickDown(eventData);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(onClickUp != null) onClickUp(eventData);
+        if (onClickUp != null) onClickUp(eventData);
     }
 }

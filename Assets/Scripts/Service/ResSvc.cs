@@ -5,25 +5,20 @@
     日期：2024-04-14 14:53:41
 	功能：资源加载服务
 *****************************************************/
-using CommonNet;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ResSvc : SvcBase
+public class ResSvc : SvcBase<ResSvc>
 {
-    public static ResSvc instance = null;
-   
+
     //后期可改成模板生成工具
     public override void InitSvc()
     {
         base.InitSvc();
-        instance = this;
         InitCharaterCfg(PathDefine.personCfg);
         InitTalentCfg(PathDefine.TalentCfg);
         InitRDNameCfg(PathDefine.RdnameCfg);
@@ -32,7 +27,7 @@ public class ResSvc : SvcBase
         InitTaskCfg(PathDefine.TaskCfg);
         InitTaskDailyCfg(PathDefine.TaskDailyCfg);
         InitTaskRewardCfg(PathDefine.TaskRewardCfg);
-
+        InitRaffleItemCfg(PathDefine.RaffleItemCfg);
         InitSkillCfg(PathDefine.SkillCfg);
         //    InitSkillMoveCfg(PathDefine.SkillMoveCfg);
         InitSkillActionCfg(PathDefine.SkillActionCfg);
@@ -163,6 +158,11 @@ public class ResSvc : SvcBase
         }
         GameCommon.Log("personCfg Init Done.");
     }
+    /// <summary>
+    /// 获取人物配置数据
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public personCfg GetPersonCfgData(int id)
     {
         personCfg personCfg = null;
@@ -172,6 +172,11 @@ public class ResSvc : SvcBase
         }
         return null;
     }
+    /// <summary>
+    /// 获取人物头像
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="callback"></param>
     public void GetPersonCfgHard(int id, Action<Texture2D> callback)
     {
         personCfg personCfg = null;
@@ -179,7 +184,7 @@ public class ResSvc : SvcBase
         {
             Debug.Log(PathDefine.ResHard + personCfg.Hard);
             ComTools.GetImg(personCfg.Hard, callback);
-            
+
         }
     }
     #endregion
@@ -601,7 +606,7 @@ public class ResSvc : SvcBase
                 TaskDic.Add(ID, taskCfg);
             }
         }
-        GameCommon.Log("personCfg Init Done.");
+        GameCommon.Log("InitTaskCfg Init Done.");
     }
     public TaskCfg GetTaskCfgData(int id)
     {
@@ -744,6 +749,7 @@ public class ResSvc : SvcBase
     {
         return TaskDailyDic.Count;
     }
+
     /// <summary>
     /// 根据id获取活跃度
     /// </summary>
@@ -766,6 +772,90 @@ public class ResSvc : SvcBase
             return null;
         }
         return rewardItems[id];
+    }
+    #endregion
+    #region 加载抽奖配置
+    private Dictionary<int, RaffleItemCfg> RaffleItemDic = new Dictionary<int, RaffleItemCfg>();
+    private void InitRaffleItemCfg(string Path)
+    {
+        TextAsset xml = GetTextAsset(Path);
+        if (!xml)
+        {
+            GameCommon.Log("xml file:" + Path + "not exist", ComLogType.Error);
+        }
+        else
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml.text);//读取文本数据
+            XmlNodeList nodeList = doc.SelectSingleNode(("root")).ChildNodes;//选择根节点为root的节点
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                XmlElement ele = nodeList[i] as XmlElement;
+                if (ele.GetAttributeNode("ID") == null)//判断是否能够读取到ID
+                {
+                    continue;
+                }
+                int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);//获取ID中的数据
+                RaffleItemCfg raffleItemCfg = new RaffleItemCfg()
+                {
+                    ID = ID,
+                };
+                foreach (XmlElement node in nodeList[i].ChildNodes)
+                {
+                    switch (node.Name)
+                    {
+                        case "mShopID":
+                            raffleItemCfg.mShopID = int.Parse(node.InnerText);
+                            break;
+                        case "Count":
+                            raffleItemCfg.Count = int.Parse(node.InnerText);
+                            break;
+                        case "probability":
+                            raffleItemCfg.probability = int.Parse(node.InnerText);
+                            break;
+                    }
+                }
+                RaffleItemDic.Add(ID, raffleItemCfg);
+            }
+        }
+    }
+    /// <summary>
+    /// 获取抽奖物品配置
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public ItemCfg GetRaffleItemCfgData(int id)
+    {
+        ItemCfg shopItemCfg = null;
+        if (ShopItemDic.TryGetValue(id, out shopItemCfg))
+        {
+            return shopItemCfg;
+        }
+        return null;
+    }
+    public RaffleItemCfg GetRaffleItemCfgShopId(int ShopID)
+    {
+        foreach (KeyValuePair<int, RaffleItemCfg> i in RaffleItemDic)
+        {
+            if (i.Value.mShopID == ShopID)
+            {
+                return i.Value;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 获取抽奖物品配置
+    /// </summary>
+    /// <returns></returns>
+    public RaffleItemCfg[] GetRaffleItemCfgData()
+    {
+        List<RaffleItemCfg> items = new List<RaffleItemCfg>();
+        foreach (KeyValuePair<int, RaffleItemCfg> i in RaffleItemDic)
+        {
+            items.Add(i.Value);
+        }
+        return items.ToArray();
     }
     #endregion
     #region 加载技能配置
@@ -1256,7 +1346,8 @@ public class ResSvc : SvcBase
 
         return textAsset;
 #elif UNITY_EDITOR
-        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(Path.Combine(PathDefine.Download , path) + PathDefine.Xml);
+
+        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(PathDefine.Download + path + PathDefine.Xml);
         return textAsset;
 #endif
     }

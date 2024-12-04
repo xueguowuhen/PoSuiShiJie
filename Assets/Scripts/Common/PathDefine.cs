@@ -5,13 +5,13 @@
     日期：2024-04-14 10:03:35
 	功能：路径配置文件
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-public class PathDefine
+using XLua;
+[LuaCallCSharp]
+public static class PathDefine
 {
     #region Configs
     public const string ABDownload = "download";
+    public const string Download = "Assets/Download/";
     public const string personCfg = "ResCfg/person";
     public const string TalentCfg = "ResCfg/Talent";
     public const string RdnameCfg = "ResCfg/rdname";
@@ -20,6 +20,7 @@ public class PathDefine
     public const string TaskCfg = "ResCfg/guide";
     public const string TaskDailyCfg = "ResCfg/DailyTask";
     public const string TaskRewardCfg = "ResCfg/TaskReward";
+    public const string RaffleItemCfg = "ResCfg/RaffleItem";
     public const string SkillCfg = "ResCfg/skill";
     public const string SkillMoveCfg = "ResCfg/skillmove";
     public const string SkillActionCfg = "ResCfg/skillaction";
@@ -41,13 +42,14 @@ public class PathDefine
     public const string ResPerson = "ResPerfer/Person/";
     public const string ResItem = "ResPerfer/Item/";
     public const string ResShopItem = "ShopItem";
+    public const string RaffleItem = "RaffleItem";
     public const string ResBagItem = "BagItem";
     public const string ResFriendsItem = "FriendsItem";
     public const string ResAttributeText = "attributeText";
     public const string ResRewardTaskItem = "RewardTaskItem";
     public const string ResDailyTaskItem = "DailyTaskItem";
     public const string Prefab = "ResPerfer/";
-    public const string EntityHp="ItemEntityHp";
+    public const string EntityHp = "ItemEntityHp";
     public const string ResHard = "ResUI/Hard/";
     public const string ResUI = "ResUI/";
     public const string Equip = "Equip/";
@@ -59,30 +61,8 @@ public class PathDefine
     #endregion
     #region GameObjectPath
 
-    #region LoginWnd
-
-    #endregion
-    #region LoadingWnd
-    public const string Loading_txtTips = "BottomWnd/txtTips";
-    public const string Loading_imageFG = "BottomWnd/loadingfg";
-    public const string Loading_txtPrg = "BottomWnd/loadingfg/txtPrg";
-    #endregion
-    #region DownloadWnd
-    public const string Downing_txtSpeed = "BottomWnd/txtSpeed";
-    public const string Downing_txtTips = "BottomWnd/txtTips";
-    public const string Downing_txtProgress = "BottomWnd/txtProgress";
-    public const string Downing_txtPrg = "BottomWnd/loadingfg/txtPrg";
-    public const string Downing_imageFG = "BottomWnd/loadingfg";
-    public const string abCompareInfo = "abCompareInfo.txt";
-    public const string abCompareInfo_TMP = "abCompareInfo_TMP.txt";
-    public const string abCompareInfo_Cache = "abCompareInfo_Cache.txt";
-    #endregion
-    #region RegisterWnd
-    public const string Register_close = "RegisterCenten/btn_close1";
-    public const string Register_Register = "RegisterCenten/Register";
-    public const string Register_Username = "RegisterCenten/Username/InputField";
-    public const string Register_Password = "RegisterCenten/Password/InputField";
-    public const string Register_RePassword = "RegisterCenten/RePassword/InputField";
+    #region Lua窗体加载 
+    public const string RaffleCtrl = "RaffleCtrl";
     #endregion
     #region DynamicWnd
     public const string TextTips = "CenterPin/TxtTips";
@@ -92,10 +72,6 @@ public class PathDefine
     public const string txtCritical = "txtCritical";
     public const string txtDodge = "txtDodge";
     public const string txtHp = "txtHp";
-    #endregion
-    #region ShopWnd
-    public const string Buttons = "Buttons";
-    public const string Slots = "Slots";
     #endregion
     #region BuyTipWnd
     public const string quantity = "quantity";
@@ -141,15 +117,6 @@ public class PathDefine
     public const string UseText = "All/UseButton/UseText";
     public const string ItemText = "All";
     public const string CloseButton = "All/CloseButton";
-    #endregion
-    #region BagWnd
-    public const string AllBtn = "Bag/background/BagTatleBtn/AllBtn";
-    public const string EuqipBtn = "Bag/background/BagTatleBtn/EuqipBtn";
-    public const string materialBtn = "Bag/background/BagTatleBtn/materialBtn";
-    public const string consumeBtn = "Bag/background/BagTatleBtn/consumeBtn";
-    public const string SearchBtn = "Bag/background/BagTatleBtn/SearchBtn";
-    public const string CloseBtn = "Bag/background/BagTatleBtn/CloseBtn";
-    public const string BagContent = "Bag/background/Slots/ScrollRect/ViewPort/BagContent";
     #endregion
     #region MainCityWnd
     public const string MapRoot = "MapRoot";
@@ -203,25 +170,6 @@ public class PathDefine
     public const string PlayerName = "我";
     //public const string PlayerNpc
     #endregion
-    #region PersonWnd
-    public const string PersonWnd = "ResPerfer/PersonWnd";
-    public const string BtnPerson = "PersonItem/PersonOne";
-    public const string BtnClose = "CloseBtn";
-    public const string ItemOne = "Centen/PersonBg/ItemOne";
-    public const string ItemTwo = "Centen/PersonBg/ItemTwo";
-    public const string Img = "Image";
-    public const string Person = "Person";
-    public const string PersonItem = "PersonItem";
-    public const string Talent = "Talent";
-    public const string TalentOne = "talentOne";
-    public const string attribute = "attribute";
-    public const string Hp = "Hp";
-    public const string Experience = "Experience";
-    public const string Slider = "Slider";
-    public const string Attr = "Attr";
-    public const string HpSlider = "HpSlider";
-    public const string MagicSlider = "MagicSlider";
 
-    #endregion
     #endregion
 }

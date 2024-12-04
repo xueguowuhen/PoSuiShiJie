@@ -8,12 +8,8 @@
 
 using CommonNet;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PlayerController : Controller
 {
@@ -138,7 +134,7 @@ public class PlayerController : Controller
                     speed = targetVelocity
                 }
             };
-            NetSvc.instance.SendMsgAsync(msg);
+            NetSvc.Instance.SendMsgAsync(msg);
         }
 
     }
@@ -179,7 +175,7 @@ public class PlayerController : Controller
         float delaySeconds = delayTime / 1000f; // 转换为秒
 
         targetVelocity = dataTrans.speed;
-      //  Debug.Log("当前速度"+currentVelocity+"速度：" + targetVelocity);
+        //  Debug.Log("当前速度"+currentVelocity+"速度：" + targetVelocity);
         eulerAngles = dataTrans.Rot;
         float speed = targetVelocity == Constants.VelocityRun ? Constants.PlayerRunSpeed : Constants.PlayerWalkSpeed;
         // 预测位置

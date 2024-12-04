@@ -32,7 +32,7 @@ public class StateHit : ISate
     }
     public void Process(EntityBase entity)
     {
-       
+
     }
 
 

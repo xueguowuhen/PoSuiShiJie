@@ -6,11 +6,8 @@
 	功能：主城窗体
 *****************************************************/
 using CommonNet;
-using System.Collections.Generic;
-using System.Xml.Xsl;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 public class MainCitySys : SystemRoot
 {
     #region 公开字段/属性
@@ -19,7 +16,7 @@ public class MainCitySys : SystemRoot
     public CharacterController characterController;
     public PlayerController playerController;
     public PersonWnd personWnd;
-    public ShopWnd shop;
+    public ShopWnd shopWnd;
     public BagWnd bagWnd;
     //public GuideWnd guideWnd;
     public FriendsWnd friendsWnd;
@@ -420,6 +417,13 @@ public class MainCitySys : SystemRoot
     //    }
     //    return list;
     //}
+    /// <summary>
+    /// 打开抽奖界面
+    /// </summary>
+    public void EndRaffleLua()
+    {
+        LuaMgr.Instance.LoadView(PathDefine.RaffleCtrl);
+    }
 
     public void OpenGuideWnd()
     {
@@ -447,7 +451,7 @@ public class MainCitySys : SystemRoot
     /// </summary>
     public void EnterShop()
     {
-        shop.SetWndState();
+        shopWnd.SetWndState();
     }
     /// <summary>
     /// 背包界面
@@ -484,6 +488,10 @@ public class MainCitySys : SystemRoot
     public void FriendReFresh(FriendItem item = null)
     {
         friendsWnd.RefreshFriends(item);
+    }
+    public void OpenPerson()
+    {
+        mainCityWnd.PersonPoint.gameObject.SetActive(true);
     }
 
     public void EnterTalentWnd()

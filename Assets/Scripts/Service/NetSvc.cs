@@ -10,23 +10,20 @@ using CommonNet;
 using ComNet;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
-using UnityEngine.UI;
 
 
-public class NetSvc : SvcBase
+public class NetSvc : SvcBase<NetSvc>
 {
-    public static NetSvc instance;
+
     private readonly static string Lock = "lock";
     private Queue<GameMsg> Msgqueue = new Queue<GameMsg>();
     public TraSocket<ClientSession, GameMsg> client = null;
     private Queue<Action> extcutionActions = new Queue<Action>();
-    private int sessionID=-1;
+    private int sessionID = -1;
     public override void InitSvc()
     {
         base.InitSvc();
-        instance = this;
         StartAsClient();
         SocketDispatcher.Instance.AddEventListener(CMD.SystemSessionID, onSystemSessionID);
         GameCommon.Log("NetSvc Init....");

@@ -5,9 +5,6 @@
     日期：2024-05-14 14:14:58
 	功能：死亡状态
 *****************************************************/
-using UnityEngine;
-using UnityEngine.Rendering;
-
 public class StateDie : ISate
 {
     public void Enter(EntityBase entity, params object[] objects)

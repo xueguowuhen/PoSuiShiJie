@@ -6,8 +6,6 @@
     功能：好友界面
 *****************************************************/
 using CommonNet;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -222,6 +220,7 @@ public class FriendsWnd : WindowRoot
 
     private void ClickClose()
     {
+        MainCitySys.instance.OpenPerson();
         SetWndState(false);
     }
 }

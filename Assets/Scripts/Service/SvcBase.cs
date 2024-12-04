@@ -5,15 +5,27 @@
     日期：2024-11-10 15:33:21
 	功能：Nothing
 *****************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-public class SvcBase:MonoBehaviour
+public class SvcBase<T> : MonoBehaviour where T : SvcBase<T>
 {
+    private static T _instance;
+    public static T Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<T>();
+                if (_instance == null)
+                {
+                    GameObject obj = GameObject.Find("GameRoot");
+                    _instance = obj.GetOrAddComponent<T>();
+                }
+            }
+            return _instance;
+        }
+    }
     public void Update()
     {
         OnUpdate();
@@ -23,7 +35,7 @@ public class SvcBase:MonoBehaviour
         BeforeOnDestroy();
     }
     public virtual void InitSvc() { }
-    
+
     public virtual void OnUpdate() { }
     public virtual void BeforeOnDestroy() { }
 }
